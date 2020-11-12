@@ -1,9 +1,10 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const express = require('express');
+const path = require('path');
+
 const PORT = 3000;
 
 const app = express();
-app.use('/', express.static(__dirname + '/static'));
+app.use('/', express.static(path.join(__dirname, 'static')));
 
-app.listen(PORT, function () {
-  console.log(`server started at http://localhost:${PORT}`)
-})
+app.listen(PORT);
