@@ -1,0 +1,25 @@
+{
+  "name": "mf.messenger.praktikum.yandex",
+  "version": "0.1.0",
+  "description": "just a simple kind of chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "$(npm bin)/nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergey-demidov/mf.messenger.praktikum.yandex.git"
+  },
+  "author": "Sergey Demidov <sergey.k.demidov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/sergey-demidov/mf.messenger.praktikum.yandex#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6",
+    "reload": "^3.1.1"
+  }
+}
