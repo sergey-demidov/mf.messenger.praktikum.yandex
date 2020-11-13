@@ -1,3 +1,111 @@
-* {
-  color: orange;
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
 }
+
+:root {
+  --vc-border-color: grey;
+}
+
+.vc-overlay {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.vc-container {
+  height: 100%;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vc-wrap {
+  flex-basis: 350px;
+}
+
+.vc-dialog {
+  border-radius: 20px;
+  display: block;
+  background-color: orange;
+  overflow: hidden;
+  box-shadow: 0 5px 20px #0007;
+}
+
+.vc-dialog-header, .vc-dialog-content, .vc-dialog-footer  {
+  /*border-radius: 20px 20px 0 0;*/
+  background-color: #eee;
+  padding: 0 15px 0 15px;
+  font-weight: bold;
+  font-size: larger;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.vc-dialog-header {
+  padding-left: 32px;
+  padding-top: 8px;
+}
+.vc-dialog-content {
+  flex-direction: column;
+}
+
+.vc-dialog-footer {
+  padding-bottom: 12px;
+  justify-content: center;
+  display: flex;
+}
+
+.vc-button {
+  border-radius: 8px;
+  padding: 4px 10px 4px 10px;
+  margin: 0 10px 0 10px;
+  background: linear-gradient(to top, #fefcea, #f1da36);
+  box-shadow: 0 1px 5px #0007;
+  cursor: pointer;
+}
+
+.vc-button:hover {
+  box-shadow: 0 1px 10px #0007;
+  filter: brightness(103%);
+}
+
+.vc-text-input-wrap {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.vc-text-input {
+  padding: 10px 10px 10px 10px;
+  margin: 20px 10px 20px 10px;
+  width: calc(100% - 40px);
+  border: 1px solid var(--vc-border-color);
+  border-radius: 4px;
+  outline-color: green;
+  background-color: transparent;
+  font-size: medium;
+}
+
+.vc-label {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  font-size: small;
+  font-weight: lighter;
+  background-color: #eee;
+  /*background-color: yellow;*/
+  padding-left: 4px;
+  padding-right: 4px;
+  transition-property: width, opacity;
+  transition-duration: 0.5s;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+  display: inline;
+}
+
