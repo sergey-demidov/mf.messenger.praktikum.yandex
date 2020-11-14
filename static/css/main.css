@@ -2,6 +2,7 @@ html, body {
   padding: 0;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
+
 }
 
 :root {
@@ -23,8 +24,18 @@ html, body {
 }
 
 .vc-wrap {
-  flex-basis: 350px;
+  width: 400px;
 }
+
+.vc-text-input-wrap {
+  position: relative;
+  padding: 20px 10px;
+  /*min-width: 256px;*/
+
+  /*width: calc(100% - 60px);*/
+  /*padding-bottom: 10px;*/
+}
+
 
 .vc-dialog {
   border-radius: 20px;
@@ -32,9 +43,10 @@ html, body {
   background-color: orange;
   overflow: hidden;
   box-shadow: 0 5px 20px #0007;
+  /*max-height: 400px;*/
 }
 
-.vc-dialog-header, .vc-dialog-content, .vc-dialog-footer  {
+.vc-dialog-header, .vc-dialog-content, .vc-dialog-footer {
   /*border-radius: 20px 20px 0 0;*/
   background-color: #eee;
   padding: 0 15px 0 15px;
@@ -49,14 +61,23 @@ html, body {
   padding-left: 32px;
   padding-top: 8px;
 }
+
 .vc-dialog-content {
+  display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
+  height: auto;
 }
 
 .vc-dialog-footer {
-  padding-bottom: 12px;
+  padding-bottom: 16px;
   justify-content: center;
   display: flex;
+}
+
+.vc-register-ref {
+  font-size: small;
+  padding-top: 0;
 }
 
 .vc-button {
@@ -73,39 +94,58 @@ html, body {
   filter: brightness(103%);
 }
 
-.vc-text-input-wrap {
-  position: relative;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}
 
 .vc-text-input {
-  padding: 10px 10px 10px 10px;
-  margin: 20px 10px 20px 10px;
-  width: calc(100% - 40px);
+  padding: 10px;
+  min-width: 300px;
+  margin-left: -10px;
+  width: 100%;
   border: 1px solid var(--vc-border-color);
   border-radius: 4px;
   outline-color: green;
   background-color: transparent;
   font-size: medium;
+  /*position: static;*/
 }
 
 .vc-label {
   position: absolute;
-  top: 10px;
-  left: 16px;
+  top: 11px;
+  left: 8px;
   font-size: small;
   font-weight: lighter;
   background-color: #eee;
-  /*background-color: yellow;*/
   padding-left: 4px;
   padding-right: 4px;
-  transition-property: width, opacity;
-  transition-duration: 0.5s;
-  overflow: hidden;
+  /*transition-property: width, opacity;*/
+  /*transition-duration: 0.5s;*/
+  /*overflow: hidden;*/
   white-space: nowrap;
-  text-overflow: clip;
+  /*text-overflow: clip;*/
   display: inline;
 }
+@media only screen and (max-height: 540px) {
+  .register .vc-wrap {
+    width: 650px;
+  }
 
+  .register .vc-dialog-content {
+    max-height: 50vh;
+  }
+
+  .register .vc-text-input-wrap {
+    flex-basis: 33%;
+    padding: 20px 10px 10px 10px;
+  }
+  .register .vc-text-input {
+    min-width: auto;
+  }
+
+
+}
+
+@media only screen and (max-height: 420px) {
+  .register .vc-dialog-content {
+    max-height: 60vh;
+  }
+}
