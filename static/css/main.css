@@ -2,7 +2,6 @@ html, body {
   padding: 0;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
-
 }
 
 :root {
@@ -27,6 +26,7 @@ html, body {
   position: relative;
   padding: 20px 20px;
   margin: 0 10px;
+  font-weight: normal;
 }
 
 .vc-text-input {
@@ -71,10 +71,11 @@ html, body {
 }
 
 .vc-dialog-header {
-  padding-left: 32px;
+  padding-left: 42px;
   padding-top: 8px;
   font-weight: bold;
   font-size: larger;
+  filter: brightness(95%);
 }
 
 .vc-dialog-content {
