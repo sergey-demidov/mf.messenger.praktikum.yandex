@@ -7,41 +7,41 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
   <link rel="stylesheet" href="/css/main.css">
+  <script src="js/main.js"></script>
+
 </head>
 <body>
 <main>
   <div class="vc-overlay">
     <div class="vc-container">
-      <div class="vc-wrap">
-        <div class="vc-dialog">
-          <div class="vc-dialog-header">
-            Login
-          </div>
-          <form action="/">
-            <div class="vc-dialog-content">
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userLogin">login</label>
-                <input name="login" class="vc-text-input" id="userLogin" type="text" spellcheck="false" required>
-              </div>
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userPassword">password</label>
-                <input name="password" class="vc-text-input"
-                       id="userPassword" type="password"
-                       required/>
-              </div>
-              <div class="vc-text-input-wrap" style="padding-top: 0;">
-                <a class="vc-register-ref" href="register.html"> Dont have login? </a>
-              </div>
+      <div class="vc-dialog">
+        <div class="vc-dialog-header">
+          Login
+        </div>
+        <form name="login" action="/">
+          <div class="vc-dialog-content">
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userLogin">login</label>
+              <input name="login" class="vc-text-input" id="userLogin" type="text" spellcheck="false" required>
+            </div>
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userPassword">password</label>
+              <input name="password" class="vc-text-input"
+                     id="userPassword" type="password"
+                     required/>
+            </div>
+            <div class="vc-text-input-wrap" style="padding-top: 0;">
+              <a class="vc-register-ref" href="register.html"> Dont have login? </a>
+            </div>
 
-            </div>
-          </form>
-          <div class="vc-dialog-footer">
-            <div class="vc-button" onclick="window.location = '/';">
-              Return
-            </div>
-            <div class="vc-button">
-              Submit
-            </div>
+          </div>
+        </form>
+        <div class="vc-dialog-footer">
+          <div class="vc-button" onclick="window.location = '/';">
+            Return
+          </div>
+          <div class="vc-button" onclick="submitForm(forms.login)">
+            Submit
           </div>
         </div>
       </div>

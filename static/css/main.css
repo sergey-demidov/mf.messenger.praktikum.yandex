@@ -23,17 +23,33 @@ html, body {
   align-items: center;
 }
 
-.vc-wrap {
-  width: 400px;
-}
-
 .vc-text-input-wrap {
   position: relative;
-  padding: 20px 10px;
-  /*min-width: 256px;*/
+  padding: 20px 20px;
+  margin: 0 10px;
+}
 
-  /*width: calc(100% - 60px);*/
-  /*padding-bottom: 10px;*/
+.vc-text-input {
+  padding: 10px;
+  min-width: 240px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  outline-color: dimgray;
+  background-color: transparent;
+  font-size: medium;
+}
+
+.vc-label {
+  position: absolute;
+  top: 10px;
+  left: 25px;
+  font-size: small;
+  font-weight: lighter;
+  background-color: #eee;
+  padding-left: 4px;
+  padding-right: 4px;
+  white-space: nowrap;
+  display: inline;
 }
 
 
@@ -47,11 +63,8 @@ html, body {
 }
 
 .vc-dialog-header, .vc-dialog-content, .vc-dialog-footer {
-  /*border-radius: 20px 20px 0 0;*/
   background-color: #eee;
   padding: 0 15px 0 15px;
-  font-weight: bold;
-  font-size: larger;
   min-height: 40px;
   display: flex;
   align-items: center;
@@ -60,10 +73,13 @@ html, body {
 .vc-dialog-header {
   padding-left: 32px;
   padding-top: 8px;
+  font-weight: bold;
+  font-size: larger;
 }
 
 .vc-dialog-content {
-  display: flex;
+  font-weight: bold;
+  font-size: larger;
   flex-direction: column;
   flex-wrap: wrap;
   height: auto;
@@ -82,6 +98,8 @@ html, body {
 
 .vc-button {
   border-radius: 8px;
+  font-weight: bolder;
+  color: #333;
   padding: 4px 10px 4px 10px;
   margin: 0 10px 0 10px;
   background: linear-gradient(to top, #fefcea, #f1da36);
@@ -95,57 +113,47 @@ html, body {
 }
 
 
-.vc-text-input {
-  padding: 10px;
-  min-width: 300px;
-  margin-left: -10px;
-  width: 100%;
-  border: 1px solid var(--vc-border-color);
-  border-radius: 4px;
-  outline-color: green;
-  background-color: transparent;
-  font-size: medium;
-  /*position: static;*/
-}
+@media only screen and (max-width: 320px) {
+  .vc-text-input {
+    min-width: calc(100vw - 60px);
+  }
 
-.vc-label {
-  position: absolute;
-  top: 11px;
-  left: 8px;
-  font-size: small;
-  font-weight: lighter;
-  background-color: #eee;
-  padding-left: 4px;
-  padding-right: 4px;
-  /*transition-property: width, opacity;*/
-  /*transition-duration: 0.5s;*/
-  /*overflow: hidden;*/
-  white-space: nowrap;
-  /*text-overflow: clip;*/
-  display: inline;
-}
-@media only screen and (max-height: 540px) {
-  .register .vc-wrap {
-    width: 650px;
+  .vc-text-input-wrap {
+    margin: 0;
+    padding: 20px 20px 0 20px;
   }
 
   .register .vc-dialog-content {
-    max-height: 50vh;
+    padding: 10px 0;
+  }
+}
+
+@media only screen and (max-height: 568px) {
+  .register .vc-dialog-content {
+    max-height: 70vh;
+    min-width: 100vw;
+  }
+
+  .register .vc-text-input {
+    min-width: 220px;
   }
 
   .register .vc-text-input-wrap {
-    flex-basis: 33%;
-    padding: 20px 10px 10px 10px;
+    flex-basis: 50%;
   }
-  .register .vc-text-input {
-    min-width: auto;
-  }
-
-
 }
 
-@media only screen and (max-height: 420px) {
+@media only screen and (max-height: 320px) {
+  .register .vc-text-input-wrap {
+    margin: 0;
+    padding: 20px 0 0 20px;
+  }
+
   .register .vc-dialog-content {
-    max-height: 60vh;
+    padding: 10px 0;
+  }
+
+  .register .vc-dialog-header {
+    display: none;
   }
 }

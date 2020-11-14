@@ -7,60 +7,59 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
   <link rel="stylesheet" href="/css/main.css">
+  <script src="js/main.js"></script>
 </head>
 <body>
 <main>
-  <div class="vc-overlay  register">
+  <div class="vc-overlay">
     <div class="vc-container">
-      <div class="vc-wrap">
-        <div class="vc-dialog">
-          <div class="vc-dialog-header">
-            Register
+      <div class="vc-dialog register">
+        <div class="vc-dialog-header">
+          Register
+        </div>
+        <form action="/" name="register" autocomplete="off" spellcheck="false">
+          <div class="vc-dialog-content">
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userFirstName">first name</label>
+              <input name="first_name" class="vc-text-input" id="userFirstName" type="text"
+                     required>
+            </div>
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userSecondName">last name</label>
+              <input name="second_name" class="vc-text-input" id="userSecondName" type="text"
+                     required>
+            </div>
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userEmail">e-mail</label>
+              <input name="email" class="vc-text-input" id="userEmail" type="text" required>
+            </div>
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userLogin">login</label>
+              <input name="login" class="vc-text-input" id="userLogin" type="text" required>
+            </div>
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userPassword">password</label>
+              <input name="password" class="vc-text-input"
+                     id="userPassword" type="password"
+                     required/>
+            </div>
+            <div class="vc-text-input-wrap">
+              <label class="vc-label" for="userPhone">phone</label>
+              <input name="phone" class="vc-text-input" id="userPhone" type="text" spellcheck="false" required>
+            </div>
           </div>
-          <form action="/" autocomplete="off" spellcheck="false">
-            <div class="vc-dialog-content">
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userFirstName">first name</label>
-                <input name="first_name" class="vc-text-input" id="userFirstName" type="text"
-                       required>
-              </div>
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userSecondName">last name</label>
-                <input name="second_name" class="vc-text-input" id="userSecondName" type="text"
-                       required>
-              </div>
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userEmail">e-mail</label>
-                <input name="email" class="vc-text-input" id="userEmail" type="text" required>
-              </div>
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userLogin">login</label>
-                <input name="login" class="vc-text-input" id="userLogin" type="text" required>
-              </div>
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userPassword">password</label>
-                <input name="password" class="vc-text-input"
-                       id="userPassword" type="password"
-                       required/>
-              </div>
-              <div class="vc-text-input-wrap">
-                <label class="vc-label" for="userPhone">phone</label>
-                <input name="phone" class="vc-text-input" id="userPhone" type="text" spellcheck="false" required>
-              </div>
+          <div class="vc-dialog-content">
+            <div class="vc-text-input-wrap" style="padding-top: 0;">
+              <a class="vc-register-ref" href="/login.html"> Already have login? </a>
             </div>
-            <div class="vc-dialog-content">
-              <div class="vc-text-input-wrap" style="padding-top: 0;">
-                <a class="vc-register-ref" href="/login.html"> Already have login? </a>
-              </div>
-            </div>
-          </form>
-          <div class="vc-dialog-footer">
-            <div class="vc-button" onclick="window.location = '/';">
-              Return
-            </div>
-            <div class="vc-button">
-              Submit
-            </div>
+          </div>
+        </form>
+        <div class="vc-dialog-footer">
+          <div class="vc-button" onclick="window.location = '/';">
+            Return
+          </div>
+          <div class="vc-button" onclick="submitForm(forms.register)">
+            Submit
           </div>
         </div>
       </div>
