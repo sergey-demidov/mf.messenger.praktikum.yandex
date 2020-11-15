@@ -12,35 +12,35 @@
 </head>
 <body>
 <main>
-  <div class="vc-overlay">
-    <div class="vc-container">
-      <div class="vc-dialog">
-        <div class="vc-dialog-header">
+  <div class="mpy_overlay">
+    <div class="mpy_container">
+      <div class="mpy_dialog">
+        <div class="mpy_dialog__header">
           Login
         </div>
         <form name="login" action="/">
-          <div class="vc-dialog-content">
-            <div class="vc-text-input-wrap">
-              <label class="vc-label" for="userLogin">login</label>
-              <input name="login" class="vc-text-input" id="userLogin" type="text" spellcheck="false" required>
+          <div class="mpy_dialog__content mpy_lightgrey">
+            <div class="mpy_text_input__wrapper">
+              <label class="mpy_text_input__label" for="userLogin">login</label>
+              <input name="login" class="mpy_text_input" id="userLogin" type="text" spellcheck="false" required>
             </div>
-            <div class="vc-text-input-wrap">
-              <label class="vc-label" for="userPassword">password</label>
-              <input name="password" class="vc-text-input"
+            <div class="mpy_text_input__wrapper">
+              <label class="mpy_text_input__label" for="userPassword">password</label>
+              <input name="password" class="mpy_text_input"
                      id="userPassword" type="password"
                      required/>
             </div>
-            <div class="vc-text-input-wrap" style="padding-top: 0;">
-              <a class="vc-register-ref" href="register.html"> Dont have login? </a>
+            <div class="mpy_text_input__wrapper" style="padding-top: 0;">
+              <a class="mpy_dialog__reference" href="register.html" onclick="openDialog('register.html'); return false;"> Dont have login? </a>
             </div>
 
           </div>
         </form>
-        <div class="vc-dialog-footer">
-          <div class="vc-button" onclick="window.history.go(-1); return false;">
+        <div class="mpy_dialog__footer mpy_lightgrey">
+          <div class="mpy_button" onclick="closeDialog()">
             Return
           </div>
-          <div class="vc-button" onclick="submitForm(forms.login)">
+          <div class="mpy_button" onclick="submitForm(forms.login)">
             Submit
           </div>
         </div>

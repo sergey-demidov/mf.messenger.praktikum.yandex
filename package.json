@@ -42,11 +42,14 @@
       "no-unused-vars": [
         "warn"
       ],
+      "no-restricted-syntax": [
+        "warn"
+      ],
       "no-var": [
-        "off"
+        "warn"
       ],
       "one-var": [
-        "off"
+        "warn"
       ]
     }
   }

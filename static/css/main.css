@@ -4,32 +4,49 @@ html, body {
   font-family: 'Montserrat', sans-serif;
 }
 
-:root {
-  --vc-border-color: grey;
-}
-
-.vc-overlay {
+.mpy_overlay {
   position: fixed;
   width: 100vw;
   height: 100vh;
+  background-color: #0007;
 }
 
-.vc-container {
+.mpy_container {
   height: 100%;
-  background-color: #ccc;
+  /*width: 100vh;*/
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.vc-text-input-wrap {
-  position: relative;
-  padding: 20px 20px;
-  margin: 0 10px;
-  font-weight: normal;
-}
+/*.vc-panel {*/
+/*  flex: 1;*/
+/*  background-color: #fefcea;*/
+/*  border-right: 1px solid lightslategrey;*/
+/*  height: 100vh;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
 
-.vc-text-input {
+/*.mpy_content {*/
+/*  flex: 11;*/
+/*  height: 100%;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  !*background-color: #eeeeee;*!*/
+/*}*/
+
+/*.vc-main-wrapper {*/
+/*  height: 100%;*/
+/*  display: flex;*/
+/*  justify-content: left;*/
+/*  align-items: center;*/
+
+/*}*/
+
+.mpy_text_input {
   padding: 10px;
   min-width: 240px;
   border: 1px solid gray;
@@ -39,65 +56,80 @@ html, body {
   font-size: medium;
 }
 
-.vc-label {
+.mpy_text_input__wrapper {
+  position: relative;
+  padding: 20px 20px;
+  margin: 0 10px;
+  font-weight: normal;
+  background-color: inherit;
+}
+
+.mpy_text_input__label {
   position: absolute;
   top: 10px;
   left: 25px;
   font-size: small;
   font-weight: lighter;
-  background-color: #eee;
+  background-color: inherit;
   padding-left: 4px;
   padding-right: 4px;
   white-space: nowrap;
   display: inline;
 }
 
-
-.vc-dialog {
-  border-radius: 20px;
-  display: block;
-  background-color: orange;
-  overflow: hidden;
-  box-shadow: 0 5px 20px #0007;
-  /*max-height: 400px;*/
+.mpy_white {
+  background-color: #ffffff;
 }
 
-.vc-dialog-header, .vc-dialog-content, .vc-dialog-footer {
-  background-color: #eee;
+.mpy_lightgrey {
+  background-color: #eeeeee;
+}
+
+.mpy_dialog {
+  border-radius: 20px;
+  display: block;
+  background-color: #eeeeee;
+  overflow: hidden;
+  box-shadow: 0 5px 20px #0007;
+}
+
+.mpy_dialog__header, .mpy_dialog__content, .mpy_dialog__footer {
   padding: 0 15px 0 15px;
   min-height: 40px;
   display: flex;
   align-items: center;
 }
 
-.vc-dialog-header {
-  padding-left: 42px;
-  padding-top: 8px;
+.mpy_dialog__header {
+  padding: 2px 0 2px 32px;
   font-weight: bold;
   font-size: larger;
-  filter: brightness(95%);
+  background-color: #cccccc;
 }
 
-.vc-dialog-content {
-  font-weight: bold;
-  font-size: larger;
+.mpy_dialog__content {
+  /*font-weight: bold;*/
+  /*font-size: larger;*/
   flex-direction: column;
   flex-wrap: wrap;
-  height: auto;
 }
 
-.vc-dialog-footer {
+.mpy_dialog__footer {
   padding-bottom: 16px;
   justify-content: center;
-  display: flex;
 }
 
-.vc-register-ref {
+.mpy_dialog__reference {
   font-size: small;
   padding-top: 0;
 }
 
-.vc-button {
+#overlay {
+  transition: opacity;
+  transition-duration: 500ms;
+}
+
+.mpy_button {
   border-radius: 8px;
   font-weight: bolder;
   color: #333;
@@ -106,55 +138,59 @@ html, body {
   background: linear-gradient(to top, #fefcea, #f1da36);
   box-shadow: 0 1px 5px #0007;
   cursor: pointer;
+  display: inline;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 
-.vc-button:hover {
+.mpy_button:hover {
   box-shadow: 0 1px 10px #0007;
   filter: brightness(103%);
 }
 
 
 @media only screen and (max-width: 320px) {
-  .vc-text-input {
+  .mpy_text_input {
     min-width: calc(100vw - 60px);
   }
 
-  .vc-text-input-wrap {
+  .mpy_text_input__wrapper {
     margin: 0;
     padding: 20px 20px 0 20px;
   }
 
-  .register .vc-dialog-content {
+  .register .mpy_dialog__content {
     padding: 10px 0;
   }
 }
 
 @media only screen and (max-height: 568px) {
-  .register .vc-dialog-content {
+  .register .mpy_dialog__content {
     max-height: 70vh;
     min-width: 100vw;
   }
 
-  .register .vc-text-input {
+  .register .mpy_text_input {
     min-width: 220px;
   }
 
-  .register .vc-text-input-wrap {
+  .register .mpy_text_input__wrapper {
     flex-basis: 50%;
   }
 }
 
 @media only screen and (max-height: 320px) {
-  .register .vc-text-input-wrap {
+  .register .mpy_text_input__wrapper {
     margin: 0;
     padding: 20px 0 0 20px;
   }
 
-  .register .vc-dialog-content {
+  .register .mpy_dialog__content {
     padding: 10px 0;
   }
 
-  .register .vc-dialog-header {
+  .register .mpy_dialog__header {
     display: none;
   }
 }

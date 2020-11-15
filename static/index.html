@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>mf.messenger.praktikum.yandex</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <title>mf.messenger.praktikum.yandex</title>
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="js/main.js"></script>
 </head>
 <body>
+<nav class="menu">
+  <ul>
+    <li><a href="#">Главная</a></li>
+    <li><a href="#">О нас</a></li>
+    <li><a href="#">Контакты</a></li>
+  </ul>
+</nav>
 <div>Он сказал: "Поехали!".</div>
+<div class="mpy_button" onclick="openDialog('/login.html')">
+  Login
+</div>
+<div id="dialog"></div>
 </body>
 </html>

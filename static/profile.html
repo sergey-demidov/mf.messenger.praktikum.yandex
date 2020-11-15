@@ -11,14 +11,13 @@
 </head>
 <body>
 <main>
-  <div class="mpy_overlay">
-    <div class="mpy_container">
-      <div class="mpy_dialog register">
-        <div class="mpy_dialog__header">
-          Register
-        </div>
-        <form action="/" name="register" autocomplete="off" spellcheck="false">
-          <div class="mpy_dialog__content mpy_lightgrey">
+  <!--  <div class="mpy_overlay">-->
+  <div class="mpy_container">
+
+    <div class="vc-main-wrapper">
+      <form action="/" name="profile" autocomplete="off" spellcheck="false">
+        <div class="mpy_content">
+          <div class="mpy_dialog__content mpy_white">
             <div class="mpy_text_input__wrapper">
               <label class="mpy_text_input__label" for="userFirstName">first name</label>
               <input name="first_name" class="mpy_text_input" id="userFirstName" type="text"
@@ -48,23 +47,16 @@
               <input name="phone" class="mpy_text_input" id="userPhone" type="text" spellcheck="false" required>
             </div>
           </div>
-          <div class="mpy_dialog__content mpy_lightgrey">
+          <div class="mpy_dialog__content">
             <div class="mpy_text_input__wrapper" style="padding-top: 0;">
-              <a class="mpy_dialog__reference" href="#" onclick="openDialog('login.html'); return false;"> Already have login? </a>
+              <a class="mpy_dialog__reference" href="/login.html"> Already have login? </a>
             </div>
           </div>
-        </form>
-        <div class="mpy_dialog__footer mpy_lightgrey">
-          <div class="mpy_button" onclick="closeDialog(); return false;">
-            Return
-          </div>
-          <div class="mpy_button" onclick="submitForm(forms.register)">
-            Submit
-          </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
+  <!--  </div>-->
 </main>
 </body>
 </html>
