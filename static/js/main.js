@@ -16,7 +16,7 @@ const loadImage = (event) => {
     const errorSign = document.createElement('div');
     console.log('onerror');
     errorSign.classList.add('mpy_avatar_error_sign');
-    errorSign.innerText = '\ue033';
+    errorSign.innerText = '\ue001';
     output.parentElement.appendChild(errorSign);
     setTimeout(() => {
       errorSign.style.opacity = '0';
