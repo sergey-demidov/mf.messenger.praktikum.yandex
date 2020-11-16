@@ -287,6 +287,16 @@ body {
   filter: brightness(103%);
 }
 
+.unselectable {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.undraggable {
+  user-drag: none;
+  -webkit-user-drag: none;
+}
 
 @media only screen and (max-width: 320px) {
   .mpy_text_input {
