@@ -6,57 +6,84 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="stylesheet" href="css/main.css">
   <script src="js/main.js"></script>
 </head>
 <body>
 <main>
   <!--  <div class="mpy_overlay">-->
+  <div class="mpy_navigation">
+    <div>
+      <a href="/" class="mpy_navigation__link">Home</a>
+      <a href="404.html" class="mpy_navigation__link">404</a>
+      <a href="500.html" class="mpy_navigation__link">500</a>
+    </div>
+    <div>
+      <div onclick="openDialog('/login.html')" class="mpy_navigation__link">Login</div>
+      <div onclick="openDialog('/register.html')" class="mpy_navigation__link">Register</div>
+      <a href="profile.html" class="mpy_navigation__link">Profile</a>
+    </div>
+  </div>
   <div class="mpy_container">
-
     <div class="vc-main-wrapper">
       <form action="/" name="profile" autocomplete="off" spellcheck="false">
+        <input name="avatar" id='avatar_input' type='file' accept="image/*" onchange="loadImage(event)" hidden/>
         <div class="mpy_content">
-          <div class="mpy_dialog__content mpy_white">
+          <div class="mpy_dialog__content mpy_white mpy_pt10">
+
+            <div class="mpy_avatar_output__wrapper">
+              <img id="avatar_output" class="mpy_avatar_output" src="/images/anonim.png"
+                   width="150" height="150" alt="avatar">
+              <div class="mpy_avatar_output__icon" onclick="document.getElementById('avatar_input').click();">&#xe3b0</div>
+            </div>
+
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userFirstName">first name</label>
-              <input name="first_name" class="mpy_text_input" id="userFirstName" type="text"
+              <div class="mpy_text_input__label">first name</div>
+              <input name="first_name" class="mpy_text_input" type="text" value="Сергей"
                      required>
             </div>
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userSecondName">last name</label>
-              <input name="second_name" class="mpy_text_input" id="userSecondName" type="text"
+              <div class="mpy_text_input__label">last name</div>
+              <input name="second_name" class="mpy_text_input" type="text" value="Демидов"
                      required>
             </div>
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userEmail">e-mail</label>
-              <input name="email" class="mpy_text_input" id="userEmail" type="text" required>
+              <div class="mpy_text_input__label">e-mail</div>
+              <input name="email" class="mpy_text_input" type="text" value="sergey.k.demidov@yandex.ru">
             </div>
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userLogin">login</label>
-              <input name="login" class="mpy_text_input" id="userLogin" type="text" required>
+              <div class="mpy_text_input__label">phone</div>
+              <input name="phone" class="mpy_text_input" type="text" spellcheck="false" value="+7 (906) 031-90-06">
             </div>
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userPassword">password</label>
-              <input name="password" class="mpy_text_input"
-                     id="userPassword" type="password"
-                     required/>
+              <div class="mpy_text_input__label">login</div>
+              <input name="login" class="mpy_text_input" type="text" value="sergey">
             </div>
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userPhone">phone</label>
-              <input name="phone" class="mpy_text_input" id="userPhone" type="text" spellcheck="false" required>
+              <div class="mpy_text_input__label">old password</div>
+              <input name="oldPassword" class="mpy_text_input value"
+                     type="password"
+              />
+            </div>
+            <div class="mpy_text_input__wrapper">
+              <div class="mpy_text_input__label">new password</div>
+              <input name="newPassword" class="mpy_text_input value"
+                     type="password"
+              />
             </div>
           </div>
-          <div class="mpy_dialog__content">
-            <div class="mpy_text_input__wrapper" style="padding-top: 0;">
-              <a class="mpy_dialog__reference" href="/login.html"> Already have login? </a>
+          <div class="mpy_dialog__footer mpy_white mpy_pt10">
+            <div class="mpy_button" onclick="submitForm(forms.profile)">
+              Save
             </div>
           </div>
+
         </div>
       </form>
     </div>
   </div>
-  <!--  </div>-->
+  <div id="dialog"></div>
 </main>
 </body>
 </html>

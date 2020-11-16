@@ -4,11 +4,92 @@ html, body {
   font-family: 'Montserrat', sans-serif;
 }
 
+body {
+  animation: fadeInAnimation ease-out 300ms;
+}
+
+.mpy_blink_alert {
+  animation-name: blinkAlert;
+  /*background-repeat: no-repeat;*/
+  animation-duration: 500ms;
+  animation-iteration-count: 3;
+  /*animation-delay: 500ms;*/
+  animation-timing-function: ease;
+}
+
+
+@keyframes blinkAlert {
+  0% {
+    background-color: #f000;
+  }
+  50% {
+    background-color: #f00f;
+  }
+}
+
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+:root {
+  --text-wrapper-padding-x: 10px;
+  --text-wrapper-padding-y: 10px;
+}
+
+.mpy_pb10 {
+  padding-bottom: 10px !important;
+}
+
+.mpy_pt10 {
+  padding-top: 10px !important;
+}
+
+.mpy_pt0 {
+  padding-top: 0 !important;
+}
+
+.mpy_navigation {
+  overflow: hidden;
+  background-color: #678;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mpy_navigation__link {
+  color: #eee;
+  text-align: center;
+  padding: 12px 12px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-right: 1px solid #0000;
+  border-left: 1px solid #0000;
+}
+
+.mpy_navigation__link:hover {
+  border-right: 1px solid gray;
+  border-left: 1px solid gray;
+  background-color: #89a;
+}
+
+.mpy_navigation__link:active {
+  background-color: #9ab;
+  color: white;
+  font-weight: bolder;
+}
+
 .mpy_overlay {
   position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: #0007;
+  z-index: 10;
 }
 
 .mpy_container {
@@ -19,62 +100,112 @@ html, body {
   align-items: center;
 }
 
-/*.vc-panel {*/
-/*  flex: 1;*/
-/*  background-color: #fefcea;*/
-/*  border-right: 1px solid lightslategrey;*/
-/*  height: 100vh;*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*}*/
+.vc-main-wrapper {
+  max-width: 900px;
+  /*display: flex;*/
+  justify-content: left;
+  align-items: center;
 
-/*.mpy_content {*/
-/*  flex: 11;*/
-/*  height: 100%;*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*  !*background-color: #eeeeee;*!*/
-/*}*/
+}
 
-/*.vc-main-wrapper {*/
-/*  height: 100%;*/
-/*  display: flex;*/
-/*  justify-content: left;*/
-/*  align-items: center;*/
+.mpy_avatar_output__wrapper {
+  background-color: #678;
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px #0009;
+  height: 150px;
+  width: 150px;
+  margin: 10px 0;
+  position: relative;
+  background-image: url(/images/alpha.jpg);
+}
 
-/*}*/
+.mpy_avatar_error_sign {
+  color: red;
+  font-family: 'Material Icons Outlined';
+  font-size: 100px;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  /*width: 100px;*/
+  /*height: 100px;*/
+  line-height: 100px;
+  /*display: inline-block;*/
+  opacity: 1;
+  transition: opacity 1500ms ease-in;
+  /*transition-duration: 1s;*/
+}
+
+.mpy_avatar_output__icon {
+  color: #eee;
+  font-family: 'Material Icons Outlined';
+  font-size: 25px;
+  font-weight: lighter;
+  font-style: normal;
+  text-decoration: none;
+  border-radius: 8px;
+  /*background-color: #4CAF50;*/
+  background: linear-gradient(to top, #5b6, #8e9);
+  display: inline;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 3px 5px;
+  box-shadow: 1px 1px 5px #0009;
+  cursor: pointer;
+}
+
+.mpy_avatar_output__icon:hover {
+  box-shadow: 3px 3px 10px #0009;
+  filter: brightness(104%);
+}
+
+.mpy_avatar_output {
+  clip-path: circle(50%);
+  object-fit: cover;
+  /*position: absolute;*/
+}
 
 .mpy_text_input {
+  color: #678;
   padding: 10px;
   min-width: 240px;
-  border: 1px solid gray;
-  border-radius: 4px;
-  outline-color: dimgray;
+  border: 1px solid #678;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
   background-color: transparent;
   font-size: medium;
+  margin: 1px;
+}
+
+.mpy_text_input:focus {
+  color: #567;
+  outline: none;
+  border: 2px solid #567;
+  margin: 0;
+  padding-left: 9px;
 }
 
 .mpy_text_input__wrapper {
   position: relative;
-  padding: 20px 20px;
-  margin: 0 10px;
+  padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
+  margin: 5px 10px;
   font-weight: normal;
   background-color: inherit;
 }
 
 .mpy_text_input__label {
   position: absolute;
-  top: 10px;
-  left: 25px;
+  top: calc(var(--text-wrapper-padding-y) - 9px);
+  left: calc(var(--text-wrapper-padding-x) + 8px);;
   font-size: small;
   font-weight: lighter;
   background-color: inherit;
-  padding-left: 4px;
-  padding-right: 4px;
+  color: #567;
+  padding: 0 4px;
+  margin: 0;
   white-space: nowrap;
-  display: inline;
+  display: inline-block;
 }
 
 .mpy_white {
@@ -82,34 +213,36 @@ html, body {
 }
 
 .mpy_lightgrey {
-  background-color: #eeeeee;
+  background-color: #e0e7ef;
 }
 
 .mpy_dialog {
   border-radius: 20px;
   display: block;
-  background-color: #eeeeee;
+  /*background-color: #eeeeee;*/
   overflow: hidden;
   box-shadow: 0 5px 20px #0007;
+  z-index: 20;
 }
 
-.mpy_dialog__header, .mpy_dialog__content, .mpy_dialog__footer {
+
+.mpy_dialog__header {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 2px 0 2px 35px;
+  border-bottom: 1px solid #5677;
+  font-weight: bold;
+  font-size: larger;
+  background-color: #89a;
+  color: #eee;
+}
+
+.mpy_dialog__content {
   padding: 0 15px 0 15px;
   min-height: 40px;
   display: flex;
   align-items: center;
-}
-
-.mpy_dialog__header {
-  padding: 2px 0 2px 32px;
-  font-weight: bold;
-  font-size: larger;
-  background-color: #cccccc;
-}
-
-.mpy_dialog__content {
-  /*font-weight: bold;*/
-  /*font-size: larger;*/
   flex-direction: column;
   flex-wrap: wrap;
 }
@@ -117,26 +250,31 @@ html, body {
 .mpy_dialog__footer {
   padding-bottom: 16px;
   justify-content: center;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
 }
 
-.mpy_dialog__reference {
+.mpy_dialog__link {
   font-size: small;
   padding-top: 0;
+  color: #567;
 }
 
-#overlay {
+#dialog {
   transition: opacity;
-  transition-duration: 500ms;
+  transition-duration: 300ms;
+  opacity: 0;
 }
 
 .mpy_button {
   border-radius: 8px;
   font-weight: bolder;
-  color: #333;
-  padding: 4px 10px 4px 10px;
+  color: #444;
+  padding: 5px 15px 5px 15px;
   margin: 0 10px 0 10px;
-  background: linear-gradient(to top, #fefcea, #f1da36);
-  box-shadow: 0 1px 5px #0007;
+  background: linear-gradient(to top, #5b6, #8e9);
+  box-shadow: 1px 1px 5px #0009;
   cursor: pointer;
   display: inline;
   user-select: none;
@@ -145,7 +283,7 @@ html, body {
 }
 
 .mpy_button:hover {
-  box-shadow: 0 1px 10px #0007;
+  box-shadow: 3px 3px 10px #0009;
   filter: brightness(103%);
 }
 

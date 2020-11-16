@@ -19,19 +19,21 @@
           Login
         </div>
         <form name="login" action="/">
-          <div class="mpy_dialog__content mpy_lightgrey">
+          <div class="mpy_dialog__content mpy_lightgrey mpy_pt10">
+<!--            <div class="mpy_v_spacer_10"></div>-->
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userLogin">login</label>
-              <input name="login" class="mpy_text_input" id="userLogin" type="text" spellcheck="false" required>
+              <div class="mpy_text_input__label">login</div>
+              <input name="login" class="mpy_text_input" id="userLogin" type="text" spellcheck="false">
             </div>
             <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userPassword">password</label>
+              <div class="mpy_text_input__label">password</div>
               <input name="password" class="mpy_text_input"
                      id="userPassword" type="password"
-                     required/>
+                     />
             </div>
-            <div class="mpy_text_input__wrapper" style="padding-top: 0;">
-              <a class="mpy_dialog__reference" href="register.html" onclick="openDialog('register.html'); return false;"> Dont have login? </a>
+            <div class="mpy_text_input__wrapper mpy_pt0">
+              <a class="mpy_dialog__link" href="register.html"
+                 onclick="openDialog('register.html'); return false;"> Dont have login? </a>
             </div>
 
           </div>
