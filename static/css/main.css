@@ -81,7 +81,6 @@ body {
 .mpy_navigation__link:active {
   background-color: #9ab;
   color: white;
-  font-weight: bolder;
 }
 
 .mpy_overlay {
