@@ -85,14 +85,29 @@ body {
 }
 
 .mpy_avatar_output__wrapper {
-  background-color: #678;
+  background-color: #bce;
   border-radius: 50%;
   box-shadow: 1px 1px 5px #0009;
   height: 150px;
   width: 150px;
   margin: 10px 0;
   position: relative;
-  background-image: url(/images/alpha.jpg);
+
+  /*background-image: linear-gradient(45deg, #789 25%, transparent 25%),*/
+  /*linear-gradient(-45deg, #789 25%, transparent 25%),*/
+  /*linear-gradient(45deg, transparent 75%, #789 75%),*/
+  /*linear-gradient(-45deg, transparent 75%, #789 75%);*/
+
+  /*background-size: 16px 16px;*/
+  /*background-position: 0 0, 0 8px, 8px -8px, -8px 0;*/
+  /*background-image: url(/images/alpha.jpg);*/
+
+  background-image: linear-gradient(to right, #bdf7, #bdf7),
+  linear-gradient(to right, #aaa 50%, #fff 50%),
+  linear-gradient(to bottom, #aaa 50%, #fff 50%);
+
+  background-blend-mode: normal, difference, normal;
+  background-size: 18px 18px;
 }
 
 .mpy_avatar_error_sign {
