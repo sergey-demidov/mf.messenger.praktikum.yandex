@@ -8,26 +8,6 @@ body {
   animation: fadeInAnimation ease-out 300ms;
 }
 
-.mpy_blink_alert {
-  animation-name: blinkAlert;
-  /*background-repeat: no-repeat;*/
-  animation-duration: 500ms;
-  animation-iteration-count: 3;
-  /*animation-delay: 500ms;*/
-  animation-timing-function: ease;
-}
-
-
-@keyframes blinkAlert {
-  0% {
-    background-color: #f000;
-  }
-  50% {
-    background-color: #f00f;
-  }
-}
-
-
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
@@ -93,18 +73,15 @@ body {
 
 .mpy_container {
   height: 100%;
-  /*width: 100vh;*/
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.vc-main-wrapper {
+.mpy_main_wrapper {
   max-width: 900px;
-  /*display: flex;*/
   justify-content: left;
   align-items: center;
-
 }
 
 .mpy_avatar_output__wrapper {
@@ -119,19 +96,24 @@ body {
 }
 
 .mpy_avatar_error_sign {
+  position: absolute;
   color: red;
   font-family: 'Material Icons Outlined';
   font-size: 100px;
-  position: absolute;
+  line-height: 100px;
   top: 25px;
   left: 25px;
-  /*width: 100px;*/
-  /*height: 100px;*/
-  line-height: 100px;
-  /*display: inline-block;*/
-  opacity: 1;
-  transition: opacity 1500ms ease-in;
-  /*transition-duration: 1s;*/
+  opacity: 0;
+}
+
+.blink {
+  animation: blinker 0.7s step-start infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 1;
+  }
 }
 
 .mpy_avatar_output__icon {
@@ -158,7 +140,7 @@ body {
   filter: brightness(104%);
 }
 
-.mpy_avatar_output {
+.mpy_avatar_preview {
   clip-path: circle(50%);
   object-fit: cover;
   /*position: absolute;*/
@@ -212,7 +194,7 @@ body {
 }
 
 .mpy_lightgrey {
-  background-color: #e0e7ef;
+  background-color: #e0e4e8;
 }
 
 .mpy_dialog {
@@ -297,47 +279,3 @@ body {
   -webkit-user-drag: none;
 }
 
-@media only screen and (max-width: 320px) {
-  .mpy_text_input {
-    min-width: calc(100vw - 60px);
-  }
-
-  .mpy_text_input__wrapper {
-    margin: 0;
-    padding: 20px 20px 0 20px;
-  }
-
-  .register .mpy_dialog__content {
-    padding: 10px 0;
-  }
-}
-
-@media only screen and (max-height: 568px) {
-  .register .mpy_dialog__content {
-    max-height: 70vh;
-    min-width: 100vw;
-  }
-
-  .register .mpy_text_input {
-    min-width: 220px;
-  }
-
-  .register .mpy_text_input__wrapper {
-    flex-basis: 50%;
-  }
-}
-
-@media only screen and (max-height: 320px) {
-  .register .mpy_text_input__wrapper {
-    margin: 0;
-    padding: 20px 0 0 20px;
-  }
-
-  .register .mpy_dialog__content {
-    padding: 10px 0;
-  }
-
-  .register .mpy_dialog__header {
-    display: none;
-  }
-}

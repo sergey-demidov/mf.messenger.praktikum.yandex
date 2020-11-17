@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
   <link rel="stylesheet" href="css/main.css">
   <script src="js/main.js"></script>
+  <script src="js/profile.js"></script>
 </head>
 <body>
 <main>
@@ -26,18 +27,22 @@
     </div>
   </div>
   <div class="mpy_container">
-    <div class="vc-main-wrapper">
+    <div class="mpy_main_wrapper">
       <form action="/" name="profile" autocomplete="off" spellcheck="false">
-        <input name="avatar" id='avatar_input' type='file' accept="image/*" onchange="loadImage(event)" hidden/>
+        <input name="avatar" type='file' accept="image/*" onchange="loadImage(this)" hidden/>
         <div class="mpy_content">
           <div class="mpy_dialog__content mpy_white mpy_pt10">
 
             <div class="mpy_avatar_output__wrapper unselectable">
-              <img id="avatar_output" class="mpy_avatar_output unselectable undraggable" src="/images/anonim.png"
-                   width="150" height="150" alt="avatar">
-              <div class="mpy_avatar_output__icon unselectable" onclick="document.getElementById('avatar_input').click();">&#xe3b0</div>
+              <img id="avatarPreview" class="mpy_avatar_preview unselectable undraggable" src="images/anonim.png"
+                   width="150" height="150" alt="avatar preview">
+              <div class="mpy_avatar_output__icon unselectable" onclick="forms.profile.avatar.click();">
+                <span class="material-icons">camera_alt</span>
+              </div>
+              <span id="errorSign" class="material-icons mpy_avatar_error_sign">
+                image_not_supported
+              </span>
             </div>
-
             <div class="mpy_text_input__wrapper">
               <div class="mpy_text_input__label">first name</div>
               <input name="first_name" class="mpy_text_input" type="text" value="Сергей"

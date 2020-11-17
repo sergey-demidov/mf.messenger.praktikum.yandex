@@ -1,33 +1,3 @@
-const loadImage = (event) => {
-  const output = document.getElementById('avatar_output');
-  const tmpSrc = output.src;
-  const fileInput = event.target;
-  output.src = URL.createObjectURL(event.target.files[0]);
-
-  // output.onload = () => {
-  //   URL.revokeObjectURL(output.src); // free memory
-  // };
-  console.log('event');
-  output.onerror = () => {
-    fileInput.value = '';
-    console.dir(fileInput);
-    URL.revokeObjectURL(output.src);
-    output.src = tmpSrc;
-    const errorSign = document.createElement('div');
-    console.log('onerror');
-    errorSign.classList.add('mpy_avatar_error_sign');
-    errorSign.innerText = '\ue001';
-    output.parentElement.appendChild(errorSign);
-    setTimeout(() => {
-      errorSign.style.opacity = '0';
-    }, 500);
-    setTimeout(() => {
-      output.parentElement.removeChild(errorSign);
-      errorSign.remove();
-    }, 2000);
-  };
-};
-
 const openDialog = (src, elementId = 'dialog', parseTag = 'main') => {
   const dialog = document.getElementById(elementId);
   if (!dialog) {
