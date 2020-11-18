@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta http-equiv="Refresh" content="3; url='/login.html'"/>
+  <meta http-equiv="Refresh" content="0; url='/chat.html'"/>
   <title>mf.messenger.praktikum.yandex</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
 </head>
 <body>
 <main>
-  <div class="mpy_overlay" id="dialog">
+  <div class="mpy_overlay">
     <div class="mpy_container">
       <div class="mpy_dialog__content">
         <div class="mpy_text_input__wrapper">
@@ -22,9 +22,6 @@
           </h2>
         </div>
         <div class="mpy_text_input__wrapper">
-          <img src="/images/loading.gif" alt="" width="32" height="32">
-        </div>
-        <div class="mpy_text_input__wrapper">
           <i>
             Please be patient
           </i>
@@ -32,15 +29,6 @@
       </div>
     </div>
   </div>
-  <script>
-    window.onload = () => {
-      let element = document.getElementById('dialog');
-      element.style.opacity = '1';
-      setTimeout(() => {
-        element.style.opacity = '0';
-      }, 1900);
-    }
-  </script>
 </main>
 </body>
 </html>

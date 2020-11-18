@@ -1,6 +1,7 @@
 html, body, ul, li {
   padding: 0;
   margin: 0;
+  clear: both;
 }
 
 body {
@@ -39,6 +40,10 @@ body {
 
 .mpy_pt0 {
   padding-top: 0 !important;
+}
+
+.mpy_pr40 {
+  padding-right: 40px;
 }
 
 .block {
@@ -196,12 +201,12 @@ body {
 .mpy_text_input__wrapper {
   position: relative;
   padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
-  width: calc(100% - 20px);
-  flex: 0 0 100%;
+  width: calc(100% - var(--text-wrapper-padding-x) - var(--text-wrapper-padding-x));
   margin: 0;
   font-weight: normal;
   background-color: inherit;
   text-align: center;
+  display: block;
 }
 
 .mpy_text_input__label {
@@ -221,7 +226,7 @@ body {
 .mpy_text_input__icon {
   position: absolute;
   top: calc(var(--text-wrapper-padding-y) + 10px);
-  right: 15px;
+  right: calc(var(--text-wrapper-padding-x) + 10px);
   color: #567;
   cursor: pointer;
   font-size: 20px;
@@ -232,6 +237,10 @@ body {
 
 .mpy_text_input__icon:hover {
   text-shadow: 1px 1px 3px #0009;
+}
+
+.mpy_text_input__icon.prepend {
+  right: calc(var(--text-wrapper-padding-x) + 40px);
 }
 
 
@@ -293,17 +302,82 @@ body {
 .mpy_chat_content {
   flex: 1;
   display: flex;
-  /*background-color: #bbccee;*/
   height: calc(100vh - 40px);
   position: relative;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.mpy_chat_content__received {
+  background: #fff;
+  margin: 10px auto 10px 10px;
+  display: flex;
+  padding: 15px 20px 15px 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 5px #0007;
+  position: relative;
+  max-width: 50em;
+}
+
+.mpy_chat_content__received:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid #fff;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #fff;
+  border-bottom: 5px solid transparent;
+  left: 30px;
+  bottom: -10px;
+  filter: drop-shadow(0 2px 1px #0003) drop-shadow(-2px 2px 1px #0003);
+  position: absolute;
+}
+
+
+.mpy_chat_content__sended {
+  background: #cfc;
+  /*color: #fff;*/
+  margin: 10px 10px 10px auto;
+  padding: 15px 15px;
+  border-radius: 20px;
+  box-shadow: 0 0 5px #0007;
+  position: relative;
+  max-width: 40em;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+}
+
+.mpy_chat_content__sended:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid #cfc;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #cfc;
+  border-bottom: 5px solid transparent;
+  right: 25px;
+  bottom: -10px;
+  transform: scaleX(-1);
+  filter: drop-shadow(0 2px 1px #0003) drop-shadow(-2px 2px 1px #0003);
+  position: absolute;
+}
+
+.mpy_chat_content__message {
+  padding: 0 5px 0 0;
+}
+
+.mpy_chat_content__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px 0 0;
+  flex-direction: column;
 }
 
 .mpy_chat_input {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  display: block;
-  width: 100%;
+  margin-top: 15px;
 }
 
 
@@ -379,7 +453,7 @@ body {
 
 .mpy_chat_display__wrapper {
   padding: 5px 5px;
-  margin: 5px 10px 0 10px;
+  margin: 0 10px 5px 10px;
   display: flex;
   text-align: center;
   width: calc(100% - 30px);
@@ -399,12 +473,19 @@ body {
   font-weight: bolder;
   font-size: smaller;
   text-align: left;
-  padding: 0 10px;
+  padding: 10px 5px 0 10px;
 }
 
-.mpy_chat_display__time {
+.mpy_chat_time {
   font-size: x-small;
   text-align: center;
+  padding: 0;
+}
+
+.mpy_chat_nickname {
+  font-size: x-small;
+  text-align: center;
+  padding: 5px 0 5px 0;
 }
 
 .mpy_chat_display__status {
@@ -481,3 +562,13 @@ body {
   max-width: 150px;
   /*background-color: #bbccee;*/
 }
+
+.mpy_chat_message_status {
+  padding: 0 5px;
+  font-size: 16px;
+}
+
+.mpy_chat_message_readed {
+  color: #0bf;
+}
+
