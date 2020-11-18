@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <title>mf.messenger.praktikum.yandex</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/main.js"></script>
+  <script src="js/profile.js"></script>
+</head>
+<body>
+<main>
+  <nav class="mpy_navigation">
+    <div>
+      <a href="/" class="mpy_navigation__link">Home</a>
+      <a href="chat.html" class="mpy_navigation__link">Chat</a>
+      <a href="404.html" class="mpy_navigation__link">404</a>
+      <a href="500.html" class="mpy_navigation__link">500</a>
+    </div>
+    <div>
+      <div onclick="openDialog('/login.html')" class="mpy_navigation__link">Login</div>
+      <div onclick="openDialog('/register.html')" class="mpy_navigation__link">Register</div>
+      <a href="profile.html" class="mpy_navigation__link">Profile</a>
+    </div>
+  </nav>
+  <div class="mpy_container">
+    <div class="mpy_main_wrapper">
+      <div class="mpy_chat_list mpy_lightgrey">
+        <div class="mpy_text_input__wrapper">
+          <!--          <div class="mpy_text_input__label">search</div>-->
+          <div class="mpy_text_input__icon" title="search">
+            <i class="material-icons">search</i>
+          </div>
+
+          <input name="search" class="mpy_text_input" type="text" spellcheck="false">
+        </div>
+        <ul>
+
+          <li class="mpy_chat_display__wrapper mpy_white">
+            <div class="mpy_chat_display__tool">
+              <div class="mpy_chat_display__avatar">
+                <span class="material-icons mpy_chat_display__avatar_sign"> settings </span>
+                <img id="avatarPreview" class="mpy_avatar_preview  unselectable undraggable"
+                     src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
+                     width="40" height="40" alt="avatar preview">
+              </div>
+            </div>
+            <div style="flex: 2">
+              <div class="mpy_chat_display__header">Lorem ipsum</div>
+              <div class="mpy_chat_display__body">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In auctor, lorem et cursus sodales, quam massa
+                molestie ipsum, non sodales eros erat eget nisi
+              </div>
+            </div>
+            <div style="flex: 0; text-align: center; align-items: center">
+              <div class="mpy_chat_display__time">
+                09:20
+              </div>
+              <div class="mpy_chat_display__status">
+                4
+              </div>
+            </div>
+          </li>
+          <li class="mpy_chat_display__wrapper mpy_white">
+            chat
+          </li>
+
+        </ul>
+      </div>
+      <div class="mpy_chat_content">
+        <div class="mpy_chat_input">
+          <form action="/" name="message" autocomplete="off" spellcheck="false">
+            <div class="mpy_text_input__wrapper mpy_white">
+              <div class="mpy_text_input__label">message</div>
+              <div class="mpy_text_input__icon" title="send">
+                <i class="material-icons">send</i>
+              </div>
+              <input name="message" class="mpy_text_input" type="text" spellcheck="false">
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <div id="dialog"></div>
+  </div>
+</main>
+</body>
+</html>
