@@ -24,12 +24,6 @@ jobs:
         # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#overriding-automatic-language-detection
 
     steps:
-    - name: Configure access to private repositories
-      env:
-        TOKEN: ${{ GITHUB_TOKEN }}
-      run:
-        git config --global url."https://${TOKEN}@github.com/sergey-demidov/mf.messenger.praktikum.yandex".insteadOf "https://github.com/sergey-demidov/mf.messenger.praktikum.yandex"
-
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
