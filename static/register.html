@@ -14,51 +14,53 @@
   <div class="mpy_overlay">
     <div class="mpy_container">
       <div class="mpy_dialog register">
-        <div class="mpy_dialog__header">
+        <header class="mpy_dialog__header">
           Register
-        </div>
-        <form action="/" name="register" autocomplete="off" spellcheck="false">
-          <div class="mpy_dialog__content mpy_lightgrey mpy_pt10">
-            <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userFirstName">first name</label>
-              <input name="first_name" class="mpy_text_input" id="userFirstName" type="text"
-                     required>
+        </header>
+        <main>
+          <form action="/" name="register" autocomplete="off" spellcheck="false">
+            <div class="mpy_dialog__content mpy_lightgrey mpy_pt10">
+              <div class="mpy_text_input__wrapper">
+                <label class="mpy_text_input__label" for="userFirstName">first name</label>
+                <input name="first_name" class="mpy_text_input" id="userFirstName" type="text"
+                       required>
+              </div>
+              <div class="mpy_text_input__wrapper">
+                <label class="mpy_text_input__label" for="userSecondName">last name</label>
+                <input name="second_name" class="mpy_text_input" id="userSecondName" type="text"
+                       required>
+              </div>
+              <div class="mpy_text_input__wrapper">
+                <label class="mpy_text_input__label" for="userEmail">e-mail</label>
+                <input name="email" class="mpy_text_input" id="userEmail" type="text" required>
+              </div>
+              <div class="mpy_text_input__wrapper">
+                <label class="mpy_text_input__label" for="userLogin">login</label>
+                <input name="login" class="mpy_text_input" id="userLogin" type="text" required>
+              </div>
+              <div class="mpy_text_input__wrapper">
+                <label class="mpy_text_input__label" for="userPassword">password</label>
+                <input name="password" class="mpy_text_input"
+                       id="userPassword" type="password"
+                       required/>
+              </div>
+              <div class="mpy_text_input__wrapper">
+                <label class="mpy_text_input__label" for="userPhone">phone</label>
+                <input name="phone" class="mpy_text_input" id="userPhone" type="text" spellcheck="false" required>
+              </div>
+              <a class="mpy_dialog__link" href="#" onclick="openDialog('login.html'); return false;"> Already have
+                login? </a>
             </div>
-            <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userSecondName">last name</label>
-              <input name="second_name" class="mpy_text_input" id="userSecondName" type="text"
-                     required>
-            </div>
-            <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userEmail">e-mail</label>
-              <input name="email" class="mpy_text_input" id="userEmail" type="text" required>
-            </div>
-            <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userLogin">login</label>
-              <input name="login" class="mpy_text_input" id="userLogin" type="text" required>
-            </div>
-            <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userPassword">password</label>
-              <input name="password" class="mpy_text_input"
-                     id="userPassword" type="password"
-                     required/>
-            </div>
-            <div class="mpy_text_input__wrapper">
-              <label class="mpy_text_input__label" for="userPhone">phone</label>
-              <input name="phone" class="mpy_text_input" id="userPhone" type="text" spellcheck="false" required>
-            </div>
-            <a class="mpy_dialog__link" href="#" onclick="openDialog('login.html'); return false;"> Already have
-              login? </a>
-          </div>
-        </form>
-        <div class="mpy_dialog__footer mpy_lightgrey">
+          </form>
+        </main>
+        <footer class="mpy_dialog__footer mpy_lightgrey">
           <div class="mpy_button" onclick="closeDialog(); return false;">
             Return
           </div>
           <div class="mpy_button" onclick="submitForm(forms.register)">
             Submit
           </div>
-        </div>
+        </footer>
       </div>
     </div>
   </div>

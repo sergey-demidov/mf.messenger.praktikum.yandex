@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const openDialog = (src, elementId = 'dialog', parseTag = 'main') => {
   const dialog = document.getElementById(elementId);
   if (!dialog) {
@@ -26,11 +27,13 @@ const openDialog = (src, elementId = 'dialog', parseTag = 'main') => {
         }
         else {
           dialog.hidden = true;
+          // eslint-disable-next-line no-console
           console.warn(`cant parse tag '${parseTag}' from url '${src}'`);
         }
       })
       .catch((e) => {
         dialog.hidden = true;
+        // eslint-disable-next-line no-console
         console.error(e);
       });
   }
@@ -52,12 +55,14 @@ function closeDialog(elementId = 'dialog') {
   return false;
 }
 
+// eslint-disable-next-line no-unused-vars
 function submitForm(form) {
   const formData = new FormData(form);
   const res = Array.from(formData.entries()).reduce((memo, pair) => ({
     ...memo,
     [pair[0]]: pair[1]
   }), {});
+  // eslint-disable-next-line no-console
   console.dir(res);
   closeDialog();
 }

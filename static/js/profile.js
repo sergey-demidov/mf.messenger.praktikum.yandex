@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const loadImage = (element) => {
   const fileInput = element;
   const avatarPreview = document.getElementById('avatarPreview');

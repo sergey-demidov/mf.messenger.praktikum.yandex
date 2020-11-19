@@ -15,35 +15,37 @@
   <div class="mpy_overlay">
     <div class="mpy_container">
       <div class="mpy_dialog">
-        <div class="mpy_dialog__header">
+        <header class="mpy_dialog__header">
           Login
-        </div>
-        <form name="login" action="/">
-          <div class="mpy_dialog__content mpy_lightgrey mpy_pt10">
-            <!--            <div class="mpy_v_spacer_10"></div>-->
-            <div class="mpy_text_input__wrapper">
-              <div class="mpy_text_input__label">login</div>
-              <input name="login" class="mpy_text_input" id="userLogin" type="text" spellcheck="false">
-            </div>
-            <div class="mpy_text_input__wrapper">
-              <div class="mpy_text_input__label">password</div>
-              <input name="password" class="mpy_text_input"
-                     id="userPassword" type="password"
-              />
-            </div>
-            <a class="mpy_dialog__link" href="register.html"
-               onclick="openDialog('register.html'); return false;"> Dont have login? </a>
+        </header>
+        <main>
+          <form name="login" action="/">
+            <div class="mpy_dialog__content mpy_lightgrey mpy_pt10">
+              <!--            <div class="mpy_v_spacer_10"></div>-->
+              <div class="mpy_text_input__wrapper">
+                <div class="mpy_text_input__label">login</div>
+                <input name="login" class="mpy_text_input" id="userLogin" type="text" spellcheck="false">
+              </div>
+              <div class="mpy_text_input__wrapper">
+                <div class="mpy_text_input__label">password</div>
+                <input name="password" class="mpy_text_input"
+                       id="userPassword" type="password"
+                />
+              </div>
+              <a class="mpy_dialog__link" href="register.html"
+                 onclick="openDialog('register.html'); return false;"> Dont have login? </a>
 
-          </div>
-        </form>
-        <div class="mpy_dialog__footer mpy_lightgrey">
+            </div>
+          </form>
+        </main>
+        <footer class="mpy_dialog__footer mpy_lightgrey">
           <div class="mpy_button" onclick="closeDialog()">
             Return
           </div>
           <div class="mpy_button" onclick="submitForm(forms.login)">
             Submit
           </div>
-        </div>
+        </footer>
       </div>
     </div>
   </div>
