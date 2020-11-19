@@ -51,7 +51,8 @@
       ],
       "one-var": [
         "warn"
-      ]
+      ],
+      "linebreak-style": 0
     }
   }
 }
