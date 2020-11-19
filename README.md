@@ -14,15 +14,15 @@
    - регистрация (с формой, имена полей: first_name, second_name, login, email, password, phone),
    - список чатов, лента переписки (поле для ввода сообщения: message),
    - настройки пользователя:
-     - имена полей для изменения информации о пользователе: 
-       - first_name 
-       - second_name 
-       - display_name
-       - login
-       - email
-       - phone
-     - поле для изменения аватара с выбором файла и превью: avatar;
-     - страница с формой для изменения пароля: (поля oldPassword, newPassword, newPasswordConfirm).
+     1. имена полей для изменения информации о пользователе: 
+        - first_name 
+        - second_name 
+        - display_name
+        - login
+        - email
+        - phone
+     1. поле для изменения аватара с выбором файла и превью: avatar;
+     1. страница с формой для изменения пароля: (поля oldPassword, newPassword, newPasswordConfirm).
    - страница 404,
    - страница 500.
 1. Сделан сбор данных из форм. В console.log выводится объект со всеми заполненными полями формы.
