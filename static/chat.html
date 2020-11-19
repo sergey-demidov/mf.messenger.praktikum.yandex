@@ -16,23 +16,23 @@
 <main>
   <nav class="mpy_navigation">
     <div>
-      <a href="/" class="mpy_navigation__link">Home</a>
-      <a href="chat.html" class="mpy_navigation__link">Chat</a>
-      <a href="404.html" class="mpy_navigation__link">404</a>
-      <a href="500.html" class="mpy_navigation__link">500</a>
+      <a href="/" class="mpy_navigation_link">Home</a>
+      <a href="chat.html" class="mpy_navigation_link">Chat</a>
+      <a href="404.html" class="mpy_navigation_link">404</a>
+      <a href="500.html" class="mpy_navigation_link">500</a>
     </div>
     <div>
-      <div onclick="openDialog('/login.html')" class="mpy_navigation__link">Login</div>
-      <div onclick="openDialog('/register.html')" class="mpy_navigation__link">Register</div>
-      <a href="profile.html" class="mpy_navigation__link">Profile</a>
+      <div onclick="openDialog('/login.html')" class="mpy_navigation_link">Login</div>
+      <div onclick="openDialog('/register.html')" class="mpy_navigation_link">Register</div>
+      <a href="profile.html" class="mpy_navigation_link">Profile</a>
     </div>
   </nav>
   <div class="mpy_container">
     <div class="mpy_main_wrapper">
       <div class="mpy_chat_list mpy_lightgrey">
-        <div class="mpy_text_input__wrapper">
-          <!--          <div class="mpy_text_input__label">search</div>-->
-          <div class="mpy_text_input__icon" title="search">
+        <div class="mpy_text_input_wrapper">
+          <!--          <div class="mpy_text_input_label">search</div>-->
+          <div class="mpy_text_input_icon" title="search">
             <i class="material-icons">search</i>
           </div>
 
@@ -40,18 +40,18 @@
         </div>
         <ul>
 
-          <li class="mpy_chat_display__wrapper mpy_white">
-            <div class="mpy_chat_display__tool">
-              <div class="mpy_chat_display__avatar">
-                <span class="material-icons mpy_chat_display__avatar_sign"> settings </span>
+          <li class="mpy_chat_display_wrapper mpy_white">
+            <div class="mpy_chat_display_tool">
+              <div class="mpy_chat_display_avatar">
+                <span class="material-icons mpy_chat_display_avatar_sign"> settings </span>
                 <img id="avatarPreview" class="mpy_avatar_preview unselectable undraggable"
                      src="//cdn.britannica.com/58/181058-050-9CC9F60F/Marcus-Tullius-Cicero-detail-marble-bust-Capitoline.jpg"
                      width="40" height="40" alt="avatar preview">
               </div>
             </div>
-            <div style="flex: 2">
-              <div class="mpy_chat_display__header">Lorem ipsum</div>
-              <div class="mpy_chat_display__body">
+            <div class="mpy_chat_display">
+              <div class="mpy_chat_display_header">Lorem ipsum</div>
+              <div class="mpy_chat_display_body">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -59,11 +59,11 @@
                 deserunt mollit anim id est laborum.
               </div>
             </div>
-            <div style="flex: 0; text-align: center; align-items: center">
+            <div class="mpy_chat_display_status">
               <div class="mpy_chat_time mpy_pt10">
                 09:20
               </div>
-              <div class="mpy_chat_display__status">
+              <div class="mpy_chat_display_sign">
                 4
               </div>
             </div>
@@ -72,8 +72,8 @@
       </div>
       <div class="mpy_chat_wrapper">
         <ul class="mpy_chat_content">
-          <li class="mpy_chat_content__sended">
-            <div class="mpy_chat_content__message">
+          <li class="mpy_chat_content_sended">
+            <div class="mpy_chat_content_message">
               Ага
             </div>
             <div class="mpy_chat_time">
@@ -81,8 +81,8 @@
             </div>
             <i class="material-icons mpy_chat_message_status mpy_chat_message_readed">done_all</i>
           </li>
-          <li class="mpy_chat_content__received">
-            <div class="mpy_chat_content__avatar">
+          <li class="mpy_chat_content_received">
+            <div class="mpy_chat_content_avatar">
               <img class="mpy_avatar_preview unselectable undraggable"
                    src="//cdn.britannica.com/58/181058-050-9CC9F60F/Marcus-Tullius-Cicero-detail-marble-bust-Capitoline.jpg"
                    width="40" height="40" alt="Marcus Tullius Cicero">
@@ -101,17 +101,17 @@
         </ul>
         <form action="/" name="message" autocomplete="off" spellcheck="false">
           <div class="mpy_chat_input">
-            <div class="mpy_text_input__wrapper mpy_white">
-              <div class="mpy_text_input__label">message</div>
-              <i class="material-icons mpy_text_input__icon" title="send" onclick="submitForm(forms.message)">send</i>
-              <i class="material-icons mpy_text_input__icon prepend" title="send">attach_file</i>
+            <div class="mpy_text_input_wrapper mpy_white">
+              <div class="mpy_text_input_label">message</div>
+              <i class="material-icons mpy_text_input_icon" title="send" onclick="submitForm(forms.message)">send</i>
+              <i class="material-icons mpy_text_input_icon prepend" title="send">attach_file</i>
               <input name="message" class="mpy_text_input mpy_pr40" type="text" spellcheck="false">
             </div>
           </div>
         </form>
       </div>
     </div>
-    <div id="dialog"></div>
+    <div id="mpy_dialog"></div>
   </div>
 </main>
 </body>

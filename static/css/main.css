@@ -6,11 +6,14 @@ html, body, ul, li {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  animation: fadeInAnimation ease-out 300ms;
 }
 
 /*body {*/
 /*}*/
+
+.animate {
+  animation: fadeInAnimation ease-out 300ms;
+}
 
 @keyframes fadeInAnimation {
   from {
@@ -26,30 +29,6 @@ body {
   --text-wrapper-padding-y: 10px;
 }
 
-.mpy_pb10 {
-  padding-bottom: 10px !important;
-}
-
-.mpy_pt10 {
-  padding-top: 10px !important;
-}
-
-.mpy_pt20 {
-  padding-top: 20px !important;
-}
-
-.mpy_pt0 {
-  padding-top: 0 !important;
-}
-
-.mpy_pr40 {
-  padding-right: 40px;
-}
-
-.block {
-  display: block !important;
-}
-
 .mpy_navigation {
   overflow: hidden;
   background-color: #678;
@@ -57,7 +36,7 @@ body {
   justify-content: space-between;
 }
 
-.mpy_navigation__link {
+.mpy_navigation_link {
   color: #eee;
   text-align: center;
   padding: 10px 12px;
@@ -69,13 +48,13 @@ body {
   border-left: 1px solid #0000;
 }
 
-.mpy_navigation__link:hover {
+.mpy_navigation_link:hover {
   border-right: 1px solid gray;
   border-left: 1px solid gray;
   background-color: #89a;
 }
 
-.mpy_navigation__link:active {
+.mpy_navigation_link:active {
   background-color: #9ab;
   color: white;
 }
@@ -96,14 +75,13 @@ body {
 }
 
 .mpy_main_wrapper {
-  /*max-width: 900px;*/
   justify-content: left;
   align-items: center;
   display: flex;
   flex: 1;
 }
 
-.mpy_avatar_output__wrapper {
+.mpy_avatar_output_wrapper {
   background-color: #bce;
   border-radius: 50%;
   box-shadow: 1px 1px 5px #0009;
@@ -114,7 +92,6 @@ body {
   background-image: linear-gradient(to right, #bdf7, #bdf7),
   linear-gradient(to right, #aaa 50%, #fff 50%),
   linear-gradient(to bottom, #aaa 50%, #fff 50%);
-
   background-blend-mode: normal, difference, normal;
   background-size: 18px 18px;
 }
@@ -140,7 +117,7 @@ body {
   }
 }
 
-.mpy_avatar_output__icon {
+.mpy_avatar_output_icon {
   color: #eee;
   font-family: 'Material Icons Outlined';
   font-size: 25px;
@@ -148,7 +125,6 @@ body {
   font-style: normal;
   text-decoration: none;
   border-radius: 8px;
-  /*background-color: #4CAF50;*/
   background: linear-gradient(to top, #5b6, #8e9);
   display: inline;
   position: absolute;
@@ -159,7 +135,7 @@ body {
   cursor: pointer;
 }
 
-.mpy_avatar_output__icon:hover {
+.mpy_avatar_output_icon:hover {
   box-shadow: 3px 3px 10px #0009;
   filter: brightness(104%);
 }
@@ -187,7 +163,6 @@ body {
   background-color: transparent;
   font-size: medium;
   margin: 1px;
-  /*margin: 1px 0 1px 0;*/
 }
 
 .mpy_text_input:focus {
@@ -195,10 +170,9 @@ body {
   outline: none;
   border: 2px solid #567;
   margin: 0;
-  /*padding-left: 9px;*/
 }
 
-.mpy_text_input__wrapper {
+.mpy_text_input_wrapper {
   position: relative;
   padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
   width: calc(100% - var(--text-wrapper-padding-x) - var(--text-wrapper-padding-x));
@@ -209,7 +183,7 @@ body {
   display: block;
 }
 
-.mpy_text_input__label {
+.mpy_text_input_label {
   position: absolute;
   top: calc(var(--text-wrapper-padding-y) - 9px);
   left: calc(var(--text-wrapper-padding-x) + 8px);;
@@ -223,7 +197,7 @@ body {
   display: inline-block;
 }
 
-.mpy_text_input__icon {
+.mpy_text_input_icon {
   position: absolute;
   top: calc(var(--text-wrapper-padding-y) + 10px);
   right: calc(var(--text-wrapper-padding-x) + 10px);
@@ -235,11 +209,11 @@ body {
   background-color: inherit;
 }
 
-.mpy_text_input__icon:hover {
+.mpy_text_input_icon:hover {
   text-shadow: 1px 1px 3px #0009;
 }
 
-.mpy_text_input__icon.prepend {
+.mpy_text_input_icon.prepend {
   right: calc(var(--text-wrapper-padding-x) + 40px);
 }
 
@@ -247,14 +221,13 @@ body {
 .mpy_dialog {
   border-radius: 20px;
   display: block;
-  /*background-color: #eeeeee;*/
   overflow: hidden;
   box-shadow: 0 5px 20px #0007;
-  /*z-index: 20;*/
+  animation: fadeInAnimation ease-out 300ms;
 }
 
 
-.mpy_dialog__header {
+.mpy_dialog_header {
   min-height: 40px;
   display: flex;
   align-items: center;
@@ -266,17 +239,15 @@ body {
   color: #eee;
 }
 
-.mpy_dialog__content {
+.mpy_dialog_content {
   padding: 0 20px;
-  /*min-height: 40px;*/
   display: flex;
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  /*min-width: 300px;*/
 }
 
-.mpy_dialog__footer {
+.mpy_dialog_footer {
   padding: 5px 0 25px 0;
   justify-content: center;
   min-height: 40px;
@@ -284,7 +255,7 @@ body {
   align-items: center;
 }
 
-.mpy_dialog__link {
+.mpy_dialog_link {
   margin: auto;
   padding: 10px 0 20px 0;
   font-size: small;
@@ -318,7 +289,7 @@ body {
 }
 
 
-.mpy_chat_content__received {
+.mpy_chat_content_received {
   background: #fff;
   margin: 10px auto 10px 10px;
   display: flex;
@@ -329,7 +300,7 @@ body {
   max-width: 50em;
 }
 
-.mpy_chat_content__received:before {
+.mpy_chat_content_received:before {
   content: "";
   width: 0;
   height: 0;
@@ -344,7 +315,7 @@ body {
 }
 
 
-.mpy_chat_content__sended {
+.mpy_chat_content_sended {
   background: #cfc;
   /*color: #fff;*/
   margin: 10px 10px 10px auto;
@@ -359,7 +330,7 @@ body {
 
 }
 
-.mpy_chat_content__sended:before {
+.mpy_chat_content_sended:before {
   content: "";
   width: 0;
   height: 0;
@@ -374,11 +345,11 @@ body {
   position: absolute;
 }
 
-.mpy_chat_content__message {
+.mpy_chat_content_message {
   padding: 0 5px 0 0;
 }
 
-.mpy_chat_content__avatar {
+.mpy_chat_content_avatar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -391,7 +362,7 @@ body {
 }
 
 
-#dialog {
+#mpy_dialog {
   transition: opacity;
   transition-duration: 300ms;
   opacity: 0;
@@ -418,7 +389,7 @@ body {
   filter: brightness(103%);
 }
 
-.block_button {
+.mpy_block_button {
   padding: 10px 0;
   display: block;
   text-align: center;
@@ -461,7 +432,7 @@ body {
   text-shadow: 1px 2px 5px #0007;
 }
 
-.mpy_chat_display__wrapper {
+.mpy_chat_display_wrapper {
   padding: 5px 5px;
   margin: 0 10px 5px 10px;
   display: flex;
@@ -474,12 +445,12 @@ body {
   cursor: pointer;
 }
 
-.mpy_chat_display__wrapper:hover {
+.mpy_chat_display_wrapper:hover {
   box-shadow: 1px 1px 4px #000;
 
 }
 
-.mpy_chat_display__header {
+.mpy_chat_display_header {
   font-weight: bolder;
   font-size: smaller;
   text-align: left;
@@ -498,7 +469,11 @@ body {
   padding: 5px 0 5px 0;
 }
 
-.mpy_chat_display__status {
+.mpy_chat_display_status {
+
+}
+
+.mpy_chat_display_sign {
   font-size: small;
   font-weight: bolder;
   text-align: center;
@@ -510,7 +485,7 @@ body {
   padding: 3px;
 }
 
-.mpy_chat_display__tool {
+.mpy_chat_display_tool {
   flex: 0;
   line-height: 0;
   align-items: center;
@@ -518,7 +493,7 @@ body {
   margin-left: 4px;
 }
 
-/*.mpy_chat_display__tool:hover {*/
+/*.mpy_chat_display_tool:hover {*/
 /*  color: #567;*/
 /*}*/
 
@@ -535,22 +510,26 @@ body {
   border-radius: 50%;
 }
 
-.mpy_chat_display__avatar {
+.mpy_chat_display {
+  flex: 2;
+}
+
+.mpy_chat_display_avatar {
   cursor: pointer;
   box-shadow: 0 0 3px #0007;
   border-radius: 50%;
   position: relative;;
 }
 
-.mpy_chat_display__avatar:hover {
+.mpy_chat_display_avatar:hover {
   box-shadow: 1px 1px 4px #000;
 }
 
-.mpy_chat_display__avatar:hover > span {
+.mpy_chat_display_avatar:hover > span {
   color: #556677;
 }
 
-.mpy_chat_display__avatar_sign {
+.mpy_chat_display_avatar_sign {
   position: absolute;
   color: transparent;
   width: 1em;
@@ -561,7 +540,7 @@ body {
   font-size: 25px;
 }
 
-.mpy_chat_display__body {
+.mpy_chat_display_body {
   font-weight: lighter;
   font-size: smaller;
   text-align: left;
@@ -581,4 +560,25 @@ body {
 .mpy_chat_message_readed {
   color: #0bf;
 }
+
+.mpy_pb10 {
+  padding-bottom: 10px;
+}
+
+.mpy_pt10 {
+  padding-top: 10px;
+}
+
+.mpy_pt20 {
+  padding-top: 20px;
+}
+
+.mpy_pt0 {
+  padding-top: 0;
+}
+
+.mpy_pr40 {
+  padding-right: 40px;
+}
+
 
