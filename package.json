@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node index & browser-sync start --proxy 'localhost:3000' --files 'static'",
+    "dev": "node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
+    "serve": "node server",
     "lint": "eslint --ext .js ."
   },
   "repository": {
