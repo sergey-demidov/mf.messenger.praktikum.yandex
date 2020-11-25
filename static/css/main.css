@@ -8,9 +8,6 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-/*body {*/
-/*}*/
-
 .animate {
   animation: fadeInAnimation ease-out 300ms;
 }
@@ -87,7 +84,7 @@ body {
   box-shadow: 1px 1px 5px #0009;
   height: 150px;
   width: 150px;
-  margin: 10px 0;
+  margin: 10px auto;
   position: relative;
   background-image: linear-gradient(to right, #bdf7, #bdf7),
   linear-gradient(to right, #aaa 50%, #fff 50%),
@@ -154,7 +151,7 @@ body {
 .mpy_text_input {
   color: #678;
   padding: 10px 30px 10px 10px;
-  min-width: 240px;
+  /*min-width: 240px;*/
   width: 100%;
   border: 1px solid #678;
   border-radius: 5px;
@@ -175,12 +172,14 @@ body {
 .mpy_text_input_wrapper {
   position: relative;
   padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
-  width: calc(100% - var(--text-wrapper-padding-x) - var(--text-wrapper-padding-x));
+  /*width: calc(100% - var(--text-wrapper-padding-x) - var(--text-wrapper-padding-x));*/
   margin: 0;
   font-weight: normal;
   background-color: inherit;
   text-align: center;
   display: block;
+  box-sizing: border-box;
+  flex: 0 0 100%;
 }
 
 .mpy_text_input_label {
@@ -244,7 +243,8 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
+  max-width: 280px;
 }
 
 .mpy_dialog_footer {
