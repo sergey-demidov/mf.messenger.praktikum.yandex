@@ -165,8 +165,15 @@ body {
 .mpy_text_input:focus {
   color: #567;
   outline: none;
-  border: 2px solid #567;
+  border: 2px solid;
   margin: 0;
+}
+
+.mpy_text_input__invalid {
+  border-color: #c34;
+}
+.mpy_text_input__invalid:focus {
+  border-color: #c34;
 }
 
 .mpy_text_input_wrapper {
@@ -182,6 +189,7 @@ body {
   flex: 0 0 100%;
 }
 
+
 .mpy_text_input_label {
   position: absolute;
   top: calc(var(--text-wrapper-padding-y) - 9px);
@@ -194,6 +202,27 @@ body {
   margin: 0;
   white-space: nowrap;
   display: inline-block;
+  /*transition: 500ms;*/
+  transition-timing-function: ease-in;
+}
+
+.mpy_text_input_label__invalid {
+  color: #c34;
+}
+
+.mpy_text_alert {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  font-size: 3em;
+  text-align: center;
+  color: white;
+  width: 100vw;
+  padding: 20px;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .mpy_text_input_icon {
@@ -379,15 +408,27 @@ body {
   box-shadow: 1px 1px 5px #0009;
   cursor: pointer;
   display: inline;
+  border: 0;
+  outline: 0;
+  /*user-select: none;*/
+  /*-moz-user-select: none;*/
+  /*-webkit-user-select: none;*/
+}
+
+.mpy_button:hover, .mpy_button:active, .mpy_button:focus {
+  box-shadow: 3px 3px 10px #0009;
+  filter: brightness(105%);
+}
+
+.mpy_button__disabled, .mpy_button__disabled:hover, .mpy_button__disabled:active {
+  box-shadow: 0 0 2px #0007;
+  filter: grayscale(90%);
+  cursor: not-allowed;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
 }
 
-.mpy_button:hover {
-  box-shadow: 3px 3px 10px #0009;
-  filter: brightness(103%);
-}
 
 .mpy_block_button {
   padding: 10px 0;
