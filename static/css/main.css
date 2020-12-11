@@ -289,7 +289,13 @@ body {
   padding: 10px 0 20px 0;
   font-size: small;
   color: #567;
+  outline: none;
 }
+.mpy_dialog_link:active {
+  outline: none;
+}
+
+
 
 .mpy_chat_list {
   /*background-color: #88ee99;*/
