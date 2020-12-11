@@ -14,7 +14,11 @@ sue({
         };
     },
     methods: {
+        onReset() {
+            this.EventBus.emit('reset');
+        },
         formIsValid(formName) {
+            // console.dir(formName);
             const form = document.forms.namedItem(formName);
             return form.checkValidity();
         },
@@ -59,6 +63,9 @@ sue({
     components: {
         's-input': sInput,
         's-btn': sButton,
+    },
+    mounted() {
+        this.EventBus.emit('reset'); // validate
     },
 });
 //# sourceMappingURL=index.js.map

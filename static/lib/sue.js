@@ -32,17 +32,17 @@ const sue = (i) => {
             };
             window.sApp = this;
             this.init = () => init;
-            this.init = this.init.bind(this);
+            // this.init = this.init.bind(this);
             this.EventBus = new EventBus();
             this.EventBus.on('update', this.update);
             this.EventBus.on('dataChange', this.setData);
             // define each components
             Object.keys(init.components).forEach((key) => {
                 if (!window.customElements.get(key)) {
-                    console.dir(customElements);
                     customElements.define(key, init.components[key]);
                 }
             });
+            this.init().methods._get = (param) => param;
             this.methods = {};
             Object.keys(this.init().methods).forEach((key) => {
                 this.methods[key] = this.init().methods[key].bind(this);
@@ -64,21 +64,18 @@ const sue = (i) => {
                     throw new Error(`Cant delete property ${prop} from ${target}`);
                 },
             });
-            // const fragment = document.createDocumentFragment();
-            // console.dir(this.querySelectorAll('template')[0]);
-            // // fragment.appendChild(this.querySelector('template')[0].cloneNode(true));
-            // console.dir(fragment);
-            this.init().methods._get = (param) => param;
             this.innerHTML = init.template;
+            this.init().created = this.init().created.bind(this);
+            this.init().mounted = this.init().mounted.bind(this);
             this.init().created();
             this.EventBus.emit('update');
         }
         // get result from user defined methods
         run(parsed) {
-            if (!this.init().methods[parsed.func]) {
+            if (!this.methods[parsed.func]) {
                 throw new Error(`Method ${parsed.func} is not defined`);
             }
-            const res = this.init().methods[parsed.func](...parsed.params.map((e) => {
+            const res = this.methods[parsed.func](...parsed.params.map((e) => {
                 // param is plain string
                 const stringRes = e.match(/^['"]([a-z0-9_]+)['"]$/i);
                 if (stringRes) {
@@ -93,6 +90,9 @@ const sue = (i) => {
             }));
             return (parsed.not ? !res : res).toString();
         }
+        // это не оптимальный метод и точно не окончательный
+        // он работает напрямую с ДОМ и не учитывает вложенность
+        // был создан только для отработки динамических атрибутов.
         render() {
             this.rendering = true;
             const content = this.querySelectorAll('*');
@@ -113,16 +113,14 @@ const sue = (i) => {
                                 el.disabled = (res === 'true');
                                 break;
                             default:
-                                // console.log(`${native}  => ${res}`)
                                 el.setAttribute(native, res);
                         }
                     }
                     if (attribute.charAt(0) === '@') { // inline event handlers
                         const parsed = this.parse(el.getAttribute(attribute) || '');
-                        const native = `on${attribute.substring(1)}`;
-                        if (this.init().methods[parsed.func]) {
-                            // здесь нарушается слабая связанность, но легко вызывать встроенные методы
-                            el.setAttribute(native, `sApp.methods.${el.getAttribute(attribute)}`);
+                        if (this.methods[parsed.func]) {
+                            // работает правильно, но нарушает слабую связанность. Будет реализован через addEventListener
+                            el.setAttribute(`on${attribute.substring(1)}`, `sApp.methods.${el.getAttribute(attribute)}`);
                         }
                         else {
                             throw new Error(`Method ${parsed.func} does not exist`);
@@ -135,7 +133,7 @@ const sue = (i) => {
         parse(str) {
             const result = { not: false, func: '', params: [] };
             let not = '';
-            const regFunc = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\(([^)]*)\)\s*$/i); // some_func42(a,b) || !some_func(...)
+            const regFunc = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\(([^)]*)\)\s*$/i); // some_func(a,b), !some_func()
             const func = str.match(regFunc);
             if (func) {
                 let strParams;
@@ -144,7 +142,7 @@ const sue = (i) => {
                 result.not = (not === '!');
                 return result;
             }
-            const regVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\s*$/i); // some_variable || !some_variable
+            const regVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\s*$/i); // some_variable, !some_variable
             const variable = str.match(regVariable);
             if (variable) {
                 result.func = '_get';

@@ -19,7 +19,6 @@ class sInput extends HTMLElement {
         this.labelElement.classList.add(css.label);
         this.labelElement.innerText = this.defaultLabel;
         this.model = this.getAttribute(':model') || '';
-        // console.log(this.model)
         this.inputElement = document.createElement('input');
         this.inputElement.classList.add(css.input);
         this.inputElement.type = this.getAttribute('type') || 'text';
@@ -41,23 +40,13 @@ class sInput extends HTMLElement {
         this.eventBus.on('reset', () => this.reset());
     }
     reset() {
-        // console.log(this.inputElement.value)
         this.inputElement.value = this.inputElement.defaultValue;
         this.dataChange();
     }
     setLabel(message) {
         if (this.labelElement.innerText === message)
             return;
-        const backupColor = this.labelElement.style.color;
-        // мгновенно исчезает
-        this.labelElement.style.transition = '0ms';
-        this.labelElement.style.color = '#0000';
-        setTimeout(() => {
-            // плавно появляется
-            this.labelElement.style.transition = '300ms';
-            this.labelElement.innerText = message;
-            this.labelElement.style.color = backupColor;
-        }, 0);
+        this.labelElement.innerText = message;
     }
     validate() {
         const result = this.validateInstance.validate(this.inputElement.value, this.validateRules);
@@ -77,7 +66,6 @@ class sInput extends HTMLElement {
         return ['label', 'value', 'model'];
     }
     dataChange() {
-        // console.log(`emit DataChange: ${this.inputElement.value}`)
         if (this.model) {
             this.eventBus.emit('dataChange', this.model, this.inputElement.value);
         }
@@ -90,7 +78,6 @@ class sInput extends HTMLElement {
             }
             this.inputElement.value = newValue;
         }
-        // console.log(`attributeChangedCallback ${name}: ${oldValue} => ${newValue}`)
     }
 }
 export default sInput;

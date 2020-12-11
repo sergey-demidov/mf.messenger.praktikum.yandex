@@ -3,7 +3,9 @@ class sButton extends HTMLElement {
     constructor() {
         super();
         this.eventBus = new EventBus();
-        this.classList.add('mpy_button');
+        if (!this.getAttribute('class')) {
+            this.classList.add('mpy_button');
+        }
     }
     get disabled() {
         return this.hasAttribute('disabled');

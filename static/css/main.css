@@ -227,12 +227,12 @@ body {
 
 .mpy_text_input_icon {
   position: absolute;
-  top: calc(var(--text-wrapper-padding-y) + 10px);
-  right: calc(var(--text-wrapper-padding-x) + 10px);
+  top: calc(var(--text-wrapper-padding-y) + 8px);
+  right: calc(var(--text-wrapper-padding-x) + 8px);
   color: #567;
   cursor: pointer;
-  font-size: 20px;
-  line-height: 20px;
+  /*font-size: 10px;*/
+  /*line-height: 10px;*/
   text-shadow: 0 0 1px #0009;
   background-color: inherit;
 }
@@ -388,6 +388,8 @@ body {
 
 .mpy_chat_input {
   margin-top: 15px;
+  background-color: #eeeeee;
+  position: relative;
 }
 
 
