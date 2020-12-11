@@ -8,7 +8,7 @@
     "dev": "tsc -w & node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
     "serve": "node server",
     "lint": "eslint --ext .ts src",
-    "deploy": "if [[ $(git status --porcelain | wc -l) -eq 0 ]]; then git rebase main deploy && git push &&  it checkout main; else echo 'Need to commit first'; fi"
+    "deploy": "test `git status --porcelain | wc -l` -eq 0 && git rebase main deploy && git push && git checkout main || echo commit first"
   },
   "repository": {
     "type": "git",
