@@ -5,8 +5,8 @@
 > этот репозиторий является заготовкой для учебного проекта по программе 
 > "Мидл фронтенд-разработчик" от [Яндекс Практикум](https://praktikum.yandex.ru/).
 
+<details><summary>### Проектная работа 1-й спринт</summary>
 
-### Проектная работа 1-й спринт
 1. Настроен Express-сервер с раздачей статики.
 1. Настоен деплой статики на [Netlify](https://messenger42-praktikum-yandex.netlify.app/)
 1. [Нарисованы](https://www.figma.com/file/jCefXmc3zICQxhhZP2GLOA/Chat?node-id=0%3A1) и сверстаны прототипы экранов:
@@ -28,9 +28,22 @@
 1. Сделан сбор данных из форм. В console.log выводится объект со всеми заполненными полями формы.
 1. Корневой `index.html` содержит переадресацию на `chat.html`
 1. Подключены шрифты Material Icons
+</details>
+
+### Проектная работа 2-й спринт
+
+1. Частично реализован шаблонизатор на основе [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
+1. Проект переведен на TypeScript
+1. В `tsconfig` включен режим `strict`
+1. Проект разбит на модули, настроены `import`/`export`
+1. На все формы добавлена валидация по `focus`/`blur` плюс `keyup`
+1. Страницы генерируются на основании шаблонов
+1. Сделаны переиспользуемые модули для кнопок и текстовых полей
+1. Свойство `disabled` кнопки отправки связано с валидацией форм
+1. TypeScript компилятор внедрен в скрипт запуска сервера разработки
 
 ---
-## Инсталляция
+### Инсталляция
 Клонируйте репозиторий
 ```shell script
 git clone https://github.com/sergey-demidov/mf.messenger.praktikum.yandex.git
@@ -41,11 +54,11 @@ npm install # или yarn
 ```
 ---
 ## Использование
-Для запуска локального express сервера
+Для запуска локального сервера express
 ```shell script
 node server.js
 ```
-Для синхронизации с браузером
+Для компиляции TS и синхронизации с браузером
 ```shell script
 npm run dev # или yarn dev
 ```
@@ -53,5 +66,3 @@ npm run dev # или yarn dev
 ```shell script
 npm run lint # или yarn lint
 ```
-
-
