@@ -17,7 +17,7 @@ export default `
 
         <input name="search" class="mpy_text_input" type="text" spellcheck="false">
       </div>
-      <!--здесь нужен цикл, однако по времени уже не получается реализовать -->
+      <!--здесь нужны компоненты и цикл, однако по времени уже не получается реализовать -->
       <ul>
         <li class="mpy_chat_display_wrapper mpy_white">
           <div class="mpy_chat_display_tool">
@@ -50,7 +50,7 @@ export default `
       </ul>
     </div>
     <div class="mpy_chat_wrapper">
-      <!--здесь нужен цикл, однако по времени уже не получается реализовать -->
+      <!--здесь нужны компоненты и цикл, однако по времени уже не получается реализовать -->
       <ul class="mpy_chat_content">
         <li class="mpy_chat_content_sended">
           <div class="mpy_chat_content_message">

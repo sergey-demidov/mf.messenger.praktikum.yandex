@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc -w & node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
     "serve": "node server",
-    "lint": "eslint --ext .js ."
+    "lint": "eslint --ext .ts src"
   },
   "repository": {
     "type": "git",

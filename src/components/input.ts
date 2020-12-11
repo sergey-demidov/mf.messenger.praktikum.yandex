@@ -58,7 +58,8 @@ class sInput extends HTMLElement {
 
     this.inputElement.addEventListener('focus', () => this.validate());
     this.inputElement.addEventListener('blur', () => this.validate());
-    this.inputElement.addEventListener('keyup', () => this.dataChange());
+    this.inputElement.addEventListener('keyup', (e) => this.onKeyup(e));
+    this.inputElement.addEventListener('keydown', (e) => this.onKeydown(e));
 
     this.eventBus.on('reset', () => this.reset());
   }
@@ -66,6 +67,19 @@ class sInput extends HTMLElement {
   reset(): void {
     this.inputElement.value = this.inputElement.defaultValue;
     this.dataChange();
+  }
+
+  onKeyup(e: KeyboardEvent): void {
+    this.dataChange();
+    e.stopPropagation();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onKeydown(e: KeyboardEvent): void {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
   }
 
   setLabel(message: string): void {
