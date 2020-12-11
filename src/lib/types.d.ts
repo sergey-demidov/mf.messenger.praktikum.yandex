@@ -1,9 +1,10 @@
-import EventBus from "./event-bus.js";
+/* eslint-disable @typescript-eslint/ban-types */
+import EventBus from './event-bus.js';
 
 export interface sApp {
   EventBus: EventBus;
   methods: Record<string, Function>;
-  mounted: Function;
+  mounted(): void;
 }
 
 export interface sInit {
