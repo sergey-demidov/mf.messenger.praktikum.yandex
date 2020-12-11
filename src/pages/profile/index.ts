@@ -13,16 +13,11 @@ sue({
       email: 'demid@podolsk.ru',
       phone: '+7(906)031-90-06',
       login: 'sergey',
-      pages: ['first', 'second'],
     };
   },
   methods: {
-    onReset(): void {
-      (this as sApp).EventBus.emit('reset');
-    },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
-      // console.log((form as HTMLFormElement).checkValidity())
       return (form as HTMLFormElement).checkValidity();
     },
     submitForm(formName: string): void {
