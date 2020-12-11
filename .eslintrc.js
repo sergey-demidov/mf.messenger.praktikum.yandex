@@ -11,11 +11,12 @@ module.exports = {
     },
   },
   rules: {
-    // 'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'import/no-extraneous-dependencies': [2, { devDependencies: ['**/test.tsx', '**/test.ts'] }],
     '@typescript-eslint/indent': [2, 2],
     'no-underscore-dangle': 'off',
     'max-len': 0,
+    'linebreak-style': 0,
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never',
       mjs: 'never',
