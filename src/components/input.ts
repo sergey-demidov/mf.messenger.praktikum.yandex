@@ -37,7 +37,6 @@ class sInput extends HTMLElement {
     this.labelElement.innerText = this.defaultLabel;
 
     this.model = this.getAttribute(':model') || '';
-    // console.log(this.model)
     this.inputElement = document.createElement('input');
     this.inputElement.classList.add(css.input);
     this.inputElement.type = this.getAttribute('type') || 'text';
@@ -65,23 +64,13 @@ class sInput extends HTMLElement {
   }
 
   reset(): void {
-    // console.log(this.inputElement.value)
     this.inputElement.value = this.inputElement.defaultValue;
     this.dataChange();
   }
 
   setLabel(message: string): void {
     if (this.labelElement.innerText === message) return;
-    const backupColor = this.labelElement.style.color;
-    // мгновенно исчезает
-    this.labelElement.style.transition = '0ms';
-    this.labelElement.style.color = '#0000';
-    setTimeout(() => {
-      // плавно появляется
-      this.labelElement.style.transition = '300ms';
-      this.labelElement.innerText = message;
-      this.labelElement.style.color = backupColor;
-    }, 0);
+    this.labelElement.innerText = message;
   }
 
   validate(): void {
@@ -105,21 +94,19 @@ class sInput extends HTMLElement {
   }
 
   dataChange(): void {
-    // console.log(`emit DataChange: ${this.inputElement.value}`)
     if (this.model) {
       this.eventBus.emit('dataChange', this.model, this.inputElement.value);
     }
     this.validate();
   }
 
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+  attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
     if (name === 'model' && this.inputElement.value !== newValue) {
       if (oldValue === null && !this.inputElement.defaultValue) {
         this.inputElement.defaultValue = newValue; // need for reset forms
       }
       this.inputElement.value = newValue;
     }
-    // console.log(`attributeChangedCallback ${name}: ${oldValue} => ${newValue}`)
   }
 }
 

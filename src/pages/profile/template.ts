@@ -1,14 +1,9 @@
-export default `
-<nav class="mpy_navigation">
+export default `<nav class="mpy_navigation">
   <div>
-    <a href="../chat.html" class="mpy_navigation_link">Chat</a>
-    <a href="../404.html" class="mpy_navigation_link">404</a>
-    <a href="../500.html" class="mpy_navigation_link">500</a>
+    <a href="/pages/chat" class="mpy_navigation_link">Chat</a>
   </div>
   <div>
-    <a href="../login" class="mpy_navigation_link">Login</a>
-    <a href="../register" class="mpy_navigation_link">Register</a>
-    <a href="../profile" class="mpy_navigation_link">Profile</a>
+    <a href="/pages/login" class="mpy_navigation_link">Login</a>
   </div>
 </nav>
 <div class="mpy_container">
@@ -16,7 +11,7 @@ export default `
     <div class="mpy_main_wrapper">
       <input name="avatar" type='file' accept="image/*" @change="loadImage(this)" hidden/>
       <div class="mpy_content">
-        <div class="mpy_dialog_content mpy_white mpy_pt10" style="max-width: 350px;">
+        <div class="mpy_dialog_content mpy_white mpy_pt10" style="max-width: 400px;">
           <div class="mpy_avatar_output_wrapper unselectable">
             <img id="avatarPreview" class="mpy_avatar_preview unselectable undraggable"
                  src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
@@ -25,8 +20,8 @@ export default `
               <span class="material-icons">camera_alt</span>
             </div>
             <span id="errorSign" class="material-icons mpy_avatar_error_sign">
-                            image_not_supported
-                          </span>
+               image_not_supported
+            </span>
           </div>
           <s-input
             name="first_name"

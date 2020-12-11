@@ -2,7 +2,8 @@ import EventBus from "./event-bus.js";
 
 export interface sApp {
   EventBus: EventBus;
-  methods: Record<string, Function>
+  methods: Record<string, Function>;
+  mounted: Function;
 }
 
 export interface sInit {

@@ -3,12 +3,11 @@ interface listeners {
 }
 
 class EventBus {
-  protected listeners: listeners;
+  protected listeners: listeners = {};
 
   private static instance: EventBus;
 
   constructor() {
-    this.listeners = {};
     if (EventBus.instance) {
       return EventBus.instance;
     }

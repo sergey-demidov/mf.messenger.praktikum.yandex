@@ -3,6 +3,7 @@ import sue from '../../lib/sue.js';
 import sInput from '../../components/input.js';
 import sButton from '../../components/button.js';
 import template from './template.js';
+import EventBus from '../../lib/event-bus';
 
 sue({
   template,
@@ -16,7 +17,11 @@ sue({
     };
   },
   methods: {
+    onReset(): void {
+      (this as sApp).EventBus.emit('reset');
+    },
     formIsValid(formName: string): boolean {
+      // console.dir(formName);
       const form = document.forms.namedItem(formName);
       return (form as HTMLFormElement).checkValidity();
     },
@@ -64,5 +69,8 @@ sue({
   components: {
     's-input': sInput,
     's-btn': sButton,
+  },
+  mounted() {
+    (this.EventBus as EventBus).emit('reset'); // validate
   },
 });
