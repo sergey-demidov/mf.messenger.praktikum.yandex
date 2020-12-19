@@ -10,7 +10,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "alwaysStrict": true,
-    "lib": ["dom", "es6", "dom.iterable"],
+    "lib": ["dom", "es6", "dom.iterable", "es2017"],
     "outDir": "static"
   }
 }
