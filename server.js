@@ -5,9 +5,13 @@ const path = require('path');
 const PORT = 3000;
 
 const app = express();
+
 app.use('/', express.static(path.join(__dirname, 'static')));
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'static/pages/404/index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'static/index.html'));
 });
+// app.use((req, res) => {
+//   res.sendFile(path.join(__dirname, 'static/pages/404/index.html'));
+// });
 
 app.listen(PORT);

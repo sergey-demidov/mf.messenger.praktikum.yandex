@@ -1,9 +1,9 @@
 export default `<nav class="mpy_navigation">
   <div>
-    <a href="/pages/chat" class="mpy_navigation_link">Chat</a>
+    <a href="/#/chat" class="mpy_navigation_link">Chat</a>
   </div>
   <div>
-    <a href="/pages/login" class="mpy_navigation_link">Login</a>
+    <a href="/#/login" class="mpy_navigation_link">Login</a>
   </div>
 </nav>
 <div class="mpy_container">

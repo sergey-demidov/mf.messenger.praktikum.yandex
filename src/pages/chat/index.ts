@@ -3,11 +3,11 @@ import sInput from '../../components/input.js';
 import sButton from '../../components/button.js';
 import template from './template.js';
 
-sue({
+const chat = sue({
+  name: 's-app-chat',
   template,
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     submitForm(formName: string): void {
@@ -26,3 +26,5 @@ sue({
     's-btn': sButton,
   },
 });
+
+export default chat;

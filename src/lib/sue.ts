@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from './event-bus.js';
-import { sInit, sParsed } from './types';
+import { sInit, sParsed, sCustomElementConstructor } from './types';
 
 declare global {
   interface Window {
@@ -8,9 +8,10 @@ declare global {
   }
 }
 
-const sue = (i: Record<string, unknown>): CustomElementConstructor => {
+const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   // need to merge with incomplete init definitions
   const emptyInit: sInit = {
+    name: '',
     template: '',
     data: () => ({}),
     components: {},
@@ -25,21 +26,29 @@ const sue = (i: Record<string, unknown>): CustomElementConstructor => {
   const app = class extends HTMLElement {
     EventBus: EventBus;
 
+    name: string;
+
     protected data: Record<string, unknown>
+    // protected data: ProxyHandler<Record<string, unknown>>
 
     methods: Record<string, Function>;
 
     protected rendering = false;
 
+    protected connected = false;
+
+    protected active = false
+
     // template: HTMLElement;
 
-    init: () => sInit
+    init: sInit
 
     constructor() {
       super();
-      window.sApp = this;
-      this.init = () => init;
-      // this.init = this.init.bind(this);
+      this.init = init;
+      this.name = init.name;
+      if (!this.name) throw new Error('Component name is not defined');
+      // this.hide();
       this.EventBus = new EventBus();
       this.EventBus.on('update', this.update);
       this.EventBus.on('dataChange', this.setData);
@@ -50,57 +59,61 @@ const sue = (i: Record<string, unknown>): CustomElementConstructor => {
           customElements.define(key, init.components[key]);
         }
       });
-      this.init().methods._get = (param: string): string => param;
+      this.init.methods._get = (param: string): string => param;
       this.methods = {};
-      Object.keys(this.init().methods).forEach((key) => {
-        this.methods[key] = this.init().methods[key].bind(this);
+      Object.keys(this.init.methods).forEach((key) => {
+        this.methods[key] = this.init.methods[key].bind(this);
       });
 
-      this.data = new Proxy(init.data(), {
-        get(target, prop: string) {
-          return target[prop];
-        },
-        set: (target, prop: string, value) => {
-          if (this.rendering) {
-            // eslint-disable-next-line no-console
-            console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `,
-              'background: #333; color: #f55');
-          }
-          target[prop] = value;
-          this.EventBus.emit('update');
-          return true;
-        },
-        deleteProperty(target, prop: string) {
-          throw new Error(`Cant delete property ${prop} from ${target}`);
-        },
-      });
+      this.data = this.makeProxy(init.data());
 
-      this.innerHTML = init.template;
+      this.init.created = this.init.created.bind(this);
+      this.init.mounted = this.init.mounted.bind(this);
 
-      this.init().created = this.init().created.bind(this);
-      this.init().mounted = this.init().mounted.bind(this);
-
-      this.init().created();
-      this.EventBus.emit('update');
+      this.init.created();
+      // window.sApp = this;
     }
 
-    // dataChange event handler
+    // dataChange eventBus handler
     protected setData = (...args: string[]) => {
       const [variable, value] = args;
-      // console.log(`sue setData '${variable}' => '${value}'`)
       if (!Object.hasOwnProperty.call(this.data, variable)) {
         throw new Error(`${variable} undefined`);
       }
       this.data[variable] = value;
     }
 
-    // update event handler
+    // update eventBus handler
     protected update = () => {
       if (!this.rendering) this.render();
     }
 
+    protected makeProxy(data: Record<string, unknown>) {
+      return new Proxy(data, {
+        get(target, prop: string) {
+          return target[prop];
+        },
+        set: (target, prop: string, value) => {
+          if (this.rendering) {
+          // eslint-disable-next-line no-console
+            console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `,
+              'background: #333; color: #f55');
+          }
+          if (this.active) {
+            target[prop] = value;
+            this.EventBus.emit('update');
+          }
+          return true;
+        },
+        deleteProperty(target, prop: string) {
+          throw new Error(`Cant delete property ${prop} from ${target}`);
+        },
+      });
+    }
+
     // get result from user defined methods
     protected run(parsed: sParsed): string {
+      if (!this.connected) return '';
       if (!this.methods[parsed.func]) {
         throw new Error(`Method ${parsed.func} is not defined`);
       }
@@ -184,16 +197,31 @@ const sue = (i: Record<string, unknown>): CustomElementConstructor => {
     }
 
     connectedCallback() {
-      this.init().mounted();
+      this.innerHTML = init.template;
+      this.connected = true;
+      this.EventBus.emit('update');
+      this.init.mounted();
     }
 
     disconnectedCallback() {
       this.EventBus.off('update', this.update);
       this.EventBus.off('dataChange', this.setData);
     }
+
+    show() {
+      this.style.display = 'block';
+      this.active = true;
+    }
+
+    hide() {
+      this.style.display = 'none';
+      this.active = false;
+    }
   };
-  customElements.define('s-app', app);
-  return app;
+  customElements.define(init.name, app);
+  return { constructor: app, name: init.name };
 };
+
+// export app;
 
 export default sue;

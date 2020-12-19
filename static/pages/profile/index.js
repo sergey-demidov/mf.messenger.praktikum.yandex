@@ -2,7 +2,8 @@ import sue from '../../lib/sue.js';
 import sInput from '../../components/input.js';
 import sButton from '../../components/button.js';
 import template from './template.js';
-sue({
+const profile = sue({
+    name: 's-app-profile',
     template,
     data() {
         return {
@@ -68,4 +69,5 @@ sue({
         this.EventBus.emit('reset'); // validate
     },
 });
+export default profile;
 //# sourceMappingURL=index.js.map

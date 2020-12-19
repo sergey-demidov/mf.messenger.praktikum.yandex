@@ -2,7 +2,8 @@ import sue from '../../lib/sue.js';
 import sInput from '../../components/input.js';
 import sButton from '../../components/button.js';
 import template from './template.js';
-sue({
+const register = sue({
+    name: 's-app-register-modal',
     template,
     methods: {
         onReset() {
@@ -31,4 +32,5 @@ sue({
         's-btn': sButton,
     },
 });
+export default register;
 //# sourceMappingURL=index.js.map
