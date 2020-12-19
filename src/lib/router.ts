@@ -50,8 +50,8 @@ class Router {
   _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
     if (!route) {
-      if (pathname !== '#404') {
-        this.go('#404');
+      if (pathname !== '/#/404') {
+        this.go('/#/404');
       }
       return;
     }
