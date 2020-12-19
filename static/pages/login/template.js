@@ -1,4 +1,5 @@
 export default `
+<s-app>
 <div class="mpy_overlay">
   <div class="mpy_container">
     <div class="mpy_dialog">
@@ -17,7 +18,7 @@ export default `
               type="password"
               s-validate="min_8">
             </s-input>
-            <a tabindex="-1" class="mpy_dialog_link" href="../register"> Dont have login? </a>
+            <a tabindex="-1" class="mpy_dialog_link" href="/#/register"> Dont have login? </a>
           </div>
         </form>
       </main>
@@ -39,5 +40,6 @@ export default `
     </div>
   </div>
 </div>
+<s-app>
 `;
 //# sourceMappingURL=template.js.map

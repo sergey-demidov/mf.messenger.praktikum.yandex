@@ -57,11 +57,13 @@ body {
 }
 
 .mpy_overlay {
-  position: fixed;
+  position: absolute;
   width: 100vw;
   height: 100vh;
   background-color: #0007;
   z-index: 10;
+  left: 0;
+  top: 0;
 }
 
 .mpy_container {

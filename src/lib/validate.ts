@@ -10,11 +10,15 @@ interface validateResult {
 }
 
 class Validate {
-  protected rules: rules;
+  protected rules: rules = {};
 
   private static instance: Validate;
 
   constructor() {
+    if (Validate.instance) {
+      return Validate.instance;
+    }
+    Validate.instance = this;
     this.rules = {
       pass: { regexp: new RegExp(/.*/), message: '' }, // default
       min_6: { regexp: new RegExp(/^.{6,}$/), message: 'minimum 6 characters' },
@@ -24,10 +28,6 @@ class Validate {
       email: { regexp: new RegExp(/^\w+[\w-.]*@\w+([-.]\w+)*\.[a-z]{2,}$/i), message: 'need a valid e-mail address' },
       phone: { regexp: new RegExp(/^\+?\d\(?\d{3}\)?\d([-\d]{8})|([\d]{5})\d$/), message: 'need a valid phone number' },
     };
-    if (Validate.instance) {
-      return Validate.instance;
-    }
-    Validate.instance = this;
   }
 
   validate(input: string, ruleset: string): validateResult {

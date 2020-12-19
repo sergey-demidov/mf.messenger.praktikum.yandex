@@ -2,7 +2,8 @@ import sue from '../../lib/sue.js';
 import sInput from '../../components/input.js';
 import sButton from '../../components/button.js';
 import template from './template.js';
-sue({
+const login = sue({
+    name: 's-app-login-modal',
     template,
     data() {
         return {
@@ -33,5 +34,9 @@ sue({
         's-input': sInput,
         's-btn': sButton,
     },
+    mounted: () => {
+        console.dir('login mounted');
+    },
 });
+export default login;
 //# sourceMappingURL=index.js.map

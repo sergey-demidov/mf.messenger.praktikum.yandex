@@ -2,7 +2,7 @@ export default `<div class="mpy_overlay">
   <div class="mpy_container">
     <div class="mpy_dialog">
       <header class="mpy_dialog_header">
-        Login
+        Register
       </header>
       <main>
         <form name="register" action="/">
@@ -32,7 +32,7 @@ export default `<div class="mpy_overlay">
               name="phone"
               s-validate="phone">
             </s-input>
-            <a tabindex="-1" class="mpy_dialog_link" href="../login"> Already have login? </a>
+            <a tabindex="-1" class="mpy_dialog_link" href="/#/login"> Already have login? </a>
           </div>
         </form>
       </main>

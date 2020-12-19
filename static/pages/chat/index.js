@@ -2,7 +2,8 @@ import sue from '../../lib/sue.js';
 import sInput from '../../components/input.js';
 import sButton from '../../components/button.js';
 import template from './template.js';
-sue({
+const chat = sue({
+    name: 's-app-chat',
     template,
     data() {
         return {};
@@ -21,4 +22,5 @@ sue({
         's-btn': sButton,
     },
 });
+export default chat;
 //# sourceMappingURL=index.js.map

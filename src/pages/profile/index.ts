@@ -5,7 +5,8 @@ import sButton from '../../components/button.js';
 import template from './template.js';
 import EventBus from '../../lib/event-bus';
 
-sue({
+const profile = sue({
+  name: 's-app-profile',
   template,
   data() {
     return {
@@ -74,3 +75,5 @@ sue({
     (this.EventBus as EventBus).emit('reset'); // validate
   },
 });
+
+export default profile;
