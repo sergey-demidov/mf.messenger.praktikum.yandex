@@ -41,9 +41,6 @@
     "prettier": "^1.19.1",
     "typescript": "^3.9.7"
   },
-  "dependencies": {
-    "jsdoc": "^3.6.6"
-  },
   "engines": {
     "node": "12.x"
   }
