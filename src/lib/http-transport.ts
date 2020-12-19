@@ -38,11 +38,7 @@ export default class HttpTransport {
     method: this.METHODS.DELETE,
   }, options.timeout);
 
-  request(url: string, options: HttpRequestOptions = {
-    headers: {},
-    data: {},
-    method: this.METHODS.GET,
-  }, timeout = 5000): Promise<XMLHttpRequest> {
+  request(url: string, options: HttpRequestOptions, timeout = 3000): Promise<XMLHttpRequest> {
     const { headers, data, method } = options;
 
     const sendURL = (method === this.METHODS.GET) ? `${url}?${queryStringify(data as PlainObject)}` : url;
@@ -69,6 +65,8 @@ export default class HttpTransport {
 
       if (method === this.METHODS.GET || !data) {
         xhr.send();
+      } else if (data instanceof FormData) {
+        xhr.send(data);
       } else {
         xhr.send(JSON.stringify(data));
       }

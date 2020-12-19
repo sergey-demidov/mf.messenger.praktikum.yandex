@@ -13,11 +13,7 @@ export default class HttpTransport {
         this.post = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.POST }), options.timeout);
         this.delete = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.DELETE }), options.timeout);
     }
-    request(url, options = {
-        headers: {},
-        data: {},
-        method: this.METHODS.GET,
-    }, timeout = 5000) {
+    request(url, options, timeout = 3000) {
         const { headers, data, method } = options;
         const sendURL = (method === this.METHODS.GET) ? `${url}?${queryStringify(data)}` : url;
         return new Promise((resolve, reject) => {
@@ -40,6 +36,9 @@ export default class HttpTransport {
             xhr.ontimeout = reject;
             if (method === this.METHODS.GET || !data) {
                 xhr.send();
+            }
+            else if (data instanceof FormData) {
+                xhr.send(data);
             }
             else {
                 xhr.send(JSON.stringify(data));
