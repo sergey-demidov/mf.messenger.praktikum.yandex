@@ -1,4 +1,4 @@
-import Route from './route.js';
+import Route from './route';
 import { sCustomElementConstructor } from './types';
 
 class Router {

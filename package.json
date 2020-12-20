@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc -w & node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
+    "dev": "ttsc -w & node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
     "serve": "node server",
     "lint": "eslint --ext .ts src",
     "deploy": "test `git status --porcelain | wc -l` -eq 0 && git rebase main deploy && git push && git checkout main || echo commit first"
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
+    "@zoltu/typescript-transformer-append-js-extension": "^1.0.1",
     "babel-eslint": "^10.1.0",
     "browser-sync": "^2.26.13",
     "eslint": "^7.14.0",

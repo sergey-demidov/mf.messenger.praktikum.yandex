@@ -1,9 +1,9 @@
-import Router from './lib/router.js';
-import chat from './pages/chat/index.js';
-import login from './pages/login/index.js';
-import register from './pages/register/index.js';
-import profile from './pages/profile/index.js';
-import error404 from './pages/404/index.js';
+import Router from "./lib/router.js";
+import chat from "./pages/chat/index.js";
+import login from "./pages/login/index.js";
+import register from "./pages/register/index.js";
+import profile from "./pages/profile/index.js";
+import error404 from "./pages/404/index.js";
 const root = document.getElementById('app');
 if (!root)
     throw new Error('Root element does not exist');

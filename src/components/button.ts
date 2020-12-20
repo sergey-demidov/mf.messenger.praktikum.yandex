@@ -1,4 +1,4 @@
-import EventBus from '../lib/event-bus.js';
+import EventBus from '../lib/event-bus';
 
 class sButton extends HTMLElement {
   get disabled(): boolean {

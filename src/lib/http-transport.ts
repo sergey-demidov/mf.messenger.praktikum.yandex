@@ -1,4 +1,4 @@
-import { queryStringify, PlainObject } from './utils.js';
+import { queryStringify, PlainObject } from './utils';
 
 type DataType = Record<string, string | number | Array<string> | Array<number> | boolean> | FormData;
 

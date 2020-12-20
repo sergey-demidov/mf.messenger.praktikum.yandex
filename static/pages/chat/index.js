@@ -1,7 +1,7 @@
-import sue from '../../lib/sue.js';
-import sInput from '../../components/input.js';
-import sButton from '../../components/button.js';
-import template from './template.js';
+import sue from "../../lib/sue.js";
+import sInput from "../../components/input.js";
+import sButton from "../../components/button.js";
+import template from "./template.js";
 const chat = sue({
     name: 's-app-chat',
     template,

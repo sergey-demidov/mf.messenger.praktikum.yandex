@@ -3,7 +3,7 @@ export default `
   <div>
   </div>
   <div>
-    <a href="/pages/profile" class="mpy_navigation_link">Profile</a>
+    <a href="/#/profile" class="mpy_navigation_link">Profile</a>
   </div>
 </nav>
 <div class="mpy_container">
