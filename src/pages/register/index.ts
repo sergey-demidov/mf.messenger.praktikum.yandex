@@ -1,8 +1,8 @@
 import { sApp } from '../../lib/types';
-import sue from '../../lib/sue.js';
-import sInput from '../../components/input.js';
-import sButton from '../../components/button.js';
-import template from './template.js';
+import sue from '../../lib/sue';
+import sInput from '../../components/input';
+import sButton from '../../components/button';
+import template from './template';
 
 const register = sue({
   name: 's-app-register-modal',

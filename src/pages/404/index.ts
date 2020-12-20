@@ -1,6 +1,6 @@
-import sue from '../../lib/sue.js';
-import sButton from '../../components/button.js';
-import template from './template.js';
+import sue from '../../lib/sue';
+import sButton from '../../components/button';
+import template from './template';
 
 const error404 = sue({
   name: 's-app-error404',

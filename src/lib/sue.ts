@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
-import EventBus from './event-bus.js';
+import EventBus from './event-bus';
 import { sInit, sParsed, sCustomElementConstructor } from './types';
 
 declare global {
@@ -77,9 +77,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     // dataChange eventBus handler
     protected setData = (...args: string[]) => {
       const [variable, value] = args;
-      if (!Object.hasOwnProperty.call(this.data, variable)) {
-        throw new Error(`${variable} undefined`);
-      }
+      // if (!Object.hasOwnProperty.call(this.data, variable)) {
+      //   throw new Error(`${variable} undefined`);
+      // }
       this.data[variable] = value;
     }
 
@@ -99,7 +99,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
             console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `,
               'background: #333; color: #f55');
           }
-          if (this.active) {
+          if (window.sApp === this) {
             target[prop] = value;
             this.EventBus.emit('update');
           }
@@ -210,12 +210,13 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     show() {
       this.style.display = 'block';
-      this.active = true;
+      // this.active = true;
+      window.sApp = this;
     }
 
     hide() {
       this.style.display = 'none';
-      this.active = false;
+      // this.active = false;
     }
   };
   customElements.define(init.name, app);

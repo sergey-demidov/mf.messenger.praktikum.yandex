@@ -1,4 +1,4 @@
-import { queryStringify } from './utils.js';
+import { queryStringify } from "./utils.js";
 export default class HttpTransport {
     constructor() {
         this.METHODS = Object.freeze({

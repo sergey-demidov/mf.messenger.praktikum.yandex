@@ -10,7 +10,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "alwaysStrict": true,
-    "lib": ["dom", "es6", "dom.iterable", "es2017"],
-    "outDir": "static"
+    "lib": [
+      "dom",
+      "es6",
+      "dom.iterable",
+      "es2017"
+    ],
+    "outDir": "static",
+    "plugins": [
+      {
+        "transform": "@zoltu/typescript-transformer-append-js-extension/output/index.js",
+        "after": true
+      }
+    ]
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import EventBus from './event-bus.js';
+import EventBus from './event-bus';
 
 export interface sApp {
   EventBus: EventBus;

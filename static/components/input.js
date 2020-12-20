@@ -1,5 +1,5 @@
-import Validate from '../lib/validate.js';
-import EventBus from '../lib/event-bus.js';
+import Validate from "../lib/validate.js";
+import EventBus from "../lib/event-bus.js";
 const css = Object.freeze({
     wrapper: 'mpy_text_input_wrapper',
     label: 'mpy_text_input_label',
