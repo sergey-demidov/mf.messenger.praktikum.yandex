@@ -28,6 +28,9 @@ class sButton extends HTMLElement {
     if (!this.getAttribute('class')) {
       this.classList.add('mpy_button');
     }
+    if (this.hasAttribute('block')) {
+      this.classList.add('mpy_button__block');
+    }
   }
 }
 
