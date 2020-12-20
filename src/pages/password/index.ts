@@ -41,8 +41,6 @@ const password = sue({
     's-input': sInput,
     's-btn': sButton,
   },
-  mounted: () => {
-  },
 });
 
 export default password;
