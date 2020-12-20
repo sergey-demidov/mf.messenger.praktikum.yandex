@@ -61,6 +61,7 @@ class sInput extends HTMLElement {
         this.labelElement.innerText = message;
     }
     validate() {
+        console.log(this.validateRules);
         const result = this.validateInstance.validate(this.inputElement.value, this.validateRules);
         this.inputElement.setCustomValidity(result.valid ? '' : result.message);
         this.eventBus.emit('update');
@@ -75,7 +76,7 @@ class sInput extends HTMLElement {
         this.setLabel(this.defaultLabel);
     }
     static get observedAttributes() {
-        return ['label', 'value', 'model'];
+        return ['label', 'value', 'model', 's-validate'];
     }
     dataChange() {
         if (this.model) {
@@ -89,6 +90,9 @@ class sInput extends HTMLElement {
                 this.inputElement.defaultValue = newValue; // need for reset forms
             }
             this.inputElement.value = newValue;
+        }
+        if (name === 's-validate') {
+            this.validateRules = newValue;
         }
     }
 }

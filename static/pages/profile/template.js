@@ -49,6 +49,13 @@ export default `<nav class="mpy_navigation">
             :model="login"
             s-validate="min_6 no_spaces letters_only">
           </s-input>
+          <s-btn
+            tabindex="0"
+            :disabled="!formIsValid('profile')"
+            onclick="window.router.go('/#/password')"
+            block >
+            Change password
+          </s-btn>
 
         </div>
         <div class="mpy_dialog_footer mpy_white mpy_pt10">

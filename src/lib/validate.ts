@@ -21,6 +21,7 @@ class Validate {
     Validate.instance = this;
     this.rules = {
       pass: { regexp: new RegExp(/.*/), message: '' }, // default
+      required: { regexp: new RegExp(/^.+$/), message: 'required' },
       min_6: { regexp: new RegExp(/^.{6,}$/), message: 'minimum 6 characters' },
       min_8: { regexp: new RegExp(/^.{8,}$/), message: 'minimum 8 characters' },
       no_spaces: { regexp: new RegExp(/^\S+$/), message: 'no spaces allowed' },
@@ -33,6 +34,16 @@ class Validate {
   validate(input: string, ruleset: string): validateResult {
     const result: validateResult = { valid: true, message: 'Ok' };
     ruleset.split(' ').every((r) => {
+      const ruleMatch = r.match(/^match:(.*)/);
+      if (ruleMatch) {
+        const [, value] = ruleMatch;
+        if (input !== value) {
+          result.valid = false;
+          result.message = 'password nom match';
+          return false;
+        }
+        return true;
+      }
       if (!this.rules[r]) {
         throw new Error(`Cant validate: rule '${r}' dont exist`);
       }

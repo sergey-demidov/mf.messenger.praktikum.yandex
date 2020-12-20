@@ -1,523 +1,534 @@
 html, body, ul, li {
-  padding: 0;
-  margin: 0;
-  clear: both;
+    padding: 0;
+    margin: 0;
+    clear: both;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .animate {
-  animation: fadeInAnimation ease-out 300ms;
+    animation: fadeInAnimation ease-out 300ms;
 }
 
 @keyframes fadeInAnimation {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 :root {
-  --text-wrapper-padding-x: 10px;
-  --text-wrapper-padding-y: 10px;
+    --text-wrapper-padding-x: 10px;
+    --text-wrapper-padding-y: 10px;
 }
 
 .mpy_navigation {
-  overflow: hidden;
-  background-color: #678;
-  display: flex;
-  justify-content: space-between;
+    overflow: hidden;
+    background-color: #678;
+    display: flex;
+    justify-content: space-between;
 }
 
 .mpy_navigation_link {
-  color: #eee;
-  text-align: center;
-  padding: 10px 12px;
-  min-height: 20px;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  border-right: 1px solid #0000;
-  border-left: 1px solid #0000;
+    color: #eee;
+    text-align: center;
+    padding: 10px 12px;
+    min-height: 20px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-right: 1px solid #0000;
+    border-left: 1px solid #0000;
 }
 
 .mpy_navigation_link:hover {
-  border-right: 1px solid gray;
-  border-left: 1px solid gray;
-  background-color: #89a;
+    border-right: 1px solid gray;
+    border-left: 1px solid gray;
+    background-color: #89a;
 }
 
 .mpy_navigation_link:active {
-  background-color: #9ab;
-  color: white;
+    background-color: #9ab;
+    color: white;
 }
 
 .mpy_overlay {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: #0007;
-  z-index: 10;
-  left: 0;
-  top: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0007;
+    z-index: 10;
+    left: 0;
+    top: 0;
 }
 
 .mpy_container {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mpy_main_wrapper {
-  justify-content: left;
-  align-items: center;
-  display: flex;
-  flex: 1;
+    justify-content: left;
+    align-items: center;
+    display: flex;
+    flex: 1;
 }
 
 .mpy_avatar_output_wrapper {
-  background-color: #bce;
-  border-radius: 50%;
-  box-shadow: 1px 1px 5px #0009;
-  height: 150px;
-  width: 150px;
-  margin: 10px auto;
-  position: relative;
-  background-image: linear-gradient(to right, #bdf7, #bdf7),
-  linear-gradient(to right, #aaa 50%, #fff 50%),
-  linear-gradient(to bottom, #aaa 50%, #fff 50%);
-  background-blend-mode: normal, difference, normal;
-  background-size: 18px 18px;
+    background-color: #bce;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px #0009;
+    height: 150px;
+    width: 150px;
+    margin: 10px auto;
+    position: relative;
+    background-image: linear-gradient(to right, #bdf7, #bdf7),
+    linear-gradient(to right, #aaa 50%, #fff 50%),
+    linear-gradient(to bottom, #aaa 50%, #fff 50%);
+    background-blend-mode: normal, difference, normal;
+    background-size: 18px 18px;
 }
 
 .mpy_avatar_error_sign {
-  position: absolute;
-  color: red;
-  font-family: 'Material Icons Outlined';
-  font-size: 100px;
-  line-height: 100px;
-  top: 25px;
-  left: 25px;
-  opacity: 0;
+    position: absolute;
+    color: red;
+    font-family: 'Material Icons Outlined';
+    font-size: 100px;
+    line-height: 100px;
+    top: 25px;
+    left: 25px;
+    opacity: 0;
 }
 
 .blink {
-  animation: blinker 0.7s step-start infinite;
+    animation: blinker 0.7s step-start infinite;
 }
 
 @keyframes blinker {
-  50% {
-    opacity: 1;
-  }
+    50% {
+        opacity: 1;
+    }
 }
 
 .mpy_avatar_output_icon {
-  color: #eee;
-  font-family: 'Material Icons Outlined';
-  font-size: 25px;
-  font-weight: lighter;
-  font-style: normal;
-  text-decoration: none;
-  border-radius: 8px;
-  background: linear-gradient(to top, #5b6, #8e9);
-  display: inline;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding: 3px 5px;
-  box-shadow: 1px 1px 5px #0009;
-  cursor: pointer;
+    color: #eee;
+    font-family: 'Material Icons Outlined';
+    font-size: 25px;
+    font-weight: lighter;
+    font-style: normal;
+    text-decoration: none;
+    border-radius: 8px;
+    background: linear-gradient(to top, #5b6, #8e9);
+    display: inline;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 3px 5px;
+    box-shadow: 1px 1px 5px #0009;
+    cursor: pointer;
 }
 
 .mpy_avatar_output_icon:hover {
-  box-shadow: 3px 3px 10px #0009;
-  filter: brightness(104%);
+    box-shadow: 3px 3px 10px #0009;
+    filter: brightness(104%);
 }
 
 .mpy_avatar_preview {
-  clip-path: circle(50%);
-  object-fit: cover;
+    clip-path: circle(50%);
+    object-fit: cover;
 }
 
 .mpy_content {
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-  /*flex-direction: column;*/
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*flex-direction: column;*/
 }
 
 .mpy_text_input {
-  color: #678;
-  padding: 10px 30px 10px 10px;
-  /*min-width: 240px;*/
-  width: 100%;
-  border: 1px solid #678;
-  border-radius: 5px;
-  box-sizing: border-box;
-  outline: none;
-  background-color: transparent;
-  font-size: medium;
-  margin: 1px;
+    color: #678;
+    padding: 10px 30px 10px 10px;
+    /*min-width: 240px;*/
+    width: 100%;
+    border: 1px solid #678;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    background-color: transparent;
+    font-size: medium;
+    margin: 1px;
 }
 
 .mpy_text_input:focus {
-  color: #567;
-  outline: none;
-  border: 2px solid;
-  margin: 0;
+    color: #567;
+    outline: none;
+    border: 2px solid;
+    margin: 0;
 }
 
 .mpy_text_input__invalid {
-  border-color: #c34;
+    border-color: #c34;
 }
+
 .mpy_text_input__invalid:focus {
-  border-color: #c34;
+    border-color: #c34;
 }
 
 .mpy_text_input_wrapper {
-  position: relative;
-  padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
-  /*width: calc(100% - var(--text-wrapper-padding-x) - var(--text-wrapper-padding-x));*/
-  margin: 0;
-  font-weight: normal;
-  background-color: inherit;
-  text-align: center;
-  display: block;
-  box-sizing: border-box;
-  flex: 0 0 100%;
+    position: relative;
+    padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
+    /*width: calc(100% - var(--text-wrapper-padding-x) - var(--text-wrapper-padding-x));*/
+    margin: 0;
+    font-weight: normal;
+    background-color: inherit;
+    text-align: center;
+    display: block;
+    box-sizing: border-box;
+    flex: 0 0 100%;
 }
 
 
 .mpy_text_input_label {
-  position: absolute;
-  top: calc(var(--text-wrapper-padding-y) - 9px);
-  left: calc(var(--text-wrapper-padding-x) + 8px);;
-  font-size: small;
-  font-weight: lighter;
-  background-color: inherit;
-  color: #567;
-  padding: 0 4px;
-  margin: 0;
-  white-space: nowrap;
-  display: inline-block;
-  /*transition: 500ms;*/
-  transition-timing-function: ease-in;
+    position: absolute;
+    top: calc(var(--text-wrapper-padding-y) - 9px);
+    left: calc(var(--text-wrapper-padding-x) + 8px);;
+    font-size: small;
+    font-weight: lighter;
+    background-color: inherit;
+    color: #567;
+    padding: 0 4px;
+    margin: 0;
+    white-space: nowrap;
+    display: inline-block;
+    /*transition: 500ms;*/
+    transition-timing-function: ease-in;
 }
 
 .mpy_text_input_label__invalid {
-  color: #c34;
+    color: #c34;
 }
 
 .mpy_text_alert {
-  display: block;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 0;
-  font-size: 3em;
-  text-align: center;
-  color: white;
-  width: 100vw;
-  padding: 20px;
-  margin: 0;
-  box-sizing: border-box;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    font-size: 3em;
+    text-align: center;
+    color: white;
+    width: 100vw;
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .mpy_text_input_icon {
-  position: absolute;
-  top: calc(var(--text-wrapper-padding-y) + 8px);
-  right: calc(var(--text-wrapper-padding-x) + 8px);
-  color: #567;
-  cursor: pointer;
-  /*font-size: 10px;*/
-  /*line-height: 10px;*/
-  text-shadow: 0 0 1px #0009;
-  background-color: inherit;
+    position: absolute;
+    top: calc(var(--text-wrapper-padding-y) + 8px);
+    right: calc(var(--text-wrapper-padding-x) + 8px);
+    color: #567;
+    cursor: pointer;
+    /*font-size: 10px;*/
+    /*line-height: 10px;*/
+    text-shadow: 0 0 1px #0009;
+    background-color: inherit;
 }
 
 .mpy_text_input_icon:hover {
-  text-shadow: 1px 1px 3px #0009;
+    text-shadow: 1px 1px 3px #0009;
 }
 
 .mpy_text_input_icon.prepend {
-  right: calc(var(--text-wrapper-padding-x) + 40px);
+    right: calc(var(--text-wrapper-padding-x) + 40px);
 }
 
 
 .mpy_dialog {
-  border-radius: 20px;
-  display: block;
-  overflow: hidden;
-  box-shadow: 0 5px 20px #0007;
-  animation: fadeInAnimation ease-out 300ms;
+    border-radius: 20px;
+    display: block;
+    overflow: hidden;
+    box-shadow: 0 5px 20px #0007;
+    animation: fadeInAnimation ease-out 300ms;
 }
 
 
 .mpy_dialog_header {
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  padding: 2px 0 2px 35px;
-  border-bottom: 1px solid #5677;
-  font-weight: bold;
-  font-size: larger;
-  background-color: #89a;
-  color: #eee;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 2px 0 2px 35px;
+    border-bottom: 1px solid #5677;
+    font-weight: bold;
+    font-size: larger;
+    background-color: #89a;
+    color: #eee;
 }
 
 .mpy_dialog_content {
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  flex-flow: row wrap;
-  max-width: 280px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-flow: row wrap;
+    max-width: 280px;
 }
 
 .mpy_dialog_footer {
-  padding: 5px 0 25px 0;
-  justify-content: center;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
+    padding: 5px 0 25px 0;
+    justify-content: center;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .mpy_dialog_link {
-  margin: auto;
-  padding: 10px 0 20px 0;
-  font-size: small;
-  color: #567;
-  outline: none;
-}
-.mpy_dialog_link:active {
-  outline: none;
+    margin: auto;
+    padding: 10px 0 20px 0;
+    font-size: small;
+    color: #567;
+    outline: none;
 }
 
+.mpy_dialog_link:active {
+    outline: none;
+}
 
 
 .mpy_chat_list {
-  /*background-color: #88ee99;*/
-  min-width: 200px;
-  display: block;
-  height: calc(100vh - 40px);
-  border-right: 1px #444444 solid;
+    /*background-color: #88ee99;*/
+    min-width: 200px;
+    display: block;
+    height: calc(100vh - 40px);
+    border-right: 1px #444444 solid;
 }
 
 .mpy_chat_content {
-  flex: 1;
-  display: flex;
-  height: calc(100vh - 40px);
-  position: relative;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 40px);
+    position: relative;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
 }
 
 .mpy_chat_wrapper {
-  flex: 1;
-  display: flex;
-  height: calc(100vh - 40px);
-  position: relative;
-  flex-direction: column;
-  justify-content: flex-end;
+    flex: 1;
+    display: flex;
+    height: calc(100vh - 40px);
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 
 .mpy_chat_content_received {
-  background: #fff;
-  margin: 10px auto 10px 10px;
-  display: flex;
-  padding: 15px 20px 15px 10px;
-  border-radius: 20px;
-  box-shadow: 0 0 5px #0007;
-  position: relative;
-  max-width: 50em;
+    background: #fff;
+    margin: 10px auto 10px 10px;
+    display: flex;
+    padding: 15px 20px 15px 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px #0007;
+    position: relative;
+    max-width: 50em;
 }
 
 .mpy_chat_content_received:before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-left: 5px solid #fff;
-  border-right: 5px solid transparent;
-  border-top: 5px solid #fff;
-  border-bottom: 5px solid transparent;
-  left: 30px;
-  bottom: -10px;
-  filter: drop-shadow(0 2px 1px #0003) drop-shadow(-2px 2px 1px #0003);
-  position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid #fff;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+    border-bottom: 5px solid transparent;
+    left: 30px;
+    bottom: -10px;
+    filter: drop-shadow(0 2px 1px #0003) drop-shadow(-2px 2px 1px #0003);
+    position: absolute;
 }
 
 
 .mpy_chat_content_sended {
-  background: #cfc;
-  /*color: #fff;*/
-  margin: 10px 10px 10px auto;
-  padding: 15px 15px;
-  border-radius: 20px;
-  box-shadow: 0 0 5px #0007;
-  position: relative;
-  max-width: 40em;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+    background: #cfc;
+    /*color: #fff;*/
+    margin: 10px 10px 10px auto;
+    padding: 15px 15px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px #0007;
+    position: relative;
+    max-width: 40em;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 
 }
 
 .mpy_chat_content_sended:before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-left: 5px solid #cfc;
-  border-right: 5px solid transparent;
-  border-top: 5px solid #cfc;
-  border-bottom: 5px solid transparent;
-  right: 25px;
-  bottom: -10px;
-  transform: scaleX(-1);
-  filter: drop-shadow(0 2px 1px #0003) drop-shadow(-2px 2px 1px #0003);
-  position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 5px solid #cfc;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #cfc;
+    border-bottom: 5px solid transparent;
+    right: 25px;
+    bottom: -10px;
+    transform: scaleX(-1);
+    filter: drop-shadow(0 2px 1px #0003) drop-shadow(-2px 2px 1px #0003);
+    position: absolute;
 }
 
 .mpy_chat_content_message {
-  padding: 0 5px 0 0;
+    padding: 0 5px 0 0;
 }
 
 .mpy_chat_content_avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 10px 0 0;
-  flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px 0 0;
+    flex-direction: column;
 }
 
 .mpy_chat_input {
-  margin-top: 15px;
-  background-color: #eeeeee;
-  position: relative;
+    margin-top: 15px;
+    background-color: #eeeeee;
+    position: relative;
 }
 
 
 #mpy_dialog {
-  transition: opacity;
-  transition-duration: 300ms;
-  opacity: 0;
+    transition: opacity;
+    transition-duration: 300ms;
+    opacity: 0;
 }
 
 
 .mpy_button {
-  border-radius: 8px;
-  font-weight: bolder;
-  color: #444;
-  padding: 10px 20px;
-  margin: 0 15px;
-  background-image: linear-gradient(to top, #5b6, #8e9);
-  box-shadow: 1px 1px 5px #0009;
-  cursor: pointer;
-  display: inline;
-  border: 0;
-  outline: 0;
-  /*user-select: none;*/
-  /*-moz-user-select: none;*/
-  /*-webkit-user-select: none;*/
+    border-radius: 5px;
+    font-weight: bolder;
+    color: #444;
+    padding: 10px 20px;
+    margin: 0 15px;
+    background-image: linear-gradient(to top, #5b6, #8e9);
+    box-shadow: 1px 1px 5px #0009;
+    cursor: pointer;
+    display: inline;
+    border: 0;
+    outline: 0;
+    text-align: center;
+    /*user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-webkit-user-select: none;*/
+}
+
+.mpy_button__block {
+    display: block;
+    width: 100%;
+    background-color: #eeeeee;
+    background-image: none;
+    margin: 10px 10px;
+    box-shadow: 0 0 2px #000;
 }
 
 .mpy_button:hover, .mpy_button:active, .mpy_button:focus {
-  box-shadow: 3px 3px 10px #0009;
-  filter: brightness(105%);
+    box-shadow: 3px 3px 10px #0009;
+    filter: brightness(105%);
 }
 
 .mpy_button__disabled, .mpy_button__disabled:hover, .mpy_button__disabled:active {
-  box-shadow: 0 0 2px #0007;
-  filter: grayscale(90%);
-  cursor: not-allowed;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
+    box-shadow: 0 0 2px #0007;
+    filter: grayscale(90%);
+    cursor: not-allowed;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 
 .mpy_block_button {
-  padding: 10px 0;
-  display: block;
-  text-align: center;
-  width: 100%;
-  margin: 0;
-  box-shadow: none;
-  border: 1px solid #678;
-  border-radius: 5px;
+    padding: 10px 0;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    border: 1px solid #678;
+    border-radius: 5px;
 }
 
 
 .unselectable {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .undraggable {
-  user-drag: none;
-  -webkit-user-drag: none;
+    user-drag: none;
+    -webkit-user-drag: none;
 }
 
 .mpy_white {
-  background-color: #ffffff;
-  background-image: none;
+    background-color: #ffffff;
+    background-image: none;
 }
 
 .mpy_lightgrey {
-  background-color: #e0e7ef;
-  /*background-color: #5f5;*/
-  background-image: none;
+    background-color: #e0e7ef;
+    /*background-color: #5f5;*/
+    background-image: none;
 }
 
 .mpy_icon_clickable {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .mpy_icon_clickable:hover {
-  cursor: pointer;
-  text-shadow: 1px 2px 5px #0007;
+    cursor: pointer;
+    text-shadow: 1px 2px 5px #0007;
 }
 
 .mpy_chat_display_wrapper {
-  padding: 5px 5px;
-  margin: 0 10px 5px 10px;
-  display: flex;
-  text-align: center;
-  width: calc(100% - 30px);
-  /*margin: 0;*/
-  /*border: 1px solid #678;*/
-  border-radius: 5px;
-  box-shadow: 0 0 2px #0007;
-  cursor: pointer;
+    padding: 5px 5px;
+    margin: 0 10px 5px 10px;
+    display: flex;
+    text-align: center;
+    width: calc(100% - 30px);
+    /*margin: 0;*/
+    /*border: 1px solid #678;*/
+    border-radius: 5px;
+    box-shadow: 0 0 2px #0007;
+    cursor: pointer;
 }
 
 .mpy_chat_display_wrapper:hover {
-  box-shadow: 1px 1px 4px #000;
+    box-shadow: 1px 1px 4px #000;
 
 }
 
 .mpy_chat_display_header {
-  font-weight: bolder;
-  font-size: smaller;
-  text-align: left;
-  padding: 10px 5px 0 10px;
+    font-weight: bolder;
+    font-size: smaller;
+    text-align: left;
+    padding: 10px 5px 0 10px;
 }
 
 .mpy_chat_time {
-  font-size: x-small;
-  text-align: center;
-  padding: 0;
+    font-size: x-small;
+    text-align: center;
+    padding: 0;
 }
 
 .mpy_chat_nickname {
-  font-size: x-small;
-  text-align: center;
-  padding: 5px 0 5px 0;
+    font-size: x-small;
+    text-align: center;
+    padding: 5px 0 5px 0;
 }
 
 .mpy_chat_display_status {
@@ -525,23 +536,23 @@ body {
 }
 
 .mpy_chat_display_sign {
-  font-size: small;
-  font-weight: bolder;
-  text-align: center;
-  border-radius: 50%;
-  background: linear-gradient(to top, #5b6, #8e9);
-  width: 1em;
-  margin: 3px auto 3px auto;
-  line-height: 1em;
-  padding: 3px;
+    font-size: small;
+    font-weight: bolder;
+    text-align: center;
+    border-radius: 50%;
+    background: linear-gradient(to top, #5b6, #8e9);
+    width: 1em;
+    margin: 3px auto 3px auto;
+    line-height: 1em;
+    padding: 3px;
 }
 
 .mpy_chat_display_tool {
-  flex: 0;
-  line-height: 0;
-  align-items: center;
-  display: flex;
-  margin-left: 4px;
+    flex: 0;
+    line-height: 0;
+    align-items: center;
+    display: flex;
+    margin-left: 4px;
 }
 
 /*.mpy_chat_display_tool:hover {*/
@@ -549,87 +560,87 @@ body {
 /*}*/
 
 .clickable {
-  cursor: pointer;
-  box-shadow: 0 0 2px #0007;
+    cursor: pointer;
+    box-shadow: 0 0 2px #0007;
 }
 
 .clickable:hover {
-  box-shadow: 1px 1px 4px #000;
+    box-shadow: 1px 1px 4px #000;
 }
 
 .rounded {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .mpy_chat_display {
-  flex: 2;
+    flex: 2;
 }
 
 .mpy_chat_display_avatar {
-  cursor: pointer;
-  box-shadow: 0 0 3px #0007;
-  border-radius: 50%;
-  position: relative;;
+    cursor: pointer;
+    box-shadow: 0 0 3px #0007;
+    border-radius: 50%;
+    position: relative;;
 }
 
 .mpy_chat_display_avatar:hover {
-  box-shadow: 1px 1px 4px #000;
+    box-shadow: 1px 1px 4px #000;
 }
 
 .mpy_chat_display_avatar:hover > span {
-  color: #556677;
+    color: #556677;
 }
 
 .mpy_chat_display_avatar_sign {
-  position: absolute;
-  color: transparent;
-  width: 1em;
-  height: 1em;
-  z-index: 1;
-  bottom: -4px;
-  right: -4px;
-  font-size: 25px;
+    position: absolute;
+    color: transparent;
+    width: 1em;
+    height: 1em;
+    z-index: 1;
+    bottom: -4px;
+    right: -4px;
+    font-size: 25px;
 }
 
 .mpy_chat_display_body {
-  font-weight: lighter;
-  font-size: smaller;
-  text-align: left;
-  padding: 0.5em 10px 0 10px;
-  margin: 0 0 0.5em 0;
-  height: 2.5em;
-  overflow: hidden;
-  max-width: 150px;
-  /*background-color: #bbccee;*/
+    font-weight: lighter;
+    font-size: smaller;
+    text-align: left;
+    padding: 0.5em 10px 0 10px;
+    margin: 0 0 0.5em 0;
+    height: 2.5em;
+    overflow: hidden;
+    max-width: 150px;
+    /*background-color: #bbccee;*/
 }
 
 .mpy_chat_message_status {
-  padding: 0 5px;
-  font-size: 16px;
+    padding: 0 5px;
+    font-size: 16px;
 }
 
 .mpy_chat_message_readed {
-  color: #0bf;
+    color: #0bf;
 }
 
 .mpy_pb10 {
-  padding-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .mpy_pt10 {
-  padding-top: 10px;
+    padding-top: 10px;
 }
 
 .mpy_pt20 {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .mpy_pt0 {
-  padding-top: 0;
+    padding-top: 0;
 }
 
 .mpy_pr40 {
-  padding-right: 40px;
+    padding-right: 40px;
 }
 
 

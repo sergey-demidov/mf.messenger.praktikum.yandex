@@ -18,6 +18,7 @@ class Router {
     if (Router.instance) {
       return Router.instance;
     }
+    console.log('router constructor');
     Router.instance = this;
     this.routes = [];
     this.root = root;
@@ -36,18 +37,21 @@ class Router {
   }
 
   start(): void {
-    window.onhashchange = ((event: HashChangeEvent): void => {
+    console.log('router start');
+    window.onhashchange = (event: HashChangeEvent): void => {
       this._onRoute((event.currentTarget as Window).location.hash);
-    });
+    };
 
-    window.onpopstate = ((event: PopStateEvent): void => {
+    window.onpopstate = (event: PopStateEvent): void => {
+      console.log('onpopstate');
       this._onRoute((event.currentTarget as Window).location.hash);
-    });
+    };
 
     this._onRoute(window.location.hash);
   }
 
   _onRoute(pathname: string): void {
+    console.log(`route ${pathname}`);
     const route = this.getRoute(pathname);
     if (!route) {
       if (pathname !== '/#/404') {
@@ -65,21 +69,25 @@ class Router {
     route.render();
   }
 
-  go(pathname: string) {
+  go(pathname: string): void {
+    console.log(`go ${pathname}`);
+    // this.history.pushState({ page: 1 }, 'title 1', '?page=1');
     this.history.pushState({}, '', pathname);
     this._onRoute(pathname);
   }
 
-  back() {
+  back(): void {
     this.history.back();
   }
 
-  forward() {
+  forward(): void {
     this.history.forward();
   }
 
-  getRoute(pathname: string) {
-    return this.routes.find((route) => route.match(pathname));
+  getRoute(pathname: string): Route | undefined {
+    console.log(`getRoute ${pathname}`);
+    console.dir(this.routes);
+    return this.routes.find((r) => r.match(pathname.charAt(0) === '/' ? pathname.substring(1) : pathname));
   }
 }
 

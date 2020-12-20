@@ -1,6 +1,7 @@
 class Route {
     constructor(pathname, view, root) {
         this.pathname = pathname.charAt(0) === '/' ? pathname.substring(1) : pathname;
+        // this.pathname = pathname;
         this.view = view;
         this.root = root;
         this.element = document.createElement(view.name);

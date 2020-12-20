@@ -118,8 +118,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         throw new Error(`Method ${parsed.func} is not defined`);
       }
       const res = this.methods[parsed.func](...parsed.params.map((e) => {
+        console.log(`param is ${e}`);
         // param is plain string
-        const stringRes = e.match(/^['"]([a-z0-9_]+)['"]$/i);
+        const stringRes = e.match(/^['"]([a-z0-9_: ]+)['"]$/i);
         if (stringRes) {
           return stringRes[1];
         }

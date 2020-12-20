@@ -11,6 +11,7 @@ class Route {
 
   constructor(pathname: string, view: sCustomElementConstructor, root: HTMLElement) {
     this.pathname = pathname.charAt(0) === '/' ? pathname.substring(1) : pathname;
+    // this.pathname = pathname;
     this.view = view;
     this.root = root;
     this.element = <sHTMLElement>document.createElement(view.name);
