@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from './event-bus';
-import { sInit, sParsed, sCustomElementConstructor } from './types';
-import login from '../pages/login';
+import {
+  sInit, sParsed, sCustomElementConstructor, sEvents,
+} from './types';
 
 declare global {
   interface Window {
@@ -9,14 +10,16 @@ declare global {
   }
 }
 
-const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
-  'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
-  'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
-  'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
-  'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
-  'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
-  'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
-  'onwaiting'] as const;
+// type sEH = 'onabort' | 'onblur'
+//
+// const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
+//   'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
+//   'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
+//   'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
+//   'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
+//   'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
+//   'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
+//   'onwaiting'] as const;
 
 const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   // need to merge with incomplete init definitions
@@ -149,33 +152,32 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       if (!this.connected || !this.active) return;
       this.rendering = true;
       const content = this.querySelectorAll('*');
-      [].forEach.call(content, (element: HTMLElement) => { // each element in template
-        const el = element;
-        const { attributes } = el;
-        [].forEach.call(attributes, (a: Attr) => { // each attribute
+      Array.from(content).forEach((el) => { // each element in template
+        const element = <HTMLElement>el;
+        const { attributes } = element;
+        Array.from(attributes).forEach((a) => { // each attribute
           const attribute = a.name;
           if (attribute.charAt(0) === ':') { // dynamic props
-            const parsed = this.parse(el.getAttribute(attribute) || '');
+            const parsed = this.parse(element.getAttribute(attribute) || '');
             const native = attribute.substring(1);
             const res = this.run(parsed);
             switch (native) {
               case 'text':
-                el.innerText = res;
+                element.innerText = res;
                 break;
               case 'disabled':
-                console.log(`${res}`);
-                (el as HTMLInputElement).disabled = (res === 'true');
+                (element as HTMLInputElement).disabled = (res === 'true');
                 break;
               default:
-                el.setAttribute(native, res);
+                element.setAttribute(native, res);
             }
           }
           if (attribute.charAt(0) === '@') { // inline event handlers
-            const parsed = this.parse(el.getAttribute(attribute) || '');
+            const parsed = this.parse(element.getAttribute(attribute) || '');
             if (this.methods[parsed.func]) {
               const key = `on${attribute.substring(1)}`;
-              if (key in el) {
-                el[key as typeof sEventHandlers[number]] = () => this.run(parsed);
+              if (key in element) {
+                element[key as sEvents] = () => this.run(parsed);
               } else {
                 throw new Error(`event '${key}' does not exist`);
               }
