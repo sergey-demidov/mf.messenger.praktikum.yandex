@@ -1,15 +1,15 @@
 export default `<nav class="mpy_navigation">
   <div>
-    <a href="/#/chat" class="mpy_navigation_link">Chat</a>
+    <a href="/" class="mpy_navigation_link">Chat</a>
   </div>
   <div>
     <a href="/#/login" class="mpy_navigation_link">Login</a>
   </div>
 </nav>
 <div class="mpy_container">
-  <form action="/" name="profile" autocomplete="off" spellcheck="false" @reset="onReset()">
+  <form action="/" name="profile" autocomplete="off" spellcheck="false" @reset="onReset('profile')">
     <div class="mpy_main_wrapper">
-      <input name="avatar" type='file' accept="image/*" @change="loadImage(this)" hidden/>
+      <input id="avatarInput" name="avatar" type='file' accept="image/*" @change="loadImage()" hidden/>
       <div class="mpy_content">
         <div class="mpy_dialog_content mpy_white mpy_pt10" style="max-width: 400px;">
           <div class="mpy_avatar_output_wrapper unselectable">
@@ -51,7 +51,6 @@ export default `<nav class="mpy_navigation">
           </s-input>
           <s-btn
             tabindex="0"
-            :disabled="!formIsValid('profile')"
             onclick="window.router.go('/#/password')"
             block >
             Change password

@@ -38,11 +38,10 @@ class sInput extends HTMLElement {
         this.inputElement.addEventListener('blur', () => this.validate());
         this.inputElement.addEventListener('keyup', (e) => this.onKeyup(e));
         this.inputElement.addEventListener('keydown', (e) => this.onKeydown(e));
-        this.eventBus.on('reset', () => this.reset());
-    }
-    reset() {
-        this.inputElement.value = this.inputElement.defaultValue;
-        this.dataChange();
+        this.inputElement.reset = () => {
+            this.inputElement.value = this.inputElement.defaultValue;
+            this.dataChange();
+        };
     }
     onKeyup(e) {
         this.dataChange();
@@ -61,7 +60,6 @@ class sInput extends HTMLElement {
         this.labelElement.innerText = message;
     }
     validate() {
-        console.log(this.validateRules);
         const result = this.validateInstance.validate(this.inputElement.value, this.validateRules);
         this.inputElement.setCustomValidity(result.valid ? '' : result.message);
         this.eventBus.emit('update');
@@ -70,7 +68,7 @@ class sInput extends HTMLElement {
             this.labelElement.classList.add(css.label_alert);
             this.setLabel(result.message);
             return;
-        } // else
+        }
         this.inputElement.classList.remove(css.input_alert);
         this.labelElement.classList.remove(css.label_alert);
         this.setLabel(this.defaultLabel);

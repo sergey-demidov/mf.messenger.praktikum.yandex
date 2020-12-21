@@ -7,7 +7,7 @@ export default `
         Change password
       </header>
       <main>
-        <form name="login" action="/">
+        <form name="password" action="/">
           <div class="mpy_dialog_content mpy_lightgrey mpy_pt10">
             <s-input
               name="oldPassword"
@@ -34,13 +34,13 @@ export default `
       <footer class="mpy_dialog_footer mpy_lightgrey">
         <s-btn
           tabindex="0"
-          :disabled="!formIsValid('login')"
-          @click="submitForm('login')">
+          :disabled="!formIsValid('password')"
+          @click="submitForm('password')">
           Submit
         </s-btn>
         <s-btn
           tabindex="0"
-          onclick="window.history.go(-1)">
+          onclick="window.router.go('/#/profile')">
           Back
         </s-btn>
         <!-- need to return focus on tab-->
