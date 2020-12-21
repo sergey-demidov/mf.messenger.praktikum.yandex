@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from "./event-bus.js";
-const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
-    'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
-    'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
-    'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
-    'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
-    'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
-    'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
-    'onwaiting'];
+// type sEH = 'onabort' | 'onblur'
+//
+// const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
+//   'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
+//   'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
+//   'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
+//   'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
+//   'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
+//   'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
+//   'onwaiting'] as const;
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
@@ -117,33 +119,32 @@ const sue = (i) => {
                 return;
             this.rendering = true;
             const content = this.querySelectorAll('*');
-            [].forEach.call(content, (element) => {
-                const el = element;
-                const { attributes } = el;
-                [].forEach.call(attributes, (a) => {
+            Array.from(content).forEach((el) => {
+                const element = el;
+                const { attributes } = element;
+                Array.from(attributes).forEach((a) => {
                     const attribute = a.name;
                     if (attribute.charAt(0) === ':') { // dynamic props
-                        const parsed = this.parse(el.getAttribute(attribute) || '');
+                        const parsed = this.parse(element.getAttribute(attribute) || '');
                         const native = attribute.substring(1);
                         const res = this.run(parsed);
                         switch (native) {
                             case 'text':
-                                el.innerText = res;
+                                element.innerText = res;
                                 break;
                             case 'disabled':
-                                console.log(`${res}`);
-                                el.disabled = (res === 'true');
+                                element.disabled = (res === 'true');
                                 break;
                             default:
-                                el.setAttribute(native, res);
+                                element.setAttribute(native, res);
                         }
                     }
                     if (attribute.charAt(0) === '@') { // inline event handlers
-                        const parsed = this.parse(el.getAttribute(attribute) || '');
+                        const parsed = this.parse(element.getAttribute(attribute) || '');
                         if (this.methods[parsed.func]) {
                             const key = `on${attribute.substring(1)}`;
-                            if (key in el) {
-                                el[key] = () => this.run(parsed);
+                            if (key in element) {
+                                element[key] = () => this.run(parsed);
                             }
                             else {
                                 throw new Error(`event '${key}' does not exist`);
