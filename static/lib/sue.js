@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from "./event-bus.js";
+const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
+    'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
+    'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
+    'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
+    'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
+    'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
+    'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
+    'onwaiting'];
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
@@ -22,10 +30,12 @@ const sue = (i) => {
             // dataChange eventBus handler
             this.setData = (...args) => {
                 const [variable, value] = args;
-                // if (!Object.hasOwnProperty.call(this.data, variable)) {
-                //   throw new Error(`${variable} undefined`);
-                // }
-                this.data[variable] = value;
+                if (this.active) {
+                    if (!Object.hasOwnProperty.call(this.data, variable)) {
+                        throw new Error(`${this.name}: trying to set ${value} to undefined variable ${variable}`);
+                    }
+                    this.data[variable] = value;
+                }
             };
             // update eventBus handler
             this.update = () => {
@@ -36,7 +46,6 @@ const sue = (i) => {
             this.name = init.name;
             if (!this.name)
                 throw new Error('Component name is not defined');
-            // this.hide();
             this.EventBus = new EventBus();
             this.EventBus.on('update', this.update);
             this.EventBus.on('dataChange', this.setData);
@@ -55,7 +64,6 @@ const sue = (i) => {
             this.init.created = this.init.created.bind(this);
             this.init.mounted = this.init.mounted.bind(this);
             this.init.created();
-            // window.sApp = this;
         }
         makeProxy(data) {
             return new Proxy(data, {
@@ -67,10 +75,8 @@ const sue = (i) => {
                         // eslint-disable-next-line no-console
                         console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `, 'background: #333; color: #f55');
                     }
-                    if (window.sApp === this) {
-                        target[prop] = value;
-                        this.EventBus.emit('update');
-                    }
+                    target[prop] = value;
+                    this.EventBus.emit('update');
                     return true;
                 },
                 deleteProperty(target, prop) {
@@ -80,13 +86,11 @@ const sue = (i) => {
         }
         // get result from user defined methods
         run(parsed) {
-            if (!this.connected)
-                return '';
+            // if (!this.active) return '';
             if (!this.methods[parsed.func]) {
                 throw new Error(`Method ${parsed.func} is not defined`);
             }
-            const res = this.methods[parsed.func](...parsed.params.map((e) => {
-                console.log(`param is ${e}`);
+            let res = this.methods[parsed.func](...parsed.params.map((e) => {
                 // param is plain string
                 const stringRes = e.match(/^['"]([a-z0-9_: ]+)['"]$/i);
                 if (stringRes) {
@@ -99,12 +103,18 @@ const sue = (i) => {
                 // param is data property
                 return this.data[e];
             }));
+            // method returns undef
+            if (typeof res === 'undefined') {
+                res = false;
+            }
             return (parsed.not ? !res : res).toString();
         }
         // это не оптимальный метод и точно не окончательный
         // он работает напрямую с ДОМ и не учитывает вложенность
         // был создан только для отработки динамических атрибутов.
         render() {
+            if (!this.connected || !this.active)
+                return;
             this.rendering = true;
             const content = this.querySelectorAll('*');
             [].forEach.call(content, (element) => {
@@ -121,6 +131,7 @@ const sue = (i) => {
                                 el.innerText = res;
                                 break;
                             case 'disabled':
+                                console.log(`${res}`);
                                 el.disabled = (res === 'true');
                                 break;
                             default:
@@ -130,11 +141,16 @@ const sue = (i) => {
                     if (attribute.charAt(0) === '@') { // inline event handlers
                         const parsed = this.parse(el.getAttribute(attribute) || '');
                         if (this.methods[parsed.func]) {
-                            // работает правильно, но нарушает слабую связанность. Будет реализован через addEventListener
-                            el.setAttribute(`on${attribute.substring(1)}`, `sApp.methods.${el.getAttribute(attribute)}`);
+                            const key = `on${attribute.substring(1)}`;
+                            if (key in el) {
+                                el[key] = () => this.run(parsed);
+                            }
+                            else {
+                                throw new Error(`event '${key}' does not exist`);
+                            }
                         }
                         else {
-                            throw new Error(`Method ${parsed.func} does not exist`);
+                            throw new Error(`Method '${parsed.func}' does not exist`);
                         }
                     }
                 });
@@ -175,12 +191,12 @@ const sue = (i) => {
         }
         show() {
             this.style.display = 'block';
-            // this.active = true;
-            window.sApp = this;
+            this.active = true;
+            this.render();
         }
         hide() {
             this.style.display = 'none';
-            // this.active = false;
+            this.active = false;
         }
     };
     customElements.define(init.name, app);

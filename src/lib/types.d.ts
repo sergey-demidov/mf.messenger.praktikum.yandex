@@ -33,3 +33,7 @@ export interface sHTMLElement extends HTMLElement {
   show: Function;
   hide: Function;
 }
+
+export interface sHTMLInputElement extends HTMLInputElement {
+  reset: () => void;
+}

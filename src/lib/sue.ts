@@ -1,12 +1,22 @@
 /* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from './event-bus';
 import { sInit, sParsed, sCustomElementConstructor } from './types';
+import login from '../pages/login';
 
 declare global {
   interface Window {
     sApp: HTMLElement;
   }
 }
+
+const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
+  'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
+  'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
+  'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
+  'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
+  'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
+  'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
+  'onwaiting'] as const;
 
 const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   // need to merge with incomplete init definitions
@@ -29,7 +39,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     name: string;
 
     protected data: Record<string, unknown>
-    // protected data: ProxyHandler<Record<string, unknown>>
 
     methods: Record<string, Function>;
 
@@ -39,8 +48,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     protected active = false
 
-    // template: HTMLElement;
-
     init: sInit
 
     constructor() {
@@ -48,7 +55,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.init = init;
       this.name = init.name;
       if (!this.name) throw new Error('Component name is not defined');
-      // this.hide();
       this.EventBus = new EventBus();
       this.EventBus.on('update', this.update);
       this.EventBus.on('dataChange', this.setData);
@@ -71,16 +77,17 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.init.mounted = this.init.mounted.bind(this);
 
       this.init.created();
-      // window.sApp = this;
     }
 
     // dataChange eventBus handler
     protected setData = (...args: string[]) => {
       const [variable, value] = args;
-      // if (!Object.hasOwnProperty.call(this.data, variable)) {
-      //   throw new Error(`${variable} undefined`);
-      // }
-      this.data[variable] = value;
+      if (this.active) {
+        if (!Object.hasOwnProperty.call(this.data, variable)) {
+          throw new Error(`${this.name}: trying to set ${value} to undefined variable ${variable}`);
+        }
+        this.data[variable] = value;
+      }
     }
 
     // update eventBus handler
@@ -95,14 +102,12 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         },
         set: (target, prop: string, value) => {
           if (this.rendering) {
-          // eslint-disable-next-line no-console
+            // eslint-disable-next-line no-console
             console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `,
               'background: #333; color: #f55');
           }
-          if (window.sApp === this) {
-            target[prop] = value;
-            this.EventBus.emit('update');
-          }
+          target[prop] = value;
+          this.EventBus.emit('update');
           return true;
         },
         deleteProperty(target, prop: string) {
@@ -113,12 +118,11 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     // get result from user defined methods
     protected run(parsed: sParsed): string {
-      if (!this.connected) return '';
+      // if (!this.active) return '';
       if (!this.methods[parsed.func]) {
         throw new Error(`Method ${parsed.func} is not defined`);
       }
-      const res = this.methods[parsed.func](...parsed.params.map((e) => {
-        console.log(`param is ${e}`);
+      let res = this.methods[parsed.func](...parsed.params.map((e) => {
         // param is plain string
         const stringRes = e.match(/^['"]([a-z0-9_: ]+)['"]$/i);
         if (stringRes) {
@@ -131,6 +135,10 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         // param is data property
         return this.data[e];
       }));
+      // method returns undef
+      if (typeof res === 'undefined') {
+        res = false;
+      }
       return (parsed.not ? !res : res).toString();
     }
 
@@ -138,6 +146,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     // он работает напрямую с ДОМ и не учитывает вложенность
     // был создан только для отработки динамических атрибутов.
     protected render(): void {
+      if (!this.connected || !this.active) return;
       this.rendering = true;
       const content = this.querySelectorAll('*');
       [].forEach.call(content, (element: HTMLElement) => { // each element in template
@@ -154,6 +163,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
                 el.innerText = res;
                 break;
               case 'disabled':
+                console.log(`${res}`);
                 (el as HTMLInputElement).disabled = (res === 'true');
                 break;
               default:
@@ -163,10 +173,14 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           if (attribute.charAt(0) === '@') { // inline event handlers
             const parsed = this.parse(el.getAttribute(attribute) || '');
             if (this.methods[parsed.func]) {
-              // работает правильно, но нарушает слабую связанность. Будет реализован через addEventListener
-              el.setAttribute(`on${attribute.substring(1)}`, `sApp.methods.${el.getAttribute(attribute)}`);
+              const key = `on${attribute.substring(1)}`;
+              if (key in el) {
+                el[key as typeof sEventHandlers[number]] = () => this.run(parsed);
+              } else {
+                throw new Error(`event '${key}' does not exist`);
+              }
             } else {
-              throw new Error(`Method ${parsed.func} does not exist`);
+              throw new Error(`Method '${parsed.func}' does not exist`);
             }
           }
         });
@@ -211,13 +225,13 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     show() {
       this.style.display = 'block';
-      // this.active = true;
-      window.sApp = this;
+      this.active = true;
+      this.render();
     }
 
     hide() {
       this.style.display = 'none';
-      // this.active = false;
+      this.active = false;
     }
   };
   customElements.define(init.name, app);

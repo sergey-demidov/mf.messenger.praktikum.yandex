@@ -1,9 +1,9 @@
-import { sApp } from '../../lib/types';
+import { sApp, sHTMLInputElement } from '../../lib/types';
 import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
-import EventBus from '../../lib/event-bus';
+// import EventBus from '../../lib/event-bus';
 
 const profile = sue({
   name: 's-app-profile',
@@ -18,12 +18,25 @@ const profile = sue({
     };
   },
   methods: {
-    onReset(): void {
-      (this as sApp).EventBus.emit('reset');
+    onReset(formName: string): boolean {
+      const form = document.forms.namedItem(formName);
+      if (form) {
+        Array.from(form.elements).forEach((el) => {
+          const element = <sHTMLInputElement>el;
+          if (typeof element.reset === 'function') element.reset();
+        });
+      }
+      return false;
     },
     formIsValid(formName: string): boolean {
-      // console.dir(formName);
+      console.log(`${formName} validate`);
       const form = document.forms.namedItem(formName);
+      // if (form) {
+      //   Array.from(form.elements).forEach((el) => {
+      //     const element = <sHTMLInputElement>el;
+      //     if (typeof element.validate === 'function') element.reset();
+      //   });
+      // }
       return (form as HTMLFormElement).checkValidity();
     },
     submitForm(formName: string): void {
@@ -42,8 +55,8 @@ const profile = sue({
       }
     },
     // Превью аватара с обработкой ошибок
-    loadImage(element: HTMLInputElement): void {
-      const fileInput = element;
+    loadImage(): void {
+      const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
       const avatarPreview = <HTMLSourceElement>document.getElementById('avatarPreview');
       if (!avatarPreview || !fileInput || !fileInput.files) {
         throw new Error(`avatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
@@ -70,9 +83,6 @@ const profile = sue({
   components: {
     's-input': sInput,
     's-btn': sButton,
-  },
-  mounted() {
-    (this.EventBus as EventBus).emit('reset'); // validate
   },
 });
 

@@ -2,6 +2,7 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
+// import EventBus from '../../lib/event-bus';
 const profile = sue({
     name: 's-app-profile',
     template,
@@ -15,12 +16,26 @@ const profile = sue({
         };
     },
     methods: {
-        onReset() {
-            this.EventBus.emit('reset');
+        onReset(formName) {
+            const form = document.forms.namedItem(formName);
+            if (form) {
+                Array.from(form.elements).forEach((el) => {
+                    const element = el;
+                    if (typeof element.reset === 'function')
+                        element.reset();
+                });
+            }
+            return false;
         },
         formIsValid(formName) {
-            // console.dir(formName);
+            console.log(`${formName} validate`);
             const form = document.forms.namedItem(formName);
+            // if (form) {
+            //   Array.from(form.elements).forEach((el) => {
+            //     const element = <sHTMLInputElement>el;
+            //     if (typeof element.validate === 'function') element.reset();
+            //   });
+            // }
             return form.checkValidity();
         },
         submitForm(formName) {
@@ -37,8 +52,8 @@ const profile = sue({
             }
         },
         // Превью аватара с обработкой ошибок
-        loadImage(element) {
-            const fileInput = element;
+        loadImage() {
+            const fileInput = document.getElementById('avatarInput');
             const avatarPreview = document.getElementById('avatarPreview');
             if (!avatarPreview || !fileInput || !fileInput.files) {
                 throw new Error(`avatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
@@ -64,9 +79,6 @@ const profile = sue({
     components: {
         's-input': sInput,
         's-btn': sButton,
-    },
-    mounted() {
-        this.EventBus.emit('reset'); // validate
     },
 });
 export default profile;

@@ -8,9 +8,9 @@ const register = sue({
   name: 's-app-register-modal',
   template,
   methods: {
-    onReset(): void {
-      (this as sApp).EventBus.emit('reset');
-    },
+    // onReset(): void {
+    //   (this as sApp).EventBus.emit('reset');
+    // },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
       return (form as HTMLFormElement).checkValidity();

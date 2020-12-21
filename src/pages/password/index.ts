@@ -14,14 +14,16 @@ const password = sue({
   },
   methods: {
     concat(...args: string[]): string {
-      console.log(args.join(''));
       return args.join('');
     },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
+      console.log(`formIsValid ${formName}`);
+      console.log((form as HTMLFormElement).checkValidity());
       return (form as HTMLFormElement).checkValidity();
     },
     submitForm(formName: string): void {
+      console.log('submitForm');
       const form = document.forms.namedItem(formName);
       if ((this as sApp).methods.formIsValid(formName)) { // validate
         const formData = new FormData(form as HTMLFormElement);

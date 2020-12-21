@@ -34,25 +34,27 @@ class Validate {
   validate(input: string, ruleset: string): validateResult {
     const result: validateResult = { valid: true, message: 'Ok' };
     ruleset.split(' ').every((r) => {
+      // "match:PassWorD" compare to another field
       const ruleMatch = r.match(/^match:(.*)/);
       if (ruleMatch) {
         const [, value] = ruleMatch;
         if (input !== value) {
           result.valid = false;
-          result.message = 'password nom match';
-          return false;
+          result.message = 'passwords not match';
+          return false; // last every
         }
-        return true;
+        return true; // next every
       }
       if (!this.rules[r]) {
         throw new Error(`Cant validate: rule '${r}' dont exist`);
       }
+      // regexp rules
       if (!input.match(this.rules[r].regexp)) {
         result.valid = false;
         result.message = this.rules[r].message;
-        return false; // last every()
+        return false; // last every
       }
-      return true; // next every()
+      return true; // next every
     });
     return result;
   }
