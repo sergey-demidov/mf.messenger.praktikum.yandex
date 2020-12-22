@@ -31,6 +31,7 @@ class sButton extends HTMLElement {
     if (this.hasAttribute('block')) {
       this.classList.add('mpy_button__block');
     }
+    this.classList.add('unselectable');
   }
 }
 

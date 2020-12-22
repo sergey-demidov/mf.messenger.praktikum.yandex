@@ -1,12 +1,13 @@
 import { queryStringify, PlainObject } from './utils';
 
-type DataType = Record<string, string | number | Array<string> | Array<number> | boolean> | FormData;
+export type DataType = Record<string, string | number | Array<string> | Array<number> | boolean> | FormData;
 
 export type HttpRequestOptions = {
   method?: string;
   data?: DataType;
   headers?: Record<string, string>;
   timeout?: number;
+  withCredentials?: boolean;
 }
 
 export default class HttpTransport {
@@ -18,27 +19,35 @@ export default class HttpTransport {
     DELETE: 'DELETE',
   });
 
+  prefix: string;
+
+  baseUrl = 'https://ya-praktikum.tech/api/v2';
+
+  constructor(prefix: string) {
+    this.prefix = prefix;
+  }
+
   get = (url: string, options: HttpRequestOptions = {}): Promise<XMLHttpRequest> => this.request(url, {
     ...options,
     method: this.METHODS.GET,
-  }, options.timeout)
+  }, options.timeout, options.withCredentials)
 
   put = (url: string, options: HttpRequestOptions = {}): Promise<XMLHttpRequest> => this.request(url, {
     ...options,
     method: this.METHODS.PUT,
-  }, options.timeout);
+  }, options.timeout, options.withCredentials);
 
   post = (url: string, options: HttpRequestOptions = {}): Promise<XMLHttpRequest> => this.request(url, {
     ...options,
     method: this.METHODS.POST,
-  }, options.timeout);
+  }, options.timeout, options.withCredentials);
 
   delete = (url: string, options: HttpRequestOptions = {}): Promise<XMLHttpRequest> => this.request(url, {
     ...options,
     method: this.METHODS.DELETE,
-  }, options.timeout);
+  }, options.timeout, options.withCredentials);
 
-  request(url: string, options: HttpRequestOptions, timeout = 3000): Promise<XMLHttpRequest> {
+  request(url: string, options: HttpRequestOptions, timeout = 3000, withCredentials = true): Promise<XMLHttpRequest> {
     const { headers, data, method } = options;
 
     const sendURL = (method === this.METHODS.GET) ? `${url}?${queryStringify(data as PlainObject)}` : url;
@@ -46,7 +55,8 @@ export default class HttpTransport {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.timeout = timeout;
-      xhr.open(method as string, sendURL);
+      xhr.withCredentials = withCredentials;
+      xhr.open(method as string, this.baseUrl + this.prefix + sendURL);
       if (!headers || Object.keys(headers).length === 0) {
         xhr.setRequestHeader('Content-Type', 'text/plain');
       } else {

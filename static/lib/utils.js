@@ -47,4 +47,13 @@ export function isEqual(lhs, rhs) {
     }
     return true;
 }
+export function isJsonString(str) {
+    try {
+        JSON.parse(str);
+    }
+    catch (e) {
+        return false;
+    }
+    return true;
+}
 //# sourceMappingURL=utils.js.map

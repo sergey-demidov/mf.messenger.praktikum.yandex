@@ -8,27 +8,33 @@ export default `<div class="mpy_overlay">
         <form name="register" action="/">
           <div class="mpy_dialog_content mpy_lightgrey mpy_pt10">
             <s-input
+              value="wwwwwwww"
               name="login"
               s-validate="min_6 no_spaces letters_only">
             </s-input>
             <s-input
+              value="wwwwwwww"
               name="password"
               type="password"
               s-validate="min_8">
             </s-input>
             <s-input
+              value="wwwwwwww"
               name="first_name"
               s-validate="min_6 no_spaces letters_only">
             </s-input>
             <s-input
+              value="wwwwwwww"
               name="second_name"
               s-validate="min_6 no_spaces letters_only">
             </s-input>
             <s-input
+              value="wwwwwwww@ya.ru"
               name="email"
               s-validate="email">
             </s-input>
             <s-input
+              value="+70987654321"
               name="phone"
               s-validate="phone">
             </s-input>
@@ -37,9 +43,9 @@ export default `<div class="mpy_overlay">
         </form>
       </main>
       <footer class="mpy_dialog_footer mpy_lightgrey">
+<!--          :disabled="!formIsValid('register')"-->
         <s-btn
           tabindex="0"
-          :disabled="!formIsValid('register')"
           @click="submitForm('register')">
           Submit
         </s-btn>
@@ -53,5 +59,6 @@ export default `<div class="mpy_overlay">
       </footer>
     </div>
   </div>
+  <s-toaster>
 </div>
 `;

@@ -29,9 +29,9 @@ class sInput extends HTMLElement {
         this.inputElement.autofocus = this.autofocus;
         this.autofocus = false;
         this.validateRules = this.getAttribute('s-validate') || 'pass';
-        if (this.validateRules !== 'pass') {
-            this.inputElement.setCustomValidity('XXX'); // make invalid by default
-        }
+        // if (this.validateRules !== 'pass') {
+        //   this.inputElement.setCustomValidity('XXX'); // make invalid by default
+        // }
         this.appendChild(this.labelElement);
         this.appendChild(this.inputElement);
         this.inputElement.addEventListener('focus', () => this.validate());
