@@ -33,6 +33,43 @@ body {
     justify-content: space-between;
 }
 
+.mpy_toaster_wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    min-width: 50vw;
+    right: 20px;
+    bottom: 20px;
+    z-index: 15;
+    padding: 0 10px;
+}
+
+.mpy_toaster_toast {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    margin: 5px 0;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px #0009;
+    box-sizing: border-box;
+    text-shadow: 0 0 3px #0007;
+    transition: all 500ms;
+}
+
+.mpy_toaster_toast__error {
+    background-image: linear-gradient(to right, #f67, #b56);
+}
+
+.mpy_toaster_toast__warn {
+    background-image: linear-gradient(to right,  #ee6, #bb3);
+}
+
+.mpy_toaster_toast__info {
+    background-image: linear-gradient(to right, #8e9, #5b6);
+}
+
+
 .mpy_navigation_link {
     color: #eee;
     text-align: center;
@@ -255,6 +292,7 @@ body {
     overflow: hidden;
     box-shadow: 0 5px 20px #0007;
     animation: fadeInAnimation ease-out 300ms;
+    z-index: 20;
 }
 
 
