@@ -3,23 +3,13 @@ import EventBus from './event-bus';
 import {
   sInit, sParsed, sCustomElementConstructor, sEvents,
 } from './types';
+import { CONST } from './utils';
 
 declare global {
   interface Window {
     sApp: HTMLElement;
   }
 }
-
-// type sEH = 'onabort' | 'onblur'
-//
-// const sEventHandlers = ['onabort', 'onblur', 'oncancel', 'oncanplay', 'oncanplaythrough', 'onchange', 'onclick',
-//   'oncuechange', 'ondblclick', 'ondurationchange', 'onemptied', 'onended', 'onerror', 'onfocus',
-//   'oninput', 'oninvalid', 'onkeydown', 'onkeypress', 'onkeyup', 'onload', 'onloadeddata',
-//   'onloadedmetadata', 'onloadstart', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove',
-//   'onmouseout', 'onmouseover', 'onmouseup', 'onpause', 'onplay', 'onplaying', 'onprogress',
-//   'onratechange', 'onreset', 'onresize', 'onscroll', 'onseeked', 'onseeking', 'onselect',
-//   'onstalled', 'onsubmit', 'onsuspend', 'ontimeupdate', 'ontoggle', 'onvolumechange',
-//   'onwaiting'] as const;
 
 const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   // need to merge with incomplete init definitions
@@ -59,7 +49,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.name = init.name;
       if (!this.name) throw new Error('Component name is not defined');
       this.EventBus = new EventBus();
-      this.EventBus.on('update', this.update);
+      this.EventBus.on(CONST.update, this.update);
       this.EventBus.on('dataChange', this.setData);
 
       // define each components
@@ -110,7 +100,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
               'background: #333; color: #f55');
           }
           target[prop] = value;
-          this.EventBus.emit('update');
+          this.EventBus.emit(CONST.update);
           return true;
         },
         deleteProperty(target, prop: string) {
@@ -132,33 +122,29 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           return stringRes[1];
         }
         // param is undefined data property
-        if (typeof this.data[e] === 'undefined') {
+        if (typeof this.data[e] === CONST.undefined) {
           throw new Error(`${e} undefined`);
         }
         // param is data property
         return this.data[e];
       }));
       // method returns undef
-      if (typeof res === 'undefined') {
+      if (typeof res === CONST.undefined) {
         res = false;
       }
       return (parsed.not ? !res : res).toString();
     }
 
-    isPresent():boolean {
+    protected isVisible():boolean {
       const style = window.getComputedStyle(this);
-      console.dir(style.visibility);
-      return (style.visibility === 'visible');
+      return (style.visibility === CONST.visible);
     }
 
     // это не оптимальный метод и точно не окончательный
     // он работает напрямую с ДОМ и не учитывает вложенность
     // был создан только для отработки динамических атрибутов.
     protected render(): void {
-      if (!this.isPresent()) return;
-      console.log(`sue render ${this.name}`);
-      console.trace();
-      // if (!this.connected || !this.active) return;
+      if (!this.isVisible()) return;
       this.rendering = true;
       const content = this.querySelectorAll('*');
       Array.from(content).forEach((el) => { // each element in template
@@ -225,27 +211,25 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     connectedCallback() {
       this.innerHTML = init.template;
       this.connected = true;
-      this.EventBus.emit('update');
       this.init.mounted();
+      this.EventBus.emit(CONST.update);
     }
 
-    disconnectedCallback() {
-      this.EventBus.off('update', this.update);
-      this.EventBus.off('dataChange', this.setData);
-    }
+    // disconnectedCallback() {
+    //   this.EventBus.off('update', this.update);
+    //   this.EventBus.off('dataChange', this.setData);
+    // }
 
     show() {
-      this.style.display = 'block';
-      // this.hidden = false;
-      this.style.visibility = 'visible';
+      this.style.display = CONST.block;
+      this.style.visibility = CONST.visible;
       this.active = true;
       this.render();
     }
 
     hide() {
-      this.style.display = 'none';
-      // this.hidden = true;
-      this.style.visibility = 'hidden';
+      this.style.display = CONST.none;
+      this.style.visibility = CONST.hidden;
       this.active = false;
     }
   };

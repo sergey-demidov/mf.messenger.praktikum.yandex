@@ -1,9 +1,10 @@
 import EventBus from "../lib/event-bus.js";
+import { CONST } from "../lib/utils.js";
 class sButton extends HTMLElement {
     constructor() {
         super();
         this.eventBus = new EventBus();
-        if (!this.getAttribute('class')) {
+        if (!this.getAttribute(CONST.class)) {
             this.classList.add('mpy_button');
         }
         if (this.hasAttribute('block')) {
@@ -13,18 +14,18 @@ class sButton extends HTMLElement {
         this.addEventListener('keydown', (e) => this.onKeydown(e));
     }
     get disabled() {
-        return this.hasAttribute('disabled');
+        return this.hasAttribute(CONST.disabled);
     }
     set disabled(val) {
         if (val) {
             this.setAttribute('tabindex', '-1');
             this.classList.add('mpy_button__disabled');
-            this.style.pointerEvents = 'none';
+            this.style.pointerEvents = CONST.none;
         }
         else {
             this.setAttribute('tabindex', '0');
             this.classList.remove('mpy_button__disabled');
-            this.style.pointerEvents = 'auto';
+            this.style.pointerEvents = CONST.auto;
         }
     }
     static get observedAttributes() {

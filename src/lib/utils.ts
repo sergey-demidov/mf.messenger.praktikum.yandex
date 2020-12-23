@@ -83,3 +83,21 @@ export function formDataToObject(formData: FormData): Record<string, unknown> {
     [pair[0]]: pair[1],
   }), {});
 }
+
+export const CONST = Object.freeze({
+  undefined: 'undefined',
+  none: 'none',
+  auto: 'auto',
+  visible: 'visible',
+  hidden: 'hidden',
+  block: 'block',
+  update: 'update',
+  div: 'div',
+  click: 'click',
+  flex: 'flex',
+  disabled: 'disabled',
+  class: 'class',
+  error: 'error',
+  warn: 'warn',
+  info: 'info',
+});

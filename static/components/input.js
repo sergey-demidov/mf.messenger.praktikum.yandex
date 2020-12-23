@@ -3,9 +3,9 @@ import EventBus from "../lib/event-bus.js";
 const css = Object.freeze({
     wrapper: 'mpy_text_input_wrapper',
     label: 'mpy_text_input_label',
-    label_alert: 'mpy_text_input_label__invalid',
+    label_invalid: 'mpy_text_input_label__invalid',
     input: 'mpy_text_input',
-    input_alert: 'mpy_text_input__invalid',
+    input_invalid: 'mpy_text_input__invalid',
 });
 class sInput extends HTMLElement {
     constructor() {
@@ -62,13 +62,13 @@ class sInput extends HTMLElement {
         this.inputElement.setCustomValidity(result.valid ? '' : result.message);
         this.eventBus.emit('update');
         if (!result.valid) {
-            this.inputElement.classList.add(css.input_alert);
-            this.labelElement.classList.add(css.label_alert);
+            this.inputElement.classList.add(css.input_invalid);
+            this.labelElement.classList.add(css.label_invalid);
             this.setLabel(result.message);
             return;
         }
-        this.inputElement.classList.remove(css.input_alert);
-        this.labelElement.classList.remove(css.label_alert);
+        this.inputElement.classList.remove(css.input_invalid);
+        this.labelElement.classList.remove(css.label_invalid);
         this.setLabel(this.defaultLabel);
     }
     static get observedAttributes() {
