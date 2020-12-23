@@ -27,7 +27,7 @@ class Validate {
       no_spaces: { regexp: new RegExp(/^\S+$/), message: 'no spaces allowed' },
       letters_only: { regexp: new RegExp(/^[a-zа-яё]+$/i), message: 'only letters allowed' },
       email: { regexp: new RegExp(/^\w+[\w-.]*@\w+([-.]\w+)*\.[a-z]{2,}$/i), message: 'need a valid e-mail address' },
-      phone: { regexp: new RegExp(/^\+?\d\(?\d{3}\)?\d([-\d]{8})|([\d]{5})\d$/), message: 'need a valid phone number' },
+      phone: { regexp: new RegExp(/^(8|\+7)[- ]?\)?\(?\d{3}\)?[- ]?\)?[\d- ]{7,10}$/), message: 'need a valid phone number' },
     };
   }
 

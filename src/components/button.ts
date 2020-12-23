@@ -32,6 +32,14 @@ class sButton extends HTMLElement {
       this.classList.add('mpy_button__block');
     }
     this.classList.add('unselectable');
+    this.addEventListener('keydown', (e) => this.onKeydown(e));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onKeydown(e: KeyboardEvent): void {
+    if (e.key === 'Enter') {
+      (e.target as HTMLElement).click();
+    }
   }
 }
 

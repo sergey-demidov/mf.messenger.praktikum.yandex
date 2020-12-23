@@ -1,9 +1,10 @@
 export default `<nav class="mpy_navigation">
   <div>
-    <a href="/" class="mpy_navigation_link">Chat</a>
+    <a href="/#/" class="mpy_navigation_link">Chat</a>
   </div>
   <div>
-    <a href="/#/login" class="mpy_navigation_link">Login</a>
+<!--    <a href="/#/login" class="mpy_navigation_link">Login</a>-->
+  <s-user></s-user>
   </div>
 </nav>
 <div class="mpy_container">
@@ -26,33 +27,37 @@ export default `<nav class="mpy_navigation">
           <s-input
             name="first_name"
             :model="first_name"
-            autofocus
+            valid
             s-validate="min_6 no_spaces letters_only">
           </s-input>
           <s-input
             name="second_name"
             :model="second_name"
+            valid
             s-validate="min_6 no_spaces letters_only">
           </s-input>
           <s-input
             name="email"
             :model="email"
+            valid
             s-validate="email">
           </s-input>
           <s-input
             name="phone"
             :model="phone"
+            valid
             s-validate="phone">
           </s-input>
           <s-input
             name="login"
             :model="login"
+            valid
             s-validate="min_6 no_spaces letters_only">
           </s-input>
           <s-btn
             tabindex="0"
             onclick="window.router.go('/#/password')"
-            block >
+            block>
             Change password
           </s-btn>
 
@@ -70,7 +75,7 @@ export default `<nav class="mpy_navigation">
             Reset
           </s-btn>
           <!-- need to return focus on tab -->
-          <div tabindex="0" onFocus="document.querySelector('[autofocus]').focus()"></div>
+          <div tabindex="0" onFocus="document.querySelector('input[name=first_name]').focus()"></div>
         </div>
       </div>
     </div>

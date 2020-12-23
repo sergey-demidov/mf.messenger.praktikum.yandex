@@ -56,4 +56,13 @@ export function isJsonString(str) {
     }
     return true;
 }
+export function hash8() {
+    return Math.random().toString(36).substr(2, 8);
+}
+export function hash16() {
+    return Math.random().toString(36).substr(2, 8) + Math.random().toString(36).substr(2, 8);
+}
+export function formDataToObject(formData) {
+    return Array.from(formData.entries()).reduce((memo, pair) => (Object.assign(Object.assign({}, memo), { [pair[0]]: pair[1] })), {});
+}
 //# sourceMappingURL=utils.js.map

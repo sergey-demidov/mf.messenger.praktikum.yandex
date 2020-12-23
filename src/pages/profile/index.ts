@@ -3,7 +3,12 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
+import sUser from '../../components/user';
+import { formDataToObject } from '../../lib/utils';
+// import Toaster from '../../lib/toaster';
 // import EventBus from '../../lib/event-bus';
+
+// const toaster = new Toaster();
 
 const profile = sue({
   name: 's-app-profile',
@@ -29,24 +34,14 @@ const profile = sue({
       return false;
     },
     formIsValid(formName: string): boolean {
-      console.log(`${formName} validate`);
       const form = document.forms.namedItem(formName);
-      // if (form) {
-      //   Array.from(form.elements).forEach((el) => {
-      //     const element = <sHTMLInputElement>el;
-      //     if (typeof element.validate === 'function') element.reset();
-      //   });
-      // }
       return (form as HTMLFormElement).checkValidity();
     },
     submitForm(formName: string): void {
       const form = document.forms.namedItem(formName);
       if ((this as sApp).methods.formIsValid(formName)) { // validate
         const formData = new FormData(form as HTMLFormElement);
-        const res = Array.from(formData.entries()).reduce((memo, pair) => ({
-          ...memo,
-          [pair[0]]: pair[1],
-        }), {});
+        const res = formDataToObject(formData);
         // eslint-disable-next-line no-console
         console.dir(res); // print result
       } else {
@@ -83,6 +78,7 @@ const profile = sue({
   components: {
     's-input': sInput,
     's-btn': sButton,
+    's-user': sUser,
   },
 });
 

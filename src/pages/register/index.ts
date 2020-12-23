@@ -2,10 +2,11 @@ import { sApp } from '../../lib/types';
 import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
-import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import template from './template';
+import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthAPI from '../../api/auth';
-import { isJsonString } from '../../lib/utils';
+import { formDataToObject, isJsonString } from '../../lib/utils';
+import { HttpDataType } from '../../lib/http-transport';
 
 const auth = new AuthAPI();
 const toaster = new Toaster();
@@ -30,13 +31,8 @@ const register = sue({
       const form = document.forms.namedItem(formName);
       if ((this as sApp).methods.formIsValid(formName)) { // validate
         const formData = new FormData(form as HTMLFormElement);
-        const res = Array.from(formData.entries()).reduce((memo, pair) => ({
-          ...memo,
-          [pair[0]]: pair[1],
-        }), {});
-        // eslint-disable-next-line no-console
-        console.dir(res); // print result
-        auth.singUp(res)
+        const res = formDataToObject(formData);
+        auth.signUp(res as HttpDataType)
           .then((response) => {
             if (response.status === 200) {
               return response;
@@ -46,18 +42,16 @@ const register = sue({
             }
             throw new Error(response.response);
           })
-          .then((r) => {
-            console.log(r);
+          .then(() => {
+            window.router.go('/#/');
           })
           .catch((error) => {
-            console.dir(error);
             let message = error;
             if (error instanceof ProgressEvent) message = 'Error: Internet has broken down';
             toaster.toast(message, ToasterMessageTypes.error);
           });
       } else {
-        // eslint-disable-next-line no-console
-        console.log('form is not valid');
+        toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
       }
     },
   },

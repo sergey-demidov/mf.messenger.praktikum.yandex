@@ -46,13 +46,10 @@ class sInput extends HTMLElement {
     this.inputElement.spellcheck = false;
     this.inputElement.autocomplete = 'off';
 
-    this.inputElement.autofocus = this.autofocus;
-    this.autofocus = false;
-
     this.validateRules = this.getAttribute('s-validate') || 'pass';
-    // if (this.validateRules !== 'pass') {
-    //   this.inputElement.setCustomValidity('XXX'); // make invalid by default
-    // }
+    if (this.validateRules !== 'pass' && !this.hasAttribute('valid')) {
+      this.inputElement.setCustomValidity('invalid'); // make invalid
+    }
 
     this.appendChild(this.labelElement);
     this.appendChild(this.inputElement);
@@ -122,6 +119,12 @@ class sInput extends HTMLElement {
     }
     if (name === 's-validate') {
       this.validateRules = newValue;
+    }
+  }
+
+  connectedCallback():void {
+    if (this.autofocus) {
+      this.inputElement.focus();
     }
   }
 }

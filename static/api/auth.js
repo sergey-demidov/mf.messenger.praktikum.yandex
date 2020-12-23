@@ -7,14 +7,14 @@ class AuthAPI {
     constructor() {
         this.fetch = new HttpTransport('/auth');
     }
-    singUp(userData) {
+    signUp(userData) {
         return this.fetch.post('/signup', { data: userData, headers });
     }
     signIn(userData) {
         return this.fetch.post('/signin', { data: userData, headers });
     }
     getUser() {
-        return this.fetch.get('/user');
+        return this.fetch.get('/user', {});
     }
     logOut() {
         return this.fetch.post('/logout', { headers });

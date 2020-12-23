@@ -6,7 +6,6 @@ class Router {
         if (Router.instance) {
             return Router.instance;
         }
-        console.log('router constructor');
         Router.instance = this;
         this.routes = [];
         this.root = root;
@@ -22,8 +21,9 @@ class Router {
         return this;
     }
     start() {
-        console.log('router start');
         window.onhashchange = (event) => {
+            // window.location = document.referrer;
+            console.log('onhashchange');
             this._onRoute(event.currentTarget.location.hash);
         };
         window.onpopstate = (event) => {
@@ -33,7 +33,6 @@ class Router {
         this._onRoute(window.location.hash);
     }
     _onRoute(pathname) {
-        console.log(`route ${pathname}`);
         const route = this.getRoute(pathname);
         if (!route) {
             if (pathname !== '/#/404') {
@@ -49,8 +48,6 @@ class Router {
         route.render();
     }
     go(pathname) {
-        console.log(`go ${pathname}`);
-        // this.history.pushState({ page: 1 }, 'title 1', '?page=1');
         this.history.pushState({}, '', pathname);
         this._onRoute(pathname);
     }
@@ -61,8 +58,6 @@ class Router {
         this.history.forward();
     }
     getRoute(pathname) {
-        console.log(`getRoute ${pathname}`);
-        console.dir(this.routes);
         return this.routes.find((r) => r.match(pathname.charAt(0) === '/' ? pathname.substring(1) : pathname));
     }
 }

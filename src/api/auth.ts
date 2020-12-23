@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import HttpTransport, { DataType } from '../lib/http-transport';
+import HttpTransport, { HttpDataType } from '../lib/http-transport';
 
 const headers = {
   'Content-type': 'application/json',
@@ -12,19 +12,19 @@ class AuthAPI {
     this.fetch = new HttpTransport('/auth');
   }
 
-  singUp(userData: DataType) {
+  signUp(userData: HttpDataType): Promise<XMLHttpRequest> {
     return this.fetch.post('/signup', { data: userData, headers });
   }
 
-  signIn(userData: DataType) {
+  signIn(userData: HttpDataType): Promise<XMLHttpRequest> {
     return this.fetch.post('/signin', { data: userData, headers });
   }
 
-  getUser() {
-    return this.fetch.get('/user');
+  getUser(): Promise<XMLHttpRequest> {
+    return this.fetch.get('/user', {});
   }
 
-  logOut() {
+  logOut(): Promise<XMLHttpRequest> {
     return this.fetch.post('/logout', { headers });
   }
 }

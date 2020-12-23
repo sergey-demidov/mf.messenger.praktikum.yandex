@@ -44,7 +44,7 @@ export default `
           Back
         </s-btn>
         <!-- need to return focus on tab-->
-        <div tabindex="0" onFocus="document.querySelector('input[name=login]').focus()"></div>
+        <div tabindex="0" onFocus="document.querySelector('input[name=oldPassword]').focus()"></div>
       </footer>
     </div>
   </div>

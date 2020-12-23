@@ -16,12 +16,9 @@ const password = sue({
         },
         formIsValid(formName) {
             const form = document.forms.namedItem(formName);
-            console.log(`formIsValid ${formName}`);
-            console.log(form.checkValidity());
             return form.checkValidity();
         },
         submitForm(formName) {
-            console.log('submitForm');
             const form = document.forms.namedItem(formName);
             if (this.methods.formIsValid(formName)) { // validate
                 const formData = new FormData(form);

@@ -35,10 +35,12 @@ class Route {
   }
 
   render(): void {
-    console.dir(this.element);
     if (!this.element.parentElement) {
       this.root.appendChild(this.element);
     }
+    console.dir(window.location);
+    console.dir(document.referrer);
+    // window.location.href = document.referrer;
     this.element.show();
   }
 

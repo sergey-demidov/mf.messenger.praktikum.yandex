@@ -1,10 +1,10 @@
 import { queryStringify, PlainObject } from './utils';
 
-export type DataType = Record<string, string | number | Array<string> | Array<number> | boolean> | FormData;
+export type HttpDataType = Record<string, string | number | Array<string> | Array<number> | boolean>;
 
 export type HttpRequestOptions = {
   method?: string;
-  data?: DataType;
+  data?: HttpDataType;
   headers?: Record<string, string>;
   timeout?: number;
   withCredentials?: boolean;
@@ -50,7 +50,7 @@ export default class HttpTransport {
   request(url: string, options: HttpRequestOptions, timeout = 3000, withCredentials = true): Promise<XMLHttpRequest> {
     const { headers, data, method } = options;
 
-    const sendURL = (method === this.METHODS.GET) ? `${url}?${queryStringify(data as PlainObject)}` : url;
+    const sendURL = (method === this.METHODS.GET && data) ? `${url}?${queryStringify(data as PlainObject)}` : url;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();

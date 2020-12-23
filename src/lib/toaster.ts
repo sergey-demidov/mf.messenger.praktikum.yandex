@@ -1,5 +1,4 @@
-import EventBus from './event-bus';
-import Queue from './queue';
+import { hash8 } from './utils';
 
 export const ToasterMessageTypes = Object.freeze({
   info: 'info',
@@ -8,22 +7,19 @@ export const ToasterMessageTypes = Object.freeze({
 });
 
 type sToast = {
-  message: string,
+  message: string
   type: string
+  id: string
 }
 
 export default class Toaster {
   private static instance: Toaster;
 
-  queue = new Queue();
-
-  eventBus = new EventBus();
-
-  timeout = 4000;
+  timeout = 5000;
 
   wrapper = document.createElement('div')
 
-  constructor(timeout = 4000) {
+  constructor(timeout = 5000) {
     if (Toaster.instance) {
       return Toaster.instance;
     }
@@ -34,26 +30,30 @@ export default class Toaster {
   }
 
   toast(message: string, type = ToasterMessageTypes.info): void {
-    this.queue.enqueue(<sToast>{ message, type });
-    this.render();
+    const id = hash8();
+    this.wrapper.appendChild(this.makeToast(<sToast>{ message, type, id }));
     setTimeout(() => {
-      this.queue.dequeue();
-      this.render();
+      this.untoast(id);
     }, this.timeout);
   }
 
-  render(): void {
-    this.wrapper.innerHTML = '';
-    Array.from(this.queue.values()).forEach((t) => {
-      const toast = <sToast>t;
-      const toastElement = document.createElement('div');
-      toastElement.classList.add('mpy_toaster_toast');
-      toastElement.classList.add(`mpy_toaster_toast__${toast.type}`);
-      toastElement.innerText = toast.message;
-      this.wrapper.appendChild(toastElement);
+  // eslint-disable-next-line class-methods-use-this
+  untoast(id: string): void {
+    const toastElement = document.getElementById(id);
+    if (toastElement) {
+      toastElement.style.opacity = '0';
       setTimeout(() => {
-        toastElement.style.opacity = '0';
-      }, this.timeout - 500);
-    });
+        toastElement.remove();
+      }, 333);
+    }
+  }
+
+  makeToast(toast: sToast): HTMLElement {
+    const toastElement = document.createElement('div');
+    toastElement.id = toast.id;
+    toastElement.classList.add('mpy_toaster_toast', `mpy_toaster_toast__${toast.type}`, 'unselectable');
+    toastElement.innerText = toast.message;
+    toastElement.onclick = () => this.untoast(toast.id);
+    return toastElement;
   }
 }
