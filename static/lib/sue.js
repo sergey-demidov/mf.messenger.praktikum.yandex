@@ -111,12 +111,20 @@ const sue = (i) => {
             }
             return (parsed.not ? !res : res).toString();
         }
+        isPresent() {
+            const style = window.getComputedStyle(this);
+            console.dir(style.visibility);
+            return (style.visibility === 'visible');
+        }
         // это не оптимальный метод и точно не окончательный
         // он работает напрямую с ДОМ и не учитывает вложенность
         // был создан только для отработки динамических атрибутов.
         render() {
-            if (!this.connected || !this.active)
+            if (!this.isPresent())
                 return;
+            console.log(`sue render ${this.name}`);
+            console.trace();
+            // if (!this.connected || !this.active) return;
             this.rendering = true;
             const content = this.querySelectorAll('*');
             Array.from(content).forEach((el) => {
@@ -192,11 +200,15 @@ const sue = (i) => {
         }
         show() {
             this.style.display = 'block';
+            // this.hidden = false;
+            this.style.visibility = 'visible';
             this.active = true;
             this.render();
         }
         hide() {
             this.style.display = 'none';
+            // this.hidden = true;
+            this.style.visibility = 'hidden';
             this.active = false;
         }
     };

@@ -12,6 +12,8 @@ window.router = new Router(root);
 document.addEventListener('DOMContentLoaded', () => {
     window.router
         .use('/', chat)
+        .use('/#', chat)
+        .use('/#/', chat)
         .use('/#/login', login)
         .use('/#/profile', profile)
         .use('/#/register', register)

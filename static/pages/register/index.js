@@ -1,10 +1,10 @@
 import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
-import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import template from "./template.js";
+import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
-import { isJsonString } from "../../lib/utils.js";
+import { formDataToObject, isJsonString } from "../../lib/utils.js";
 const auth = new AuthAPI();
 const toaster = new Toaster();
 const register = sue({
@@ -27,10 +27,8 @@ const register = sue({
             const form = document.forms.namedItem(formName);
             if (this.methods.formIsValid(formName)) { // validate
                 const formData = new FormData(form);
-                const res = Array.from(formData.entries()).reduce((memo, pair) => (Object.assign(Object.assign({}, memo), { [pair[0]]: pair[1] })), {});
-                // eslint-disable-next-line no-console
-                console.dir(res); // print result
-                auth.singUp(res)
+                const res = formDataToObject(formData);
+                auth.signUp(res)
                     .then((response) => {
                     if (response.status === 200) {
                         return response;
@@ -40,11 +38,10 @@ const register = sue({
                     }
                     throw new Error(response.response);
                 })
-                    .then((r) => {
-                    console.log(r);
+                    .then(() => {
+                    window.router.go('/#/');
                 })
                     .catch((error) => {
-                    console.dir(error);
                     let message = error;
                     if (error instanceof ProgressEvent)
                         message = 'Error: Internet has broken down';
@@ -52,8 +49,7 @@ const register = sue({
                 });
             }
             else {
-                // eslint-disable-next-line no-console
-                console.log('form is not valid');
+                toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
             }
         },
     },

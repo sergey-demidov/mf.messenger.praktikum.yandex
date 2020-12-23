@@ -10,6 +10,7 @@ class sButton extends HTMLElement {
             this.classList.add('mpy_button__block');
         }
         this.classList.add('unselectable');
+        this.addEventListener('keydown', (e) => this.onKeydown(e));
     }
     get disabled() {
         return this.hasAttribute('disabled');
@@ -28,6 +29,12 @@ class sButton extends HTMLElement {
     }
     static get observedAttributes() {
         return ['disabled'];
+    }
+    // eslint-disable-next-line class-methods-use-this
+    onKeydown(e) {
+        if (e.key === 'Enter') {
+            e.target.click();
+        }
     }
 }
 export default sButton;

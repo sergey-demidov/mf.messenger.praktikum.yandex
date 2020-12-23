@@ -18,7 +18,6 @@ class Router {
     if (Router.instance) {
       return Router.instance;
     }
-    console.log('router constructor');
     Router.instance = this;
     this.routes = [];
     this.root = root;
@@ -32,13 +31,13 @@ class Router {
   use(pathname: string, view: sCustomElementConstructor): Router {
     const route = new Route(pathname, view, this.root);
     this.routes.push(route);
-
     return this;
   }
 
   start(): void {
-    console.log('router start');
     window.onhashchange = (event: HashChangeEvent): void => {
+      // window.location = document.referrer;
+      console.log('onhashchange');
       this._onRoute((event.currentTarget as Window).location.hash);
     };
 
@@ -51,7 +50,6 @@ class Router {
   }
 
   _onRoute(pathname: string): void {
-    console.log(`route ${pathname}`);
     const route = this.getRoute(pathname);
     if (!route) {
       if (pathname !== '/#/404') {
@@ -70,8 +68,6 @@ class Router {
   }
 
   go(pathname: string): void {
-    console.log(`go ${pathname}`);
-    // this.history.pushState({ page: 1 }, 'title 1', '?page=1');
     this.history.pushState({}, '', pathname);
     this._onRoute(pathname);
   }
@@ -85,8 +81,6 @@ class Router {
   }
 
   getRoute(pathname: string): Route | undefined {
-    console.log(`getRoute ${pathname}`);
-    console.dir(this.routes);
     return this.routes.find((r) => r.match(pathname.charAt(0) === '/' ? pathname.substring(1) : pathname));
   }
 }

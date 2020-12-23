@@ -68,3 +68,18 @@ export function isJsonString(str: string): boolean {
   }
   return true;
 }
+
+export function hash8(): string {
+  return Math.random().toString(36).substr(2, 8);
+}
+
+export function hash16(): string {
+  return Math.random().toString(36).substr(2, 8) + Math.random().toString(36).substr(2, 8);
+}
+
+export function formDataToObject(formData: FormData): Record<string, unknown> {
+  return Array.from(formData.entries()).reduce((memo, pair) => ({
+    ...memo,
+    [pair[0]]: pair[1],
+  }), {});
+}

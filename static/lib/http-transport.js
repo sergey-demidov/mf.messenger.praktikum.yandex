@@ -17,7 +17,7 @@ export default class HttpTransport {
     }
     request(url, options, timeout = 3000, withCredentials = true) {
         const { headers, data, method } = options;
-        const sendURL = (method === this.METHODS.GET) ? `${url}?${queryStringify(data)}` : url;
+        const sendURL = (method === this.METHODS.GET && data) ? `${url}?${queryStringify(data)}` : url;
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.timeout = timeout;

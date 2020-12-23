@@ -2,6 +2,7 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
+import sUser from "../../components/user.js";
 const chat = sue({
     name: 's-app-chat',
     template,
@@ -20,6 +21,7 @@ const chat = sue({
     components: {
         's-input': sInput,
         's-btn': sButton,
+        's-user': sUser,
     },
 });
 export default chat;

@@ -19,7 +19,7 @@ export default class Queue<T> {
 
   // Ставит элемент в очередь.
   // Возвращает новый размер очереди.
-  enqueue(value: T) {
+  enqueue(value: T): number {
     const node: ListNode<T> = { value, next: null, prev: null };
     if (!this.tail) {
       this.head = node;
