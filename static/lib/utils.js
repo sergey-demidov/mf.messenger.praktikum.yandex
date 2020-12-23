@@ -65,4 +65,21 @@ export function hash16() {
 export function formDataToObject(formData) {
     return Array.from(formData.entries()).reduce((memo, pair) => (Object.assign(Object.assign({}, memo), { [pair[0]]: pair[1] })), {});
 }
+export const CONST = Object.freeze({
+    undefined: 'undefined',
+    none: 'none',
+    auto: 'auto',
+    visible: 'visible',
+    hidden: 'hidden',
+    block: 'block',
+    update: 'update',
+    div: 'div',
+    click: 'click',
+    flex: 'flex',
+    disabled: 'disabled',
+    class: 'class',
+    error: 'error',
+    warn: 'warn',
+    info: 'info',
+});
 //# sourceMappingURL=utils.js.map
