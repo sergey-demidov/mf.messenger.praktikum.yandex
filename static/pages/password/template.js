@@ -11,6 +11,7 @@ export default `
           <div class="mpy_dialog_content mpy_lightgrey mpy_pt10">
             <s-input
               name="oldPassword"
+              :model="oldPassword"
               label="old password"
               type="password"
               s-validate="required">
@@ -24,6 +25,7 @@ export default `
             </s-input>
             <s-input
               name="newPasswordAgain"
+              :model="newPasswordAgain"
               label="new password again"
               type="password"
               :s-validate="concat('min_8 match:', newPassword)">

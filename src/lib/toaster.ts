@@ -65,7 +65,7 @@ export default class Toaster {
     } else {
       throw new Error(`Can't resolve error ${error}`);
     }
-    this.toast(message);
+    this.toast(message, ToasterMessageTypes.error);
   }
 
   makeToast(toast: sToast): HTMLElement {

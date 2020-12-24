@@ -20,7 +20,7 @@ class UserAPI {
     return this.fetch.put('/profile/avatar', { data });
   }
 
-  password(data: HttpDataType): Promise<XMLHttpRequest> {
+  changePassword(data: HttpDataType): Promise<XMLHttpRequest> {
     return this.fetch.put('/password', { data, headers });
   }
 }

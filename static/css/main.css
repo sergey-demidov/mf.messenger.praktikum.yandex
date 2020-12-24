@@ -652,11 +652,11 @@ body {
 }
 
 .mpy_chat_display_avatar:hover {
-    box-shadow: 1px 1px 4px #000;
+    box-shadow: 2px 2px 5px #000;
 }
 
 .mpy_chat_display_avatar:hover > span {
-    color: #556677;
+    color: #5b6;
 }
 
 .mpy_chat_display_avatar_sign {

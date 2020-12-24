@@ -25,7 +25,7 @@ const profile = sue({
       phone: '',
       login: '',
       avatar: '',
-      avatarBackup: '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200',
+      emptyAvatar: '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200',
 
     };
   },
@@ -83,25 +83,24 @@ const profile = sue({
     },
     // Превью аватара с обработкой ошибок
     loadImage(): void {
-      console.log('loadImage');
       const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
       const avatarPreview = <HTMLSourceElement>document.getElementById('avatarPreview');
       if (!avatarPreview || !fileInput || !fileInput.files) {
         throw new Error(`avatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
       }
       const backupSrc = avatarPreview.src; // сохраняем старое изображение
-      avatarPreview.src = URL.createObjectURL(fileInput.files[0]); // показываем новое
-      this.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
+      // avatarPreview.src = URL.createObjectURL(fileInput.files[0]); // показываем новое
+      (this as sApp).data.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
 
       avatarPreview.onload = () => {
-        console.log('avatarPreview.onload');
         URL.revokeObjectURL(avatarPreview.src); // free memory
       };
 
       // в случае ошибки
       avatarPreview.onerror = () => {
         fileInput.value = '';
-        avatarPreview.src = backupSrc; // возвращаем старое изображение
+        // avatarPreview.src = backupSrc; // возвращаем старое изображение
+        (this as sApp).data.avatar = backupSrc; // возвращаем старое изображение
         // моргаем красным значком
         const errorSign = document.getElementById('errorSign');
         if (!errorSign) {
@@ -121,14 +120,15 @@ const profile = sue({
           }
           throw new Error('unauthorized');
         })
-        .then((user) => {
+        .then((u) => {
+          const user = u;
           const that = <sApp> this;
-          Object.assign(that.data, user);
-          if (!that.data.avatar) {
-            that.data.avatar = that.data.avatarBackup;
+          if (!user.avatar) {
+            user.avatar = that.data.emptyAvatar;
           } else {
-            that.data.avatar = baseUrl + that.data.avatar;
+            user.avatar = baseUrl + user.avatar;
           }
+          Object.assign(that.data, user);
           const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
           if (fileInput) fileInput.value = '';
         }).catch((error) => {
