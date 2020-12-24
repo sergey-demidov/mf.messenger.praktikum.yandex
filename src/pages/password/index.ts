@@ -3,13 +3,22 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
+import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import { formDataToObject } from '../../lib/utils';
+import { HttpDataType } from '../../lib/http-transport';
+import UserAPI from '../../api/user';
+
+const userAPI = new UserAPI();
+const toaster = new Toaster();
 
 const password = sue({
   name: 's-app-password-modal',
   template,
   data() {
     return {
+      oldPassword: '',
       newPassword: '',
+      newPasswordAgain: '',
     };
   },
   methods: {
@@ -22,18 +31,30 @@ const password = sue({
     },
     submitForm(formName: string): void {
       const form = document.forms.namedItem(formName);
-      if ((this as sApp).methods.formIsValid(formName)) { // validate
-        const formData = new FormData(form as HTMLFormElement);
-        const res = Array.from(formData.entries()).reduce((memo, pair) => ({
-          ...memo,
-          [pair[0]]: pair[1],
-        }), {});
-        // eslint-disable-next-line no-console
-        console.dir(res); // print result
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('form is not valid');
+      if (!form) {
+        throw new Error(`form '${formName}' is not exist`);
       }
+      if (!(this as sApp).methods.formIsValid(formName)) { // validate
+        toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+        return;
+      }
+      const formData = new FormData(form);
+      const res = formDataToObject(formData);
+      res.display_name = res.first_name;
+      userAPI.changePassword(res as HttpDataType)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error(response.response);
+          }
+          toaster.toast('Password saved successfully', ToasterMessageTypes.info);
+          (this as sApp).data.oldPassword = '';
+          (this as sApp).data.newPassword = '';
+          (this as sApp).data.newPasswordAgain = '';
+          window.router.back();
+        })
+        .catch((error) => {
+          toaster.bakeError(error);
+        });
     },
   },
   components: {

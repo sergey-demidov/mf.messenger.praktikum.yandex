@@ -13,7 +13,7 @@ class UserAPI {
     saveProfileAvatar(data) {
         return this.fetch.put('/profile/avatar', { data });
     }
-    password(data) {
+    changePassword(data) {
         return this.fetch.put('/password', { data, headers });
     }
 }
