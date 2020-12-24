@@ -16,6 +16,7 @@ export default `
             <s-input
               name="password"
               type="password"
+              :model="password"
               s-validate="min_8">
             </s-input>
             <a tabindex="-1" class="mpy_dialog_link" href="/#/register"> Dont have login? </a>

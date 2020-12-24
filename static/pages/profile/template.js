@@ -1,21 +1,21 @@
 export default `<nav class="mpy_navigation">
   <div>
-    <a href="/#/" class="mpy_navigation_link">Chat</a>
+    <a href="/#/" data-icon="" class="mpy_navigation_link">Chat</a>
   </div>
   <div>
-<!--    <a href="/#/login" class="mpy_navigation_link">Login</a>-->
-  <s-user></s-user>
+    <!--    <a href="/#/login" class="mpy_navigation_link">Login</a>-->
+    <s-user></s-user>
   </div>
 </nav>
 <div class="mpy_container">
-  <form action="/" name="profile" autocomplete="off" spellcheck="false" @reset="onReset('profile')">
+  <form action="/" name="profile" autocomplete="off" spellcheck="false">
     <div class="mpy_main_wrapper">
       <input id="avatarInput" name="avatar" type='file' accept="image/*" @change="loadImage()" hidden/>
       <div class="mpy_content">
         <div class="mpy_dialog_content mpy_white mpy_pt10" style="max-width: 400px;">
           <div class="mpy_avatar_output_wrapper unselectable">
             <img id="avatarPreview" class="mpy_avatar_preview unselectable undraggable"
-                 src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
+                 :src="avatar"
                  width="150" height="150" alt="avatar preview">
             <div class="mpy_avatar_output_icon unselectable" onclick="forms.profile.avatar.click();">
               <span class="material-icons">camera_alt</span>
@@ -26,12 +26,14 @@ export default `<nav class="mpy_navigation">
           </div>
           <s-input
             name="first_name"
+            label="first name"
             :model="first_name"
             valid
             s-validate="min_6 no_spaces letters_only">
           </s-input>
           <s-input
             name="second_name"
+            label="second name"
             :model="second_name"
             valid
             s-validate="min_6 no_spaces letters_only">
@@ -71,7 +73,7 @@ export default `<nav class="mpy_navigation">
           </s-btn>
           <s-btn
             tabindex="0"
-            onclick="forms.profile.reset()">
+            @click="resetForm()">
             Reset
           </s-btn>
           <!-- need to return focus on tab -->

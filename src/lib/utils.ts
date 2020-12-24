@@ -1,4 +1,25 @@
 /* eslint-disable no-restricted-syntax */
+
+export const CONST = Object.freeze({
+  undefined: 'undefined',
+  string: 'string',
+  object: 'object',
+  none: 'none',
+  auto: 'auto',
+  visible: 'visible',
+  hidden: 'hidden',
+  block: 'block',
+  update: 'update',
+  div: 'div',
+  click: 'click',
+  flex: 'flex',
+  disabled: 'disabled',
+  class: 'class',
+  error: 'error',
+  warn: 'warn',
+  info: 'info',
+});
+
 export type PlainObject<T = unknown> = {
   [k in string]: T;
 };
@@ -60,9 +81,10 @@ export function isEqual(lhs: PlainObject, rhs: PlainObject): boolean {
   }
   return true;
 }
-export function isJsonString(str: string): boolean {
+export function isJsonString(str: unknown): boolean {
+  if (typeof str !== CONST.string) return false;
   try {
-    JSON.parse(str);
+    JSON.parse(str as string);
   } catch (e) {
     return false;
   }
@@ -83,21 +105,3 @@ export function formDataToObject(formData: FormData): Record<string, unknown> {
     [pair[0]]: pair[1],
   }), {});
 }
-
-export const CONST = Object.freeze({
-  undefined: 'undefined',
-  none: 'none',
-  auto: 'auto',
-  visible: 'visible',
-  hidden: 'hidden',
-  block: 'block',
-  update: 'update',
-  div: 'div',
-  click: 'click',
-  flex: 'flex',
-  disabled: 'disabled',
-  class: 'class',
-  error: 'error',
-  warn: 'warn',
-  info: 'info',
-});

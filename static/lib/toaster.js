@@ -1,4 +1,4 @@
-import { hash8 } from "./utils.js";
+import { CONST, hash8, isJsonString } from "./utils.js";
 export const ToasterMessageTypes = Object.freeze({
     info: 'info',
     error: 'error',
@@ -32,6 +32,26 @@ export default class Toaster {
                 toastElement.remove();
             }, 333);
         }
+    }
+    bakeError(error) {
+        let message = '';
+        if (!error) {
+            message = 'Error: Something wrong';
+        }
+        else if (error instanceof ProgressEvent) {
+            message = 'Error: Internet has broken down';
+        }
+        else if (isJsonString(error)) {
+            message = JSON.parse(error).reason || error;
+        }
+        else if (typeof error === CONST.object) {
+            // eslint-disable-next-line @typescript-eslint/ban-types
+            message = error.toString();
+        }
+        else {
+            throw new Error(`Can't resolve error ${error}`);
+        }
+        this.toast(message);
     }
     makeToast(toast) {
         const toastElement = document.createElement('div');

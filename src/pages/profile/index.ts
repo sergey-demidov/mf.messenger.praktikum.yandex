@@ -1,56 +1,89 @@
-import { sApp, sHTMLInputElement } from '../../lib/types';
+import { sApp } from '../../lib/types';
 import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
 import sUser from '../../components/user';
-import { formDataToObject } from '../../lib/utils';
-// import Toaster from '../../lib/toaster';
-// import EventBus from '../../lib/event-bus';
+import { formDataToObject, isJsonString } from '../../lib/utils';
+import AuthAPI from '../../api/auth';
+import { baseUrl, HttpDataType } from '../../lib/http-transport';
+import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import UserAPI from '../../api/user';
 
-// const toaster = new Toaster();
+const auth = new AuthAPI();
+const userAPI = new UserAPI();
+const toaster = new Toaster();
 
 const profile = sue({
   name: 's-app-profile',
   template,
   data() {
     return {
-      first_name: 'Сергей',
-      second_name: 'Демидов',
-      email: 'demid@podolsk.ru',
-      phone: '+7(906)031-90-06',
-      login: 'sergey',
+      first_name: '',
+      second_name: '',
+      email: '',
+      phone: '',
+      login: '',
+      avatar: '',
+      avatarBackup: '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200',
+
     };
   },
   methods: {
-    onReset(formName: string): boolean {
-      const form = document.forms.namedItem(formName);
-      if (form) {
-        Array.from(form.elements).forEach((el) => {
-          const element = <sHTMLInputElement>el;
-          if (typeof element.reset === 'function') element.reset();
-        });
-      }
-      return false;
+    resetForm(): void {
+      console.trace();
+      (this as sApp).methods.fillForm();
     },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
-      return (form as HTMLFormElement).checkValidity();
+      if (!form) {
+        throw new Error(`form '${formName}' is not exist`);
+      }
+      return form.checkValidity();
     },
     submitForm(formName: string): void {
       const form = document.forms.namedItem(formName);
-      if ((this as sApp).methods.formIsValid(formName)) { // validate
-        const formData = new FormData(form as HTMLFormElement);
-        const res = formDataToObject(formData);
-        // eslint-disable-next-line no-console
-        console.dir(res); // print result
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('form is not valid');
+      if (!form) {
+        throw new Error(`form '${formName}' is not exist`);
       }
+      if (!(this as sApp).methods.formIsValid(formName)) { // validate
+        toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+        return;
+      }
+      const formData = new FormData(form);
+      const res = formDataToObject(formData);
+      res.display_name = res.first_name;
+      userAPI.saveProfile(res as HttpDataType)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error(response.response);
+          }
+          toaster.toast('Profile saved successfully', ToasterMessageTypes.info);
+        })
+        .catch((error) => {
+          toaster.bakeError(error);
+        });
+      const avatar = formData.get('avatar');
+      if (!avatar || !(avatar as File).size) {
+        return;
+      }
+      userAPI.saveProfileAvatar(formData)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error(response.response);
+          }
+          toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
+          // setTimeout(() => (this as sApp).methods.fillForm(), 2000);
+        })
+        .catch((error) => {
+          toaster.bakeError(error);
+        });
+      const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
+      if (fileInput) fileInput.value = '';
     },
     // Превью аватара с обработкой ошибок
     loadImage(): void {
+      console.log('loadImage');
       const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
       const avatarPreview = <HTMLSourceElement>document.getElementById('avatarPreview');
       if (!avatarPreview || !fileInput || !fileInput.files) {
@@ -58,6 +91,12 @@ const profile = sue({
       }
       const backupSrc = avatarPreview.src; // сохраняем старое изображение
       avatarPreview.src = URL.createObjectURL(fileInput.files[0]); // показываем новое
+      this.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
+
+      avatarPreview.onload = () => {
+        console.log('avatarPreview.onload');
+        URL.revokeObjectURL(avatarPreview.src); // free memory
+      };
 
       // в случае ошибки
       avatarPreview.onerror = () => {
@@ -74,6 +113,31 @@ const profile = sue({
         }, 2000);
       };
     },
+    fillForm() {
+      auth.getUser()
+        .then((response) => {
+          if (response.status === 200 && isJsonString(response.response)) {
+            return JSON.parse(response.response);
+          }
+          throw new Error('unauthorized');
+        })
+        .then((user) => {
+          const that = <sApp> this;
+          Object.assign(that.data, user);
+          if (!that.data.avatar) {
+            that.data.avatar = that.data.avatarBackup;
+          } else {
+            that.data.avatar = baseUrl + that.data.avatar;
+          }
+          const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
+          if (fileInput) fileInput.value = '';
+        }).catch((error) => {
+          toaster.bakeError(error);
+        });
+    },
+  },
+  mounted() {
+    (this as unknown as sApp).methods.fillForm();
   },
   components: {
     's-input': sInput,

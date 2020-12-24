@@ -4,7 +4,7 @@ import EventBus from './event-bus';
 export interface sApp {
   EventBus: EventBus;
   methods: Record<string, Function>;
-
+  data: Record<string, unknown>
   mounted(): void;
 }
 

@@ -16,6 +16,7 @@ const register = sue({
   template,
   data() {
     return {
+      password: '',
       toaster: HTMLElement,
     };
   },
@@ -34,6 +35,7 @@ const register = sue({
         const res = formDataToObject(formData);
         auth.signUp(res as HttpDataType)
           .then((response) => {
+            (this as sApp).data.password = '';
             if (response.status === 200) {
               return response;
             }
@@ -44,6 +46,7 @@ const register = sue({
           })
           .then(() => {
             window.router.go('/#/');
+            toaster.toast('Logged in successfully', ToasterMessageTypes.info);
           })
           .catch((error) => {
             let message = error;

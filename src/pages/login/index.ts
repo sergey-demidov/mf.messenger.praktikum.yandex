@@ -32,6 +32,7 @@ const login = sue({
         const res = formDataToObject(formData);
         auth.signIn(res as HttpDataType)
           .then((response) => {
+            (this as sApp).data.password = '';
             if (response.status === 200) {
               return response;
             }
@@ -42,11 +43,16 @@ const login = sue({
           })
           .then(() => {
             window.router.go('/#/');
+            toaster.toast('Logged in successfully', ToasterMessageTypes.info);
           })
           .catch((error) => {
             let message = error;
             if (error instanceof ProgressEvent) message = 'Error: Internet has broken down';
             toaster.toast(message, ToasterMessageTypes.error);
+            console.dir(message);
+            if (error.message === 'user already in system') {
+              window.router.go('/#/');
+            }
           });
       } else {
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);

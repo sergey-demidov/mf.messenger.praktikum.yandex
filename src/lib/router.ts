@@ -36,15 +36,13 @@ class Router {
 
   start(): void {
     window.onhashchange = (event: HashChangeEvent): void => {
-      // window.location = document.referrer;
-      console.log('onhashchange');
       this._onRoute((event.currentTarget as Window).location.hash);
     };
 
-    window.onpopstate = (event: PopStateEvent): void => {
-      console.log('onpopstate');
-      this._onRoute((event.currentTarget as Window).location.hash);
-    };
+    // window.onpopstate = (event: PopStateEvent): void => {
+    //   console.log('onpopstate');
+    //   this._onRoute((event.currentTarget as Window).location.hash);
+    // };
 
     this._onRoute(window.location.hash);
   }

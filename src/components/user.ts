@@ -2,6 +2,7 @@ import EventBus from '../lib/event-bus';
 import AuthAPI from '../api/auth';
 import { CONST, isJsonString } from '../lib/utils';
 import Toaster, { ToasterMessageTypes } from '../lib/toaster';
+import ICONS from '../lib/icons';
 
 const auth = new AuthAPI();
 const toaster = new Toaster();
@@ -25,9 +26,7 @@ class sUser extends HTMLElement {
     this.classList.add('mpy_navigation_link');
     this.wrapper.classList.add('mpy_navigation_menu');
     this.addEventListener('click', (e: MouseEvent) => this.showMenu(e));
-    // this.addEventListener('mouseover', (e) => this.showMenu(e));
-    // window.addEventListener('popstate', () => this.onPopstate());
-    window.addEventListener('hashchange', () => this.onPopstate());
+    window.addEventListener('hashchange', () => this.onHashchange());
     document.body.addEventListener('click', () => this.hideMenu());
     this.makeMenu();
   }
@@ -39,8 +38,10 @@ class sUser extends HTMLElement {
     }
     this.menuOpened = true;
     const targetRect = this.getBoundingClientRect();
-    this.wrapper.style.top = `${targetRect.bottom + 10}px`;
-    this.wrapper.style.right = '0';
+    this.wrapper.style.top = `${targetRect.bottom + 5}px`;
+    this.wrapper.style.left = `${targetRect.left}px`;
+    this.wrapper.style.minWidth = `${targetRect.width}px`;
+
     this.wrapper.style.display = CONST.flex;
     e.stopPropagation();
   }
@@ -55,7 +56,7 @@ class sUser extends HTMLElement {
     return (style.visibility === CONST.visible);
   }
 
-  onPopstate(): void {
+  onHashchange(): void {
     if (!this.isPresent()) return;
     this.connectedCallback();
   }
@@ -69,8 +70,8 @@ class sUser extends HTMLElement {
         }
         throw new Error('unauthorized');
       }).then((user) => {
-        this.innerText = user.login;
-        this.eventBus.emit('dataChange', 'login', user.login);
+        this.innerText = `${user.login}`;
+        this.dataset.icon = ICONS.person;
         document.body.style.opacity = '1';
       }).catch((e) => {
         console.warn(e);
@@ -83,10 +84,13 @@ class sUser extends HTMLElement {
     const logout = document.createElement(CONST.div);
     logout.classList.add('mpy_navigation_link');
     logout.innerText = 'Logout';
+    logout.dataset.icon = '\ue9ba';
+
     logout.addEventListener('click', () => this.logout());
     const profile = document.createElement(CONST.div);
     profile.classList.add('mpy_navigation_link');
     profile.innerText = 'Profile';
+    profile.dataset.icon = ICONS.settings;
     profile.addEventListener('click', () => window.router.go('/#/profile'));
     this.wrapper.style.display = CONST.none;
     this.wrapper.appendChild(profile);
