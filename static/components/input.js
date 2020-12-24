@@ -86,6 +86,7 @@ class sInput extends HTMLElement {
                 this.inputElement.defaultValue = newValue; // need for reset forms
             }
             this.inputElement.value = newValue;
+            this.validate();
         }
         if (name === 's-validate') {
             this.validateRules = newValue;

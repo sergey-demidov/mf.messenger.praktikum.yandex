@@ -1,4 +1,5 @@
 import { queryStringify } from "./utils.js";
+export const baseUrl = 'https://ya-praktikum.tech';
 export default class HttpTransport {
     constructor(prefix) {
         this.METHODS = Object.freeze({
@@ -8,7 +9,7 @@ export default class HttpTransport {
             PATCH: 'PATCH',
             DELETE: 'DELETE',
         });
-        this.baseUrl = 'https://ya-praktikum.tech/api/v2';
+        this.ApiBaseUrl = `${baseUrl}/api/v2`;
         this.get = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.GET }), options.timeout, options.withCredentials);
         this.put = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.PUT }), options.timeout, options.withCredentials);
         this.post = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.POST }), options.timeout, options.withCredentials);
@@ -22,11 +23,8 @@ export default class HttpTransport {
             const xhr = new XMLHttpRequest();
             xhr.timeout = timeout;
             xhr.withCredentials = withCredentials;
-            xhr.open(method, this.baseUrl + this.prefix + sendURL);
-            if (!headers || Object.keys(headers).length === 0) {
-                xhr.setRequestHeader('Content-Type', 'text/plain');
-            }
-            else {
+            xhr.open(method, this.ApiBaseUrl + this.prefix + sendURL);
+            if (headers && Object.keys(headers).length > 0) {
                 Object.keys(headers).forEach((header) => {
                     xhr.setRequestHeader(header, headers[header]);
                 });

@@ -1,6 +1,6 @@
 import { queryStringify, PlainObject } from './utils';
 
-export type HttpDataType = Record<string, string | number | Array<string> | Array<number> | boolean>;
+export type HttpDataType = Record<string, string | number | Array<string> | Array<number> | boolean > | FormData;
 
 export type HttpRequestOptions = {
   method?: string;
@@ -9,6 +9,8 @@ export type HttpRequestOptions = {
   timeout?: number;
   withCredentials?: boolean;
 }
+
+export const baseUrl = 'https://ya-praktikum.tech';
 
 export default class HttpTransport {
   METHODS = Object.freeze({
@@ -21,7 +23,7 @@ export default class HttpTransport {
 
   prefix: string;
 
-  baseUrl = 'https://ya-praktikum.tech/api/v2';
+  ApiBaseUrl = `${baseUrl}/api/v2`;
 
   constructor(prefix: string) {
     this.prefix = prefix;
@@ -56,15 +58,12 @@ export default class HttpTransport {
       const xhr = new XMLHttpRequest();
       xhr.timeout = timeout;
       xhr.withCredentials = withCredentials;
-      xhr.open(method as string, this.baseUrl + this.prefix + sendURL);
-      if (!headers || Object.keys(headers).length === 0) {
-        xhr.setRequestHeader('Content-Type', 'text/plain');
-      } else {
+      xhr.open(method as string, this.ApiBaseUrl + this.prefix + sendURL);
+      if (headers && Object.keys(headers).length > 0) {
         Object.keys(headers).forEach((header) => {
           xhr.setRequestHeader(header, headers[header]);
         });
       }
-
       xhr.onload = () => {
         resolve(xhr);
       };

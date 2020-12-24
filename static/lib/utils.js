@@ -1,3 +1,23 @@
+/* eslint-disable no-restricted-syntax */
+export const CONST = Object.freeze({
+    undefined: 'undefined',
+    string: 'string',
+    object: 'object',
+    none: 'none',
+    auto: 'auto',
+    visible: 'visible',
+    hidden: 'hidden',
+    block: 'block',
+    update: 'update',
+    div: 'div',
+    click: 'click',
+    flex: 'flex',
+    disabled: 'disabled',
+    class: 'class',
+    error: 'error',
+    warn: 'warn',
+    info: 'info',
+});
 export function isPlainObject(value) {
     return typeof value === 'object'
         && value !== null
@@ -48,6 +68,8 @@ export function isEqual(lhs, rhs) {
     return true;
 }
 export function isJsonString(str) {
+    if (typeof str !== CONST.string)
+        return false;
     try {
         JSON.parse(str);
     }
@@ -65,21 +87,4 @@ export function hash16() {
 export function formDataToObject(formData) {
     return Array.from(formData.entries()).reduce((memo, pair) => (Object.assign(Object.assign({}, memo), { [pair[0]]: pair[1] })), {});
 }
-export const CONST = Object.freeze({
-    undefined: 'undefined',
-    none: 'none',
-    auto: 'auto',
-    visible: 'visible',
-    hidden: 'hidden',
-    block: 'block',
-    update: 'update',
-    div: 'div',
-    click: 'click',
-    flex: 'flex',
-    disabled: 'disabled',
-    class: 'class',
-    error: 'error',
-    warn: 'warn',
-    info: 'info',
-});
 //# sourceMappingURL=utils.js.map

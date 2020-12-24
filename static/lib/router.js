@@ -22,14 +22,12 @@ class Router {
     }
     start() {
         window.onhashchange = (event) => {
-            // window.location = document.referrer;
-            console.log('onhashchange');
             this._onRoute(event.currentTarget.location.hash);
         };
-        window.onpopstate = (event) => {
-            console.log('onpopstate');
-            this._onRoute(event.currentTarget.location.hash);
-        };
+        // window.onpopstate = (event: PopStateEvent): void => {
+        //   console.log('onpopstate');
+        //   this._onRoute((event.currentTarget as Window).location.hash);
+        // };
         this._onRoute(window.location.hash);
     }
     _onRoute(pathname) {
