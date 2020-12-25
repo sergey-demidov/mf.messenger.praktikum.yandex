@@ -45,7 +45,7 @@ class sUser extends HTMLElement {
         this.connectedCallback();
     }
     connectedCallback() {
-        document.body.style.opacity = '0';
+        // document.body.style.opacity = '0';
         auth.getUser()
             .then((response) => {
             if (response.status === 200 && isJsonString(response.response)) {
@@ -55,10 +55,10 @@ class sUser extends HTMLElement {
         }).then((user) => {
             this.innerText = `${user.login}`;
             this.dataset.icon = ICONS.person;
-            document.body.style.opacity = '1';
+            // document.body.style.opacity = '1';
         }).catch(() => {
             window.router.go('/#/login');
-            document.body.style.opacity = '1';
+            // document.body.style.opacity = '1';
         });
     }
     createResources() {

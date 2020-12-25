@@ -5,8 +5,10 @@ import template from "./template.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
+import EventBus from "../../lib/event-bus.js";
 const auth = new AuthAPI();
 const toaster = new Toaster();
+const eventBus = new EventBus();
 const login = sue({
     name: 's-app-login-modal',
     template,
@@ -28,7 +30,8 @@ const login = sue({
                 const res = formDataToObject(formData);
                 auth.signIn(res)
                     .then((response) => {
-                    this.data.password = '';
+                    // (this as sApp).data.password = '';
+                    eventBus.emit('dataChange', 'password', '');
                     if (response.status === 200) {
                         return response;
                     }
