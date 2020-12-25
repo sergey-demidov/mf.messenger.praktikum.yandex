@@ -31,6 +31,8 @@ const sue = (i) => {
                 }
             };
             // update eventBus handler
+            // когда изменяются данные - запускаем рендер
+            // если они прилетают пачкой - ставим в очередь
             this.update = () => {
                 if (!this.rendering) {
                     this.render();
@@ -50,6 +52,64 @@ const sue = (i) => {
                     }
                     this.render();
                 }
+            };
+            // это не оптимальный метод и точно не окончательный
+            // он работает напрямую с ДОМ и не учитывает вложенность
+            // был создан только для отработки динамических атрибутов.
+            this.render = () => {
+                if (!this.isVisible())
+                    return;
+                this.rendering = true;
+                const content = this.querySelectorAll('*');
+                Array.from(content).forEach((el) => {
+                    const element = el;
+                    const { attributes } = element;
+                    Array.from(attributes).forEach((a) => {
+                        const attribute = a.name;
+                        if (attribute.charAt(0) === ':') { // dynamic props
+                            const parsed = this.parse(element.getAttribute(attribute) || '');
+                            const native = attribute.substring(1);
+                            const res = this.run(parsed);
+                            switch (native) {
+                                case 'text':
+                                    element.innerText = res;
+                                    break;
+                                case 'disabled':
+                                    element.disabled = (res === 'true');
+                                    break;
+                                default:
+                                    element.setAttribute(native, res);
+                            }
+                        }
+                        if (attribute.charAt(0) === '@') { // inline event handlers
+                            const parsed = this.parse(element.getAttribute(attribute) || '');
+                            if (this.methods[parsed.func]) {
+                                const key = `on${attribute.substring(1)}`;
+                                if (key in element) {
+                                    element[key] = () => this.run(parsed);
+                                }
+                                else {
+                                    throw new Error(`event '${key}' does not exist`);
+                                }
+                            }
+                            else {
+                                throw new Error(`Method '${parsed.func}' does not exist`);
+                            }
+                        }
+                    });
+                });
+                this.rendering = false;
+            };
+            this.show = () => {
+                this.style.display = CONST.block;
+                this.style.visibility = CONST.visible;
+                this.active = true;
+                this.EventBus.emit(CONST.update);
+            };
+            this.hide = () => {
+                this.style.display = CONST.none;
+                this.style.visibility = CONST.hidden;
+                this.active = false;
             };
             this.init = init;
             this.name = init.name;
@@ -82,10 +142,6 @@ const sue = (i) => {
                     return target[prop];
                 },
                 set: (target, prop, value) => {
-                    if (this.rendering) {
-                        // eslint-disable-next-line no-console
-                        console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `, 'background: #333; color: #f55');
-                    }
                     // eslint-disable-next-line no-param-reassign
                     target[prop] = value;
                     this.EventBus.emit(CONST.update);
@@ -98,7 +154,6 @@ const sue = (i) => {
         }
         // get result from user defined methods
         run(parsed) {
-            // if (!this.active) return '';
             if (!this.methods[parsed.func]) {
                 throw new Error(`Method ${parsed.func} is not defined`);
             }
@@ -124,53 +179,6 @@ const sue = (i) => {
         isVisible() {
             const style = window.getComputedStyle(this);
             return (style.visibility === CONST.visible);
-        }
-        // это не оптимальный метод и точно не окончательный
-        // он работает напрямую с ДОМ и не учитывает вложенность
-        // был создан только для отработки динамических атрибутов.
-        render() {
-            if (!this.isVisible())
-                return;
-            this.rendering = true;
-            const content = this.querySelectorAll('*');
-            Array.from(content).forEach((el) => {
-                const element = el;
-                const { attributes } = element;
-                Array.from(attributes).forEach((a) => {
-                    const attribute = a.name;
-                    if (attribute.charAt(0) === ':') { // dynamic props
-                        const parsed = this.parse(element.getAttribute(attribute) || '');
-                        const native = attribute.substring(1);
-                        const res = this.run(parsed);
-                        switch (native) {
-                            case 'text':
-                                element.innerText = res;
-                                break;
-                            case 'disabled':
-                                element.disabled = (res === 'true');
-                                break;
-                            default:
-                                element.setAttribute(native, res);
-                        }
-                    }
-                    if (attribute.charAt(0) === '@') { // inline event handlers
-                        const parsed = this.parse(element.getAttribute(attribute) || '');
-                        if (this.methods[parsed.func]) {
-                            const key = `on${attribute.substring(1)}`;
-                            if (key in element) {
-                                element[key] = () => this.run(parsed);
-                            }
-                            else {
-                                throw new Error(`event '${key}' does not exist`);
-                            }
-                        }
-                        else {
-                            throw new Error(`Method '${parsed.func}' does not exist`);
-                        }
-                    }
-                });
-            });
-            this.rendering = false;
         }
         // eslint-disable-next-line class-methods-use-this
         parse(str) {
@@ -199,22 +207,6 @@ const sue = (i) => {
             this.innerHTML = init.template;
             this.connected = true;
             this.init.mounted();
-            this.EventBus.emit(CONST.update);
-        }
-        // disconnectedCallback() {
-        //   this.EventBus.off('update', this.update);
-        //   this.EventBus.off('dataChange', this.setData);
-        // }
-        show() {
-            this.style.display = CONST.block;
-            this.style.visibility = CONST.visible;
-            this.active = true;
-            this.render();
-        }
-        hide() {
-            this.style.display = CONST.none;
-            this.style.visibility = CONST.hidden;
-            this.active = false;
         }
     };
     customElements.define(init.name, app);

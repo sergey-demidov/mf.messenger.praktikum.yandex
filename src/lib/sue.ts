@@ -90,6 +90,8 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     }
 
     // update eventBus handler
+    // когда изменяются данные - запускаем рендер
+    // если они прилетают пачкой - ставим в очередь
     protected update = () => {
       if (!this.rendering) {
         this.render();
@@ -117,11 +119,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           return target[prop];
         },
         set: (target, prop: string, value) => {
-          if (this.rendering) {
-            // eslint-disable-next-line no-console
-            console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `,
-              'background: #333; color: #f55');
-          }
           // eslint-disable-next-line no-param-reassign
           target[prop] = value;
           this.EventBus.emit(CONST.update);
@@ -135,7 +132,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     // get result from user defined methods
     protected run(parsed: sParsed): string {
-      // if (!this.active) return '';
       if (!this.methods[parsed.func]) {
         throw new Error(`Method ${parsed.func} is not defined`);
       }
@@ -167,7 +163,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     // это не оптимальный метод и точно не окончательный
     // он работает напрямую с ДОМ и не учитывает вложенность
     // был создан только для отработки динамических атрибутов.
-    protected render(): void {
+    protected render = () => {
       if (!this.isVisible()) return;
       this.rendering = true;
       const content = this.querySelectorAll('*');
@@ -237,22 +233,16 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.innerHTML = init.template;
       this.connected = true;
       this.init.mounted();
-      this.EventBus.emit(CONST.update);
     }
 
-    // disconnectedCallback() {
-    //   this.EventBus.off('update', this.update);
-    //   this.EventBus.off('dataChange', this.setData);
-    // }
-
-    show() {
+    show = () => {
       this.style.display = CONST.block;
       this.style.visibility = CONST.visible;
       this.active = true;
-      this.render();
+      this.EventBus.emit(CONST.update);
     }
 
-    hide() {
+    hide = () => {
       this.style.display = CONST.none;
       this.style.visibility = CONST.hidden;
       this.active = false;

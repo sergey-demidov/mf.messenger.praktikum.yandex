@@ -5,7 +5,7 @@ import sButton from '../../components/button';
 import template from './template';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthAPI from '../../api/auth';
-import { formDataToObject, isJsonString } from '../../lib/utils';
+import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 
 const auth = new AuthAPI();
@@ -39,9 +39,6 @@ const register = sue({
             if (response.status === 200) {
               return response;
             }
-            if (isJsonString(response.response)) {
-              throw new Error(JSON.parse(response.response).reason);
-            }
             throw new Error(response.response);
           })
           .then(() => {
@@ -49,9 +46,7 @@ const register = sue({
             toaster.toast('Logged in successfully', ToasterMessageTypes.info);
           })
           .catch((error) => {
-            let message = error;
-            if (error instanceof ProgressEvent) message = 'Error: Internet has broken down';
-            toaster.toast(message, ToasterMessageTypes.error);
+            toaster.bakeError(error);
           });
       } else {
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
