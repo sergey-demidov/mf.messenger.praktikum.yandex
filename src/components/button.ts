@@ -1,4 +1,3 @@
-import EventBus from '../lib/event-bus';
 import { CONST } from '../lib/utils';
 
 class sButton extends HTMLElement {
@@ -17,8 +16,6 @@ class sButton extends HTMLElement {
       this.style.pointerEvents = CONST.auto;
     }
   }
-
-  eventBus = new EventBus();
 
   static get observedAttributes(): string[] {
     return ['disabled'];

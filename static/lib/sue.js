@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from "./event-bus.js";
 import { CONST } from "./utils.js";
+import Queue from "./queue.js";
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
@@ -32,11 +32,29 @@ const sue = (i) => {
             };
             // update eventBus handler
             this.update = () => {
-                if (!this.rendering)
+                if (!this.rendering) {
                     this.render();
+                }
+                else {
+                    this.renderQueue.enqueue('update');
+                }
+            };
+            // setInterval handler
+            // если очередь не пустая - очищает очередь и запускает render
+            this.delayedUpdate = () => {
+                if (!this.rendering && !this.renderQueue.isEmpty()) {
+                    // eslint-disable-next-line no-console
+                    console.warn(`delayedUpdate: ${this.renderQueue.size} queued`);
+                    while (!this.renderQueue.isEmpty()) {
+                        this.renderQueue.dequeue();
+                    }
+                    this.render();
+                }
             };
             this.init = init;
             this.name = init.name;
+            this.renderQueue = new Queue();
+            setInterval(() => this.delayedUpdate(), 100);
             if (!this.name)
                 throw new Error('Component name is not defined');
             this.EventBus = new EventBus();
@@ -68,6 +86,7 @@ const sue = (i) => {
                         // eslint-disable-next-line no-console
                         console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `, 'background: #333; color: #f55');
                     }
+                    // eslint-disable-next-line no-param-reassign
                     target[prop] = value;
                     this.EventBus.emit(CONST.update);
                     return true;
@@ -153,6 +172,7 @@ const sue = (i) => {
             });
             this.rendering = false;
         }
+        // eslint-disable-next-line class-methods-use-this
         parse(str) {
             const result = { not: false, func: '', params: [] };
             let not = '';

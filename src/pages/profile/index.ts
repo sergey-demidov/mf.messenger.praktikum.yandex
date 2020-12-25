@@ -9,10 +9,12 @@ import AuthAPI from '../../api/auth';
 import { baseUrl, HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import UserAPI from '../../api/user';
+import EventBus from '../../lib/event-bus';
 
 const auth = new AuthAPI();
 const userAPI = new UserAPI();
 const toaster = new Toaster();
+const eventBus = new EventBus();
 
 const profile = sue({
   name: 's-app-profile',
@@ -31,7 +33,6 @@ const profile = sue({
   },
   methods: {
     resetForm(): void {
-      console.trace();
       (this as sApp).methods.fillForm();
     },
     formIsValid(formName: string): boolean {
@@ -59,6 +60,7 @@ const profile = sue({
             throw new Error(response.response);
           }
           toaster.toast('Profile saved successfully', ToasterMessageTypes.info);
+          eventBus.emit('userDataChange');
         })
         .catch((error) => {
           toaster.bakeError(error);

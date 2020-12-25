@@ -1,18 +1,5 @@
-import EventBus from "../lib/event-bus.js";
 import { CONST } from "../lib/utils.js";
 class sButton extends HTMLElement {
-    constructor() {
-        super();
-        this.eventBus = new EventBus();
-        if (!this.getAttribute(CONST.class)) {
-            this.classList.add('mpy_button');
-        }
-        if (this.hasAttribute('block')) {
-            this.classList.add('mpy_button__block');
-        }
-        this.classList.add('unselectable');
-        this.addEventListener('keydown', (e) => this.onKeydown(e));
-    }
     get disabled() {
         return this.hasAttribute(CONST.disabled);
     }
@@ -30,6 +17,17 @@ class sButton extends HTMLElement {
     }
     static get observedAttributes() {
         return ['disabled'];
+    }
+    constructor() {
+        super();
+        if (!this.getAttribute(CONST.class)) {
+            this.classList.add('mpy_button');
+        }
+        if (this.hasAttribute('block')) {
+            this.classList.add('mpy_button__block');
+        }
+        this.classList.add('unselectable');
+        this.addEventListener('keydown', (e) => this.onKeydown(e));
     }
     // eslint-disable-next-line class-methods-use-this
     onKeydown(e) {

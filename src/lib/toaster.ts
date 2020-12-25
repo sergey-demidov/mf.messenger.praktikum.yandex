@@ -15,11 +15,11 @@ type sToast = {
 export default class Toaster {
   private static instance: Toaster;
 
-  timeout = 5000;
+  timeout = 4000;
 
   wrapper = document.createElement('div')
 
-  constructor(timeout = 5000) {
+  constructor(timeout = 4000) {
     if (Toaster.instance) {
       return Toaster.instance;
     }
@@ -48,7 +48,9 @@ export default class Toaster {
     }
   }
 
-  bakeError(error: unknown):void {
+  bakeError(error: unknown): void {
+    // eslint-disable-next-line no-console
+    console.dir(error);
     let message = '';
     if (!error) {
       message = 'Error: Something wrong';

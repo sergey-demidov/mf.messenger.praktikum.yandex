@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-types, @typescript-eslint/no-empty-function, no-param-reassign, class-methods-use-this, no-restricted-syntax */
 import EventBus from './event-bus';
 import {
   sInit, sParsed, sCustomElementConstructor, sEvents,
 } from './types';
 import { CONST } from './utils';
+import Queue from './queue';
 
 declare global {
   interface Window {
@@ -33,6 +33,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     protected data: Record<string, unknown>
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
     methods: Record<string, Function>;
 
     protected rendering = false;
@@ -41,12 +42,17 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     protected active = false
 
+    renderQueue: Queue<string>
+
     init: sInit
 
     constructor() {
       super();
       this.init = init;
       this.name = init.name;
+      this.renderQueue = new Queue();
+      setInterval(() => this.delayedUpdate(), 100);
+
       if (!this.name) throw new Error('Component name is not defined');
       this.EventBus = new EventBus();
       this.EventBus.on(CONST.update, this.update);
@@ -85,7 +91,24 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     // update eventBus handler
     protected update = () => {
-      if (!this.rendering) this.render();
+      if (!this.rendering) {
+        this.render();
+      } else {
+        this.renderQueue.enqueue('update');
+      }
+    }
+
+    // setInterval handler
+    // если очередь не пустая - очищает очередь и запускает render
+    protected delayedUpdate = () => {
+      if (!this.rendering && !this.renderQueue.isEmpty()) {
+        // eslint-disable-next-line no-console
+        console.warn(`delayedUpdate: ${this.renderQueue.size} queued`);
+        while (!this.renderQueue.isEmpty()) {
+          this.renderQueue.dequeue();
+        }
+        this.render();
+      }
     }
 
     protected makeProxy(data: Record<string, unknown>) {
@@ -99,6 +122,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
             console.log(`%c Setting data property '${prop}' ('${target[prop]}' => '${value}') during render `,
               'background: #333; color: #f55');
           }
+          // eslint-disable-next-line no-param-reassign
           target[prop] = value;
           this.EventBus.emit(CONST.update);
           return true;
@@ -185,6 +209,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.rendering = false;
     }
 
+    // eslint-disable-next-line class-methods-use-this
     parse(str: string): sParsed {
       const result: sParsed = { not: false, func: '', params: [] };
       let not = '';
