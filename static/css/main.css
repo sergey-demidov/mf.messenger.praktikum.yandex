@@ -91,13 +91,11 @@ body {
     text-align: center;
     padding: 10px 12px 10px 25px;
     min-height: 20px;
-    /*line-height: 1em;*/
-    /*font-size: 1em;*/
+    min-width: 50px;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
     border-right: 1px solid #0000;
-    /*border-left: 1px solid #0000;*/
     position: relative;
     vertical-align: middle;
 }

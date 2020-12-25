@@ -8,27 +8,24 @@ const auth = new AuthAPI();
 const toaster = new Toaster();
 
 class sUser extends HTMLElement {
-  eventBus = new EventBus();
-
-  not = false
+  eventBus: EventBus;
 
   menuOpened = false
 
-  wrapper = document.createElement(CONST.div)
-
-  template = ''
+  wrapper: HTMLElement
 
   constructor() {
     super();
-    if (this.hasAttribute('not')) {
-      this.not = true;
-    }
-    this.classList.add('mpy_navigation_link');
-    this.wrapper.classList.add('mpy_navigation_menu');
+
+    this.wrapper = document.createElement(CONST.div);
+    this.createResources();
+
+    this.eventBus = new EventBus();
+    this.eventBus.on('userDataChange', () => this.onHashchange());
+
     this.addEventListener('click', (e: MouseEvent) => this.showMenu(e));
     window.addEventListener('hashchange', () => this.onHashchange());
     document.body.addEventListener('click', () => this.hideMenu());
-    this.makeMenu();
   }
 
   showMenu(e: MouseEvent):void {
@@ -36,11 +33,12 @@ class sUser extends HTMLElement {
       this.hideMenu();
       return;
     }
+    const menuWidth = 110;
     this.menuOpened = true;
     const targetRect = this.getBoundingClientRect();
     this.wrapper.style.top = `${targetRect.bottom + 5}px`;
-    this.wrapper.style.left = `${targetRect.left}px`;
-    this.wrapper.style.minWidth = `${targetRect.width}px`;
+    this.wrapper.style.right = '5px';
+    this.wrapper.style.minWidth = `${menuWidth}px`;
 
     this.wrapper.style.display = CONST.flex;
     e.stopPropagation();
@@ -73,28 +71,30 @@ class sUser extends HTMLElement {
         this.innerText = `${user.login}`;
         this.dataset.icon = ICONS.person;
         document.body.style.opacity = '1';
-      }).catch((e) => {
-        console.warn(e);
+      }).catch(() => {
         window.router.go('/#/login');
         document.body.style.opacity = '1';
       });
   }
 
-  makeMenu():void {
+  createResources():void {
+    this.classList.add('mpy_navigation_link');
+    this.wrapper.classList.add('mpy_navigation_menu');
+    const getNodes = (str: string): HTMLElement => new DOMParser().parseFromString(str, 'text/html').body.firstChild as HTMLElement || document.createElement('div');
+
+    const profile = getNodes('<div class="mpy_navigation_link"> Profile </div>');
+    profile.dataset.icon = ICONS.settings;
+    profile.addEventListener('click', () => window.router.go('/#/profile'));
+    this.wrapper.appendChild(profile);
+
     const logout = document.createElement(CONST.div);
     logout.classList.add('mpy_navigation_link');
     logout.innerText = 'Logout';
     logout.dataset.icon = '\ue9ba';
-
     logout.addEventListener('click', () => this.logout());
-    const profile = document.createElement(CONST.div);
-    profile.classList.add('mpy_navigation_link');
-    profile.innerText = 'Profile';
-    profile.dataset.icon = ICONS.settings;
-    profile.addEventListener('click', () => window.router.go('/#/profile'));
-    this.wrapper.style.display = CONST.none;
-    this.wrapper.appendChild(profile);
     this.wrapper.appendChild(logout);
+
+    this.wrapper.style.display = CONST.none;
     document.body.appendChild(this.wrapper);
   }
 
