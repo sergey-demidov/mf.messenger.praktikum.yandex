@@ -4,7 +4,7 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
-import { formDataToObject, isJsonString } from "../../lib/utils.js";
+import { formDataToObject } from "../../lib/utils.js";
 const auth = new AuthAPI();
 const toaster = new Toaster();
 const register = sue({
@@ -35,9 +35,6 @@ const register = sue({
                     if (response.status === 200) {
                         return response;
                     }
-                    if (isJsonString(response.response)) {
-                        throw new Error(JSON.parse(response.response).reason);
-                    }
                     throw new Error(response.response);
                 })
                     .then(() => {
@@ -45,10 +42,7 @@ const register = sue({
                     toaster.toast('Logged in successfully', ToasterMessageTypes.info);
                 })
                     .catch((error) => {
-                    let message = error;
-                    if (error instanceof ProgressEvent)
-                        message = 'Error: Internet has broken down';
-                    toaster.toast(message, ToasterMessageTypes.error);
+                    toaster.bakeError(error);
                 });
             }
             else {

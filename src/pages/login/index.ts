@@ -46,12 +46,10 @@ const login = sue({
             toaster.toast('Logged in successfully', ToasterMessageTypes.info);
           })
           .catch((error) => {
-            let message = error;
-            if (error instanceof ProgressEvent) message = 'Error: Internet has broken down';
-            toaster.toast(message, ToasterMessageTypes.error);
-            console.dir(message);
-            if (error.message === 'user already in system') {
+            if (error.message && error.message === 'user already in system') {
               window.router.go('/#/');
+            } else {
+              toaster.bakeError(error);
             }
           });
       } else {
