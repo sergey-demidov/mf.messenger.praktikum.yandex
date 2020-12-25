@@ -1,8 +1,8 @@
 import EventBus from './event-bus';
 import {
-  sInit, sParsed, sCustomElementConstructor, sEvents,
+  sInit, sParsed, sCustomElementConstructor, sEvents, sHTMLElement,
 } from './types';
-import { CONST } from './utils';
+import { CONST, hash8 } from './utils';
 import Queue from './queue';
 
 declare global {
@@ -27,14 +27,14 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   const init: sInit = { ...emptyInit, ...i };
 
   const app = class extends HTMLElement {
-    EventBus: EventBus;
+    EventBus: EventBus = new EventBus();
 
-    name: string;
+    name = ''
 
-    protected data: Record<string, unknown>
+    protected data: Record<string, unknown> = {}
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    methods: Record<string, Function>;
+    methods: Record<string, Function> = {};
 
     protected rendering = false;
 
@@ -42,19 +42,23 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     protected active = false
 
-    renderQueue: Queue<string>
+    renderQueue = new Queue<string>()
 
-    init: sInit
+    init = emptyInit;
+
+    // id = hash8()
 
     constructor() {
       super();
+      this.createResources();
+    }
+
+    createResources = () => {
       this.init = init;
       this.name = init.name;
-      this.renderQueue = new Queue();
+      if (!this.name) throw new Error('Component name is not defined');
       setInterval(() => this.delayedUpdate(), 100);
 
-      if (!this.name) throw new Error('Component name is not defined');
-      this.EventBus = new EventBus();
       this.EventBus.on(CONST.update, this.update);
       this.EventBus.on('dataChange', this.setData);
 
@@ -65,8 +69,8 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         }
       });
       this.init.methods._get = (param: string): string => param;
-      this.methods = {};
       Object.keys(this.init.methods).forEach((key) => {
+        console.log(key);
         this.methods[key] = this.init.methods[key].bind(this);
       });
 
@@ -81,10 +85,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     // dataChange eventBus handler
     protected setData = (...args: string[]) => {
       const [variable, value] = args;
-      if (this.active) {
-        if (!Object.hasOwnProperty.call(this.data, variable)) {
-          throw new Error(`${this.name}: trying to set ${value} to undefined variable ${variable}`);
-        }
+      if (Object.hasOwnProperty.call(this.data, variable)) {
         this.data[variable] = value;
       }
     }
@@ -94,7 +95,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     // если они прилетают пачкой - ставим в очередь
     protected update = () => {
       if (!this.rendering) {
+        this.rendering = true;
         this.render();
+        this.rendering = false;
       } else {
         this.renderQueue.enqueue('update');
       }
@@ -113,25 +116,23 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       }
     }
 
-    protected makeProxy(data: Record<string, unknown>) {
-      return new Proxy(data, {
-        get(target, prop: string) {
-          return target[prop];
-        },
-        set: (target, prop: string, value) => {
-          // eslint-disable-next-line no-param-reassign
-          target[prop] = value;
-          this.EventBus.emit(CONST.update);
-          return true;
-        },
-        deleteProperty(target, prop: string) {
-          throw new Error(`Cant delete property ${prop} from ${target}`);
-        },
-      });
-    }
+    protected makeProxy = (data: Record<string, unknown>) => new Proxy(data, {
+      get(target, prop: string) {
+        return target[prop];
+      },
+      set: (target, prop: string, value) => {
+        // eslint-disable-next-line no-param-reassign
+        target[prop] = value;
+        this.EventBus.emit(CONST.update);
+        return true;
+      },
+      deleteProperty(target, prop: string) {
+        throw new Error(`Cant delete property ${prop} from ${target}`);
+      },
+    })
 
     // get result from user defined methods
-    protected run(parsed: sParsed): string {
+    protected run = (parsed: sParsed) => {
       if (!this.methods[parsed.func]) {
         throw new Error(`Method ${parsed.func} is not defined`);
       }
@@ -160,49 +161,39 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       return (style.visibility === CONST.visible);
     }
 
-    // это не оптимальный метод и точно не окончательный
-    // он работает напрямую с ДОМ и не учитывает вложенность
-    // был создан только для отработки динамических атрибутов.
-    protected render = () => {
-      if (!this.isVisible()) return;
-      this.rendering = true;
-      const content = this.querySelectorAll('*');
-      Array.from(content).forEach((el) => { // each element in template
-        const element = <HTMLElement>el;
-        const { attributes } = element;
-        Array.from(attributes).forEach((a) => { // each attribute
-          const attribute = a.name;
-          if (attribute.charAt(0) === ':') { // dynamic props
-            const parsed = this.parse(element.getAttribute(attribute) || '');
-            const native = attribute.substring(1);
-            const res = this.run(parsed);
-            switch (native) {
-              case 'text':
-                element.innerText = res;
-                break;
-              case 'disabled':
-                (element as HTMLInputElement).disabled = (res === 'true');
-                break;
-              default:
-                element.setAttribute(native, res);
-            }
-          }
-          if (attribute.charAt(0) === '@') { // inline event handlers
-            const parsed = this.parse(element.getAttribute(attribute) || '');
-            if (this.methods[parsed.func]) {
-              const key = `on${attribute.substring(1)}`;
-              if (key in element) {
-                element[key as sEvents] = () => this.run(parsed);
-              } else {
-                throw new Error(`event '${key}' does not exist`);
+    // TODO: метод не оптимален - работает напрямую с DOM
+    protected render = (e: sHTMLElement = this) => {
+      if (!this.isVisible() || e.nodeType !== 1) return;
+      const element = <HTMLElement>e;
+      const { attributes } = element;
+      Array.from(attributes).forEach((a) => { // each attribute
+        const attribute = a.name;
+        if (attribute.charAt(0) === ':') { // dynamic props
+          const parsed = this.parse(element.getAttribute(attribute) || '');
+          const native = attribute.substring(1);
+          const res = this.run(parsed);
+          switch (native) {
+            case 'text':
+              element.innerText = res;
+              break;
+            case 'disabled':
+              if (element instanceof HTMLInputElement) {
+                element.disabled = (res === 'true');
               }
-            } else {
-              throw new Error(`Method '${parsed.func}' does not exist`);
-            }
+              break;
+            default:
+              element.setAttribute(native, res);
           }
-        });
+        }
+        if (attribute.charAt(0) === '@') { // inline event handlers
+          const parsed = this.parse(element.getAttribute(attribute) || '');
+          if (!this.methods[parsed.func]) throw new Error(`Method '${parsed.func}' does not exist`);
+          const eventHandler = `on${attribute.substring(1)}`;
+          if (!(eventHandler in element)) throw new Error(`event handler '${eventHandler}' does not exist`);
+          element[eventHandler as sEvents] = () => this.run(parsed);
+        }
       });
-      this.rendering = false;
+      Array.from(e.childNodes).forEach((child) => this.render(child as sHTMLElement));
     }
 
     // eslint-disable-next-line class-methods-use-this

@@ -15,18 +15,47 @@ const sue = (i) => {
     };
     const init = Object.assign(Object.assign({}, emptyInit), i);
     const app = class extends HTMLElement {
+        // id = hash8()
         constructor() {
             super();
+            this.EventBus = new EventBus();
+            this.name = '';
+            this.data = {};
+            // eslint-disable-next-line @typescript-eslint/ban-types
+            this.methods = {};
             this.rendering = false;
             this.connected = false;
             this.active = false;
+            this.renderQueue = new Queue();
+            this.init = emptyInit;
+            this.createResources = () => {
+                this.init = init;
+                this.name = init.name;
+                if (!this.name)
+                    throw new Error('Component name is not defined');
+                setInterval(() => this.delayedUpdate(), 100);
+                this.EventBus.on(CONST.update, this.update);
+                this.EventBus.on('dataChange', this.setData);
+                // define each components
+                Object.keys(init.components).forEach((key) => {
+                    if (!window.customElements.get(key)) {
+                        customElements.define(key, init.components[key]);
+                    }
+                });
+                this.init.methods._get = (param) => param;
+                Object.keys(this.init.methods).forEach((key) => {
+                    console.log(key);
+                    this.methods[key] = this.init.methods[key].bind(this);
+                });
+                this.data = this.makeProxy(init.data());
+                this.init.created = this.init.created.bind(this);
+                this.init.mounted = this.init.mounted.bind(this);
+                this.init.created();
+            };
             // dataChange eventBus handler
             this.setData = (...args) => {
                 const [variable, value] = args;
-                if (this.active) {
-                    if (!Object.hasOwnProperty.call(this.data, variable)) {
-                        throw new Error(`${this.name}: trying to set ${value} to undefined variable ${variable}`);
-                    }
+                if (Object.hasOwnProperty.call(this.data, variable)) {
                     this.data[variable] = value;
                 }
             };
@@ -35,7 +64,9 @@ const sue = (i) => {
             // если они прилетают пачкой - ставим в очередь
             this.update = () => {
                 if (!this.rendering) {
+                    this.rendering = true;
                     this.render();
+                    this.rendering = false;
                 }
                 else {
                     this.renderQueue.enqueue('update');
@@ -53,91 +84,7 @@ const sue = (i) => {
                     this.render();
                 }
             };
-            // это не оптимальный метод и точно не окончательный
-            // он работает напрямую с ДОМ и не учитывает вложенность
-            // был создан только для отработки динамических атрибутов.
-            this.render = () => {
-                if (!this.isVisible())
-                    return;
-                this.rendering = true;
-                const content = this.querySelectorAll('*');
-                Array.from(content).forEach((el) => {
-                    const element = el;
-                    const { attributes } = element;
-                    Array.from(attributes).forEach((a) => {
-                        const attribute = a.name;
-                        if (attribute.charAt(0) === ':') { // dynamic props
-                            const parsed = this.parse(element.getAttribute(attribute) || '');
-                            const native = attribute.substring(1);
-                            const res = this.run(parsed);
-                            switch (native) {
-                                case 'text':
-                                    element.innerText = res;
-                                    break;
-                                case 'disabled':
-                                    element.disabled = (res === 'true');
-                                    break;
-                                default:
-                                    element.setAttribute(native, res);
-                            }
-                        }
-                        if (attribute.charAt(0) === '@') { // inline event handlers
-                            const parsed = this.parse(element.getAttribute(attribute) || '');
-                            if (this.methods[parsed.func]) {
-                                const key = `on${attribute.substring(1)}`;
-                                if (key in element) {
-                                    element[key] = () => this.run(parsed);
-                                }
-                                else {
-                                    throw new Error(`event '${key}' does not exist`);
-                                }
-                            }
-                            else {
-                                throw new Error(`Method '${parsed.func}' does not exist`);
-                            }
-                        }
-                    });
-                });
-                this.rendering = false;
-            };
-            this.show = () => {
-                this.style.display = CONST.block;
-                this.style.visibility = CONST.visible;
-                this.active = true;
-                this.EventBus.emit(CONST.update);
-            };
-            this.hide = () => {
-                this.style.display = CONST.none;
-                this.style.visibility = CONST.hidden;
-                this.active = false;
-            };
-            this.init = init;
-            this.name = init.name;
-            this.renderQueue = new Queue();
-            setInterval(() => this.delayedUpdate(), 100);
-            if (!this.name)
-                throw new Error('Component name is not defined');
-            this.EventBus = new EventBus();
-            this.EventBus.on(CONST.update, this.update);
-            this.EventBus.on('dataChange', this.setData);
-            // define each components
-            Object.keys(init.components).forEach((key) => {
-                if (!window.customElements.get(key)) {
-                    customElements.define(key, init.components[key]);
-                }
-            });
-            this.init.methods._get = (param) => param;
-            this.methods = {};
-            Object.keys(this.init.methods).forEach((key) => {
-                this.methods[key] = this.init.methods[key].bind(this);
-            });
-            this.data = this.makeProxy(init.data());
-            this.init.created = this.init.created.bind(this);
-            this.init.mounted = this.init.mounted.bind(this);
-            this.init.created();
-        }
-        makeProxy(data) {
-            return new Proxy(data, {
+            this.makeProxy = (data) => new Proxy(data, {
                 get(target, prop) {
                     return target[prop];
                 },
@@ -151,30 +98,79 @@ const sue = (i) => {
                     throw new Error(`Cant delete property ${prop} from ${target}`);
                 },
             });
-        }
-        // get result from user defined methods
-        run(parsed) {
-            if (!this.methods[parsed.func]) {
-                throw new Error(`Method ${parsed.func} is not defined`);
-            }
-            let res = this.methods[parsed.func](...parsed.params.map((e) => {
-                // param is plain string
-                const stringRes = e.match(/^['"]([a-z0-9_: ]+)['"]$/i);
-                if (stringRes) {
-                    return stringRes[1];
+            // get result from user defined methods
+            this.run = (parsed) => {
+                if (!this.methods[parsed.func]) {
+                    throw new Error(`Method ${parsed.func} is not defined`);
                 }
-                // param is undefined data property
-                if (typeof this.data[e] === CONST.undefined) {
-                    throw new Error(`${e} undefined`);
+                let res = this.methods[parsed.func](...parsed.params.map((e) => {
+                    // param is plain string
+                    const stringRes = e.match(/^['"]([a-z0-9_: ]+)['"]$/i);
+                    if (stringRes) {
+                        return stringRes[1];
+                    }
+                    // param is undefined data property
+                    if (typeof this.data[e] === CONST.undefined) {
+                        throw new Error(`${e} undefined`);
+                    }
+                    // param is data property
+                    return this.data[e];
+                }));
+                // method returns undef
+                if (typeof res === CONST.undefined) {
+                    res = false;
                 }
-                // param is data property
-                return this.data[e];
-            }));
-            // method returns undef
-            if (typeof res === CONST.undefined) {
-                res = false;
-            }
-            return (parsed.not ? !res : res).toString();
+                return (parsed.not ? !res : res).toString();
+            };
+            // TODO: метод не оптимален - работает напрямую с DOM
+            this.render = (e = this) => {
+                if (!this.isVisible() || e.nodeType !== 1)
+                    return;
+                const element = e;
+                const { attributes } = element;
+                Array.from(attributes).forEach((a) => {
+                    const attribute = a.name;
+                    if (attribute.charAt(0) === ':') { // dynamic props
+                        const parsed = this.parse(element.getAttribute(attribute) || '');
+                        const native = attribute.substring(1);
+                        const res = this.run(parsed);
+                        switch (native) {
+                            case 'text':
+                                element.innerText = res;
+                                break;
+                            case 'disabled':
+                                if (element instanceof HTMLInputElement) {
+                                    element.disabled = (res === 'true');
+                                }
+                                break;
+                            default:
+                                element.setAttribute(native, res);
+                        }
+                    }
+                    if (attribute.charAt(0) === '@') { // inline event handlers
+                        const parsed = this.parse(element.getAttribute(attribute) || '');
+                        if (!this.methods[parsed.func])
+                            throw new Error(`Method '${parsed.func}' does not exist`);
+                        const eventHandler = `on${attribute.substring(1)}`;
+                        if (!(eventHandler in element))
+                            throw new Error(`event handler '${eventHandler}' does not exist`);
+                        element[eventHandler] = () => this.run(parsed);
+                    }
+                });
+                Array.from(e.childNodes).forEach((child) => this.render(child));
+            };
+            this.show = () => {
+                this.style.display = CONST.block;
+                this.style.visibility = CONST.visible;
+                this.active = true;
+                this.EventBus.emit(CONST.update);
+            };
+            this.hide = () => {
+                this.style.display = CONST.none;
+                this.style.visibility = CONST.hidden;
+                this.active = false;
+            };
+            this.createResources();
         }
         isVisible() {
             const style = window.getComputedStyle(this);

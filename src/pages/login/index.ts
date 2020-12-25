@@ -7,9 +7,11 @@ import { formDataToObject, isJsonString } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthAPI from '../../api/auth';
+import EventBus from '../../lib/event-bus';
 
 const auth = new AuthAPI();
 const toaster = new Toaster();
+const eventBus = new EventBus();
 
 const login = sue({
   name: 's-app-login-modal',
@@ -32,7 +34,8 @@ const login = sue({
         const res = formDataToObject(formData);
         auth.signIn(res as HttpDataType)
           .then((response) => {
-            (this as sApp).data.password = '';
+            // (this as sApp).data.password = '';
+            eventBus.emit('dataChange', 'password', '');
             if (response.status === 200) {
               return response;
             }
