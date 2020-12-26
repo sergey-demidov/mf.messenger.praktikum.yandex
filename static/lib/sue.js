@@ -44,7 +44,6 @@ const sue = (i) => {
                 });
                 this.init.methods._get = (param) => param;
                 Object.keys(this.init.methods).forEach((key) => {
-                    console.log(key);
                     this.methods[key] = this.init.methods[key].bind(this);
                 });
                 this.data = this.makeProxy(init.data());
@@ -63,17 +62,23 @@ const sue = (i) => {
             // когда изменяются данные - запускаем рендер
             // если они прилетают пачкой - ставим в очередь
             this.update = () => {
-                if (!this.rendering) {
-                    this.rendering = true;
-                    this.render();
-                    this.rendering = false;
+                if (!this.isVisible())
+                    return;
+                if (this.rendering) {
+                    this.renderQueue.enqueue('update');
                 }
                 else {
-                    this.renderQueue.enqueue('update');
+                    this.rendering = true;
+                    const tStart = performance.now();
+                    this.render();
+                    const tEnd = performance.now();
+                    this.rendering = false;
+                    // eslint-disable-next-line no-console
+                    console.log(`render ${this.name} took ${Math.floor(tEnd - tStart)} milliseconds.`);
                 }
             };
             // setInterval handler
-            // если очередь не пустая - очищает очередь и запускает render
+            // если очередь не пустая - очищает очередь и запускает update
             this.delayedUpdate = () => {
                 if (!this.rendering && !this.renderQueue.isEmpty()) {
                     // eslint-disable-next-line no-console
@@ -81,7 +86,7 @@ const sue = (i) => {
                     while (!this.renderQueue.isEmpty()) {
                         this.renderQueue.dequeue();
                     }
-                    this.render();
+                    this.update();
                 }
             };
             this.makeProxy = (data) => new Proxy(data, {
@@ -136,25 +141,36 @@ const sue = (i) => {
                         const res = this.run(parsed);
                         switch (native) {
                             case 'text':
-                                element.innerText = res;
+                                if (element.innerText !== res)
+                                    element.innerText = res;
                                 break;
                             case 'disabled':
                                 if (element instanceof HTMLInputElement) {
-                                    element.disabled = (res === 'true');
+                                    const boolRes = (res === 'true');
+                                    if (element.disabled !== boolRes)
+                                        element.disabled = boolRes;
                                 }
                                 break;
                             default:
-                                element.setAttribute(native, res);
+                                if (element.getAttribute(native) !== res) {
+                                    element.setAttribute(native, res);
+                                }
                         }
                     }
                     if (attribute.charAt(0) === '@') { // inline event handlers
                         const parsed = this.parse(element.getAttribute(attribute) || '');
-                        if (!this.methods[parsed.func])
+                        if (!this.methods[parsed.func]) {
                             throw new Error(`Method '${parsed.func}' does not exist`);
+                        }
                         const eventHandler = `on${attribute.substring(1)}`;
-                        if (!(eventHandler in element))
+                        if (!(eventHandler in element)) {
                             throw new Error(`event handler '${eventHandler}' does not exist`);
-                        element[eventHandler] = () => this.run(parsed);
+                        }
+                        if (typeof element[eventHandler] !== 'function') {
+                            element[eventHandler] = () => this.run(parsed);
+                            // eslint-disable-next-line no-console
+                            console.warn(`set ${eventHandler} to ${parsed.func}(${parsed.params})`);
+                        }
                     }
                 });
                 Array.from(e.childNodes).forEach((child) => this.render(child));
