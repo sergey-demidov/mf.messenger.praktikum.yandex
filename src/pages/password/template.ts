@@ -7,7 +7,7 @@ export default `
         Change password
       </header>
       <main>
-        <form name="password" action="/">
+        <form name="password" action="#">
           <div class="mpy_dialog_content mpy_lightgrey mpy_pt10">
             <s-input
               name="oldPassword"

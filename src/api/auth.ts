@@ -3,6 +3,7 @@ import HttpTransport, { HttpDataType } from '../lib/http-transport';
 
 const headers = {
   'Content-type': 'application/json',
+  // Origin: 'https://localhost:3443',
 };
 
 class AuthAPI {

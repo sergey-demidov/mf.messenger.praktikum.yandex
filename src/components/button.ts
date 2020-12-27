@@ -2,15 +2,18 @@ import { CONST } from '../lib/utils';
 
 class sButton extends HTMLElement {
   get disabled(): boolean {
+    // return this.hasAttribute(CONST.disabled);
     return this.hasAttribute(CONST.disabled);
   }
 
   set disabled(val: boolean) {
     if (val) {
+      this.setAttribute(CONST.disabled, 'true');
       this.setAttribute('tabindex', '-1');
       this.classList.add('mpy_button__disabled');
       this.style.pointerEvents = CONST.none;
     } else {
+      this.removeAttribute(CONST.disabled);
       this.setAttribute('tabindex', '0');
       this.classList.remove('mpy_button__disabled');
       this.style.pointerEvents = CONST.auto;

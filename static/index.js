@@ -8,6 +8,8 @@ import password from "./pages/password/index.js";
 const root = document.getElementById('app');
 if (!root)
     throw new Error('Root element does not exist');
+// нужен для простоты использования
+// в частности - в шаблонах
 window.router = new Router(root);
 document.addEventListener('DOMContentLoaded', () => {
     window.router
@@ -19,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .use('/#/register', register)
         .use('/#/password', password)
         .use('/#/404', error404)
-        // .use('/#500', ErrorPage500)
         .start();
 });
 //# sourceMappingURL=index.js.map

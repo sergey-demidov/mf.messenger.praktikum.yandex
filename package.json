@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ttsc -w & node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
+    "dev": "ttsc -w & node server & browser-sync start --proxy 'localhost:5000' --files 'static'",
     "serve": "node server",
     "lint": "eslint --ext .ts src",
     "deploy": "test `git status --porcelain | wc -l` -eq 0 && git rebase main deploy && git push && git checkout main || echo commit first"

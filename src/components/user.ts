@@ -25,6 +25,7 @@ class sUser extends HTMLElement {
 
     this.addEventListener('click', (e: MouseEvent) => this.showMenu(e));
     window.addEventListener('hashchange', () => this.onHashchange());
+    window.addEventListener('popstate', () => this.onHashchange());
     document.body.addEventListener('click', () => this.hideMenu());
   }
 

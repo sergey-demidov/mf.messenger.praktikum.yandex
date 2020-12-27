@@ -60,24 +60,24 @@ const sue = (i) => {
             };
             // update eventBus handler
             // когда изменяются данные - запускаем рендер
-            // если они прилетают пачкой - ставим в очередь
+            // если они прилетают во время render() - ставим в очередь
             this.update = () => {
                 if (!this.isVisible())
                     return;
-                if (this.rendering) {
-                    this.renderQueue.enqueue('update');
-                }
-                else {
+                if (!this.rendering) {
                     this.rendering = true;
                     const tStart = performance.now();
                     this.render();
                     const tEnd = performance.now();
                     this.rendering = false;
                     // eslint-disable-next-line no-console
-                    console.log(`render ${this.name} took ${Math.floor(tEnd - tStart)} milliseconds.`);
+                    console.log(`render ${this.name} took ${Math.round(tEnd - tStart)} milliseconds.`);
+                }
+                else {
+                    this.renderQueue.enqueue('update');
                 }
             };
-            // setInterval handler
+            // setInterval(... ,100) handler
             // если очередь не пустая - очищает очередь и запускает update
             this.delayedUpdate = () => {
                 if (!this.rendering && !this.renderQueue.isEmpty()) {
@@ -145,10 +145,8 @@ const sue = (i) => {
                                     element.innerText = res;
                                 break;
                             case 'disabled':
-                                if (element instanceof HTMLInputElement) {
-                                    const boolRes = (res === 'true');
-                                    if (element.disabled !== boolRes)
-                                        element.disabled = boolRes;
+                                if (element.disabled !== (res === 'true')) {
+                                    element.disabled = (res === 'true');
                                 }
                                 break;
                             default:
@@ -169,7 +167,7 @@ const sue = (i) => {
                         if (typeof element[eventHandler] !== 'function') {
                             element[eventHandler] = () => this.run(parsed);
                             // eslint-disable-next-line no-console
-                            console.warn(`set ${eventHandler} to ${parsed.func}(${parsed.params})`);
+                            console.warn(`set ${eventHandler} to ${parsed.func}(${parsed.params.join(', ')})`);
                         }
                     }
                 });

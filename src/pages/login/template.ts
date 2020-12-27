@@ -1,5 +1,4 @@
 export default `
-<s-app>
 <div class="mpy_overlay">
   <div class="mpy_container">
     <div class="mpy_dialog">
@@ -41,5 +40,4 @@ export default `
     </div>
   </div>
 </div>
-<s-app>
 `;
