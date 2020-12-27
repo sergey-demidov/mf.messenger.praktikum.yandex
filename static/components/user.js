@@ -15,6 +15,7 @@ class sUser extends HTMLElement {
         this.eventBus.on('userDataChange', () => this.onHashchange());
         this.addEventListener('click', (e) => this.showMenu(e));
         window.addEventListener('hashchange', () => this.onHashchange());
+        window.addEventListener('popstate', () => this.onHashchange());
         document.body.addEventListener('click', () => this.hideMenu());
     }
     showMenu(e) {

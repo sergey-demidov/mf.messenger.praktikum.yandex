@@ -659,6 +659,7 @@ input:invalid {
 
 .mpy_chat_display_avatar:hover > span {
     color: #5b6;
+    text-shadow: 0 0 2px #000;
 }
 
 .mpy_chat_display_avatar_sign {

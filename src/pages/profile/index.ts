@@ -32,9 +32,9 @@ const profile = sue({
     };
   },
   methods: {
-    resetForm(): void {
-      (this as sApp).methods.fillForm();
-    },
+    // resetForm(): void {
+    //   (this as sApp).methods.fillForm();
+    // },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
       if (!form) {
@@ -75,7 +75,6 @@ const profile = sue({
             throw new Error(response.response);
           }
           toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
-          // setTimeout(() => (this as sApp).methods.fillForm(), 2000);
         })
         .catch((error) => {
           toaster.bakeError(error);
@@ -91,17 +90,11 @@ const profile = sue({
         throw new Error(`avatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
       }
       const backupSrc = avatarPreview.src; // сохраняем старое изображение
-      // avatarPreview.src = URL.createObjectURL(fileInput.files[0]); // показываем новое
       (this as sApp).data.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
-
-      avatarPreview.onload = () => {
-        URL.revokeObjectURL(avatarPreview.src); // free memory
-      };
 
       // в случае ошибки
       avatarPreview.onerror = () => {
         fileInput.value = '';
-        // avatarPreview.src = backupSrc; // возвращаем старое изображение
         (this as sApp).data.avatar = backupSrc; // возвращаем старое изображение
         // моргаем красным значком
         const errorSign = document.getElementById('errorSign');

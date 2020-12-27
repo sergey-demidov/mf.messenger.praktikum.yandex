@@ -2,7 +2,7 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import { formDataToObject, isJsonString } from "../../lib/utils.js";
+import { formDataToObject } from "../../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
 import EventBus from "../../lib/event-bus.js";
@@ -30,14 +30,13 @@ const login = sue({
                 const res = formDataToObject(formData);
                 auth.signIn(res)
                     .then((response) => {
-                    // (this as sApp).data.password = '';
                     eventBus.emit('dataChange', 'password', '');
                     if (response.status === 200) {
                         return response;
                     }
-                    if (isJsonString(response.response)) {
-                        throw new Error(JSON.parse(response.response).reason);
-                    }
+                    // if (isJsonString(response.response)) {
+                    //   throw new Error(JSON.parse(response.response).reason);
+                    // }
                     throw new Error(response.response);
                 })
                     .then(() => {

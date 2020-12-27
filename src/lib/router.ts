@@ -22,10 +22,6 @@ class Router {
     this.routes = [];
     this.root = root;
     this.root.innerText = '';
-    // this.overlay = document.createElement('div');
-    // this.overlay.style.display = 'none';
-    // this.overlay.classList.add('mpy_overlay');
-    // document.body.appendChild(this.overlay);
   }
 
   use(pathname: string, view: sCustomElementConstructor): Router {

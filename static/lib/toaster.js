@@ -46,6 +46,9 @@ export default class Toaster {
         else if (isJsonString(error)) {
             message = JSON.parse(error).reason || error;
         }
+        else if (error instanceof Error && isJsonString(error.message)) {
+            message = JSON.parse(error.message).reason || error.message;
+        }
         else if (typeof error === CONST.object) {
             // eslint-disable-next-line @typescript-eslint/ban-types
             message = error.toString();
