@@ -91,7 +91,8 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     // update eventBus handler
     // когда изменяются данные - запускаем рендер
-    // если они прилетают во время render() - ставим в очередь
+    // если они прилетают во время выполнения render()
+    // ставим в очередь
     protected update = () => {
       if (!this.isVisible()) return;
       if (!this.rendering) {
@@ -192,22 +193,23 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           }
         }
         if (attribute.charAt(0) === '@') { // inline event handlers
-          const parsed = this.parse(element.getAttribute(attribute) || '');
-          if (!this.methods[parsed.func]) {
-            throw new Error(`Method '${parsed.func}' does not exist`);
-          }
           const eventHandler = `on${attribute.substring(1)}`;
-          if (!(eventHandler in element)) {
-            throw new Error(`event handler '${eventHandler}' does not exist`);
-          }
+          // привязываем только один раз
           if (typeof element[eventHandler as sEvents] !== 'function') {
+            if (!(eventHandler in element)) {
+              throw new Error(`event handler '${eventHandler}' does not exist`);
+            }
+            const parsed = this.parse(element.getAttribute(attribute) || '');
+            if (!this.methods[parsed.func]) {
+              throw new Error(`Method '${parsed.func}' does not exist`);
+            }
             element[eventHandler as sEvents] = () => this.run(parsed);
             // eslint-disable-next-line no-console
             console.warn(`set ${eventHandler} to ${parsed.func}(${parsed.params.join(', ')})`);
           }
         }
       });
-      Array.from(e.childNodes).forEach((child) => this.render(child as sHTMLElement));
+      Array.from(element.childNodes).forEach((child) => this.render(child as sHTMLElement));
     }
 
     // eslint-disable-next-line class-methods-use-this
