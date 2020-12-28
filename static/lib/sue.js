@@ -43,6 +43,7 @@ const sue = (i) => {
                     }
                 });
                 this.init.methods._get = (param) => param;
+                // this.init.methods._getArray = (array: string, iterator: string): string => this.data[array][iterator];
                 Object.keys(this.init.methods).forEach((key) => {
                     this.methods[key] = this.init.methods[key].bind(this);
                 });
@@ -71,8 +72,10 @@ const sue = (i) => {
                     this.render();
                     const tEnd = performance.now();
                     this.rendering = false;
+                    const renderTime = Math.ceil(tEnd - tStart);
                     // eslint-disable-next-line no-console
-                    console.log(`render ${this.name} took ${Math.round(tEnd - tStart)} milliseconds.`);
+                    if (renderTime > 4)
+                        console.log(`render ${this.name} took ${renderTime} milliseconds.`);
                 }
                 else {
                     this.renderQueue.enqueue('update');
@@ -115,9 +118,19 @@ const sue = (i) => {
                     if (stringRes) {
                         return stringRes[1];
                     }
+                    // param is array member
+                    const arrayRes = e.match(/^([a-z0-9_]+)\[(\d+)]$/i);
+                    if (arrayRes) {
+                        const [, array, strIndex] = arrayRes;
+                        const index = parseInt(strIndex, 10);
+                        if (!this.data[array] || !Array.isArray(this.data[array]) || !this.data[array][index]) {
+                            throw new Error(`array member '${e}' undefined`);
+                        }
+                        return this.data[array][index];
+                    }
                     // param is undefined data property
                     if (typeof this.data[e] === CONST.undefined) {
-                        throw new Error(`${e} undefined`);
+                        throw new Error(`property '${e}' undefined`);
                     }
                     // param is data property
                     return this.data[e];
@@ -134,6 +147,51 @@ const sue = (i) => {
                     return;
                 const element = e;
                 const { attributes } = element;
+                if (element.hasAttribute('s-for')) { // for loop
+                    const sForAttribute = element.getAttribute('s-for') || '';
+                    if (!sForAttribute) {
+                        throw new Error('\'s-for\' attribute must have \'s-key\'');
+                    }
+                    const res = sForAttribute.match(/^([\w\d_]+) in ([\w\d_]+)$/);
+                    if (!res) {
+                        throw new Error(`Cant parse string '${sForAttribute}' in 's-for' attribute`);
+                    }
+                    const [, sFor, sIn] = res;
+                    const sKey = element.getAttribute('s-key') || '';
+                    if (!sIn || !this.data[sIn] || !Array.isArray(this.data[sIn])) {
+                        throw new Error(`Attribute 's-in' '${sIn}' is not array`);
+                    }
+                    if (!sKey) {
+                        throw new Error('Attribute \'s-key\' required');
+                    }
+                    const templateId = `${sFor}_${sIn}_${sKey}`;
+                    let template = document.getElementById(templateId);
+                    if (!template) {
+                        // eslint-disable-next-line no-console
+                        console.log(`creating template ${templateId}`);
+                        template = document.createElement('template');
+                        template.id = templateId;
+                        const clone = element.cloneNode(true);
+                        clone.removeAttribute('s-for');
+                        clone.removeAttribute('s-in');
+                        template.content.appendChild(clone);
+                        element.innerHTML = '';
+                        document.body.appendChild(template);
+                    }
+                    if (element.childElementCount !== this.data[sIn].length) {
+                        const array = this.data[sIn];
+                        // eslint-disable-next-line no-console
+                        console.log(`childElementCount ${element.childElementCount} !== ${array.length}`);
+                        element.innerHTML = '';
+                        const content = template.content.firstChild;
+                        for (let index = 0; index < array.length; index += 1) {
+                            const cloned = content.cloneNode(true);
+                            cloned.setAttribute('s-array-key', `${sKey}_${index}`);
+                            cloned.innerHTML = cloned.innerHTML.replace(`${sIn}[${sFor}]`, `${sIn}[${index}]`);
+                            element.appendChild(cloned);
+                        }
+                    }
+                }
                 Array.from(attributes).forEach((a) => {
                     const attribute = a.name;
                     if (attribute.charAt(0) === ':') { // dynamic props
@@ -196,7 +254,8 @@ const sue = (i) => {
         parse(str) {
             const result = { not: false, func: '', params: [] };
             let not = '';
-            const regFunc = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\(([^)]*)\)\s*$/i); // some_func(a,b), !some_func()
+            // some_func(a,b), !some_func()
+            const regFunc = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\(([^)]*)\)\s*$/i);
             const func = str.match(regFunc);
             if (func) {
                 let strParams;
@@ -205,12 +264,22 @@ const sue = (i) => {
                 result.not = (not === '!');
                 return result;
             }
-            const regVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\s*$/i); // some_variable, !some_variable
+            // some_variable, !some_variable
+            const regVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\s*$/i);
             const variable = str.match(regVariable);
             if (variable) {
                 result.func = '_get';
                 [, not, result.params[0]] = variable;
                 result.not = not === '!';
+                return result;
+            }
+            // some_array[some_var], !some_array[some_var]
+            const arrVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+\[[a-z0-9_]+\])\s*$/i);
+            const iterator = str.match(arrVariable);
+            if (iterator) {
+                result.func = '_get';
+                [, not, result.params[0]] = iterator;
+                result.not = (not === '!');
                 return result;
             }
             throw new Error(`Cant parse string '${str}'`);

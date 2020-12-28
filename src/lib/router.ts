@@ -1,5 +1,9 @@
 import Route from './route';
 import { sCustomElementConstructor } from './types';
+// import EventBus from './event-bus';
+// import { CONST } from './utils';
+//
+// const eventBus = new EventBus();
 
 class Router {
   public routes: Route[] = [];
@@ -35,10 +39,10 @@ class Router {
       this._onRoute((event.currentTarget as Window).location.hash);
     };
 
-    // window.onpopstate = (event: PopStateEvent): void => {
-    //   console.log('onpopstate');
-    //   this._onRoute((event.currentTarget as Window).location.hash);
-    // };
+    window.onpopstate = (event: PopStateEvent): void => {
+      // console.log('onpopstate');
+      this._onRoute((event.currentTarget as Window).location.hash);
+    };
 
     this._onRoute(window.location.hash);
   }
@@ -52,11 +56,9 @@ class Router {
       return;
     }
 
-    // if (this.currentRoute && this.currentRoute !== route && this.currentRoute.element.tagName.match(/modal$/i)) {
     if (this.currentRoute && this.currentRoute !== route) {
       this.currentRoute.leave();
     }
-
     this.currentRoute = route;
     route.render();
   }

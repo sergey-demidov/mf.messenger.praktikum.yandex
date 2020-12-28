@@ -18,6 +18,7 @@ const profile = sue({
     template,
     data() {
         return {
+            array: ['one', 'two', 'three'],
             first_name: '',
             second_name: '',
             email: '',
@@ -104,6 +105,8 @@ const profile = sue({
             };
         },
         fillForm() {
+            if (!this.isVisible())
+                return;
             auth.getUser()
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
@@ -130,6 +133,7 @@ const profile = sue({
         },
     },
     mounted() {
+        console.log('Profile mounted');
         this.methods.fillForm();
     },
     components: {
