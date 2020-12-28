@@ -6,6 +6,7 @@ export interface sApp {
   methods: Record<string, Function>;
   data: Record<string, unknown>
   mounted(): void;
+  isVisible(): boolean;
 }
 
 export interface sInit {

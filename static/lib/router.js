@@ -1,4 +1,8 @@
 import Route from "./route.js";
+// import EventBus from './event-bus';
+// import { CONST } from './utils';
+//
+// const eventBus = new EventBus();
 class Router {
     constructor(root) {
         this.routes = [];
@@ -20,10 +24,10 @@ class Router {
         window.onhashchange = (event) => {
             this._onRoute(event.currentTarget.location.hash);
         };
-        // window.onpopstate = (event: PopStateEvent): void => {
-        //   console.log('onpopstate');
-        //   this._onRoute((event.currentTarget as Window).location.hash);
-        // };
+        window.onpopstate = (event) => {
+            // console.log('onpopstate');
+            this._onRoute(event.currentTarget.location.hash);
+        };
         this._onRoute(window.location.hash);
     }
     _onRoute(pathname) {
@@ -34,7 +38,6 @@ class Router {
             }
             return;
         }
-        // if (this.currentRoute && this.currentRoute !== route && this.currentRoute.element.tagName.match(/modal$/i)) {
         if (this.currentRoute && this.currentRoute !== route) {
             this.currentRoute.leave();
         }

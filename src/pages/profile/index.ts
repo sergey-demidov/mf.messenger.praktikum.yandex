@@ -21,6 +21,7 @@ const profile = sue({
   template,
   data() {
     return {
+      array: ['one', 'two', 'three'],
       first_name: '',
       second_name: '',
       email: '',
@@ -28,7 +29,6 @@ const profile = sue({
       login: '',
       avatar: '',
       emptyAvatar: '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200',
-
     };
   },
   methods: {
@@ -108,6 +108,7 @@ const profile = sue({
       };
     },
     fillForm() {
+      if (!(this as sApp).isVisible()) return;
       auth.getUser()
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {
@@ -132,6 +133,7 @@ const profile = sue({
     },
   },
   mounted() {
+    console.log('Profile mounted');
     (this as unknown as sApp).methods.fillForm();
   },
   components: {

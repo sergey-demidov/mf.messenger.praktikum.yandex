@@ -1,3 +1,4 @@
+import { CONST } from "./utils.js";
 class EventBus {
     constructor() {
         this.listeners = {};
@@ -21,10 +22,13 @@ class EventBus {
     }
     emit(event, ...args) {
         if (!this.listeners[event]) {
-            throw new Error(`Нет события: ${event}`);
+            // eslint-disable-next-line no-console
+            console.error(`Нет события: ${event}`);
+            return;
         }
         this.listeners[event].forEach((listener) => {
-            listener(...args);
+            if (typeof listener === CONST.function)
+                listener(...args);
         });
     }
 }

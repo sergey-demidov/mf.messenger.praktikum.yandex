@@ -18,6 +18,8 @@ export const CONST = Object.freeze({
   error: 'error',
   warn: 'warn',
   info: 'info',
+  hashchange: 'hashchange',
+  function: 'function',
 });
 
 export type PlainObject<T = unknown> = {
@@ -104,4 +106,17 @@ export function formDataToObject(formData: FormData): Record<string, unknown> {
     ...memo,
     [pair[0]]: pair[1],
   }), {});
+}
+
+export function stringHash(source: string): number {
+  let hash = 0;
+  let chr;
+  for (let i = 0; i < source.length; i += 1) {
+    chr = source.charCodeAt(i);
+    // eslint-disable-next-line no-bitwise
+    hash = ((hash << 5) - hash) + chr;
+    // eslint-disable-next-line no-bitwise
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
 }

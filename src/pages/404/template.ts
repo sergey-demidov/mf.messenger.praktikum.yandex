@@ -23,6 +23,9 @@ export default `
             Home
           </s-btn>
         </div>
+        <div s-for="number in array" s-key="num">
+            <div :text=array[number]></div>
+        </div>
       </div>
     </div>
   </div>
