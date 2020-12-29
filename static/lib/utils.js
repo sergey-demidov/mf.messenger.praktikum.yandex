@@ -19,6 +19,7 @@ export const CONST = Object.freeze({
     info: 'info',
     hashchange: 'hashchange',
     function: 'function',
+    userDataChange: 'userDataChange',
 });
 export function isPlainObject(value) {
     return typeof value === 'object'

@@ -8,7 +8,7 @@ const auth = new AuthAPI();
 const toaster = new Toaster();
 
 class sUser extends HTMLElement {
-  eventBus: EventBus;
+  eventBus = new EventBus();
 
   menuOpened = false
 
@@ -20,8 +20,7 @@ class sUser extends HTMLElement {
     this.wrapper = document.createElement(CONST.div);
     this.createResources();
 
-    this.eventBus = new EventBus();
-    this.eventBus.on('userDataChange', () => this.onHashchange());
+    this.eventBus.on(CONST.userDataChange, () => this.onHashchange());
 
     this.addEventListener('click', (e: MouseEvent) => this.showMenu(e));
     window.addEventListener('hashchange', () => this.onHashchange());
@@ -81,17 +80,19 @@ class sUser extends HTMLElement {
   createResources():void {
     this.classList.add('mpy_navigation_link');
     this.wrapper.classList.add('mpy_navigation_menu');
-    const getNodes = (str: string): HTMLElement => new DOMParser().parseFromString(str, 'text/html').body.firstChild as HTMLElement || document.createElement('div');
-
-    const profile = getNodes('<div class="mpy_navigation_link"> Profile </div>');
+    // const getNodes = (str: string): HTMLElement => new DOMParser().parseFromString(str, 'text/html').body.firstChild as HTMLElement || document.createElement('div');
+    // const profile = getNodes('<div class="mpy_navigation_link"> Profile </div>');
+    const profile = document.createElement('div');
     profile.dataset.icon = ICONS.settings;
+    profile.innerText = 'Profile';
+    profile.classList.add('mpy_navigation_link');
     profile.addEventListener('click', () => window.router.go('/#/profile'));
     this.wrapper.appendChild(profile);
 
     const logout = document.createElement(CONST.div);
     logout.classList.add('mpy_navigation_link');
     logout.innerText = 'Logout';
-    logout.dataset.icon = '\ue9ba';
+    logout.dataset.icon = ICONS.logout;
     logout.addEventListener('click', () => this.logout());
     this.wrapper.appendChild(logout);
 
