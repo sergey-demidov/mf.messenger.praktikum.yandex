@@ -1,4 +1,3 @@
-import { CONST } from "./utils.js";
 class EventBus {
     constructor() {
         this.listeners = {};
@@ -27,10 +26,11 @@ class EventBus {
             return;
         }
         this.listeners[event].forEach((listener) => {
-            if (typeof listener === CONST.function)
+            if (typeof listener === 'function')
                 listener(...args);
         });
     }
 }
-export default EventBus;
+const eventBus = new EventBus();
+export default eventBus;
 //# sourceMappingURL=event-bus.js.map

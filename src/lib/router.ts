@@ -1,9 +1,7 @@
 import Route from './route';
 import { sCustomElementConstructor } from './types';
-import EventBus from './event-bus';
+import eventBus from './event-bus';
 import { CONST } from './utils';
-
-const eventBus = new EventBus();
 
 class Router {
   public routes: Route[] = [];
@@ -50,22 +48,25 @@ class Router {
 
   _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
-    console.log(`pathname: ${pathname}`);
-    if (!route) {
-      if (pathname.match(/^\/?$/)) {
-        this.go('/#/');
-        return;
-      }
-      if (pathname !== '/#/404') {
-        this.go('/#/404');
-      }
-    } else {
-      if (this.currentRoute && this.currentRoute !== route) {
+    if (route) {
+      if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
         this.currentRoute.leave();
       }
       this.currentRoute = route;
       route.render();
       eventBus.emit(CONST.hashchange);
+      return;
+    }
+    if (pathname.match(/^[/#]?$/)) {
+      this.go('/#/chat');
+      return;
+    }
+    if (pathname.match(/^[/#]?$/)) {
+      this.go('/#/chat');
+      return;
+    }
+    if (pathname !== '/#/404') {
+      this.go('/#/404');
     }
   }
 
@@ -82,8 +83,9 @@ class Router {
     this.history.forward();
   }
 
-  getRoute(pathname: string): Route | undefined {
-    return this.routes.find((r) => r.match(pathname.charAt(0) === '/' ? pathname.substring(1) : pathname));
+  getRoute(p: string): Route | undefined {
+    const pathname = p.charAt(0) === '/' ? p.substring(1) : p;
+    return this.routes.find((r) => r.match(pathname));
   }
 }
 

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import EventBus from './event-bus';
+import eventBus from './event-bus';
 
 export interface sApp {
-  EventBus: EventBus;
+  eventBus: typeof eventBus;
   methods: Record<string, Function>;
   data: Record<string, unknown>
   mounted(): void;

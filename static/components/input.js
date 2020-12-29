@@ -1,5 +1,5 @@
 import Validate from "../lib/validate.js";
-import EventBus from "../lib/event-bus.js";
+import eventBus from "../lib/event-bus.js";
 const css = Object.freeze({
     wrapper: 'mpy_text_input_wrapper',
     label: 'mpy_text_input_label',
@@ -10,7 +10,7 @@ const css = Object.freeze({
 class sInput extends HTMLElement {
     constructor() {
         super();
-        this.eventBus = new EventBus();
+        this.eventBus = eventBus;
         this.innerText = '';
         this.validateInstance = new Validate();
         this.classList.add(css.wrapper);

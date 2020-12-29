@@ -8,6 +8,29 @@ body {
     font-family: 'Montserrat', sans-serif, 'Material Icons';
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #000;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    /*background: radial-gradient(#fff, #000, #fff);*/
+    box-shadow: inset 0 0 3px #000;
+    border-radius: 5px;
+    background: #678;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #789;
+}
+
 input:invalid {
     box-shadow: none;
 }
@@ -342,7 +365,7 @@ input:invalid {
 
 .mpy_dialog_content {
     padding: 0 20px;
-    display: flex;
+    display: block;
     align-items: center;
     flex-direction: column;
     flex-flow: row wrap;
@@ -363,6 +386,8 @@ input:invalid {
     font-size: small;
     color: #567;
     outline: none;
+    display: block;
+    text-align: center;
 }
 
 .mpy_dialog_link:active {
@@ -372,10 +397,17 @@ input:invalid {
 
 .mpy_chat_list {
     /*background-color: #88ee99;*/
-    min-width: 200px;
+    width: 300px;
     display: block;
     height: calc(100vh - 40px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    direction: rtl;
     border-right: 1px #444444 solid;
+    /*box-sizing: content-box;*/
+    box-sizing: border-box;
+    padding: 0;
+    position: relative;
 }
 
 .mpy_chat_content {
@@ -499,11 +531,25 @@ input:invalid {
 
 .mpy_button__block {
     display: block;
-    width: 100%;
+    /*width: 100%;*/
     background-color: #eeeeee;
     background-image: none;
     margin: 10px 10px;
     box-shadow: 0 0 2px #000;
+    box-sizing: border-box;
+}
+
+.mpy_button__round {
+    display: inline-block;
+    border-radius: 50%;
+    padding: 0.5em 0.5em;
+    font-size: 1em;
+    margin: auto;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1em;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .mpy_button:hover, .mpy_button:active, .mpy_button:focus {
@@ -511,7 +557,7 @@ input:invalid {
     filter: brightness(105%);
 }
 
-.mpy_button__disabled, .mpy_button__disabled:hover, .mpy_button__disabled:active, .mpy_button__disabled:focus{
+.mpy_button__disabled, .mpy_button__disabled:hover, .mpy_button__disabled:active, .mpy_button__disabled:focus {
     box-shadow: 0 0 2px #0007;
     filter: grayscale(90%);
     cursor: not-allowed;
@@ -566,15 +612,19 @@ input:invalid {
 
 .mpy_chat_display_wrapper {
     padding: 5px 5px;
-    margin: 0 10px 5px 10px;
+    margin: 10px 10px;
     display: flex;
     text-align: center;
-    width: calc(100% - 30px);
+    direction: ltr;
+
+    /*width: 100%;*/
+    /*width: calc(100% - 30px);*/
     /*margin: 0;*/
     /*border: 1px solid #678;*/
     border-radius: 5px;
     box-shadow: 0 0 2px #0007;
     cursor: pointer;
+    box-sizing: content-box;
 }
 
 .mpy_chat_display_wrapper:hover {
@@ -704,6 +754,11 @@ input:invalid {
 
 .mpy_pt20 {
     padding-top: 20px;
+}
+
+.mpy_py20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .mpy_pt0 {

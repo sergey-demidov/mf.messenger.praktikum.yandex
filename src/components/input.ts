@@ -1,5 +1,5 @@
 import Validate from '../lib/validate';
-import EventBus from '../lib/event-bus';
+import eventBus from '../lib/event-bus';
 import { sHTMLInputElement } from '../lib/types';
 
 const css = Object.freeze({
@@ -11,7 +11,7 @@ const css = Object.freeze({
 });
 
 class sInput extends HTMLElement {
-  eventBus = new EventBus();
+  eventBus = eventBus;
 
   inputElement: HTMLInputElement;
 

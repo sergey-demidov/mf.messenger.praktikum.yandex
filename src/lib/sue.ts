@@ -1,9 +1,10 @@
-import EventBus from './event-bus';
+import eventBus from './event-bus';
 import {
   sInit, sParsed, sCustomElementConstructor, sEvents, sHTMLElement,
 } from './types';
 import { CONST } from './utils';
 import Queue from './queue';
+import store from './store';
 
 declare global {
   interface Window {
@@ -27,7 +28,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   const init: sInit = { ...emptyInit, ...i };
 
   const app = class extends HTMLElement {
-    EventBus: EventBus = new EventBus();
+    eventBus = eventBus;
+
+    store = store
 
     name = ''
 
@@ -59,8 +62,8 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       if (!this.name) throw new Error('Component name is not defined');
       setInterval(() => this.delayedUpdate(), 100);
 
-      this.EventBus.on(CONST.update, this.update);
-      this.EventBus.on('dataChange', this.setData);
+      this.eventBus.on(CONST.update, this.update);
+      this.eventBus.on('dataChange', this.setData);
 
       // define each components
       Object.keys(init.components).forEach((key) => {
@@ -130,7 +133,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       set: (target, prop: string, value) => {
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
-        this.EventBus.emit(CONST.update);
+        this.eventBus.emit(CONST.update);
         return true;
       },
       deleteProperty(target, prop: string) {
@@ -314,7 +317,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.style.display = CONST.block;
       this.style.visibility = CONST.visible;
       this.active = true;
-      this.EventBus.emit(CONST.update);
+      this.eventBus.emit(CONST.update);
     }
 
     hide = () => {

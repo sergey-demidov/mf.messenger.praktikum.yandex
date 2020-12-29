@@ -8,17 +8,15 @@ import AuthAPI from "../../api/auth.js";
 import { baseUrl } from "../../lib/http-transport.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import UserAPI from "../../api/user.js";
-import EventBus from "../../lib/event-bus.js";
+import eventBus from "../../lib/event-bus.js";
 const auth = new AuthAPI();
 const userAPI = new UserAPI();
 const toaster = new Toaster();
-const eventBus = new EventBus();
 const profile = sue({
     name: 's-app-profile',
     template,
     data() {
         return {
-            array: ['one', 'two', 'three'],
             first_name: '',
             second_name: '',
             email: '',

@@ -1,4 +1,5 @@
-export default `<nav class="mpy_navigation">
+export default `
+<nav class="mpy_navigation">
   <div></div>
   <div>
     <s-user></s-user>
@@ -7,25 +8,18 @@ export default `<nav class="mpy_navigation">
 <div class="mpy_container">
   <div class="mpy_main_wrapper">
     <div class="mpy_chat_list mpy_lightgrey">
-      <div class="mpy_text_input_wrapper">
-        <!--          <div class="mpy_text_input_label">search</div>-->
-        <div class="mpy_text_input_icon"
-          title="search">
-          <i class="material-icons">search</i>
-        </div>
-
-        <input name="search"
-          class="mpy_text_input"
-          type="text"
-          spellcheck="false">
+        <div style="position: fixed; bottom: 0; width: 280px; display: flex; padding: 10px; z-index: 30;">
+        <s-btn round
+            onclick="window.router.go('/#/chat/create')">
+            <i class="material-icons ">playlist_add</i>
+<!--          +-->
+          </s-btn>
       </div>
-      <!--здесь нужны компоненты и цикл, однако по времени уже не получается реализовать -->
       <div s-for="chat in chats" s-key="chat">
         <s-chat-display :s-chat="chats[chat]"></s-chat-display>
       </div>
     </div>
     <div class="mpy_chat_wrapper">
-      <!--здесь нужны компоненты и цикл, однако по времени уже не получается реализовать -->
       <ul class="mpy_chat_content">
         <li class="mpy_chat_content_sended">
           <div class="mpy_chat_content_message">

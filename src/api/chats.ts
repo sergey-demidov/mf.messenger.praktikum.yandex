@@ -16,6 +16,10 @@ class ChatsAPI {
     return this.fetch.get('', {});
   }
 
+  createChat(data: HttpDataType): Promise<XMLHttpRequest> {
+    return this.fetch.post('', { data, headers });
+  }
+
   // saveProfileAvatar(data: FormData): Promise<XMLHttpRequest> {
   //   return this.fetch.put('/profile/avatar', { data });
   // }

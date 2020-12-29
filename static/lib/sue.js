@@ -1,6 +1,7 @@
-import EventBus from "./event-bus.js";
+import eventBus from "./event-bus.js";
 import { CONST } from "./utils.js";
 import Queue from "./queue.js";
+import store from "./store.js";
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
@@ -18,7 +19,8 @@ const sue = (i) => {
         // id = hash8()
         constructor() {
             super();
-            this.EventBus = new EventBus();
+            this.eventBus = eventBus;
+            this.store = store;
             this.name = '';
             this.data = {};
             // eslint-disable-next-line @typescript-eslint/ban-types
@@ -34,8 +36,8 @@ const sue = (i) => {
                 if (!this.name)
                     throw new Error('Component name is not defined');
                 setInterval(() => this.delayedUpdate(), 100);
-                this.EventBus.on(CONST.update, this.update);
-                this.EventBus.on('dataChange', this.setData);
+                this.eventBus.on(CONST.update, this.update);
+                this.eventBus.on('dataChange', this.setData);
                 // define each components
                 Object.keys(init.components).forEach((key) => {
                     if (!window.customElements.get(key)) {
@@ -100,7 +102,7 @@ const sue = (i) => {
                 set: (target, prop, value) => {
                     // eslint-disable-next-line no-param-reassign
                     target[prop] = value;
-                    this.EventBus.emit(CONST.update);
+                    this.eventBus.emit(CONST.update);
                     return true;
                 },
                 deleteProperty(target, prop) {
@@ -237,7 +239,7 @@ const sue = (i) => {
                 this.style.display = CONST.block;
                 this.style.visibility = CONST.visible;
                 this.active = true;
-                this.EventBus.emit(CONST.update);
+                this.eventBus.emit(CONST.update);
             };
             this.hide = () => {
                 this.style.display = CONST.none;

@@ -8,11 +8,10 @@ import { CONST, isJsonString } from '../../lib/utils';
 import ChatsAPI from '../../api/chats';
 import Toaster from '../../lib/toaster';
 import { sApp } from '../../lib/types';
-import EventBus from '../../lib/event-bus';
+import eventBus from '../../lib/event-bus';
 
 const chatsApi = new ChatsAPI();
 const toaster = new Toaster();
-const eventBus = new EventBus();
 
 const chat = sue({
   name: 's-app-chat',
@@ -38,9 +37,7 @@ const chat = sue({
           this.data.chats = [];
           Object.keys(chats).forEach((key) => {
             this.data.chats.push(JSON.stringify(chats[key]));
-            console.log(chats[key]);
           });
-          console.dir(this.data.chats);
           eventBus.emit(CONST.update);
         }).catch((error) => {
           toaster.bakeError(error);
@@ -61,7 +58,6 @@ const chat = sue({
     console.log('CHATS mounted');
   },
   created() {
-    console.warn('created');
     eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.getChats());
   },
   components: {

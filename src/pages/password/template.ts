@@ -1,5 +1,4 @@
 export default `
-<s-app>
 <div class="mpy_overlay">
   <div class="mpy_container">
     <div class="mpy_dialog">
@@ -11,6 +10,7 @@ export default `
           <div class="mpy_dialog_content mpy_lightgrey mpy_pt10">
             <s-input
               name="oldPassword"
+              autofocus
               :model="oldPassword"
               label="old password"
               type="password"
@@ -51,5 +51,4 @@ export default `
     </div>
   </div>
 </div>
-<s-app>
 `;

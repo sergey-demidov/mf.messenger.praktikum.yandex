@@ -10,6 +10,9 @@ class ChatsAPI {
     getChats() {
         return this.fetch.get('', {});
     }
+    createChat(data) {
+        return this.fetch.post('', { data, headers });
+    }
 }
 export default ChatsAPI;
 //# sourceMappingURL=chats.js.map

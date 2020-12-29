@@ -5,12 +5,11 @@ import template from "./template.js";
 import { formDataToObject } from "../../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
-import EventBus from "../../lib/event-bus.js";
+import eventBus from "../../lib/event-bus.js";
 const auth = new AuthAPI();
 const toaster = new Toaster();
-const eventBus = new EventBus();
 const login = sue({
-    name: 's-app-login-modal',
+    name: 's-app-login',
     template,
     data() {
         return {
@@ -40,7 +39,7 @@ const login = sue({
                     throw new Error(response.response);
                 })
                     .then(() => {
-                    window.router.go('/#/');
+                    window.router.go('/#/chat');
                     toaster.toast('Logged in successfully', ToasterMessageTypes.info);
                 })
                     .catch((error) => {

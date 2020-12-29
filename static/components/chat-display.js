@@ -42,9 +42,9 @@ class sChatDisplay extends HTMLElement {
         return ['s-chat'];
     }
     // eslint-disable-next-line class-methods-use-this
-    connectedCallback() {
-        console.log('chat connected');
-    }
+    // connectedCallback() :void {
+    //   console.log('chat connected');
+    // }
     attributeChangedCallback(name, _oldValue, newValue) {
         if (name === 's-chat') {
             if (isJsonString(newValue)) {

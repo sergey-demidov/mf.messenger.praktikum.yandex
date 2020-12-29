@@ -3,7 +3,7 @@ import { sCustomElementConstructor, sHTMLElement } from './types';
 class Route {
   protected pathname: string;
 
-  protected readonly view: sCustomElementConstructor;
+  readonly view: sCustomElementConstructor;
 
   public element: sHTMLElement;
 

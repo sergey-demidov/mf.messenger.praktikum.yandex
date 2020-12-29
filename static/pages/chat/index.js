@@ -7,10 +7,9 @@ import sChatDisplay from "../../components/chat-display.js";
 import { CONST, isJsonString } from "../../lib/utils.js";
 import ChatsAPI from "../../api/chats.js";
 import Toaster from "../../lib/toaster.js";
-import EventBus from "../../lib/event-bus.js";
+import eventBus from "../../lib/event-bus.js";
 const chatsApi = new ChatsAPI();
 const toaster = new Toaster();
-const eventBus = new EventBus();
 const chat = sue({
     name: 's-app-chat',
     template,
@@ -36,9 +35,7 @@ const chat = sue({
                 this.data.chats = [];
                 Object.keys(chats).forEach((key) => {
                     this.data.chats.push(JSON.stringify(chats[key]));
-                    console.log(chats[key]);
                 });
-                console.dir(this.data.chats);
                 eventBus.emit(CONST.update);
             }).catch((error) => {
                 toaster.bakeError(error);
@@ -56,7 +53,6 @@ const chat = sue({
         console.log('CHATS mounted');
     },
     created() {
-        console.warn('created');
         eventBus.on(CONST.hashchange, () => this.methods.getChats());
     },
     components: {
