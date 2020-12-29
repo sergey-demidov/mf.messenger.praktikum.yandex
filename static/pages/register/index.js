@@ -8,7 +8,7 @@ import { formDataToObject } from "../../lib/utils.js";
 const auth = new AuthAPI();
 const toaster = new Toaster();
 const register = sue({
-    name: 's-app-register-modal',
+    name: 's-app-register',
     template,
     data() {
         return {
@@ -38,7 +38,7 @@ const register = sue({
                     throw new Error(response.response);
                 })
                     .then(() => {
-                    window.router.go('/#/');
+                    window.router.go('/#/chat');
                     toaster.toast('Logged in successfully', ToasterMessageTypes.info);
                 })
                     .catch((error) => {

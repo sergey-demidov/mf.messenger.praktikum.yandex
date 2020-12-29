@@ -1,4 +1,4 @@
-import EventBus from '../lib/event-bus';
+import eventBus from '../lib/event-bus';
 import AuthAPI from '../api/auth';
 import { CONST, isJsonString } from '../lib/utils';
 import Toaster, { ToasterMessageTypes } from '../lib/toaster';
@@ -8,7 +8,7 @@ const auth = new AuthAPI();
 const toaster = new Toaster();
 
 class sUser extends HTMLElement {
-  eventBus = new EventBus();
+  eventBus = eventBus;
 
   menuOpened = false
 

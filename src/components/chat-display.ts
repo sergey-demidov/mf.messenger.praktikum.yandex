@@ -50,9 +50,9 @@ class sChatDisplay extends HTMLElement {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  connectedCallback() :void {
-    console.log('chat connected');
-  }
+  // connectedCallback() :void {
+  //   console.log('chat connected');
+  // }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
     if (name === 's-chat') {

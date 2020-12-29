@@ -18,9 +18,9 @@ class sButton extends HTMLElement {
             this.style.pointerEvents = CONST.auto;
         }
     }
-    static get observedAttributes() {
-        return ['disabled'];
-    }
+    // static get observedAttributes(): string[] {
+    //   return ['disabled'];
+    // }
     constructor() {
         super();
         if (!this.getAttribute(CONST.class)) {
@@ -28,6 +28,9 @@ class sButton extends HTMLElement {
         }
         if (this.hasAttribute('block')) {
             this.classList.add('mpy_button__block');
+        }
+        else if (this.hasAttribute('round')) {
+            this.classList.add('mpy_button__round');
         }
         this.classList.add('unselectable');
         this.addEventListener('keydown', (e) => this.onKeydown(e));

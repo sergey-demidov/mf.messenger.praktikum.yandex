@@ -1,5 +1,3 @@
-import { CONST } from './utils';
-
 interface listeners {
   [key: string]: { (...args : unknown[]): void; }[];
 }
@@ -42,9 +40,11 @@ class EventBus {
       return;
     }
     this.listeners[event].forEach((listener) => {
-      if (typeof listener === CONST.function) listener(...args);
+      if (typeof listener === 'function') listener(...args);
     });
   }
 }
 
-export default EventBus;
+const eventBus = new EventBus();
+
+export default eventBus;

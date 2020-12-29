@@ -1,6 +1,6 @@
 export default `<nav class="mpy_navigation">
   <div>
-    <a href="/#/"
+    <a href="/#/chat"
       data-icon=""
       class="mpy_navigation_link">Chat</a>
   </div>
@@ -23,14 +23,15 @@ export default `<nav class="mpy_navigation">
         hidden/>
       <div class="mpy_content">
         <div class="mpy_dialog_content mpy_white mpy_pt10"
-          style="max-width: 400px;">
+          style="min-width: 320px;">
           <div class="mpy_avatar_output_wrapper unselectable">
             <img id="avatarPreview"
               class="mpy_avatar_preview unselectable undraggable"
               :src="avatar"
+              src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
               width="150"
               height="150"
-              alt="avatar preview">
+              alt="">
             <div class="mpy_avatar_output_icon unselectable"
               onclick="forms.profile.avatar.click();">
               <span class="material-icons">camera_alt</span>
@@ -62,12 +63,11 @@ export default `<nav class="mpy_navigation">
             :model="login"
             valid
             s-validate="min_6 no_spaces letters_only"></s-input>
-          <s-btn tabindex="0"
-            onclick="window.router.go('/#/password')"
-            block>
-            Change password
-          </s-btn>
-
+            <s-btn tabindex="0"
+              onclick="window.router.go('/#/password')"
+              block>
+              Change password
+            </s-btn>
         </div>
         <div class="mpy_dialog_footer mpy_white mpy_pt10">
           <s-btn tabindex="0"
@@ -86,9 +86,5 @@ export default `<nav class="mpy_navigation">
       </div>
     </div>
   </form>
-  <div s-for="number in array" s-key="num">
-    <div :text=array[number]></div>
-  </div>
-
 </div>`;
 //# sourceMappingURL=template.js.map
