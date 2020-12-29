@@ -1,9 +1,9 @@
 import Route from './route';
 import { sCustomElementConstructor } from './types';
-// import EventBus from './event-bus';
-// import { CONST } from './utils';
-//
-// const eventBus = new EventBus();
+import EventBus from './event-bus';
+import { CONST } from './utils';
+
+const eventBus = new EventBus();
 
 class Router {
   public routes: Route[] = [];
@@ -36,31 +36,37 @@ class Router {
 
   start(): void {
     window.onhashchange = (event: HashChangeEvent): void => {
+      console.dir((event.currentTarget as Window).location);
       this._onRoute((event.currentTarget as Window).location.hash);
     };
 
-    window.onpopstate = (event: PopStateEvent): void => {
-      // console.log('onpopstate');
-      this._onRoute((event.currentTarget as Window).location.hash);
-    };
+    // window.onpopstate = (event: PopStateEvent): void => {
+    //   // console.log('onpopstate');
+    //   this._onRoute((event.currentTarget as Window).location.hash);
+    // };
 
     this._onRoute(window.location.hash);
   }
 
   _onRoute(pathname: string): void {
     const route = this.getRoute(pathname);
+    console.log(`pathname: ${pathname}`);
     if (!route) {
+      if (pathname.match(/^\/?$/)) {
+        this.go('/#/');
+        return;
+      }
       if (pathname !== '/#/404') {
         this.go('/#/404');
       }
-      return;
+    } else {
+      if (this.currentRoute && this.currentRoute !== route) {
+        this.currentRoute.leave();
+      }
+      this.currentRoute = route;
+      route.render();
+      eventBus.emit(CONST.hashchange);
     }
-
-    if (this.currentRoute && this.currentRoute !== route) {
-      this.currentRoute.leave();
-    }
-    this.currentRoute = route;
-    route.render();
   }
 
   go(pathname: string): void {

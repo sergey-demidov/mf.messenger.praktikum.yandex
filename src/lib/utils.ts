@@ -20,6 +20,7 @@ export const CONST = Object.freeze({
   info: 'info',
   hashchange: 'hashchange',
   function: 'function',
+  userDataChange: 'userDataChange',
 });
 
 export type PlainObject<T = unknown> = {

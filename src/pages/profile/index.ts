@@ -4,7 +4,7 @@ import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
 import sUser from '../../components/user';
-import { formDataToObject, isJsonString } from '../../lib/utils';
+import { CONST, formDataToObject, isJsonString } from '../../lib/utils';
 import AuthAPI from '../../api/auth';
 import { baseUrl, HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
@@ -125,12 +125,16 @@ const profile = sue({
             user.avatar = baseUrl + user.avatar;
           }
           Object.assign(that.data, user);
+          eventBus.emit(CONST.userDataChange);
           const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
           if (fileInput) fileInput.value = '';
         }).catch((error) => {
           toaster.bakeError(error);
         });
     },
+  },
+  created() {
+    eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.fillForm());
   },
   mounted() {
     console.log('Profile mounted');

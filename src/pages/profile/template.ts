@@ -86,8 +86,8 @@ export default `<nav class="mpy_navigation">
       </div>
     </div>
   </form>
-          <div s-for="number in array" s-key="num">
-            <div :text=array[number]></div>
-        </div>
+  <div s-for="number in array" s-key="num">
+    <div :text=array[number]></div>
+  </div>
 
 </div>`;

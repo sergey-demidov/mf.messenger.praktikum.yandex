@@ -3,13 +3,47 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import sUser from "../../components/user.js";
+import sChatDisplay from "../../components/chat-display.js";
+import { CONST, isJsonString } from "../../lib/utils.js";
+import ChatsAPI from "../../api/chats.js";
+import Toaster from "../../lib/toaster.js";
+import EventBus from "../../lib/event-bus.js";
+const chatsApi = new ChatsAPI();
+const toaster = new Toaster();
+const eventBus = new EventBus();
 const chat = sue({
     name: 's-app-chat',
     template,
     data() {
-        return {};
+        return {
+            chats: [],
+            message: '',
+        };
     },
     methods: {
+        getChats() {
+            if (!this.isVisible())
+                return;
+            chatsApi.getChats()
+                .then((response) => {
+                if (response.status === 200 && isJsonString(response.response)) {
+                    return JSON.parse(response.response);
+                }
+                throw new Error('Getting chats failed');
+            })
+                .then((c) => {
+                const chats = c;
+                this.data.chats = [];
+                Object.keys(chats).forEach((key) => {
+                    this.data.chats.push(JSON.stringify(chats[key]));
+                    console.log(chats[key]);
+                });
+                console.dir(this.data.chats);
+                eventBus.emit(CONST.update);
+            }).catch((error) => {
+                toaster.bakeError(error);
+            });
+        },
         submitForm(formName) {
             const form = document.forms.namedItem(formName);
             const formData = new FormData(form);
@@ -18,10 +52,18 @@ const chat = sue({
             console.dir(res); // print result
         },
     },
+    mounted() {
+        console.log('CHATS mounted');
+    },
+    created() {
+        console.warn('created');
+        eventBus.on(CONST.hashchange, () => this.methods.getChats());
+    },
     components: {
         's-input': sInput,
         's-btn': sButton,
         's-user': sUser,
+        's-chat-display': sChatDisplay,
     },
 });
 export default chat;

@@ -3,7 +3,7 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import sUser from "../../components/user.js";
-import { formDataToObject, isJsonString } from "../../lib/utils.js";
+import { CONST, formDataToObject, isJsonString } from "../../lib/utils.js";
 import AuthAPI from "../../api/auth.js";
 import { baseUrl } from "../../lib/http-transport.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
@@ -124,6 +124,7 @@ const profile = sue({
                     user.avatar = baseUrl + user.avatar;
                 }
                 Object.assign(that.data, user);
+                eventBus.emit(CONST.userDataChange);
                 const fileInput = document.getElementById('avatarInput');
                 if (fileInput)
                     fileInput.value = '';
@@ -131,6 +132,9 @@ const profile = sue({
                 toaster.bakeError(error);
             });
         },
+    },
+    created() {
+        eventBus.on(CONST.hashchange, () => this.methods.fillForm());
     },
     mounted() {
         console.log('Profile mounted');
