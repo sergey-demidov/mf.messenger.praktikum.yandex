@@ -2,7 +2,7 @@ import eventBus from './event-bus';
 import {
   sInit, sParsed, sCustomElementConstructor, sEvents, sHTMLElement,
 } from './types';
-import { CONST } from './utils';
+import { CONST, hash8 } from './utils';
 import Queue from './queue';
 import store from './store';
 
@@ -15,6 +15,7 @@ declare global {
 const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   // need to merge with incomplete init definitions
   const emptyInit: sInit = {
+    authorisationRequired: false,
     name: '',
     template: '',
     data: () => ({}),
@@ -43,13 +44,15 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     protected connected = false;
 
-    protected active = false
+    protected active = false;
+
+    authorisationRequired = false;
 
     renderQueue = new Queue<string>()
 
     init = emptyInit;
 
-    // id = hash8()
+    instanceId = hash8()
 
     constructor() {
       super();
@@ -59,7 +62,10 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     createResources = () => {
       this.init = init;
       this.name = init.name;
+      this.authorisationRequired = init.authorisationRequired;
       if (!this.name) throw new Error('Component name is not defined');
+      if (!this.name.match(/-/)) throw new Error('Component name must include at least one hyphen');
+
       setInterval(() => this.delayedUpdate(), 100);
 
       this.eventBus.on(CONST.update, this.update);
@@ -71,8 +77,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           customElements.define(key, init.components[key]);
         }
       });
-      this.init.methods._get = (param: string): string => param;
-      // this.init.methods._getArray = (array: string, iterator: string): string => this.data[array][iterator];
+
+      this.init.methods._reflect = (param: string): string => param;
+
       Object.keys(this.init.methods).forEach((key) => {
         this.methods[key] = this.init.methods[key].bind(this);
       });
@@ -290,7 +297,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       const regVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\s*$/i);
       const variable = str.match(regVariable);
       if (variable) {
-        result.func = '_get';
+        result.func = '_reflect';
         [, not, result.params[0]] = variable;
         result.not = not === '!';
         return result;
@@ -299,7 +306,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       const arrVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+\[[a-z0-9_]+\])\s*$/i);
       const iterator = str.match(arrVariable);
       if (iterator) {
-        result.func = '_get';
+        result.func = '_reflect';
         [, not, result.params[0]] = iterator;
         result.not = (not === '!');
         return result;
@@ -327,7 +334,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     }
   };
   customElements.define(init.name, app);
-  return { constructor: app, name: init.name };
+  return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired || false };
 };
 
 // export app;

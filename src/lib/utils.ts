@@ -21,6 +21,7 @@ export const CONST = Object.freeze({
   hashchange: 'hashchange',
   function: 'function',
   userDataChange: 'userDataChange',
+  validate: 'validate',
 });
 
 export type PlainObject<T = unknown> = {
@@ -109,15 +110,33 @@ export function formDataToObject(formData: FormData): Record<string, unknown> {
   }), {});
 }
 
-export function stringHash(source: string): number {
-  let hash = 0;
-  let chr;
-  for (let i = 0; i < source.length; i += 1) {
-    chr = source.charCodeAt(i);
-    // eslint-disable-next-line no-bitwise
-    hash = ((hash << 5) - hash) + chr;
-    // eslint-disable-next-line no-bitwise
-    hash |= 0; // Convert to 32bit integer
+type iterable = {
+  [key in string | number]: unknown;
+};
+
+export function cloneDeep(obj: unknown): unknown {
+  function isIterable(item: unknown): boolean {
+    return (item && typeof item === 'object') as boolean;
   }
-  return hash;
+
+  function clone(source: iterable, target: iterable) {
+    if (isIterable(source)) {
+      Object.keys(source).forEach((key) => {
+        if (Object.hasOwnProperty.call(source, key)) {
+          if (isIterable(source[key])) {
+            const a = Array.isArray(source[key]) ? [] : {};
+            Object.assign(target, { [key]: a });
+            clone(source[key] as iterable, target[key] as iterable);
+          } else {
+            Object.assign(target, { [key]: source[key] });
+          }
+        }
+      });
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      target = source;
+    }
+    return target;
+  }
+  return clone(obj as iterable, (Array.isArray(obj) ? [] : {}) as iterable);
 }

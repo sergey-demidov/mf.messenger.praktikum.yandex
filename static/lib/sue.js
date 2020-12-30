@@ -1,10 +1,11 @@
 import eventBus from "./event-bus.js";
-import { CONST } from "./utils.js";
+import { CONST, hash8 } from "./utils.js";
 import Queue from "./queue.js";
 import store from "./store.js";
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
+        authorisationRequired: false,
         name: '',
         template: '',
         data: () => ({}),
@@ -16,7 +17,6 @@ const sue = (i) => {
     };
     const init = Object.assign(Object.assign({}, emptyInit), i);
     const app = class extends HTMLElement {
-        // id = hash8()
         constructor() {
             super();
             this.eventBus = eventBus;
@@ -28,13 +28,18 @@ const sue = (i) => {
             this.rendering = false;
             this.connected = false;
             this.active = false;
+            this.authorisationRequired = false;
             this.renderQueue = new Queue();
             this.init = emptyInit;
+            this.instanceId = hash8();
             this.createResources = () => {
                 this.init = init;
                 this.name = init.name;
+                this.authorisationRequired = init.authorisationRequired;
                 if (!this.name)
                     throw new Error('Component name is not defined');
+                if (!this.name.match(/-/))
+                    throw new Error('Component name must include at least one hyphen');
                 setInterval(() => this.delayedUpdate(), 100);
                 this.eventBus.on(CONST.update, this.update);
                 this.eventBus.on('dataChange', this.setData);
@@ -44,8 +49,7 @@ const sue = (i) => {
                         customElements.define(key, init.components[key]);
                     }
                 });
-                this.init.methods._get = (param) => param;
-                // this.init.methods._getArray = (array: string, iterator: string): string => this.data[array][iterator];
+                this.init.methods._reflect = (param) => param;
                 Object.keys(this.init.methods).forEach((key) => {
                     this.methods[key] = this.init.methods[key].bind(this);
                 });
@@ -270,7 +274,7 @@ const sue = (i) => {
             const regVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+)\s*$/i);
             const variable = str.match(regVariable);
             if (variable) {
-                result.func = '_get';
+                result.func = '_reflect';
                 [, not, result.params[0]] = variable;
                 result.not = not === '!';
                 return result;
@@ -279,7 +283,7 @@ const sue = (i) => {
             const arrVariable = new RegExp(/^\s*(!?)\s*([a-z0-9_]+\[[a-z0-9_]+\])\s*$/i);
             const iterator = str.match(arrVariable);
             if (iterator) {
-                result.func = '_get';
+                result.func = '_reflect';
                 [, not, result.params[0]] = iterator;
                 result.not = (not === '!');
                 return result;
@@ -293,7 +297,7 @@ const sue = (i) => {
         }
     };
     customElements.define(init.name, app);
-    return { constructor: app, name: init.name };
+    return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired || false };
 };
 // export app;
 export default sue;

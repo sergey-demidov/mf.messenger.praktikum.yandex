@@ -1,30 +1,42 @@
 import eventBus from './event-bus';
-import { CONST } from './utils';
+import { cloneDeep, CONST } from './utils';
 
 class Store {
   eventBus = eventBus;
 
-  protected initState = {
-    currentUser: {
-      id: 0,
-      first_name: '',
-      second_name: '',
-      display_name: '',
-      login: '',
-      email: '',
-      phone: '',
-      avatar: '',
+  handler = {
+    get(target: Record<string, string>, key: string): string {
+      return target[key];
     },
-    currentChat: {
-      id: 0,
-      title: '',
-      avatar: '',
+    set(target: Record<string, unknown>, key: string, value: string | number): boolean {
+      // eslint-disable-next-line no-param-reassign
+      target[key] = value;
+      eventBus.emit(CONST.update);
+      return true;
+    },
+    deleteProperty(target: Record<string, unknown>, key: string): boolean {
+      throw new Error(`Cant delete property ${key} from ${target}`);
     },
   }
 
+  initUser = {
+    id: 0,
+    first_name: '',
+    second_name: '',
+    display_name: '',
+    login: '',
+    email: '',
+    phone: '',
+    avatar: '',
+  }
+
   state = {
-    currentUser: {},
-    currentChat: {},
+    currentUser: new Proxy(<Record<string, string | number>>cloneDeep(this.initUser), this.handler),
+    currentChat: new Proxy({
+      id: 0,
+      title: '',
+      avatar: '',
+    }, this.handler),
   }
 
   private static instance: Store;
@@ -34,40 +46,12 @@ class Store {
       return Store.instance;
     }
     Store.instance = this;
-    this.state.currentUser = this.makeProxy(this.initState.currentUser);
-    this.state.currentChat = this.makeProxy(this.initState.currentChat);
   }
 
-  protected makeProxy = (data: Record<string, unknown>) => new Proxy(data, {
-    get(target, prop: string) {
-      return target[prop];
-    },
-    set: (target, prop: string, value) => {
-      // eslint-disable-next-line no-param-reassign
-      target[prop] = value;
-      this.eventBus.emit(CONST.update);
-      return true;
-    },
-    deleteProperty(target, prop: string) {
-      throw new Error(`Cant delete property ${prop} from ${target}`);
-    },
-  })
+  // clearUser():void {
+  //   Object.assign(this.state.currentUser, this.initUser);
+  // }
 }
-
-//   validator = {
-//     get(target: Record<string, string>, key: string): string {
-//       return target[key];
-//     },
-//     set(target: Record<string, unknown>, key: string, value: string | number): boolean {
-//       // eslint-disable-next-line no-param-reassign
-//       target[key] = value;
-//       return true;
-//     },
-//     deleteProperty(target: Record<string, unknown>, key: string): boolean {
-//       throw new Error(`Cant delete property ${key} from ${target}`);
-//     },
-//   }
-// }
 
 const store = new Store();
 

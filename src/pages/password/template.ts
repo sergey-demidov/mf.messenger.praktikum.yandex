@@ -6,7 +6,7 @@ export default `
         Change password
       </header>
       <main>
-        <form name="password" action="#">
+        <form name="changePassword" action="/">
           <div class="mpy_dialog_content mpy_lightgrey mpy_pt10">
             <s-input
               name="oldPassword"
@@ -21,7 +21,7 @@ export default `
               label="new password"
               :model="newPassword"
               type="password"
-              s-validate="min_8">
+              :s-validate="concat('min_8 match:', newPasswordAgain)">
             </s-input>
             <s-input
               name="newPasswordAgain"
@@ -36,8 +36,8 @@ export default `
       <footer class="mpy_dialog_footer mpy_lightgrey">
         <s-btn
           tabindex="0"
-          :disabled="!formIsValid('password')"
-          @click="submitForm('password')">
+          :disabled="!formIsValid('changePassword')"
+          @click="submitForm('changePassword')">
           Submit
         </s-btn>
         <s-btn

@@ -2,13 +2,12 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import { CONST, formDataToObject, isJsonString } from "../../lib/utils.js";
+import { formDataToObject, isJsonString } from "../../lib/utils.js";
 import { baseUrl } from "../../lib/http-transport.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
-import eventBus from "../../lib/event-bus.js";
-import store from "../../lib/store.js";
-const auth = new AuthAPI();
+import auth from "../../lib/auth.js";
+const authAPI = new AuthAPI();
 const toaster = new Toaster();
 const login = sue({
     name: 's-app-login',
@@ -25,7 +24,7 @@ const login = sue({
             return form.checkValidity();
         },
         fillUser() {
-            auth.getUser()
+            authAPI.getUser()
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
                     return JSON.parse(response.response);
@@ -41,8 +40,7 @@ const login = sue({
                 else {
                     user.avatar = baseUrl + user.avatar;
                 }
-                Object.assign(store.state.currentUser, user);
-                eventBus.emit(CONST.update);
+                auth.fillUserState().then(() => window.router.go('/#/chat'));
             }).catch((error) => {
                 toaster.bakeError(error);
             });
@@ -52,7 +50,7 @@ const login = sue({
             if (this.methods.formIsValid(formName)) { // validate
                 const formData = new FormData(form);
                 const res = formDataToObject(formData);
-                auth.signIn(res)
+                authAPI.signIn(res)
                     .then((response) => {
                     this.data.password = '';
                     if (response.status !== 200) {

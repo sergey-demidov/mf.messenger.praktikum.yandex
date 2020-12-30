@@ -17,6 +17,7 @@ const toaster = new Toaster();
 const chatEdit = sue({
   name: 's-app-chat-edit-modal',
   template,
+  authorisationRequired: true,
   data() {
     return {
       title: '',

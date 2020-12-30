@@ -1,5 +1,6 @@
 import Validate from "../lib/validate.js";
 import eventBus from "../lib/event-bus.js";
+import { CONST } from "../lib/utils.js";
 const css = Object.freeze({
     wrapper: 'mpy_text_input_wrapper',
     label: 'mpy_text_input_label',
@@ -13,6 +14,7 @@ class sInput extends HTMLElement {
         this.eventBus = eventBus;
         this.innerText = '';
         this.validateInstance = new Validate();
+        eventBus.on(CONST.validate, () => this.validate());
         this.classList.add(css.wrapper);
         this.defaultLabel = this.getAttribute('label') || this.getAttribute('name') || 'label';
         this.labelElement = document.createElement('label');
@@ -60,6 +62,7 @@ class sInput extends HTMLElement {
     validate() {
         const result = this.validateInstance.validate(this.inputElement.value, this.validateRules);
         this.inputElement.setCustomValidity(result.valid ? '' : result.message);
+        console.dir(this.inputElement.form);
         this.eventBus.emit('update');
         if (!result.valid) {
             this.inputElement.classList.add(css.input_invalid);

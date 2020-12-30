@@ -9,6 +9,7 @@ const toaster = new Toaster();
 const chatsApi = new ChatsAPI();
 const createChat = sue({
     name: 's-app-chat-create-modal',
+    authorisationRequired: true,
     template,
     data() {
         return {

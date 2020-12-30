@@ -2,6 +2,7 @@ import Route from './route';
 import { sCustomElementConstructor } from './types';
 import eventBus from './event-bus';
 import { CONST } from './utils';
+import auth from './auth';
 
 class Router {
   public routes: Route[] = [];
@@ -35,30 +36,34 @@ class Router {
   start(): void {
     window.onhashchange = (event: HashChangeEvent): void => {
       console.dir((event.currentTarget as Window).location);
-      this._onRoute((event.currentTarget as Window).location.hash);
+      auth.fillUserState().then(() => this._onRoute((event.currentTarget as Window).location.hash));
     };
 
     // window.onpopstate = (event: PopStateEvent): void => {
     //   // console.log('onpopstate');
     //   this._onRoute((event.currentTarget as Window).location.hash);
     // };
-
-    this._onRoute(window.location.hash);
+    auth.fillUserState().then(() => this._onRoute((window.location.hash)));
+    // this._onRoute(window.location.hash);
   }
 
-  _onRoute(pathname: string): void {
+  _onRoute(pathname: string):void {
     const route = this.getRoute(pathname);
     if (route) {
+      if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {
+        this.go('/#/login');
+        return;
+      }
+      if (!route.view.authorisationRequired && auth.isUserLoggedIn()) {
+        this.go('/#/chat');
+        return;
+      }
       if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
         this.currentRoute.leave();
       }
       this.currentRoute = route;
       route.render();
       eventBus.emit(CONST.hashchange);
-      return;
-    }
-    if (pathname.match(/^[/#]?$/)) {
-      this.go('/#/chat');
       return;
     }
     if (pathname.match(/^[/#]?$/)) {
