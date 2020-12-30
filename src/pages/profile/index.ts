@@ -18,6 +18,7 @@ const toaster = new Toaster();
 const profile = sue({
   name: 's-app-profile',
   template,
+  authorisationRequired: true,
   data() {
     return {
       first_name: '',

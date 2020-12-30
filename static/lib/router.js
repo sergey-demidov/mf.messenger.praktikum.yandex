@@ -1,6 +1,7 @@
 import Route from "./route.js";
 import eventBus from "./event-bus.js";
 import { CONST } from "./utils.js";
+import auth from "./auth.js";
 class Router {
     constructor(root) {
         this.routes = [];
@@ -21,27 +22,32 @@ class Router {
     start() {
         window.onhashchange = (event) => {
             console.dir(event.currentTarget.location);
-            this._onRoute(event.currentTarget.location.hash);
+            auth.fillUserState().then(() => this._onRoute(event.currentTarget.location.hash));
         };
         // window.onpopstate = (event: PopStateEvent): void => {
         //   // console.log('onpopstate');
         //   this._onRoute((event.currentTarget as Window).location.hash);
         // };
-        this._onRoute(window.location.hash);
+        auth.fillUserState().then(() => this._onRoute((window.location.hash)));
+        // this._onRoute(window.location.hash);
     }
     _onRoute(pathname) {
         const route = this.getRoute(pathname);
         if (route) {
+            if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {
+                this.go('/#/login');
+                return;
+            }
+            if (!route.view.authorisationRequired && auth.isUserLoggedIn()) {
+                this.go('/#/chat');
+                return;
+            }
             if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
                 this.currentRoute.leave();
             }
             this.currentRoute = route;
             route.render();
             eventBus.emit(CONST.hashchange);
-            return;
-        }
-        if (pathname.match(/^[/#]?$/)) {
-            this.go('/#/chat');
             return;
         }
         if (pathname.match(/^[/#]?$/)) {

@@ -12,6 +12,7 @@ const chatsApi = new ChatsAPI();
 const toaster = new Toaster();
 const chat = sue({
     name: 's-app-chat',
+    authorisationRequired: true,
     template,
     data() {
         return {
@@ -23,6 +24,7 @@ const chat = sue({
         getChats() {
             if (!this.isVisible())
                 return;
+            const that = this;
             chatsApi.getChats()
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
@@ -32,9 +34,9 @@ const chat = sue({
             })
                 .then((c) => {
                 const chats = c;
-                this.data.chats = [];
+                that.data.chats = [];
                 Object.keys(chats).forEach((key) => {
-                    this.data.chats.push(JSON.stringify(chats[key]));
+                    that.data.chats.push(JSON.stringify(chats[key]));
                 });
                 eventBus.emit(CONST.update);
             }).catch((error) => {

@@ -20,6 +20,7 @@ export const CONST = Object.freeze({
     hashchange: 'hashchange',
     function: 'function',
     userDataChange: 'userDataChange',
+    validate: 'validate',
 });
 export function isPlainObject(value) {
     return typeof value === 'object'
@@ -90,16 +91,31 @@ export function hash16() {
 export function formDataToObject(formData) {
     return Array.from(formData.entries()).reduce((memo, pair) => (Object.assign(Object.assign({}, memo), { [pair[0]]: pair[1] })), {});
 }
-export function stringHash(source) {
-    let hash = 0;
-    let chr;
-    for (let i = 0; i < source.length; i += 1) {
-        chr = source.charCodeAt(i);
-        // eslint-disable-next-line no-bitwise
-        hash = ((hash << 5) - hash) + chr;
-        // eslint-disable-next-line no-bitwise
-        hash |= 0; // Convert to 32bit integer
+export function cloneDeep(obj) {
+    function isIterable(item) {
+        return (item && typeof item === 'object');
     }
-    return hash;
+    function clone(source, target) {
+        if (isIterable(source)) {
+            Object.keys(source).forEach((key) => {
+                if (Object.hasOwnProperty.call(source, key)) {
+                    if (isIterable(source[key])) {
+                        const a = Array.isArray(source[key]) ? [] : {};
+                        Object.assign(target, { [key]: a });
+                        clone(source[key], target[key]);
+                    }
+                    else {
+                        Object.assign(target, { [key]: source[key] });
+                    }
+                }
+            });
+        }
+        else {
+            // eslint-disable-next-line no-param-reassign
+            target = source;
+        }
+        return target;
+    }
+    return clone(obj, (Array.isArray(obj) ? [] : {}));
 }
 //# sourceMappingURL=utils.js.map

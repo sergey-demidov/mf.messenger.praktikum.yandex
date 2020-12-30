@@ -1,10 +1,12 @@
 import eventBus from "../lib/event-bus.js";
-import AuthAPI from "../api/auth.js";
-import { CONST, isJsonString } from "../lib/utils.js";
+import { CONST } from "../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../lib/toaster.js";
 import ICONS from "../lib/icons.js";
-const auth = new AuthAPI();
+import auth from "../lib/auth.js";
+import store from "../lib/store.js";
+import AuthAPI from "../api/auth.js";
 const toaster = new Toaster();
+const authApi = new AuthAPI();
 class sUser extends HTMLElement {
     constructor() {
         super();
@@ -17,6 +19,7 @@ class sUser extends HTMLElement {
         window.addEventListener('hashchange', () => this.onHashchange());
         window.addEventListener('popstate', () => this.onHashchange());
         document.body.addEventListener('click', () => this.hideMenu());
+        eventBus.on(CONST.update, () => this.onHashchange());
     }
     showMenu(e) {
         if (this.menuOpened) {
@@ -46,27 +49,15 @@ class sUser extends HTMLElement {
         this.connectedCallback();
     }
     connectedCallback() {
-        // document.body.style.opacity = '0';
-        auth.getUser()
-            .then((response) => {
-            if (response.status === 200 && isJsonString(response.response)) {
-                return JSON.parse(response.response);
-            }
-            throw new Error('unauthorized');
-        }).then((user) => {
-            this.innerText = `${user.login}`;
-            this.dataset.icon = ICONS.person;
-            // document.body.style.opacity = '1';
-        }).catch(() => {
-            window.router.go('/#/login');
-            // document.body.style.opacity = '1';
+        auth.fillUserState().then((res) => {
+            if (res)
+                this.innerText = store.state.currentUser.login;
         });
     }
     createResources() {
+        this.dataset.icon = ICONS.person;
         this.classList.add('mpy_navigation_link');
         this.wrapper.classList.add('mpy_navigation_menu');
-        // const getNodes = (str: string): HTMLElement => new DOMParser().parseFromString(str, 'text/html').body.firstChild as HTMLElement || document.createElement('div');
-        // const profile = getNodes('<div class="mpy_navigation_link"> Profile </div>');
         const profile = document.createElement('div');
         profile.dataset.icon = ICONS.settings;
         profile.innerText = 'Profile';
@@ -82,11 +73,13 @@ class sUser extends HTMLElement {
         this.wrapper.style.display = CONST.none;
         document.body.appendChild(this.wrapper);
     }
+    // eslint-disable-next-line class-methods-use-this
     logout() {
-        auth.logOut().then((response) => {
+        authApi.logOut().then((response) => {
             if (response.status === 200) {
-                this.connectedCallback();
+                auth.clearUserState();
                 toaster.toast('Successfully exited', ToasterMessageTypes.info);
+                setTimeout(() => window.router.go('/#/login'), 100);
             }
             else {
                 toaster.toast('Error: Can not logout', ToasterMessageTypes.error);

@@ -14,6 +14,7 @@ const toaster = new Toaster();
 const password = sue({
   name: 's-app-password-modal',
   template,
+  authorisationRequired: true,
   data() {
     return {
       oldPassword: '',
@@ -36,6 +37,10 @@ const password = sue({
       }
       if (!(this as sApp).methods.formIsValid(formName)) { // validate
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+        return;
+      }
+      if ((this as sApp).data.newPassword !== (this as sApp).data.newPasswordAgain) {
+        toaster.toast('Error: passwords is not match', ToasterMessageTypes.error);
         return;
       }
       const formData = new FormData(form);

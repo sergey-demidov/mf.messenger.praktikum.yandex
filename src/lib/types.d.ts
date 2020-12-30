@@ -11,6 +11,7 @@ export interface sApp {
 
 export interface sInit {
   name: string;
+  authorisationRequired: boolean;
   template: string;
   data: () => Record<string, unknown>;
   methods: Record<string, Function>;
@@ -28,6 +29,7 @@ export interface sParsed {
 
 export interface sCustomElementConstructor {
   name: string
+  authorisationRequired: boolean;
   constructor: CustomElementConstructor,
 }
 
