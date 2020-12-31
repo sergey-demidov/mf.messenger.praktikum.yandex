@@ -21,15 +21,9 @@ class Router {
     }
     start() {
         window.onhashchange = (event) => {
-            console.dir(event.currentTarget.location);
             auth.fillUserState().then(() => this._onRoute(event.currentTarget.location.hash));
         };
-        // window.onpopstate = (event: PopStateEvent): void => {
-        //   // console.log('onpopstate');
-        //   this._onRoute((event.currentTarget as Window).location.hash);
-        // };
         auth.fillUserState().then(() => this._onRoute((window.location.hash)));
-        // this._onRoute(window.location.hash);
     }
     _onRoute(pathname) {
         const route = this.getRoute(pathname);
@@ -42,7 +36,8 @@ class Router {
                 this.go('/#/chat');
                 return;
             }
-            if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
+            // if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
+            if (this.currentRoute && this.currentRoute !== route) {
                 this.currentRoute.leave();
             }
             this.currentRoute = route;

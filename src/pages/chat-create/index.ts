@@ -36,6 +36,7 @@ const createChat = sue({
       }
       const formData = new FormData(form);
       const res = formDataToObject(formData);
+      res.title = (res.title as string).trim();
       chatsApi.createChat(res as HttpDataType)
         .then((response) => {
           if (response.status !== 200) {

@@ -36,9 +36,9 @@ const chat = sue({
         })
         .then((c) => {
           const chats = c;
-          that.data.chats = [];
-          Object.keys(chats).forEach((key) => {
-            (that.data.chats as string[]).push(JSON.stringify(chats[key]));
+          (that.data.chats as string[]).length = Object.keys(chats).length;
+          Object.keys(chats).forEach((key, index) => {
+            (that.data.chats as string[])[index] = JSON.stringify(chats[key]);
           });
           eventBus.emit(CONST.update);
         }).catch((error) => {

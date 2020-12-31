@@ -56,8 +56,8 @@ export default class Queue<T> {
     }
   }
 
-  peek(): T | null {
-    return this.head?.value || null;
+  peek(): T | unknown {
+    return this.head?.value || undefined;
   }
 
   isEmpty():boolean {

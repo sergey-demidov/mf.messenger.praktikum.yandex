@@ -14,12 +14,12 @@ class sUser extends HTMLElement {
         this.menuOpened = false;
         this.wrapper = document.createElement(CONST.div);
         this.createResources();
-        this.eventBus.on(CONST.userDataChange, () => this.onHashchange());
+        this.eventBus.on(CONST.userDataChange, () => this.update());
         this.addEventListener('click', (e) => this.showMenu(e));
-        window.addEventListener('hashchange', () => this.onHashchange());
-        window.addEventListener('popstate', () => this.onHashchange());
+        window.addEventListener('hashchange', () => this.update());
+        window.addEventListener('popstate', () => this.update());
         document.body.addEventListener('click', () => this.hideMenu());
-        eventBus.on(CONST.update, () => this.onHashchange());
+        eventBus.on(CONST.update, () => this.update());
     }
     showMenu(e) {
         if (this.menuOpened) {
@@ -43,16 +43,16 @@ class sUser extends HTMLElement {
         const style = window.getComputedStyle(this);
         return (style.visibility === CONST.visible);
     }
-    onHashchange() {
+    update() {
         if (!this.isPresent())
             return;
-        this.connectedCallback();
-    }
-    connectedCallback() {
         auth.fillUserState().then((res) => {
             if (res)
                 this.innerText = store.state.currentUser.login;
         });
+    }
+    connectedCallback() {
+        this.update();
     }
     createResources() {
         this.dataset.icon = ICONS.person;

@@ -1,5 +1,4 @@
-export default `
-<nav class="mpy_navigation">
+export default `<nav class="mpy_navigation">
   <div></div>
   <div>
     <s-user></s-user>
@@ -8,14 +7,14 @@ export default `
 <div class="mpy_container">
   <div class="mpy_main_wrapper">
     <div class="mpy_chat_list mpy_lightgrey">
-        <div style="position: fixed; bottom: 0; width: 280px; display: flex; padding: 10px; z-index: 30;">
+      <div class="mpy_chat_list_button_wrapper">
         <s-btn round
-            onclick="window.router.go('/#/chat/create')">
-            <i class="material-icons ">playlist_add</i>
-<!--          +-->
-          </s-btn>
+          onclick="router.go('/#/chat/create')">
+          <i class="material-icons">playlist_add</i>
+        </s-btn>
       </div>
-      <div s-for="chat in chats" s-key="chat">
+      <div s-for="chat in chats"
+        s-key="chat">
         <s-chat-display :s-chat="chats[chat]"></s-chat-display>
       </div>
     </div>
@@ -54,7 +53,8 @@ export default `
         autocomplete="off"
         spellcheck="false">
         <div class="mpy_chat_input">
-          <s-input name="message" s-validate="required"></s-input>
+          <s-input name="message"
+            s-validate="required"></s-input>
           <s-btn class="mpy_text_input_icon"
             @click="submitForm('message')">
             <i class="material-icons ">send</i>
@@ -62,6 +62,19 @@ export default `
         </div>
       </form>
     </div>
+    <div class="mpy_chat_users_list mpy_lightgrey">
+      <div class="mpy_chat_list_button_wrapper">
+        <s-btn round
+          onclick="router.go('/#/chat/users')">
+          <i class="material-icons">group_add</i>
+        </s-btn>
+      </div>
+      <div s-for="chat in chats"
+        s-key="chat">
+        <s-chat-display :s-chat="chats[chat]"></s-chat-display>
+      </div>
+    </div>
+
   </div>
   <div id="mpy_dialog"></div>
 </div></main>

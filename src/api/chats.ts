@@ -20,13 +20,13 @@ class ChatsAPI {
     return this.fetch.post('', { data, headers });
   }
 
-  // saveProfileAvatar(data: FormData): Promise<XMLHttpRequest> {
-  //   return this.fetch.put('/profile/avatar', { data });
-  // }
-  //
-  // changePassword(data: HttpDataType): Promise<XMLHttpRequest> {
-  //   return this.fetch.put('/password', { data, headers });
-  // }
+  saveChatAvatar(data: FormData): Promise<XMLHttpRequest> {
+    return this.fetch.put('/avatar', { data });
+  }
+
+  deleteChat(data: HttpDataType): Promise<XMLHttpRequest> {
+    return this.fetch.delete('', { data, headers });
+  }
 }
 
 export default ChatsAPI;

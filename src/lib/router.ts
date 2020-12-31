@@ -35,16 +35,10 @@ class Router {
 
   start(): void {
     window.onhashchange = (event: HashChangeEvent): void => {
-      console.dir((event.currentTarget as Window).location);
       auth.fillUserState().then(() => this._onRoute((event.currentTarget as Window).location.hash));
     };
 
-    // window.onpopstate = (event: PopStateEvent): void => {
-    //   // console.log('onpopstate');
-    //   this._onRoute((event.currentTarget as Window).location.hash);
-    // };
     auth.fillUserState().then(() => this._onRoute((window.location.hash)));
-    // this._onRoute(window.location.hash);
   }
 
   _onRoute(pathname: string):void {
@@ -58,7 +52,8 @@ class Router {
         this.go('/#/chat');
         return;
       }
-      if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
+      // if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
+      if (this.currentRoute && this.currentRoute !== route) {
         this.currentRoute.leave();
       }
       this.currentRoute = route;

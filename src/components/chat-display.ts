@@ -1,7 +1,10 @@
-import { isJsonString } from '../lib/utils';
+import { CONST, isJsonString } from '../lib/utils';
 import { baseUrl } from '../lib/http-transport';
+import store from '../lib/store';
+import eventBus from '../lib/event-bus';
 
-const template = `<div class="mpy_chat_display_wrapper mpy_white">
+const template = `
+<div class="mpy_chat_display_wrapper mpy_white" @click="openChatEditor()">
   <div class="mpy_chat_display_tool">
     <div class="mpy_chat_display_avatar">
       <span class="material-icons mpy_chat_display_avatar_sign"> settings </span> 
@@ -40,26 +43,53 @@ class sChatDisplay extends HTMLElement {
 
   chatTitle: HTMLElement;
 
+  chatWrapper: HTMLElement;
+
+  chatTool: HTMLElement;
+
   chatAvatar: HTMLImageElement;
+
+  chatId = 0;
 
   constructor() {
     super();
+
     this.innerHTML = template;
     this.chatTitle = <HTMLElement> this.getElementsByClassName('mpy_chat_display_header')[0];
     this.chatAvatar = <HTMLImageElement> this.getElementsByClassName('mpy_avatar_preview')[0];
+    this.chatWrapper = <HTMLElement> this.getElementsByClassName('mpy_chat_display_wrapper')[0];
+    this.chatTool = <HTMLElement> this.getElementsByClassName('mpy_chat_display_tool')[0];
+    eventBus.on(CONST.update, () => this.update());
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  // connectedCallback() :void {
-  //   console.log('chat connected');
-  // }
+  update():void {
+    if (this.chatId && this.chatId === store.state.currentChat.id) {
+      this.chatWrapper.classList.add('mpy_chat_display_wrapper__active');
+    } else {
+      this.chatWrapper.classList.remove('mpy_chat_display_wrapper__active');
+    }
+  }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
     if (name === 's-chat') {
       if (isJsonString(newValue)) {
         const chat = JSON.parse(newValue);
         this.chatTitle.innerText = chat.title || 'chat title';
+        this.chatId = chat.id;
         this.chatAvatar.src = chat.avatar ? baseUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+        this.chatTool.onclick = (e) => {
+          Object.assign(store.state.currentChat, chat);
+          console.dir(store.state.currentChat);
+          window.router.go('/#/chat/edit');
+          e.preventDefault();
+          e.stopPropagation();
+        };
+        this.chatWrapper.onclick = () => {
+          console.dir(chat);
+          Object.assign(store.state.currentChat, chat);
+          alert(chat.title);
+          return false;
+        };
       }
     }
   }
