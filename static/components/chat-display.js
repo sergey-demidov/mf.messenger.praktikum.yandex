@@ -1,6 +1,9 @@
-import { isJsonString } from "../lib/utils.js";
+import { CONST, isJsonString } from "../lib/utils.js";
 import { baseUrl } from "../lib/http-transport.js";
-const template = `<div class="mpy_chat_display_wrapper mpy_white">
+import store from "../lib/store.js";
+import eventBus from "../lib/event-bus.js";
+const template = `
+<div class="mpy_chat_display_wrapper mpy_white" @click="openChatEditor()">
   <div class="mpy_chat_display_tool">
     <div class="mpy_chat_display_avatar">
       <span class="material-icons mpy_chat_display_avatar_sign"> settings </span> 
@@ -34,23 +37,45 @@ const template = `<div class="mpy_chat_display_wrapper mpy_white">
 class sChatDisplay extends HTMLElement {
     constructor() {
         super();
+        this.chatId = 0;
         this.innerHTML = template;
         this.chatTitle = this.getElementsByClassName('mpy_chat_display_header')[0];
         this.chatAvatar = this.getElementsByClassName('mpy_avatar_preview')[0];
+        this.chatWrapper = this.getElementsByClassName('mpy_chat_display_wrapper')[0];
+        this.chatTool = this.getElementsByClassName('mpy_chat_display_tool')[0];
+        eventBus.on(CONST.update, () => this.update());
     }
     static get observedAttributes() {
         return ['s-chat'];
     }
-    // eslint-disable-next-line class-methods-use-this
-    // connectedCallback() :void {
-    //   console.log('chat connected');
-    // }
+    update() {
+        if (this.chatId && this.chatId === store.state.currentChat.id) {
+            this.chatWrapper.classList.add('mpy_chat_display_wrapper__active');
+        }
+        else {
+            this.chatWrapper.classList.remove('mpy_chat_display_wrapper__active');
+        }
+    }
     attributeChangedCallback(name, _oldValue, newValue) {
         if (name === 's-chat') {
             if (isJsonString(newValue)) {
                 const chat = JSON.parse(newValue);
                 this.chatTitle.innerText = chat.title || 'chat title';
+                this.chatId = chat.id;
                 this.chatAvatar.src = chat.avatar ? baseUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+                this.chatTool.onclick = (e) => {
+                    Object.assign(store.state.currentChat, chat);
+                    console.dir(store.state.currentChat);
+                    window.router.go('/#/chat/edit');
+                    e.preventDefault();
+                    e.stopPropagation();
+                };
+                this.chatWrapper.onclick = () => {
+                    console.dir(chat);
+                    Object.assign(store.state.currentChat, chat);
+                    alert(chat.title);
+                    return false;
+                };
             }
         }
     }

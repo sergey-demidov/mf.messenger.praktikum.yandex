@@ -22,13 +22,13 @@ class sUser extends HTMLElement {
     this.wrapper = document.createElement(CONST.div);
     this.createResources();
 
-    this.eventBus.on(CONST.userDataChange, () => this.onHashchange());
+    this.eventBus.on(CONST.userDataChange, () => this.update());
 
     this.addEventListener('click', (e: MouseEvent) => this.showMenu(e));
-    window.addEventListener('hashchange', () => this.onHashchange());
-    window.addEventListener('popstate', () => this.onHashchange());
+    window.addEventListener('hashchange', () => this.update());
+    window.addEventListener('popstate', () => this.update());
     document.body.addEventListener('click', () => this.hideMenu());
-    eventBus.on(CONST.update, () => this.onHashchange());
+    eventBus.on(CONST.update, () => this.update());
   }
 
   showMenu(e: MouseEvent):void {
@@ -57,15 +57,15 @@ class sUser extends HTMLElement {
     return (style.visibility === CONST.visible);
   }
 
-  onHashchange(): void {
+  update(): void {
     if (!this.isPresent()) return;
-    this.connectedCallback();
-  }
-
-  connectedCallback(): void {
     auth.fillUserState().then((res) => {
       if (res) this.innerText = <string>store.state.currentUser.login;
     });
+  }
+
+  connectedCallback(): void {
+    this.update();
   }
 
   createResources():void {

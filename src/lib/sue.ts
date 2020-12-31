@@ -180,6 +180,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       if (typeof res === CONST.undefined) {
         res = false;
       }
+      if (res === null) {
+        res = false;
+      }
       return (parsed.not ? !res : res).toString();
     }
 

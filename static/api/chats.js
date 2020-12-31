@@ -13,6 +13,12 @@ class ChatsAPI {
     createChat(data) {
         return this.fetch.post('', { data, headers });
     }
+    saveChatAvatar(data) {
+        return this.fetch.put('/avatar', { data });
+    }
+    deleteChat(data) {
+        return this.fetch.delete('', { data, headers });
+    }
 }
 export default ChatsAPI;
 //# sourceMappingURL=chats.js.map

@@ -145,6 +145,9 @@ const sue = (i) => {
                 if (typeof res === CONST.undefined) {
                     res = false;
                 }
+                if (res === null) {
+                    res = false;
+                }
                 return (parsed.not ? !res : res).toString();
             };
             // TODO: метод не оптимален - работает напрямую с DOM

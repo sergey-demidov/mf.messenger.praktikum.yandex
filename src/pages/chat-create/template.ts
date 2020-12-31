@@ -12,7 +12,7 @@ export default `
               name="title"
               label="title"
               :model="title"
-              s-validate="required">
+              s-validate="required no_special_chars max_32">
             </s-input>
           </div>
         </form>
@@ -22,11 +22,11 @@ export default `
           tabindex="0"
           :disabled="!formIsValid('createChat')"
           @click="submitForm('createChat')">
-          Submit
+          Create
         </s-btn>
         <s-btn
           tabindex="0"
-          onclick="window.router.back()">
+          onclick="router.go('/#/chat')">
           Back
         </s-btn>
         <!-- need to return focus on tab-->
