@@ -32,6 +32,13 @@ export default `<div class="mpy_overlay">
               image_not_supported
             </span>
             </div>
+                <s-btn tabindex="0" block
+          :disabled="!isAvatarChanged('chatEdit')"
+          @click="submitForm('chatEdit')">
+          
+          Save chat avatar
+        </s-btn>
+
             <s-input name="deleteConfirm"
               :model="deleteConfirm"
               label="enter chat name to delete"></s-input>
@@ -45,12 +52,6 @@ export default `<div class="mpy_overlay">
         </form>
       </main>
       <footer class="mpy_dialog_footer mpy_lightgrey mpy_pt10">
-        <s-btn tabindex="0"
-          :disabled="!isAvatarChanged('chatEdit')"
-          @click="submitForm('chatEdit')">
-          
-          Save
-        </s-btn>
         <s-btn tabindex="0"
           onclick="window.history.go(-1)">
           Back

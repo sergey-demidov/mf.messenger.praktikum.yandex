@@ -62,7 +62,7 @@ const chat = sue({
           Object.keys(chats).forEach((key, index) => {
             (that.data.chats as string[])[index] = JSON.stringify(chats[key]);
           });
-          eventBus.emit(CONST.update);
+          eventBus.emit(CONST.chatChange);
         }).catch((error) => {
           toaster.bakeError(error);
         });
