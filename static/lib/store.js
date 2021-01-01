@@ -25,7 +25,6 @@ class Store {
             login: '',
             email: '',
             phone: '',
-            avatar: '',
         };
         this.state = {
             currentUser: new Proxy(cloneDeep(this.initUser), this.handler),
@@ -33,6 +32,7 @@ class Store {
                 id: 0,
                 title: '',
                 avatar: '',
+                created_by: 0,
             }, this.handler),
         };
         if (Store.instance) {

@@ -42,7 +42,7 @@ const sue = (i) => {
                     throw new Error('Component name must include at least one hyphen');
                 setInterval(() => this.delayedUpdate(), 100);
                 this.eventBus.on(CONST.update, this.update);
-                this.eventBus.on('dataChange', this.setData);
+                this.eventBus.on('dataChange', (...args) => this.setData(...args));
                 // define each components
                 Object.keys(init.components).forEach((key) => {
                     if (!window.customElements.get(key)) {

@@ -23,6 +23,10 @@ class UserAPI {
   changePassword(data: HttpDataType): Promise<XMLHttpRequest> {
     return this.fetch.put('/password', { data, headers });
   }
+
+  findUsers(data: HttpDataType): Promise<XMLHttpRequest> {
+    return this.fetch.post('/search', { data, headers });
+  }
 }
 
 export default UserAPI;

@@ -244,7 +244,7 @@ input:invalid {
 
 .mpy_text_input {
     color: #678;
-    padding: 10px 30px 10px 10px;
+    padding: 10px 10px 10px 10px;
     /*min-width: 240px;*/
     width: 100%;
     border: 1px solid #678;
@@ -369,7 +369,7 @@ input:invalid {
     align-items: center;
     flex-direction: column;
     flex-flow: row wrap;
-    max-width: 280px;
+    /*max-width: 280px;*/
 }
 
 .mpy_dialog_footer {
@@ -419,13 +419,8 @@ input:invalid {
     /*transform-style: flat;*/
 }
 
-.mpy_chat_list_button_wrapper:hover {
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-}
-
 .mpy_chat_users_list {
-    width: 80px;
+    width: 100px;
     display: block;
     height: calc(100vh - 40px);
     overflow-y: auto;
@@ -641,6 +636,23 @@ input:invalid {
     text-shadow: 1px 2px 5px #0007;
 }
 
+.mpy_chat_member_wrapper {
+    padding: 5px 0;
+    margin: 10px 10px;
+    display: block;
+    text-align: center;
+    direction: ltr;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #0007;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+.mpy_chat_member_wrapper:hover {
+    box-shadow: 1px 1px 5px #0007;
+}
+
+
 .mpy_chat_display_wrapper {
     padding: 5px 5px;
     margin: 10px 10px;
@@ -651,22 +663,34 @@ input:invalid {
     box-shadow: 0 0 2px #0007;
     cursor: pointer;
     box-sizing: content-box;
+    filter: brightness(95%);
 }
 
 .mpy_chat_display_wrapper:hover {
-    box-shadow: 1px 1px 5px #0007;
+    box-shadow: 1px 1px 7px #0009;
 }
 
 .mpy_chat_display_wrapper__active {
-    box-shadow: 1px 1px 7px #000;
+    box-shadow: 1px 1px 7px #0009;
     filter: brightness(105%);
 }
 
+.mpy_chat_display_wrapper__active:hover {
+    box-shadow: 1px 1px 9px #000c;
+}
+
 .mpy_chat_display_header {
-    font-weight: bolder;
-    font-size: smaller;
+    font-weight: bold;
+    font-size: 14px;
     text-align: left;
     padding: 10px 5px 0 10px;
+}
+
+.mpy_chat_display_nick {
+    font-size: small;
+    text-align: center;
+    padding: 5px 0 0 0;
+    overflow: hidden;
 }
 
 .mpy_chat_time {
@@ -705,6 +729,7 @@ input:invalid {
     margin-left: 4px;
 }
 
+
 /*.mpy_chat_display_tool:hover {*/
 /*  color: #567;*/
 /*}*/
@@ -726,11 +751,23 @@ input:invalid {
     flex: 2;
 }
 
+.mpy_chat_member_avatar {
+    margin: auto;
+    border-radius: 50%;
+    position: relative;;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 0 5px #0007;
+}
+
 .mpy_chat_display_avatar {
     cursor: pointer;
     box-shadow: 0 0 3px #0007;
+    margin: auto;
     border-radius: 50%;
     position: relative;;
+    /*width: 40px;*/
+    /*height: 40px;*/
 }
 
 .mpy_chat_display_avatar:hover {
@@ -753,6 +790,19 @@ input:invalid {
     font-size: 25px;
 }
 
+.mpy_chat_member_avatar_sign {
+    position: absolute;
+    text-shadow: 0 0 3px #0007;
+    color: gold;
+    width: 1em;
+    height: 1em;
+    z-index: 1;
+    bottom: -4px;
+    right: -4px;
+    font-size: 20px;
+    background-size: contain;
+}
+
 .mpy_chat_display_body {
     font-weight: lighter;
     font-size: smaller;
@@ -761,7 +811,7 @@ input:invalid {
     margin: 0 0 0.5em 0;
     height: 2.5em;
     overflow: hidden;
-    max-width: 150px;
+    /*max-width: 130px;*/
     /*background-color: #bbccee;*/
 }
 

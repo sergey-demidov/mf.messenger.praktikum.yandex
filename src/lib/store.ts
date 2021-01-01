@@ -27,7 +27,7 @@ class Store {
     login: '',
     email: '',
     phone: '',
-    avatar: '',
+    // avatar: '',
   }
 
   state = {
@@ -36,6 +36,7 @@ class Store {
       id: 0,
       title: '',
       avatar: '',
+      created_by: 0,
     }, this.handler),
   }
 

@@ -19,6 +19,12 @@ class ChatsAPI {
     deleteChat(data) {
         return this.fetch.delete('', { data, headers });
     }
+    getChatUsers(chatId) {
+        return this.fetch.get(`/${chatId}/users`, {});
+    }
+    addUsers(data) {
+        return this.fetch.put('/users', { data, headers });
+    }
 }
 export default ChatsAPI;
 //# sourceMappingURL=chats.js.map

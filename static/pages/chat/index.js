@@ -4,10 +4,12 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import sUser from "../../components/user.js";
 import sChatDisplay from "../../components/chat-display.js";
+import sChatMember from "../../components/chat-member.js";
 import { CONST, isJsonString } from "../../lib/utils.js";
 import ChatsAPI from "../../api/chats.js";
 import Toaster from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
+import store from "../../lib/store.js";
 const chatsApi = new ChatsAPI();
 const toaster = new Toaster();
 const chat = sue({
@@ -17,6 +19,7 @@ const chat = sue({
     data() {
         return {
             chats: [],
+            chatMembers: [],
             message: '',
         };
     },
@@ -43,6 +46,31 @@ const chat = sue({
                 toaster.bakeError(error);
             });
         },
+        isChatSelected() {
+            return store.state.currentChat.id > 0;
+        },
+        getMembers() {
+            console.log('getMembers');
+            // if (!(this as sApp).isVisible()) return;
+            const that = this;
+            chatsApi.getChatUsers(store.state.currentChat.id)
+                .then((response) => {
+                if (response.status === 200 && isJsonString(response.response)) {
+                    return JSON.parse(response.response);
+                }
+                throw new Error('Getting users failed');
+            })
+                .then((m) => {
+                const members = m;
+                that.data.chatMembers.length = Object.keys(members).length;
+                Object.keys(members).forEach((key, index) => {
+                    that.data.chatMembers[index] = JSON.stringify(members[key]);
+                });
+                eventBus.emit(CONST.update);
+            }).catch((error) => {
+                toaster.bakeError(error);
+            });
+        },
         submitForm(formName) {
             const form = document.forms.namedItem(formName);
             const formData = new FormData(form);
@@ -56,12 +84,14 @@ const chat = sue({
     },
     created() {
         eventBus.on(CONST.hashchange, () => this.methods.getChats());
+        eventBus.on(CONST.chatChange, () => this.methods.getMembers());
     },
     components: {
         's-input': sInput,
         's-btn': sButton,
         's-user': sUser,
         's-chat-display': sChatDisplay,
+        's-chat-member': sChatMember,
     },
 });
 export default chat;
