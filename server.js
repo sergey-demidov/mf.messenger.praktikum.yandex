@@ -3,16 +3,16 @@ const path = require('path');
 // const fs = require('fs');
 // const https = require('https');
 
-const PORT = 3000;
-
 const app = express();
-
 app.use('/', express.static(path.join(__dirname, 'static')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'static/index.html'));
 });
+app.listen(3000);
 
-app.listen(PORT);
+const coverage = express();
+coverage.use('/', express.static(path.join(__dirname, 'coverage/lcov-report')));
+coverage.listen(5000);
 
 // const key = fs.readFileSync('./example.com+5-key.pem');
 // const cert = fs.readFileSync('./example.com+5.pem');

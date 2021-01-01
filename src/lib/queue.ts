@@ -9,7 +9,7 @@ export default class Queue<T> {
 
   head: ListNode<T> | null;
 
-  tail : ListNode<T> | null;
+  tail: ListNode<T> | null;
 
   constructor() {
     this.size = 0;
@@ -35,32 +35,28 @@ export default class Queue<T> {
   }
 
   dequeue(): T | undefined {
+    // size == 0
     if (!this.head) return undefined;
     const ret = this.head.value;
-    switch (this.size) {
-      case 0:
-        return undefined;
-      case 1:
-        this.size = 0;
-        this.head = null;
-        this.tail = null;
-        return ret;
-      default:
-        if (this.head.next) {
-          this.size -= 1;
-          this.head.next.prev = null;
-          this.head = this.head.next;
-          return ret;
-        }
-        return undefined;
+    // size == 1
+    if (!this.head.next) {
+      this.size = 0;
+      this.head = null;
+      this.tail = null;
+      return ret;
     }
+    // size > 1
+    this.size -= 1;
+    this.head.next.prev = null;
+    this.head = this.head.next;
+    return ret;
   }
 
   peek(): T | unknown {
-    return this.head?.value || undefined;
+    return this.head?.value;
   }
 
-  isEmpty():boolean {
+  isEmpty(): boolean {
     return this.size === 0;
   }
 
