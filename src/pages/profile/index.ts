@@ -32,7 +32,7 @@ const profile = sue({
   },
   methods: {
     // resetForm(): void {
-    //   (this as sApp).methods.fillForm();
+    //   this.methods.fillForm();
     // },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
@@ -41,12 +41,12 @@ const profile = sue({
       }
       return form.checkValidity();
     },
-    submitForm(formName: string): void {
+    submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
       if (!form) {
         throw new Error(`form '${formName}' is not exist`);
       }
-      if (!(this as sApp).methods.formIsValid(formName)) { // validate
+      if (!this.methods.formIsValid(formName)) { // validate
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
         return;
       }
@@ -82,19 +82,19 @@ const profile = sue({
       if (fileInput) fileInput.value = '';
     },
     // Превью аватара с обработкой ошибок
-    loadImage(): void {
+    loadImage(this: sApp): void {
       const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
       const avatarPreview = <HTMLSourceElement>document.getElementById('avatarPreview');
       if (!avatarPreview || !fileInput || !fileInput.files) {
         throw new Error(`avatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
       }
       const backupSrc = avatarPreview.src; // сохраняем старое изображение
-      (this as sApp).data.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
+      this.data.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
 
       // в случае ошибки
       avatarPreview.onerror = () => {
         fileInput.value = '';
-        (this as sApp).data.avatar = backupSrc; // возвращаем старое изображение
+        this.data.avatar = backupSrc; // возвращаем старое изображение
         // моргаем красным значком
         const errorSign = document.getElementById('errorSign');
         if (!errorSign) {
@@ -106,8 +106,8 @@ const profile = sue({
         }, 2000);
       };
     },
-    fillForm() {
-      if (!(this as sApp).isVisible()) return;
+    fillForm(this: sApp) {
+      if (!this.isVisible()) return;
       auth.getUser()
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {

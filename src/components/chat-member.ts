@@ -47,20 +47,17 @@ class sChatMember extends HTMLElement {
     this.memberSign = <HTMLElement> this.getElementsByClassName('mpy_chat_member_avatar_sign')[0];
     this.memberWrapper.ondragstart = () => {
       Object.assign(store.state.currentMember, this.member);
-      console.dir(this.member);
     };
     this.memberWrapper.onclick = () => { Object.assign(store.state.currentMember, this.member); };
   }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
     if (name === 's-member') {
-      console.dir(newValue);
       if (isJsonString(newValue)) {
         const member = JSON.parse(newValue);
         Object.assign(this.member, member);
-        console.dir(member);
         if (member.role === 'admin') {
-          this.memberSign.innerText = 'star';
+          this.memberSign.innerText = 'how_to_reg';
         }
         this.memberTitle.innerText = member.display_name || member.login || 'unknown';
         this.memberAvatar.src = member.avatar ? baseUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';

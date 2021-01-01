@@ -25,12 +25,12 @@ const createChat = sue({
       const form = document.forms.namedItem(formName);
       return (form as HTMLFormElement).checkValidity();
     },
-    submitForm(formName: string): void {
+    submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
       if (!form) {
         throw new Error(`form '${formName}' is not exist`);
       }
-      if (!(this as sApp).methods.formIsValid(formName)) { // validate
+      if (!this.methods.formIsValid(formName)) { // validate
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
         return;
       }
@@ -42,8 +42,8 @@ const createChat = sue({
           if (response.status !== 200) {
             throw new Error(response.response);
           }
-          toaster.toast(`Chat ${(this as sApp).data.title} created successfully`, ToasterMessageTypes.info);
-          (this as sApp).data.title = '';
+          toaster.toast(`Chat ${this.data.title} created successfully`, ToasterMessageTypes.info);
+          this.data.title = '';
           window.router.back();
         })
         .catch((error) => {

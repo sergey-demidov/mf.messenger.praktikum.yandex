@@ -47,19 +47,19 @@ const login = sue({
           toaster.bakeError(error);
         });
     },
-    submitForm(formName: string): void {
+    submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
-      if ((this as sApp).methods.formIsValid(formName)) { // validate
+      if (this.methods.formIsValid(formName)) { // validate
         const formData = new FormData(form as HTMLFormElement);
         const res = formDataToObject(formData);
         authAPI.signIn(res as HttpDataType)
           .then((response) => {
-            (this as sApp).data.password = '';
+            this.data.password = '';
             if (response.status !== 200) {
               throw new Error(response.response);
             }
             toaster.toast('Logged in successfully', ToasterMessageTypes.info);
-            (this as sApp).methods.fillUser();
+            this.methods.fillUser();
             window.router.go('/#/chat');
           })
           .catch((error) => {

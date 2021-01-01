@@ -29,7 +29,7 @@ const profile = sue({
     },
     methods: {
         // resetForm(): void {
-        //   (this as sApp).methods.fillForm();
+        //   this.methods.fillForm();
         // },
         formIsValid(formName) {
             const form = document.forms.namedItem(formName);

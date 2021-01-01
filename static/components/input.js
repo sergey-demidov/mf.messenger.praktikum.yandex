@@ -62,7 +62,6 @@ class sInput extends HTMLElement {
     validate() {
         if (this.validateRules === CONST.pass)
             return;
-        console.log(this.validateRules);
         const result = this.validateInstance.validate(this.inputElement.value, this.validateRules);
         this.inputElement.setCustomValidity(result.valid ? '' : result.message);
         this.eventBus.emit(CONST.update);

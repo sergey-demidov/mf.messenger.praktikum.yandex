@@ -145,3 +145,17 @@ export function cloneDeep(obj: unknown): unknown {
   }
   return clone(obj as iterable, (Array.isArray(obj) ? [] : {}) as iterable);
 }
+
+export function createDragNDropListeners(): void {
+  document.ondragstart = () => {
+    const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
+    setTimeout(() => { trash.innerText = 'delete'; }, 250);
+    (trash.parentElement as HTMLElement).classList.add('mpy_red');
+  };
+
+  document.ondragend = () => {
+    const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
+    setTimeout(() => { trash.innerText = 'group_add'; }, 250);
+    (trash.parentElement as HTMLElement).classList.remove('mpy_red');
+  };
+}

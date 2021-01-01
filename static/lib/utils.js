@@ -123,4 +123,16 @@ export function cloneDeep(obj) {
     }
     return clone(obj, (Array.isArray(obj) ? [] : {}));
 }
+export function createDragNDropListeners() {
+    document.ondragstart = () => {
+        const trash = document.getElementsByClassName('s-trash')[0];
+        setTimeout(() => { trash.innerText = 'delete'; }, 250);
+        trash.parentElement.classList.add('mpy_red');
+    };
+    document.ondragend = () => {
+        const trash = document.getElementsByClassName('s-trash')[0];
+        setTimeout(() => { trash.innerText = 'group_add'; }, 250);
+        trash.parentElement.classList.remove('mpy_red');
+    };
+}
 //# sourceMappingURL=utils.js.map

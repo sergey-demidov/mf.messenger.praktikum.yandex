@@ -18,7 +18,7 @@ const register = sue({
     },
     methods: {
         // onReset(): void {
-        //   (this as sApp).EventBus.emit('reset');
+        //   this.EventBus.emit('reset');
         // },
         formIsValid(formName) {
             const form = document.forms.namedItem(formName);

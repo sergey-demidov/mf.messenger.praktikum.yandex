@@ -22,20 +22,20 @@ const register = sue({
   },
   methods: {
     // onReset(): void {
-    //   (this as sApp).EventBus.emit('reset');
+    //   this.EventBus.emit('reset');
     // },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
       return (form as HTMLFormElement).checkValidity();
     },
-    submitForm(formName: string): void {
+    submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
-      if ((this as sApp).methods.formIsValid(formName)) { // validate
+      if (this.methods.formIsValid(formName)) { // validate
         const formData = new FormData(form as HTMLFormElement);
         const res = formDataToObject(formData);
         auth.signUp(res as HttpDataType)
           .then((response) => {
-            (this as sApp).data.password = '';
+            this.data.password = '';
             if (response.status === 200) {
               return response;
             }
