@@ -1,6 +1,7 @@
 import {
-  expect, beforeAll, describe, it, test,
+  expect, describe, test,
 } from '@jest/globals';
+
 import Queue from './queue';
 
 // jest.spyOn(global.console, 'log').mockImplementation(() => jest.fn())
