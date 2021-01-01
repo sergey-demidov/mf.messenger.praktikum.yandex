@@ -52,6 +52,8 @@ const chatEdit = sue({
           if (response.status !== 200) {
             throw new Error(response.response);
           }
+          store.state.currentMember.id = 0;
+          store.state.currentChat.id = 0;
           toaster.toast(`Chat ${(this as sApp).data.title} deleted successfully`, ToasterMessageTypes.info);
           window.router.go('/#/chat');
         })
