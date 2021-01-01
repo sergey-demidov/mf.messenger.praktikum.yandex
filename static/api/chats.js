@@ -25,6 +25,10 @@ class ChatsAPI {
     addUsers(data) {
         return this.fetch.put('/users', { data, headers });
     }
+    deleteUsers(data) {
+        console.dir(data);
+        return this.fetch.delete('/users', { data, headers });
+    }
 }
 export default ChatsAPI;
 //# sourceMappingURL=chats.js.map

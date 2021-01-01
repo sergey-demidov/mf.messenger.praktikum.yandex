@@ -24,6 +24,25 @@ const chat = sue({
         };
     },
     methods: {
+        deleteUser() {
+            console.dir(store.state.currentMember.role);
+            chatsApi.deleteUsers({ chatId: store.state.currentChat.id, users: [store.state.currentMember.id] })
+                .then((response) => {
+                if (response.status === 200) {
+                    toaster.toast(`User ${store.state.currentMember.login} has been kicked`);
+                    Object.assign(store.state.currentMember, { id: 0 });
+                    if (store.state.currentMember.role === 'admin') {
+                        Object.assign(store.state.currentChat, { id: 0 });
+                        setTimeout(() => { eventBus.emit(CONST.hashchange); }, 0);
+                    }
+                    setTimeout(() => { eventBus.emit(CONST.chatChange); }, 0);
+                    return;
+                }
+                throw new Error('User deletion failed');
+            }).catch((error) => {
+                toaster.bakeError(error);
+            });
+        },
         getChats() {
             if (!this.isVisible())
                 return;
@@ -50,9 +69,12 @@ const chat = sue({
             return store.state.currentChat.id > 0;
         },
         getMembers() {
-            console.log('getMembers');
-            // if (!(this as sApp).isVisible()) return;
             const that = this;
+            if (!store.state.currentChat.id) {
+                that.data.chatMembers = [];
+                return;
+            }
+            // if (!(this as sApp).isVisible()) return;
             chatsApi.getChatUsers(store.state.currentChat.id)
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {

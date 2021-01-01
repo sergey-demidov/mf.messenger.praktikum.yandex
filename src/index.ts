@@ -21,6 +21,18 @@ if (!root) throw new Error('Root element does not exist');
 // в частности - в шаблонах
 window.router = new Router(root);
 
+document.ondragstart = () => {
+  const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
+  setTimeout(() => { trash.innerText = 'delete'; }, 250);
+  (trash.parentElement as HTMLElement).classList.add('mpy_red');
+};
+
+document.ondragend = () => {
+  const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
+  setTimeout(() => { trash.innerText = 'group_add'; }, 250);
+  (trash.parentElement as HTMLElement).classList.remove('mpy_red');
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   window.router
     .use('/#/chat', chat)
