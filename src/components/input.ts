@@ -30,7 +30,7 @@ class sInput extends HTMLElement {
     super();
     this.innerText = '';
     this.validateInstance = new Validate();
-    eventBus.on(CONST.validate, () => this.validate());
+    // eventBus.on(CONST.validate, () => this.validate());
     this.classList.add(css.wrapper);
 
     this.defaultLabel = this.getAttribute('label') || this.getAttribute('name') || 'label';
@@ -45,11 +45,12 @@ class sInput extends HTMLElement {
     this.inputElement.type = this.getAttribute('type') || 'text';
     this.inputElement.name = this.getAttribute('name') || '';
     this.inputElement.value = this.getAttribute('value') || '';
+    this.inputElement.setAttribute('list', this.getAttribute('list') || '');
     this.inputElement.spellcheck = false;
     this.inputElement.autocomplete = 'off';
 
-    this.validateRules = this.getAttribute('s-validate') || 'pass';
-    if (this.validateRules !== 'pass' && !this.hasAttribute('valid')) {
+    this.validateRules = this.getAttribute('s-validate') || CONST.pass;
+    if (this.validateRules !== CONST.pass && !this.hasAttribute('valid')) {
       this.inputElement.setCustomValidity('invalid'); // make invalid
     }
 
@@ -86,10 +87,11 @@ class sInput extends HTMLElement {
   }
 
   validate(): void {
+    if (this.validateRules === CONST.pass) return;
+    console.log(this.validateRules);
     const result = this.validateInstance.validate(this.inputElement.value, this.validateRules);
     this.inputElement.setCustomValidity(result.valid ? '' : result.message);
-    console.dir(this.inputElement.form);
-    this.eventBus.emit('update');
+    this.eventBus.emit(CONST.update);
 
     if (!result.valid) {
       this.inputElement.classList.add(css.input_invalid);

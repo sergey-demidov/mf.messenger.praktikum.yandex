@@ -21,6 +21,11 @@ export const CONST = Object.freeze({
     function: 'function',
     userDataChange: 'userDataChange',
     validate: 'validate',
+    chatChange: 'chatChange',
+    pass: 'pass',
+    validateFinished: 'validateFinished',
+    true: 'true',
+    false: 'false',
 });
 export function isPlainObject(value) {
     return typeof value === 'object'

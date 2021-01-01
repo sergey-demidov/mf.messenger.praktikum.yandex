@@ -42,6 +42,8 @@ class Router {
   }
 
   _onRoute(pathname: string):void {
+    console.log(pathname);
+    console.trace();
     const route = this.getRoute(pathname);
     if (route) {
       if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {

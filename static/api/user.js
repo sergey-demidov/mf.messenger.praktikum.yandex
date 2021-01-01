@@ -16,6 +16,9 @@ class UserAPI {
     changePassword(data) {
         return this.fetch.put('/password', { data, headers });
     }
+    findUsers(data) {
+        return this.fetch.post('/search', { data, headers });
+    }
 }
 export default UserAPI;
 //# sourceMappingURL=user.js.map

@@ -1,3 +1,6 @@
+import eventBus from './event-bus';
+import { CONST } from './utils';
+
 interface rule {
   regexp: RegExp, message: string;
 }
@@ -27,7 +30,7 @@ class Validate {
       max_32: { regexp: new RegExp(/^.{0,32}$/), message: 'maximum 32 characters' },
       no_spaces: { regexp: new RegExp(/^\S+$/), message: 'no spaces allowed' },
       letters_only: { regexp: new RegExp(/^[a-zа-яё]+$/i), message: 'only letters allowed' },
-      no_special_chars: { regexp: new RegExp(/^[a-zа-яё0-9 ]+$/i), message: 'no special characters' },
+      no_special_chars: { regexp: new RegExp(/^[a-zа-яё0-9_+\-%$# ]+$/i), message: 'no special characters' },
       email: { regexp: new RegExp(/^\w+[\w-.]*@\w+([-.]\w+)*\.[a-z]{2,}$/i), message: 'need a valid e-mail address' },
       phone: { regexp: new RegExp(/^(8|\+7)\(?\d{3}\)?\d{3}[ -]?\d{2}[ -]?\d{2}$/), message: 'need a valid phone number' },
     };
@@ -59,6 +62,7 @@ class Validate {
       }
       return true; // next every
     });
+    eventBus.emit(CONST.validateFinished, result.valid.toString());
     return result;
   }
 }

@@ -1,4 +1,5 @@
-export default `<nav class="mpy_navigation">
+export default `
+<nav class="mpy_navigation">
   <div></div>
   <div>
     <s-user></s-user>
@@ -65,18 +66,17 @@ export default `<nav class="mpy_navigation">
     <div class="mpy_chat_users_list mpy_lightgrey">
       <div class="mpy_chat_list_button_wrapper">
         <s-btn round
-          onclick="router.go('/#/chat/users')">
+          :disabled="!isChatSelected()"
+          onclick="router.go('/#/chat/adduser')">
           <i class="material-icons">group_add</i>
         </s-btn>
       </div>
-      <div s-for="chat in chats"
-        s-key="chat">
-        <s-chat-display :s-chat="chats[chat]"></s-chat-display>
+      <div s-for="member in chatMembers" s-key="member">
+        <s-chat-member :s-member="chatMembers[member]"></s-chat-member>
       </div>
     </div>
 
   </div>
-  <div id="mpy_dialog"></div>
-</div></main>
+</div>
 `;
 //# sourceMappingURL=template.js.map

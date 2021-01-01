@@ -3,7 +3,7 @@ import { baseUrl } from "../lib/http-transport.js";
 import store from "../lib/store.js";
 import eventBus from "../lib/event-bus.js";
 const template = `
-<div class="mpy_chat_display_wrapper mpy_white" @click="openChatEditor()">
+<div class="mpy_chat_display_wrapper mpy_white">
   <div class="mpy_chat_display_tool">
     <div class="mpy_chat_display_avatar">
       <span class="material-icons mpy_chat_display_avatar_sign"> settings </span> 
@@ -11,7 +11,7 @@ const template = `
         class="mpy_avatar_preview unselectable undraggable"
         width="40"
         height="40"
-        src="//cdn.britannica.com/58/181058-050-9CC9F60F/Marcus-Tullius-Cicero-detail-marble-bust-Capitoline.jpg"
+        src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
         alt="">
     </div>
   </div>
@@ -65,15 +65,14 @@ class sChatDisplay extends HTMLElement {
                 this.chatAvatar.src = chat.avatar ? baseUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
                 this.chatTool.onclick = (e) => {
                     Object.assign(store.state.currentChat, chat);
-                    console.dir(store.state.currentChat);
+                    eventBus.emit(CONST.chatChange);
                     window.router.go('/#/chat/edit');
                     e.preventDefault();
                     e.stopPropagation();
                 };
                 this.chatWrapper.onclick = () => {
-                    console.dir(chat);
                     Object.assign(store.state.currentChat, chat);
-                    alert(chat.title);
+                    eventBus.emit(CONST.chatChange);
                     return false;
                 };
             }

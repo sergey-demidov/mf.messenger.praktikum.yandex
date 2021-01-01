@@ -7,6 +7,7 @@ import error404 from "./pages/404/index.js";
 import password from "./pages/password/index.js";
 import chatCreate from "./pages/chat-create/index.js";
 import chatEdit from "./pages/chat-edit/index.js";
+import addUser from "./pages/chat-add-user/index.js";
 const root = document.getElementById('app');
 if (!root)
     throw new Error('Root element does not exist');
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .use('/#/password', password)
         .use('/#/chat/create', chatCreate)
         .use('/#/chat/edit', chatEdit)
+        .use('/#/chat/adduser', addUser)
         .use('/#/404', error404)
         .start();
 });

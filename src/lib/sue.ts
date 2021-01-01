@@ -69,7 +69,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       setInterval(() => this.delayedUpdate(), 100);
 
       this.eventBus.on(CONST.update, this.update);
-      this.eventBus.on('dataChange', this.setData);
+      this.eventBus.on('dataChange', (...args) => this.setData(...args as string[]));
 
       // define each components
       Object.keys(init.components).forEach((key) => {

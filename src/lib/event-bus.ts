@@ -14,12 +14,11 @@ class EventBus {
     EventBus.instance = this;
   }
 
-  on(event: string, callback: () => void): void {
+  on(event: string, callback: (...args: unknown[]) => void): void {
     // console.dir(typeof event);
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
-
     this.listeners[event].push(callback);
   }
 

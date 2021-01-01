@@ -26,6 +26,8 @@ class Router {
         auth.fillUserState().then(() => this._onRoute((window.location.hash)));
     }
     _onRoute(pathname) {
+        console.log(pathname);
+        console.trace();
         const route = this.getRoute(pathname);
         if (route) {
             if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {
