@@ -17,6 +17,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'max-len': 0,
     'linebreak-style': 0,
+    'class-methods-use-this': 0,
     'import/extensions': ['error', 'ignorePackages', {
       js: 'never',
       mjs: 'never',

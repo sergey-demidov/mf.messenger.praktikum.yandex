@@ -38,7 +38,6 @@ class sButton extends HTMLElement {
     this.addEventListener('keydown', (e) => this.onKeydown(e));
   }
 
-  // eslint-disable-next-line class-methods-use-this
   onKeydown(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
       (e.target as HTMLElement).click();

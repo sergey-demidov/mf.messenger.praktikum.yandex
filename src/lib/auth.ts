@@ -18,7 +18,6 @@ class Auth {
     Auth.instance = this;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   isUserLoggedIn(): boolean {
     return !!store.state.currentUser.login;
   }

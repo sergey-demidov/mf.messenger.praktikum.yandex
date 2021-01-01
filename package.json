@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ttsc -w & node server & browser-sync start --proxy 'localhost:3000' --files 'static'",
+    "dev": "ttsc -w & node server & node-sass src/css/main.scss -wo static/css & browser-sync start --proxy 'localhost:3000' --files 'static'",
     "serve": "node server",
+    "css": "node-sass src/css/main.scss -o static/css",
     "lint": "eslint --ext .ts src",
     "deploy": "test `git status --porcelain | wc -l` -eq 0 && git rebase main deploy && git push && git checkout main || echo commit first"
   },
@@ -39,6 +40,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
+    "node-sass": "^5.0.0",
     "prettier": "^1.19.1",
     "typescript": "^3.9.7"
   },

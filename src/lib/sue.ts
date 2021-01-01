@@ -282,7 +282,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       Array.from(element.childNodes).forEach((child) => this.render(child as sHTMLElement));
     }
 
-    // eslint-disable-next-line class-methods-use-this
     parse(str: string): sParsed {
       const result: sParsed = { not: false, func: '', params: [] };
       let not = '';

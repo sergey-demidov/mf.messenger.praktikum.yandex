@@ -259,7 +259,6 @@ const sue = (i) => {
             const style = window.getComputedStyle(this);
             return (style.visibility === CONST.visible);
         }
-        // eslint-disable-next-line class-methods-use-this
         parse(str) {
             const result = { not: false, func: '', params: [] };
             let not = '';

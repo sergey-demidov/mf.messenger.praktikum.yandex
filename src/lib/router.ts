@@ -42,8 +42,6 @@ class Router {
   }
 
   _onRoute(pathname: string):void {
-    console.log(pathname);
-    console.trace();
     const route = this.getRoute(pathname);
     if (route) {
       if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {
@@ -54,8 +52,8 @@ class Router {
         this.go('/#/chat');
         return;
       }
-      // if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
-      if (this.currentRoute && this.currentRoute !== route) {
+      if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
+      // if (this.currentRoute && this.currentRoute !== route) {
         this.currentRoute.leave();
       }
       this.currentRoute = route;
