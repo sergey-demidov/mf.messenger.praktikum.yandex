@@ -22,30 +22,26 @@ export default class Queue {
         return this.size;
     }
     dequeue() {
+        // size == 0
         if (!this.head)
             return undefined;
         const ret = this.head.value;
-        switch (this.size) {
-            case 0:
-                return undefined;
-            case 1:
-                this.size = 0;
-                this.head = null;
-                this.tail = null;
-                return ret;
-            default:
-                if (this.head.next) {
-                    this.size -= 1;
-                    this.head.next.prev = null;
-                    this.head = this.head.next;
-                    return ret;
-                }
-                return undefined;
+        // size == 1
+        if (!this.head.next) {
+            this.size = 0;
+            this.head = null;
+            this.tail = null;
+            return ret;
         }
+        // size > 1
+        this.size -= 1;
+        this.head.next.prev = null;
+        this.head = this.head.next;
+        return ret;
     }
     peek() {
         var _a;
-        return ((_a = this.head) === null || _a === void 0 ? void 0 : _a.value) || undefined;
+        return (_a = this.head) === null || _a === void 0 ? void 0 : _a.value;
     }
     isEmpty() {
         return this.size === 0;

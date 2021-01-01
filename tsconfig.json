@@ -11,6 +11,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "alwaysStrict": true,
+    "types": [],
     "lib": [
       "dom",
       "es6",
