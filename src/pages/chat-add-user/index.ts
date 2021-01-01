@@ -74,7 +74,7 @@ const addUser = sue({
     },
     fillForm(this: sApp, ...args: string[]) {
       const [validateResult] = args;
-      if (!(this as sApp).isVisible()) return;
+      if (!this.isVisible()) return;
       if (validateResult !== CONST.true || (this.data.userName as string).length === 0) {
         this.data.possibleNames = [];
         return;

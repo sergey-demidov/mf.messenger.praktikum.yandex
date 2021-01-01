@@ -665,14 +665,15 @@ input:invalid {
 .mpy_chat_member_avatar_sign {
   position: absolute;
   text-shadow: 0 0 3px #0007;
-  color: gold;
+  color: #6c7;
   width: 1em;
   height: 1em;
   z-index: 1;
-  bottom: -4px;
-  right: -4px;
+  bottom: -7px;
+  right: -7px;
   font-size: 20px;
-  background-size: contain; }
+  padding: 1px;
+  border-radius: 50%; }
 
 .mpy_chat_display_body {
   font-weight: lighter;

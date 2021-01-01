@@ -46,9 +46,8 @@ const chat = sue({
           toaster.bakeError(error);
         });
     },
-    getChats(): void {
-      if (!(this as sApp).isVisible()) return;
-      const that = <sApp> this;
+    getChats(this: sApp): void {
+      if (!this.isVisible()) return;
       chatsApi.getChats()
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {
@@ -58,9 +57,9 @@ const chat = sue({
         })
         .then((c) => {
           const chats = c;
-          (that.data.chats as string[]).length = Object.keys(chats).length;
+          (this.data.chats as string[]).length = Object.keys(chats).length;
           Object.keys(chats).forEach((key, index) => {
-            (that.data.chats as string[])[index] = JSON.stringify(chats[key]);
+            (this.data.chats as string[])[index] = JSON.stringify(chats[key]);
           });
           eventBus.emit(CONST.chatChange);
         }).catch((error) => {
@@ -70,13 +69,12 @@ const chat = sue({
     isChatSelected(): boolean {
       return <number > store.state.currentChat.id > 0;
     },
-    getMembers(): void {
-      const that = <sApp> this;
+    getMembers(this: sApp): void {
       if (!store.state.currentChat.id) {
-        (that.data.chatMembers as string[]) = [];
+        (this.data.chatMembers as string[]) = [];
         return;
       }
-      // if (!(this as sApp).isVisible()) return;
+      // if (!this.isVisible()) return;
       chatsApi.getChatUsers(<number>store.state.currentChat.id)
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {
@@ -86,9 +84,9 @@ const chat = sue({
         })
         .then((m) => {
           const members = m;
-          (that.data.chatMembers as string[]).length = Object.keys(members).length;
+          (this.data.chatMembers as string[]).length = Object.keys(members).length;
           Object.keys(members).forEach((key, index) => {
-            (that.data.chatMembers as string[])[index] = JSON.stringify(members[key]);
+            (this.data.chatMembers as string[])[index] = JSON.stringify(members[key]);
           });
           eventBus.emit(CONST.update);
         }).catch((error) => {

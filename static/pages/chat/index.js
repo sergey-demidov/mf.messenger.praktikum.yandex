@@ -46,7 +46,6 @@ const chat = sue({
         getChats() {
             if (!this.isVisible())
                 return;
-            const that = this;
             chatsApi.getChats()
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
@@ -56,9 +55,9 @@ const chat = sue({
             })
                 .then((c) => {
                 const chats = c;
-                that.data.chats.length = Object.keys(chats).length;
+                this.data.chats.length = Object.keys(chats).length;
                 Object.keys(chats).forEach((key, index) => {
-                    that.data.chats[index] = JSON.stringify(chats[key]);
+                    this.data.chats[index] = JSON.stringify(chats[key]);
                 });
                 eventBus.emit(CONST.chatChange);
             }).catch((error) => {
@@ -69,12 +68,11 @@ const chat = sue({
             return store.state.currentChat.id > 0;
         },
         getMembers() {
-            const that = this;
             if (!store.state.currentChat.id) {
-                that.data.chatMembers = [];
+                this.data.chatMembers = [];
                 return;
             }
-            // if (!(this as sApp).isVisible()) return;
+            // if (!this.isVisible()) return;
             chatsApi.getChatUsers(store.state.currentChat.id)
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
@@ -84,9 +82,9 @@ const chat = sue({
             })
                 .then((m) => {
                 const members = m;
-                that.data.chatMembers.length = Object.keys(members).length;
+                this.data.chatMembers.length = Object.keys(members).length;
                 Object.keys(members).forEach((key, index) => {
-                    that.data.chatMembers[index] = JSON.stringify(members[key]);
+                    this.data.chatMembers[index] = JSON.stringify(members[key]);
                 });
                 eventBus.emit(CONST.update);
             }).catch((error) => {

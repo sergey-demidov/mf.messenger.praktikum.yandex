@@ -30,16 +30,16 @@ const password = sue({
       const form = document.forms.namedItem(formName);
       return (form as HTMLFormElement).checkValidity();
     },
-    submitForm(formName: string): void {
+    submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
       if (!form) {
         throw new Error(`form '${formName}' is not exist`);
       }
-      if (!(this as sApp).methods.formIsValid(formName)) { // validate
+      if (!this.methods.formIsValid(formName)) { // validate
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
         return;
       }
-      if ((this as sApp).data.newPassword !== (this as sApp).data.newPasswordAgain) {
+      if (this.data.newPassword !== this.data.newPasswordAgain) {
         toaster.toast('Error: passwords is not match', ToasterMessageTypes.error);
         return;
       }
@@ -52,9 +52,9 @@ const password = sue({
             throw new Error(response.response);
           }
           toaster.toast('Password saved successfully', ToasterMessageTypes.info);
-          (this as sApp).data.oldPassword = '';
-          (this as sApp).data.newPassword = '';
-          (this as sApp).data.newPasswordAgain = '';
+          this.data.oldPassword = '';
+          this.data.newPassword = '';
+          this.data.newPasswordAgain = '';
           window.router.back();
         })
         .catch((error) => {
