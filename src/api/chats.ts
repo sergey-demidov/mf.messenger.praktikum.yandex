@@ -35,6 +35,11 @@ class ChatsAPI {
   addUsers(data: HttpDataType): Promise<XMLHttpRequest> {
     return this.fetch.put('/users', { data, headers });
   }
+
+  deleteUsers(data: HttpDataType): Promise<XMLHttpRequest> {
+    console.dir(data);
+    return this.fetch.delete('/users', { data, headers });
+  }
 }
 
 export default ChatsAPI;

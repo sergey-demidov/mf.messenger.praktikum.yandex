@@ -1,5 +1,5 @@
 import eventBus from './event-bus';
-import { cloneDeep, CONST } from './utils';
+import { CONST } from './utils';
 
 class Store {
   eventBus = eventBus;
@@ -11,6 +11,7 @@ class Store {
     set(target: Record<string, unknown>, key: string, value: string | number): boolean {
       // eslint-disable-next-line no-param-reassign
       target[key] = value;
+      console.log(`set ${key} => ${value}`);
       eventBus.emit(CONST.update);
       return true;
     },
@@ -19,19 +20,20 @@ class Store {
     },
   }
 
-  initUser = {
-    id: 0,
-    first_name: '',
-    second_name: '',
-    display_name: '',
-    login: '',
-    email: '',
-    phone: '',
-    // avatar: '',
-  }
-
+  // initUser = {
+  //   id: 0,
+  //   first_name: '',
+  //   second_name: '',
+  //   display_name: '',
+  //   login: '',
+  //   email: '',
+  //   phone: '',
+  //   // avatar: '',
+  // }
+  //
   state = {
-    currentUser: new Proxy(<Record<string, string | number>>cloneDeep(this.initUser), this.handler),
+    currentUser: new Proxy(<Record<string, string | number>>{}, this.handler),
+    currentMember: new Proxy(<Record<string, string | number>>{}, this.handler),
     currentChat: new Proxy({
       id: 0,
       title: '',

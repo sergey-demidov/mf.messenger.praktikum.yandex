@@ -1,5 +1,4 @@
-export default `
-<nav class="mpy_navigation">
+export default `<nav class="mpy_navigation">
   <div></div>
   <div>
     <s-user></s-user>
@@ -64,14 +63,17 @@ export default `
       </form>
     </div>
     <div class="mpy_chat_users_list mpy_lightgrey">
-      <div class="mpy_chat_list_button_wrapper">
+      <div  class="mpy_chat_list_button_wrapper">
         <s-btn round
+          @drop="deleteUser()"
+          ondragover="return false"
           :disabled="!isChatSelected()"
           onclick="router.go('/#/chat/adduser')">
-          <i class="material-icons">group_add</i>
+          <i class="material-icons s-trash">group_add</i>
         </s-btn>
       </div>
-      <div s-for="member in chatMembers" s-key="member">
+      <div s-for="member in chatMembers"
+        s-key="member">
         <s-chat-member :s-member="chatMembers[member]"></s-chat-member>
       </div>
     </div>

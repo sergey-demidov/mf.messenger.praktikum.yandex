@@ -65,7 +65,7 @@ input:invalid {
     flex-direction: column-reverse;
     position: absolute;
     min-width: 33vw;
-    right: 0;
+    right: 95px;
     top: 50px;
     z-index: 150;
     padding: 0 10px;
@@ -538,13 +538,16 @@ input:invalid {
     color: #444;
     padding: 10px 20px;
     margin: 0 15px;
-    background-image: linear-gradient(to top, #5b6, #8e9);
+    /*background-image: linear-gradient(to top, #5b6, #8e9);*/
+    background-color: #6c7;
     box-shadow: 0 0 5px #0009;
     cursor: pointer;
     display: inline;
     border: 0;
     outline: 0;
     text-align: center;
+    transition: transform 500ms linear, background-color 0s 250ms;
+
     /*user-select: none;*/
     /*-moz-user-select: none;*/
     /*-webkit-user-select: none;*/
@@ -771,7 +774,7 @@ input:invalid {
 }
 
 .mpy_chat_display_avatar:hover {
-    box-shadow: 2px 2px 5px #000;
+    box-shadow: 1px 1px 7px #000;
 }
 
 .mpy_chat_display_avatar:hover > span {
@@ -853,6 +856,14 @@ input:invalid {
 
 .mpy_pr40 {
     padding-right: 40px;
+}
+
+.mpy_red {
+    background-color: red;
+    /*background-image: linear-gradient(to top, #f12, #f56);*/
+    background-image: none;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 

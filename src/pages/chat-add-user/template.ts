@@ -11,7 +11,7 @@ export default `<div class="mpy_overlay">
             <s-input name="userName"
               list="possibleUserNames"
               :model="userName"
-              s-validate="required letters_only"
+              s-validate="required no_special_chars"
               label="enter user name to invite"></s-input>
           </div>
         </form>

@@ -1,5 +1,5 @@
 import eventBus from "./event-bus.js";
-import { cloneDeep, CONST } from "./utils.js";
+import { CONST } from "./utils.js";
 class Store {
     constructor() {
         this.eventBus = eventBus;
@@ -10,6 +10,7 @@ class Store {
             set(target, key, value) {
                 // eslint-disable-next-line no-param-reassign
                 target[key] = value;
+                console.log(`set ${key} => ${value}`);
                 eventBus.emit(CONST.update);
                 return true;
             },
@@ -17,17 +18,20 @@ class Store {
                 throw new Error(`Cant delete property ${key} from ${target}`);
             },
         };
-        this.initUser = {
-            id: 0,
-            first_name: '',
-            second_name: '',
-            display_name: '',
-            login: '',
-            email: '',
-            phone: '',
-        };
+        // initUser = {
+        //   id: 0,
+        //   first_name: '',
+        //   second_name: '',
+        //   display_name: '',
+        //   login: '',
+        //   email: '',
+        //   phone: '',
+        //   // avatar: '',
+        // }
+        //
         this.state = {
-            currentUser: new Proxy(cloneDeep(this.initUser), this.handler),
+            currentUser: new Proxy({}, this.handler),
+            currentMember: new Proxy({}, this.handler),
             currentChat: new Proxy({
                 id: 0,
                 title: '',
