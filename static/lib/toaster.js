@@ -5,7 +5,7 @@ export const ToasterMessageTypes = Object.freeze({
     warn: 'warn',
 });
 export default class Toaster {
-    constructor(timeout = 4000) {
+    constructor() {
         this.timeout = 4000;
         this.wrapper = document.createElement('div');
         if (Toaster.instance) {
@@ -14,7 +14,6 @@ export default class Toaster {
         Toaster.instance = this;
         this.wrapper.classList.add('mpy_toaster_wrapper');
         document.body.appendChild(this.wrapper);
-        this.timeout = timeout;
     }
     toast(message, type = ToasterMessageTypes.info) {
         const id = hash8();
@@ -23,7 +22,6 @@ export default class Toaster {
             this.untoast(id);
         }, this.timeout);
     }
-    // eslint-disable-next-line class-methods-use-this
     untoast(id) {
         const toastElement = document.getElementById(id);
         if (toastElement) {

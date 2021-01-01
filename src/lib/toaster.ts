@@ -19,14 +19,13 @@ export default class Toaster {
 
   wrapper = document.createElement('div')
 
-  constructor(timeout = 4000) {
+  constructor() {
     if (Toaster.instance) {
       return Toaster.instance;
     }
     Toaster.instance = this;
     this.wrapper.classList.add('mpy_toaster_wrapper');
     document.body.appendChild(this.wrapper);
-    this.timeout = timeout;
   }
 
   toast(message: string, type = ToasterMessageTypes.info): void {
@@ -37,7 +36,6 @@ export default class Toaster {
     }, this.timeout);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   untoast(id: string): void {
     const toastElement = document.getElementById(id);
     if (toastElement) {

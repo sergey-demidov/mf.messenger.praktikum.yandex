@@ -91,7 +91,6 @@ class sUser extends HTMLElement {
     document.body.appendChild(this.wrapper);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   logout(): void {
     authApi.logOut().then((response) => {
       if (response.status === 200) {

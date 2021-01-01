@@ -2,6 +2,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "target": "es6",
+    "outDir": "static",
     "strict": true,
     "declaration": false,
     "strictNullChecks": true,
@@ -16,7 +17,6 @@
       "dom.iterable",
       "es2017"
     ],
-    "outDir": "static",
     "plugins": [
       {
         "transform": "@zoltu/typescript-transformer-append-js-extension/output/index.js",

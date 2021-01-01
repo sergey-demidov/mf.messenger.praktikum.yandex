@@ -3,12 +3,11 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
-import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import Toaster from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
 import ChatsAPI from '../../api/chats';
 import store from '../../lib/store';
-import { baseUrl } from '../../lib/http-transport';
-import { CONST, formDataToObject, isJsonString } from '../../lib/utils';
+import { CONST, isJsonString } from '../../lib/utils';
 import UserAPI from '../../api/user';
 
 const chatsAPI = new ChatsAPI();
@@ -39,14 +38,14 @@ const addUser = sue({
     matchUser() {
       return true;
     },
-    submitForm(formName: string): void {
+    submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
       if (!form) {
         throw new Error(`form '${formName}' is not exist`);
       }
       chatsAPI.addUsers({
         users: [
-          this.data.userId,
+          <number> this.data.userId,
         ],
         chatId: <number>store.state.currentChat.id,
       })
@@ -63,8 +62,8 @@ const addUser = sue({
           toaster.bakeError(error);
         });
     },
-    checkChat() {
-      if (!(this as sApp).isVisible()) return;
+    checkChat(this: sApp) {
+      if (!this.isVisible()) return;
       if (!store.state.currentChat.id) {
         setTimeout(() => window.router.go('/#/chat'), 100);
         return;
@@ -73,15 +72,15 @@ const addUser = sue({
         this.data.title = store.state.currentChat.title;
       }
     },
-    fillForm(...args: string[]) {
+    fillForm(this: sApp, ...args: string[]) {
       const [validateResult] = args;
       if (!(this as sApp).isVisible()) return;
-      if (validateResult !== CONST.true || this.data.userName.length === 0) {
+      if (validateResult !== CONST.true || (this.data.userName as string).length === 0) {
         this.data.possibleNames = [];
         return;
       }
 
-      userApi.findUsers({ login: this.data.userName })
+      userApi.findUsers({ login: <string> this.data.userName })
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {
             return JSON.parse(response.response);

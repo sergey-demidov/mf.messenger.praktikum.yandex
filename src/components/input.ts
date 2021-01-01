@@ -73,7 +73,6 @@ class sInput extends HTMLElement {
     e.stopPropagation();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   onKeydown(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
       e.preventDefault();
