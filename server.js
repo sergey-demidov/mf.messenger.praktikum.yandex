@@ -9,10 +9,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'static/index.html'));
 });
 app.listen(3000);
-
-const coverage = express();
-coverage.use('/', express.static(path.join(__dirname, 'coverage/lcov-report')));
-coverage.listen(5000);
+//
+// const coverage = express();
+// coverage.use('/', express.static(path.join(__dirname, 'coverage/lcov-report')));
+// coverage.listen(5000);
 
 // const key = fs.readFileSync('./example.com+5-key.pem');
 // const cert = fs.readFileSync('./example.com+5.pem');

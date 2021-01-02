@@ -146,16 +146,25 @@ export function cloneDeep(obj: unknown): unknown {
   return clone(obj as iterable, (Array.isArray(obj) ? [] : {}) as iterable);
 }
 
-export function createDragNDropListeners(): void {
-  document.ondragstart = () => {
+export function createWindowListeners(): void {
+  window.ondragstart = () => {
     const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
-    setTimeout(() => { trash.innerText = 'delete'; }, 250);
-    (trash.parentElement as HTMLElement).classList.add('mpy_red');
+    setTimeout(() => {
+      trash.innerText = 'delete';
+      (trash.parentElement as HTMLElement).classList.add('mpy_trash__red');
+    }, 250);
+    (trash.parentElement as HTMLElement).classList.add('mpy_trash');
   };
 
-  document.ondragend = () => {
+  window.ondragend = () => {
     const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
-    setTimeout(() => { trash.innerText = 'group_add'; }, 250);
-    (trash.parentElement as HTMLElement).classList.remove('mpy_red');
+    (trash.parentElement as HTMLElement).classList.remove('mpy_trash');
+    setTimeout(() => {
+      trash.innerText = 'group_add';
+      (trash.parentElement as HTMLElement).classList.remove('mpy_trash__red');
+    }, 250);
   };
+
+  // TODO: enable on deploy
+  // window.onbeforeunload = () => false;
 }

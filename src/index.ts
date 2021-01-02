@@ -8,7 +8,7 @@ import password from './pages/password/index';
 import chatCreate from './pages/chat-create/index';
 import chatEdit from './pages/chat-edit/index';
 import addUser from './pages/chat-add-user/index';
-import { createDragNDropListeners } from './lib/utils';
+import { createWindowListeners } from './lib/utils';
 
 declare global {
   interface Window {
@@ -23,7 +23,7 @@ window.router = new Router(root);
 
 document.addEventListener('DOMContentLoaded', () => {
   // показывает дропзону для удаления участника из чата
-  createDragNDropListeners();
+  createWindowListeners();
 
   window.router
     .use('/#/chat', chat)

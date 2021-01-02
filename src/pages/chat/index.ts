@@ -33,12 +33,8 @@ const chat = sue({
         .then((response) => {
           if (response.status === 200) {
             toaster.toast(`User ${store.state.currentMember.login} has been kicked`);
-            Object.assign(store.state.currentMember, { id: 0 });
-            if (store.state.currentMember.role === 'admin') {
-              Object.assign(store.state.currentChat, { id: 0 });
-              setTimeout(() => { eventBus.emit(CONST.hashchange); }, 0);
-            }
-            setTimeout(() => { eventBus.emit(CONST.chatChange); }, 0);
+            store.state.currentMember.id = 0;
+            setTimeout(() => { eventBus.emit(CONST.hashchange); }, 0);
             return;
           }
           throw new Error('User deletion failed');
@@ -58,9 +54,15 @@ const chat = sue({
         .then((c) => {
           const chats = c;
           (this.data.chats as string[]).length = Object.keys(chats).length;
+          let currentChatPresent = false;
           Object.keys(chats).forEach((key, index) => {
+            if (chats[key].id === store.state.currentChat.id) currentChatPresent = true;
             (this.data.chats as string[])[index] = JSON.stringify(chats[key]);
           });
+          if (!currentChatPresent) {
+            console.warn('CHAT NOT PRESENT');
+            store.state.currentChat.id = 0;
+          }
           eventBus.emit(CONST.chatChange);
         }).catch((error) => {
           toaster.bakeError(error);
@@ -70,7 +72,11 @@ const chat = sue({
       return <number > store.state.currentChat.id > 0;
     },
     getMembers(this: sApp): void {
-      if (!store.state.currentChat.id) {
+      console.log('getMembers');
+      console.log(typeof store.state.currentChat.id);
+      console.dir(store.state.currentChat.id);
+      console.trace();
+      if (!store.state.currentChat.id || store.state.currentChat.id === 0) {
         (this.data.chatMembers as string[]) = [];
         return;
       }

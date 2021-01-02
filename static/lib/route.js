@@ -7,7 +7,6 @@ class Route {
     }
     navigate(pathname) {
         if (this.match(pathname)) {
-            this.pathname = pathname;
             this.render();
         }
     }
@@ -16,7 +15,8 @@ class Route {
             this.element.hide();
         }
     }
-    match(pathname) {
+    match(p) {
+        const pathname = p.charAt(0) === '/' ? p.substring(1) : p;
         return pathname === this.pathname;
     }
     render() {

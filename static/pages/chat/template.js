@@ -63,7 +63,8 @@ export default `<nav class="mpy_navigation">
       </form>
     </div>
     <div class="mpy_chat_users_list mpy_lightgrey">
-      <div  class="mpy_chat_list_button_wrapper">
+      <div  
+      class="mpy_chat_list_button_wrapper">
         <s-btn round
           @drop="deleteUser()"
           ondragover="return false"

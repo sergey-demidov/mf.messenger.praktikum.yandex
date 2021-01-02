@@ -450,13 +450,14 @@ input:invalid {
   padding: 10px 20px;
   margin: 0 15px;
   background-color: #6c7;
+  background-image: linear-gradient(to top, #5b6, #8e9);
   box-shadow: 0 0 5px #0009;
   cursor: pointer;
   display: inline;
   border: 0;
   outline: 0;
   text-align: center;
-  transition: transform 500ms linear, background-color 0s 250ms; }
+  transition: transform 500ms linear; }
   .mpy_button:hover {
     box-shadow: 0 0 10px #0009;
     filter: brightness(105%); }
@@ -714,8 +715,10 @@ input:invalid {
 .mpy_pr40 {
   padding-right: 40px; }
 
-.mpy_red {
-  background-color: red;
-  background-image: none;
+.mpy_trash {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1); }
+
+.mpy_trash__red {
+  background-color: red;
+  background-image: linear-gradient(to top, #d00, #f55); }

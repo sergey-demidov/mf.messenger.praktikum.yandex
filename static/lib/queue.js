@@ -33,7 +33,7 @@ export default class Queue {
             this.tail = null;
             return ret;
         }
-        // size > 1
+        // size == 1
         this.size -= 1;
         this.head.next.prev = null;
         this.head = this.head.next;

@@ -8,7 +8,7 @@ import password from "./pages/password/index.js";
 import chatCreate from "./pages/chat-create/index.js";
 import chatEdit from "./pages/chat-edit/index.js";
 import addUser from "./pages/chat-add-user/index.js";
-import { createDragNDropListeners } from "./lib/utils.js";
+import { createWindowListeners } from "./lib/utils.js";
 const root = document.getElementById('app');
 if (!root)
     throw new Error('Root element does not exist');
@@ -16,7 +16,7 @@ if (!root)
 window.router = new Router(root);
 document.addEventListener('DOMContentLoaded', () => {
     // показывает дропзону для удаления участника из чата
-    createDragNDropListeners();
+    createWindowListeners();
     window.router
         .use('/#/chat', chat)
         .use('/#/login', login)

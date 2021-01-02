@@ -107,9 +107,9 @@ const addUser = sue({
         });
     },
   },
-  created() {
-    eventBus.on(CONST.validateFinished, (args) => (this as unknown as sApp).methods.fillForm(args));
-    eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.checkChat());
+  created(this: sApp) {
+    eventBus.on(CONST.validateFinished, (args) => this.methods.fillForm(args));
+    eventBus.on(CONST.hashchange, () => this.methods.checkChat());
   },
 
   components: {
