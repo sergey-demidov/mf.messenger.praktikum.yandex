@@ -3,16 +3,16 @@ import { baseUrl } from "../lib/http-transport.js";
 import store from "../lib/store.js";
 const template = `
 <div class="mpy_chat_member_wrapper mpy_white" draggable="true">
-  <div class="mpy_chat_member_avatar">
-    <span class="material-icons mpy_chat_member_avatar_sign"> person </span>
-    <img class="mpy_avatar_preview unselectable undraggable"
+  <div class="mpy_chat_member_avatar undraggable unselectable">
+    <span class="material-icons mpy_chat_member_avatar_sign undraggable unselectable"> person </span>
+    <img class="mpy_avatar_preview undraggable unselectable"
       draggable="false"
       width="40"
       height="40"
       src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
       alt="">
   </div>
-  <div class="mpy_chat_display_nick">
+  <div class="mpy_chat_display_nick undraggable unselectable">
   </div>
 </div>
 `;
@@ -41,7 +41,8 @@ class sChatMember extends HTMLElement {
                 const member = JSON.parse(newValue);
                 Object.assign(this.member, member);
                 if (member.role === 'admin') {
-                    this.memberSign.innerText = 'how_to_reg';
+                    this.memberSign.innerText = 'star';
+                    this.memberSign.style.color = 'gold';
                 }
                 this.memberTitle.innerText = member.display_name || member.login || 'unknown';
                 this.memberAvatar.src = member.avatar ? baseUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';

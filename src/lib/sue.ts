@@ -88,7 +88,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
       this.init.created = this.init.created.bind(this);
       this.init.mounted = this.init.mounted.bind(this);
-
+      // this.style.display = CONST.none;
       this.init.created();
     }
 

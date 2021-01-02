@@ -123,16 +123,24 @@ export function cloneDeep(obj) {
     }
     return clone(obj, (Array.isArray(obj) ? [] : {}));
 }
-export function createDragNDropListeners() {
-    document.ondragstart = () => {
+export function createWindowListeners() {
+    window.ondragstart = () => {
         const trash = document.getElementsByClassName('s-trash')[0];
-        setTimeout(() => { trash.innerText = 'delete'; }, 250);
-        trash.parentElement.classList.add('mpy_red');
+        setTimeout(() => {
+            trash.innerText = 'delete';
+            trash.parentElement.classList.add('mpy_trash__red');
+        }, 250);
+        trash.parentElement.classList.add('mpy_trash');
     };
-    document.ondragend = () => {
+    window.ondragend = () => {
         const trash = document.getElementsByClassName('s-trash')[0];
-        setTimeout(() => { trash.innerText = 'group_add'; }, 250);
-        trash.parentElement.classList.remove('mpy_red');
+        trash.parentElement.classList.remove('mpy_trash');
+        setTimeout(() => {
+            trash.innerText = 'group_add';
+            trash.parentElement.classList.remove('mpy_trash__red');
+        }, 250);
     };
+    // TODO: enable on deploy
+    // window.onbeforeunload = () => false;
 }
 //# sourceMappingURL=utils.js.map

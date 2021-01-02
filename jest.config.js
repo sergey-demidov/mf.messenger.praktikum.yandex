@@ -4,5 +4,14 @@ module.exports = {
     'src/lib/*.ts',
     // 'src/*.ts',
   ],
-  testPathIgnorePatterns: ['<rootDir>/static/', '<rootDir>/node_modules/'],
+  coverageDirectory: 'static/coverage',
+  testPathIgnorePatterns: [
+    '<rootDir>/static/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/src/lib/icons.ts'],
+
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/lib/icons.ts',
+    '<rootDir>/src/lib/mock-utils.ts',
+  ],
 };

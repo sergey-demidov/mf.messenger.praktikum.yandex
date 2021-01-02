@@ -45,14 +45,14 @@ export default class Queue<T> {
       this.tail = null;
       return ret;
     }
-    // size > 1
+    // size == 1
     this.size -= 1;
     this.head.next.prev = null;
     this.head = this.head.next;
     return ret;
   }
 
-  peek(): T | unknown {
+  peek(): T | undefined {
     return this.head?.value;
   }
 

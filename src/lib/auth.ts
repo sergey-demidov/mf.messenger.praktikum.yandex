@@ -28,6 +28,7 @@ class Auth {
     }
     return authAPI.getUser()
       .then((response) => {
+        console.dir(response.response);
         if (response.status === 200 && isJsonString(response.response)) {
           return JSON.parse(response.response);
         }
