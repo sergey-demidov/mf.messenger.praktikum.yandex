@@ -1,10 +1,10 @@
 import eventBus from '../lib/event-bus';
-import { CONST } from '../lib/utils';
 import Toaster, { ToasterMessageTypes } from '../lib/toaster';
 import ICONS from '../lib/icons';
 import auth from '../lib/auth';
 import store from '../lib/store';
 import AuthAPI from '../api/auth';
+import { CONST } from '../lib/const';
 
 const toaster = new Toaster();
 const authApi = new AuthAPI();

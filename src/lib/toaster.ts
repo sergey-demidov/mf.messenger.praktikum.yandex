@@ -1,4 +1,5 @@
-import { CONST, hash8, isJsonString } from './utils';
+import { hash8, isJsonString } from './utils';
+import { CONST } from './const';
 
 export const ToasterMessageTypes = Object.freeze({
   info: 'info',

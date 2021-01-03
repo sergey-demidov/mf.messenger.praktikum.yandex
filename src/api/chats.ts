@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import HttpTransport, { HttpDataType } from '../lib/http-transport';
+import { ApiBaseUrl } from '../lib/const';
 
 const headers = {
   'Content-type': 'application/json',
@@ -9,7 +10,7 @@ class ChatsAPI {
   fetch: HttpTransport;
 
   constructor() {
-    this.fetch = new HttpTransport('/chats');
+    this.fetch = new HttpTransport(ApiBaseUrl, '/chats');
   }
 
   getChats(): Promise<XMLHttpRequest> {
@@ -37,7 +38,6 @@ class ChatsAPI {
   }
 
   deleteUsers(data: HttpDataType): Promise<XMLHttpRequest> {
-    console.dir(data);
     return this.fetch.delete('/users', { data, headers });
   }
 }

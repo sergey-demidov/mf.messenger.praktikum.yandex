@@ -4,7 +4,7 @@ import {
 
 import Route from '../route';
 import sue from '../sue';
-import { CONST } from '../utils';
+import { CONST } from '../const';
 
 describe('test Route class', () => {
   const root = window.document.body;

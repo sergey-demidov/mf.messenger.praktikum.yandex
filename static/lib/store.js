@@ -1,5 +1,26 @@
 import eventBus from "./event-bus.js";
-import { CONST } from "./utils.js";
+import { CONST } from "./const.js";
+const user = {
+    id: 0,
+    first_name: '',
+    second_name: '',
+    display_name: '',
+    login: '',
+    email: '',
+    phone: '',
+    avatar: '',
+};
+const chatMember = {
+    id: 0,
+    first_name: '',
+    second_name: '',
+    display_name: '',
+    login: '',
+    email: '',
+    phone: '',
+    avatar: '',
+    role: '',
+};
 class Store {
     constructor() {
         this.eventBus = eventBus;
@@ -8,6 +29,10 @@ class Store {
                 return target[key];
             },
             set(target, key, value) {
+                if (typeof target[key] === CONST.undefined) {
+                    // eslint-disable-next-line no-console
+                    console.warn(`key '${key}' undefined in store '${target}'`);
+                }
                 // eslint-disable-next-line no-param-reassign
                 target[key] = value;
                 eventBus.emit(CONST.update);
@@ -18,8 +43,8 @@ class Store {
             },
         };
         this.state = {
-            currentUser: new Proxy({}, this.handler),
-            currentMember: new Proxy({}, this.handler),
+            currentUser: new Proxy(user, this.handler),
+            currentMember: new Proxy(chatMember, this.handler),
             currentChat: new Proxy({
                 id: 0,
                 title: '',

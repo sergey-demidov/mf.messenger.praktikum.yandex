@@ -1,7 +1,7 @@
 import Route from "./route.js";
 import eventBus from "./event-bus.js";
-import { CONST } from "./utils.js";
 import auth from "./auth.js";
+import { CONST } from "./const.js";
 class Router {
     constructor(root) {
         this.routes = [];

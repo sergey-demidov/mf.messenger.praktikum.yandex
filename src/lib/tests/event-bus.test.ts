@@ -3,18 +3,21 @@ import {
 } from '@jest/globals';
 
 import eventBus from '../event-bus';
-import { CONST } from '../utils';
 import Queue from '../queue';
+import { CONST } from '../const';
 
 describe('test EventBus', () => {
+  // eslint-disable-next-line no-console
   const original = console.error;
   let output;
 
   beforeEach(() => {
+    // eslint-disable-next-line no-console
     console.error = (e) => { output = e; };
   });
 
   afterEach(() => {
+    // eslint-disable-next-line no-console
     console.error = original;
   });
 

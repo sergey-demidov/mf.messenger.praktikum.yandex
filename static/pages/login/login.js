@@ -3,10 +3,10 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
-import { backendUrl } from "../../lib/http-transport.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
 import auth from "../../lib/auth.js";
+import { backendUrl } from "../../lib/const.js";
 const authAPI = new AuthAPI();
 const toaster = new Toaster();
 const login = sue({

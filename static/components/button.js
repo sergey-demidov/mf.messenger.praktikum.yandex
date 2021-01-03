@@ -1,4 +1,4 @@
-import { CONST } from "../lib/utils.js";
+import { CONST } from "../lib/const.js";
 class sButton extends HTMLElement {
     get disabled() {
         // return this.hasAttribute(CONST.disabled);

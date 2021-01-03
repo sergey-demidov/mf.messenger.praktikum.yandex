@@ -4,10 +4,11 @@ import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
 import { formDataToObject, isJsonString } from '../../lib/utils';
-import { backendUrl, HttpDataType } from '../../lib/http-transport';
+import { HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthAPI from '../../api/auth';
 import auth from '../../lib/auth';
+import { backendUrl } from '../../lib/const';
 
 const authAPI = new AuthAPI();
 const toaster = new Toaster();

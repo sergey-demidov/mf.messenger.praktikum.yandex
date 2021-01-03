@@ -1,11 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import HttpTransport from "../lib/http-transport.js";
+import { ApiBaseUrl } from "../lib/const.js";
 const headers = {
     'Content-type': 'application/json',
 };
 class AuthAPI {
     constructor() {
-        this.fetch = new HttpTransport('/auth');
+        this.fetch = new HttpTransport(ApiBaseUrl, '/auth');
     }
     signUp(userData) {
         return this.fetch.post('/signup', { data: userData, headers });

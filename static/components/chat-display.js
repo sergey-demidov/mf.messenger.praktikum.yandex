@@ -1,7 +1,7 @@
-import { CONST, isJsonString } from "../lib/utils.js";
-import { backendUrl } from "../lib/http-transport.js";
+import { isJsonString } from "../lib/utils.js";
 import store from "../lib/store.js";
 import eventBus from "../lib/event-bus.js";
+import { backendUrl, CONST } from "../lib/const.js";
 const template = `
 <div class="mpy_chat_display_wrapper mpy_white">
   <div class="mpy_chat_display_tool">
@@ -75,6 +75,7 @@ class sChatDisplay extends HTMLElement {
                     eventBus.emit(CONST.chatChange);
                     return false;
                 };
+                eventBus.emit(CONST.update);
             }
         }
     }

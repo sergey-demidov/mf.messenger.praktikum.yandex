@@ -4,10 +4,10 @@ import {
 
 import Router from '../router';
 import sue from '../sue';
-import { CONST } from '../utils';
 import eventBus from '../event-bus';
 import auth from '../auth';
 import mocks from './mock-utils';
+import { CONST } from '../const';
 
 const root = window.document.body;
 const chatPage = sue({ name: 's-shat', authorisationRequired: true });
@@ -93,6 +93,7 @@ describe('test Router class', () => {
   test('router back() and forward()', async () => {
     const router = createRouter();
     auth.isUserLoggedIn = () => true;
+
     router.go('/#/chat');
     router.go('/#/profile');
     expect(window.document.location.hash).toEqual('#/profile');

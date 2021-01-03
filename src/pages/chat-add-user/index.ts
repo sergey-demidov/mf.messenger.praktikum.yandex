@@ -7,8 +7,9 @@ import Toaster from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
 import ChatsAPI from '../../api/chats';
 import store from '../../lib/store';
-import { CONST, isJsonString } from '../../lib/utils';
+import { isJsonString } from '../../lib/utils';
 import UserAPI from '../../api/user';
+import { CONST } from '../../lib/const';
 
 const chatsAPI = new ChatsAPI();
 const toaster = new Toaster();
@@ -57,8 +58,11 @@ const addUser = sue({
           this.data.userName = '';
           eventBus.emit(CONST.chatChange);
           window.router.go('/#/chat');
+          this.data.allowInvite = false;
+          this.data.userName = '';
         })
         .catch((error) => {
+          this.data.allowInvite = false;
           toaster.bakeError(error);
         });
     },
@@ -93,13 +97,17 @@ const addUser = sue({
           for (let i = 0; i < users.length; i += 1) {
             res.push(users[i].login);
           }
-          if (res.length === 1 && res[0] === this.data.userName) {
+          console.dir(res);
+          console.dir(this.data.userName);
+          // if (res.length === 1 && res[0] === this.data.userName) {
+          // if (this.data.userName as string in res) {
+          const index = res.indexOf(this.data.userName);
+          if (index !== -1) {
             this.data.allowInvite = true;
-            this.data.userId = users[0].id;
+            this.data.userId = users[index].id;
           } else {
             this.data.allowInvite = false;
             this.data.possibleNames = res;
-            console.dir(users);
           }
         })
         .catch((error) => {

@@ -1,11 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import HttpTransport from "../lib/http-transport.js";
+import { ApiBaseUrl } from "../lib/const.js";
 const headers = {
     'Content-type': 'application/json',
 };
 class UserAPI {
     constructor() {
-        this.fetch = new HttpTransport('/user');
+        this.fetch = new HttpTransport(ApiBaseUrl, '/user');
     }
     saveProfile(data) {
         return this.fetch.put('/profile', { data, headers });

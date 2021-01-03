@@ -1,10 +1,10 @@
 import eventBus from "../lib/event-bus.js";
-import { CONST } from "../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../lib/toaster.js";
 import ICONS from "../lib/icons.js";
 import auth from "../lib/auth.js";
 import store from "../lib/store.js";
 import AuthAPI from "../api/auth.js";
+import { CONST } from "../lib/const.js";
 const toaster = new Toaster();
 const authApi = new AuthAPI();
 class sUser extends HTMLElement {

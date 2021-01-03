@@ -1,8 +1,8 @@
 import eventBus from './event-bus';
 import store from './store';
-import { CONST, isJsonString } from './utils';
-import { backendUrl } from './http-transport';
+import { isJsonString } from './utils';
 import AuthAPI from '../api/auth';
+import { backendUrl, CONST } from './const';
 
 const authAPI = new AuthAPI();
 
