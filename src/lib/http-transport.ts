@@ -10,7 +10,7 @@ export type HttpRequestOptions = {
   withCredentials?: boolean;
 }
 
-export const baseUrl = 'https://ya-praktikum.tech';
+export const backendUrl = 'https://ya-praktikum.tech';
 
 export default class HttpTransport {
   METHODS = Object.freeze({
@@ -23,7 +23,7 @@ export default class HttpTransport {
 
   prefix: string;
 
-  ApiBaseUrl = `${baseUrl}/api/v2`;
+  ApiBaseUrl = `${backendUrl}/api/v2`;
 
   constructor(prefix: string) {
     this.prefix = prefix;

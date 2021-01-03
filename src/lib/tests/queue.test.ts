@@ -2,7 +2,7 @@ import {
   expect, describe, test,
 } from '@jest/globals';
 
-import Queue from './queue';
+import Queue from '../queue';
 
 describe('test Queue class', () => {
   test('must be defined', () => {

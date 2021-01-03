@@ -102,7 +102,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     // update eventBus handler
     // когда изменяются данные - запускаем рендер
-    // если они прилетают во время выполнения render()
+    // если они прилетают во время выполнения
     // ставим в очередь
     protected update = () => {
       if (!this.isVisible()) return;
@@ -114,7 +114,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         this.rendering = false;
         const renderTime = Math.ceil(tEnd - tStart);
         // eslint-disable-next-line no-console
-        if (renderTime > 4) console.log(`render ${this.name} took ${renderTime} milliseconds.`);
+        if (renderTime >= 10) console.log(`render ${this.name} took ${renderTime} milliseconds.`);
       } else {
         this.renderQueue.enqueue('update');
       }
@@ -338,7 +338,5 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   customElements.define(init.name, app);
   return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired || false };
 };
-
-// export app;
 
 export default sue;

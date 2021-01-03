@@ -2,9 +2,9 @@ import {
   expect, describe, test, beforeEach, afterEach,
 } from '@jest/globals';
 
-import eventBus from './event-bus';
-import { CONST } from './utils';
-import Queue from './queue';
+import eventBus from '../event-bus';
+import { CONST } from '../utils';
+import Queue from '../queue';
 
 describe('test EventBus', () => {
   const original = console.error;

@@ -1,10 +1,10 @@
 import {
-  expect, describe, test, jest, beforeAll,
+  expect, describe, test, beforeAll,
 } from '@jest/globals';
 
-import auth from './auth';
-import eventBus from './event-bus';
-import { CONST } from './utils';
+import auth from '../auth';
+import eventBus from '../event-bus';
+import { CONST } from '../utils';
 import mocks from './mock-utils';
 
 describe('test auth module', () => {

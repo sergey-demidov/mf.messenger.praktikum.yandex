@@ -34,14 +34,17 @@ class Router {
   }
 
   start(): void {
-    window.onhashchange = (event: HashChangeEvent): void => {
-      auth.fillUserState().then(() => this._onRoute((event.currentTarget as Window).location.hash));
+    // window.onhashchange = (event: HashChangeEvent): void => {
+    //   auth.fillUserState().then(() => this._onRoute((event.currentTarget as Window).location.hash));
+    // };
+    window.onhashchange = (): void => {
+      auth.fillUserState().then(() => this._onRoute(window.location.hash));
     };
 
     auth.fillUserState().then(() => this._onRoute((window.location.hash)));
   }
 
-  _onRoute(pathname: string):void {
+  protected _onRoute(pathname: string):void {
     const route = this.getRoute(pathname);
     if (route) {
       if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {
@@ -52,8 +55,8 @@ class Router {
         this.go('/#/chat');
         return;
       }
-      if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
-      // if (this.currentRoute && this.currentRoute !== route) {
+      // if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
+      if (this.currentRoute && this.currentRoute !== route) {
         this.currentRoute.leave();
       }
       this.currentRoute = route;

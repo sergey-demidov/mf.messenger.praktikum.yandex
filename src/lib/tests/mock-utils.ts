@@ -33,5 +33,16 @@ const mocks = {
       xhrMockObj.onload();
     }, 0);
   },
+
+  delayAction: (fn: () => void, delay = 1000): Promise<void> => new Promise<void>((resolve) => {
+    fn();
+    setTimeout(() => {
+      resolve();
+    }, delay);
+  }),
+
+  sleep: (delay: number): Promise<void> => new Promise<void>((resolve) => setTimeout(() => {
+    resolve();
+  }, delay)),
 };
 export default mocks;

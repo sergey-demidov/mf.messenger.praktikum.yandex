@@ -1,5 +1,5 @@
 import { queryStringify } from "./utils.js";
-export const baseUrl = 'https://ya-praktikum.tech';
+export const backendUrl = 'https://ya-praktikum.tech';
 export default class HttpTransport {
     constructor(prefix) {
         this.METHODS = Object.freeze({
@@ -9,7 +9,7 @@ export default class HttpTransport {
             PATCH: 'PATCH',
             DELETE: 'DELETE',
         });
-        this.ApiBaseUrl = `${baseUrl}/api/v2`;
+        this.ApiBaseUrl = `${backendUrl}/api/v2`;
         this.get = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.GET }), options.timeout, options.withCredentials);
         this.put = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.PUT }), options.timeout, options.withCredentials);
         this.post = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.POST }), options.timeout, options.withCredentials);

@@ -1,5 +1,5 @@
 import { isJsonString } from "../lib/utils.js";
-import { baseUrl } from "../lib/http-transport.js";
+import { backendUrl } from "../lib/http-transport.js";
 import store from "../lib/store.js";
 const template = `
 <div class="mpy_chat_member_wrapper mpy_white" draggable="true">
@@ -45,7 +45,7 @@ class sChatMember extends HTMLElement {
                     this.memberSign.style.color = 'gold';
                 }
                 this.memberTitle.innerText = member.display_name || member.login || 'unknown';
-                this.memberAvatar.src = member.avatar ? baseUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+                this.memberAvatar.src = member.avatar ? backendUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
             }
         }
     }

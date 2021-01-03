@@ -3,7 +3,7 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
-import { baseUrl } from "../../lib/http-transport.js";
+import { backendUrl } from "../../lib/http-transport.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
 import auth from "../../lib/auth.js";
@@ -38,7 +38,7 @@ const login = sue({
                     user.avatar = that.data.emptyAvatar;
                 }
                 else {
-                    user.avatar = baseUrl + user.avatar;
+                    user.avatar = backendUrl + user.avatar;
                 }
                 auth.fillUserState().then(() => window.router.go('/#/chat'));
             }).catch((error) => {

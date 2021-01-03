@@ -6,7 +6,7 @@ import template from './template';
 import sUser from '../../components/user';
 import { CONST, formDataToObject, isJsonString } from '../../lib/utils';
 import AuthAPI from '../../api/auth';
-import { baseUrl, HttpDataType } from '../../lib/http-transport';
+import { backendUrl, HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import UserAPI from '../../api/user';
 import eventBus from '../../lib/event-bus';
@@ -121,7 +121,7 @@ const profile = sue({
           if (!user.avatar) {
             user.avatar = that.data.emptyAvatar;
           } else {
-            user.avatar = baseUrl + user.avatar;
+            user.avatar = backendUrl + user.avatar;
           }
           Object.assign(that.data, user);
           eventBus.emit(CONST.userDataChange);
