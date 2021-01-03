@@ -53,10 +53,9 @@ const addUser = sue({
                 }
                 this.data.userId = 0;
                 this.data.userName = '';
+                this.data.allowInvite = false;
                 eventBus.emit(CONST.chatChange);
                 window.router.go('/#/chat');
-                this.data.allowInvite = false;
-                this.data.userName = '';
             })
                 .catch((error) => {
                 this.data.allowInvite = false;
@@ -96,10 +95,6 @@ const addUser = sue({
                 for (let i = 0; i < users.length; i += 1) {
                     res.push(users[i].login);
                 }
-                console.dir(res);
-                console.dir(this.data.userName);
-                // if (res.length === 1 && res[0] === this.data.userName) {
-                // if (this.data.userName as string in res) {
                 const index = res.indexOf(this.data.userName);
                 if (index !== -1) {
                     this.data.allowInvite = true;
