@@ -15,7 +15,7 @@ const profilePage = sue({ name: 's-profile', authorisationRequired: true });
 
 const loginPage = sue({ name: 's-login' });
 
-function callback() {
+function fakeCallback() {
 }
 
 const fillUserStateBackup = auth.fillUserState;
@@ -31,14 +31,14 @@ const createRouter = () => {
 
 describe('test Router class', () => {
   beforeAll(() => {
-    eventBus.on(CONST.hashchange, callback);
-    eventBus.on(CONST.update, callback);
+    eventBus.on(CONST.hashchange, fakeCallback);
+    eventBus.on(CONST.update, fakeCallback);
     auth.fillUserState = () => Promise.resolve(true);
   });
 
   afterAll(() => {
-    eventBus.off(CONST.hashchange, callback);
-    eventBus.off(CONST.update, callback);
+    eventBus.off(CONST.hashchange, fakeCallback);
+    eventBus.off(CONST.update, fakeCallback);
     auth.fillUserState = fillUserStateBackup;
   });
 
