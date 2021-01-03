@@ -9,7 +9,7 @@
     "serve": "node server",
     "css": "node-sass src/css/main.scss -o static/css",
     "lint": "eslint --ext .ts src",
-    "push": "test `git status --porcelain | wc -l` -eq 0 && npm run lint && git push || echo something wrong",
+    "push": "test `git status --porcelain | wc -l` -eq 0 && npm run lint && git push || echo commit and lint first",
     "deploy": "test `git status --porcelain | wc -l` -eq 0 && git rebase main deploy && git push && git checkout main || echo commit first"
   },
   "repository": {
