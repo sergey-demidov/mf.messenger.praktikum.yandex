@@ -15,7 +15,8 @@ const profilePage = sue({ name: 's-profile', authorisationRequired: true });
 
 const loginPage = sue({ name: 's-login' });
 
-function fakeCallback() {
+function fakeCallback():boolean {
+  return true;
 }
 
 const fillUserStateBackup = auth.fillUserState;
