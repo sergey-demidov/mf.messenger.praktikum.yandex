@@ -1,6 +1,6 @@
 import Validate from "../lib/validate.js";
 import eventBus from "../lib/event-bus.js";
-import { CONST } from "../lib/utils.js";
+import { CONST } from "../lib/const.js";
 const css = Object.freeze({
     wrapper: 'mpy_text_input_wrapper',
     label: 'mpy_text_input_label',
@@ -38,11 +38,16 @@ class sInput extends HTMLElement {
         this.inputElement.addEventListener('focus', () => this.validate());
         this.inputElement.addEventListener('blur', () => this.validate());
         this.inputElement.addEventListener('keyup', (e) => this.onKeyup(e));
+        this.inputElement.addEventListener('select', (e) => this.onSelect(e));
         this.inputElement.addEventListener('keydown', (e) => this.onKeydown(e));
         this.inputElement.reset = () => {
             this.inputElement.value = this.inputElement.defaultValue;
             this.dataChange();
         };
+    }
+    onSelect(e) {
+        this.dataChange();
+        e.stopPropagation();
     }
     onKeyup(e) {
         this.dataChange();

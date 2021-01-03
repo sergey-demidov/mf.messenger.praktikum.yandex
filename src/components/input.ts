@@ -1,7 +1,7 @@
 import Validate from '../lib/validate';
 import eventBus from '../lib/event-bus';
 import { sHTMLInputElement } from '../lib/types';
-import { CONST } from '../lib/utils';
+import { CONST } from '../lib/const';
 
 const css = Object.freeze({
   wrapper: 'mpy_text_input_wrapper',
@@ -60,12 +60,18 @@ class sInput extends HTMLElement {
     this.inputElement.addEventListener('focus', () => this.validate());
     this.inputElement.addEventListener('blur', () => this.validate());
     this.inputElement.addEventListener('keyup', (e) => this.onKeyup(e));
+    this.inputElement.addEventListener('select', (e) => this.onSelect(e));
     this.inputElement.addEventListener('keydown', (e) => this.onKeydown(e));
 
     (this.inputElement as sHTMLInputElement).reset = (): void => {
       this.inputElement.value = this.inputElement.defaultValue;
       this.dataChange();
     };
+  }
+
+  onSelect(e: Event): void {
+    this.dataChange();
+    e.stopPropagation();
   }
 
   onKeyup(e: KeyboardEvent): void {

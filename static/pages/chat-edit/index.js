@@ -2,12 +2,11 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import { CONST } from "../../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
 import ChatsAPI from "../../api/chats.js";
 import store from "../../lib/store.js";
-import { backendUrl } from "../../lib/http-transport.js";
+import { backendUrl, CONST } from "../../lib/const.js";
 const chatsAPI = new ChatsAPI();
 const toaster = new Toaster();
 const chatEdit = sue({

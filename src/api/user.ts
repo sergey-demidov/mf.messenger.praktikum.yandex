@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import HttpTransport, { HttpDataType } from '../lib/http-transport';
+import { ApiBaseUrl } from '../lib/const';
 
 const headers = {
   'Content-type': 'application/json',
@@ -9,7 +10,7 @@ class UserAPI {
   fetch: HttpTransport;
 
   constructor() {
-    this.fetch = new HttpTransport('/user');
+    this.fetch = new HttpTransport(ApiBaseUrl, '/user');
   }
 
   saveProfile(data: HttpDataType): Promise<XMLHttpRequest> {

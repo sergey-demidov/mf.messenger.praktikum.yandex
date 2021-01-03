@@ -1,5 +1,5 @@
 import eventBus from './event-bus';
-import { CONST } from './utils';
+import { CONST } from './const';
 
 interface rule {
   regexp: RegExp, message: string;

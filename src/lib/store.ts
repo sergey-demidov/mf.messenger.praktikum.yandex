@@ -1,5 +1,28 @@
 import eventBus from './event-bus';
-import { CONST } from './utils';
+import { CONST } from './const';
+
+const user = {
+  id: 0,
+  first_name: '',
+  second_name: '',
+  display_name: '',
+  login: '',
+  email: '',
+  phone: '',
+  avatar: '',
+};
+
+const chatMember = {
+  id: 0,
+  first_name: '',
+  second_name: '',
+  display_name: '',
+  login: '',
+  email: '',
+  phone: '',
+  avatar: '',
+  role: '',
+};
 
 class Store {
   eventBus = eventBus;
@@ -16,6 +39,10 @@ class Store {
       return target[key];
     },
     set(target: Record<string, unknown>, key: string, value: string | number): boolean {
+      if (typeof target[key] === CONST.undefined) {
+        // eslint-disable-next-line no-console
+        console.warn(`key '${key}' undefined in store '${target}'`);
+      }
       // eslint-disable-next-line no-param-reassign
       target[key] = value;
       eventBus.emit(CONST.update);
@@ -27,8 +54,8 @@ class Store {
   }
 
   state = {
-    currentUser: new Proxy(<Record<string, string | number>>{}, this.handler),
-    currentMember: new Proxy(<Record<string, string | number>>{}, this.handler),
+    currentUser: new Proxy(<Record<string, string | number>>user, this.handler),
+    currentMember: new Proxy(<Record<string, string | number>>chatMember, this.handler),
     currentChat: new Proxy({
       id: 0,
       title: '',

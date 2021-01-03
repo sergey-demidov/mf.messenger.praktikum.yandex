@@ -1,8 +1,8 @@
 import Route from './route';
 import { sCustomElementConstructor } from './types';
 import eventBus from './event-bus';
-import { CONST } from './utils';
 import auth from './auth';
+import { CONST } from './const';
 
 class Router {
   public routes: Route[] = [];

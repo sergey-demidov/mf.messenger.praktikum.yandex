@@ -1,5 +1,5 @@
 import eventBus from "./event-bus.js";
-import { CONST } from "./utils.js";
+import { CONST } from "./const.js";
 class Validate {
     constructor() {
         this.rules = {};

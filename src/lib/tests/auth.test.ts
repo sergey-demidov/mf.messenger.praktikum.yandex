@@ -4,8 +4,8 @@ import {
 
 import auth from '../auth';
 import eventBus from '../event-bus';
-import { CONST } from '../utils';
 import mocks from './mock-utils';
+import { CONST } from '../const';
 
 describe('test auth module', () => {
   beforeAll(() => {

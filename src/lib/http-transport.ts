@@ -1,4 +1,5 @@
-import { queryStringify, PlainObject } from './utils';
+import { PlainObject, queryStringify } from './utils';
+import { ApiBaseUrl } from './const';
 
 export type HttpDataType = Record<string, string | number | Array<string> | Array<number> | boolean > | FormData;
 
@@ -10,8 +11,6 @@ export type HttpRequestOptions = {
   withCredentials?: boolean;
 }
 
-export const backendUrl = 'https://ya-praktikum.tech';
-
 export default class HttpTransport {
   METHODS = Object.freeze({
     GET: 'GET',
@@ -21,12 +20,13 @@ export default class HttpTransport {
     DELETE: 'DELETE',
   });
 
+  ApiBaseUrl: string;
+
   prefix: string;
 
-  ApiBaseUrl = `${backendUrl}/api/v2`;
-
-  constructor(prefix: string) {
+  constructor(url = ApiBaseUrl, prefix: string) {
     this.prefix = prefix;
+    this.ApiBaseUrl = url;
   }
 
   get = (url: string, options: HttpRequestOptions = {}): Promise<XMLHttpRequest> => this.request(url, {

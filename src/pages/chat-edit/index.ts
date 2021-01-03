@@ -3,12 +3,11 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
-import { CONST } from '../../lib/utils';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
 import ChatsAPI from '../../api/chats';
 import store from '../../lib/store';
-import { backendUrl } from '../../lib/http-transport';
+import { backendUrl, CONST } from '../../lib/const';
 
 const chatsAPI = new ChatsAPI();
 const toaster = new Toaster();

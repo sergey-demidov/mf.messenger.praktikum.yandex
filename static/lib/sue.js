@@ -1,7 +1,13 @@
 import eventBus from "./event-bus.js";
-import { CONST, hash8 } from "./utils.js";
+import { hash8 } from "./utils.js";
 import Queue from "./queue.js";
 import store from "./store.js";
+import { CONST } from "./const.js";
+// declare global {
+//   interface Window {
+//     sApp: HTMLElement;
+//   }
+// }
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
@@ -56,7 +62,6 @@ const sue = (i) => {
                 this.data = this.makeProxy(init.data());
                 this.init.created = this.init.created.bind(this);
                 this.init.mounted = this.init.mounted.bind(this);
-                // this.style.display = CONST.none;
                 this.init.created();
             };
             // dataChange eventBus handler
@@ -88,7 +93,7 @@ const sue = (i) => {
                     this.renderQueue.enqueue('update');
                 }
             };
-            // setInterval(... ,100) handler
+            // setInterval handler
             // если очередь не пустая - очищает очередь и запускает update
             this.delayedUpdate = () => {
                 if (!this.rendering && !this.renderQueue.isEmpty()) {
@@ -151,17 +156,20 @@ const sue = (i) => {
                 }
                 return (parsed.not ? !res : res).toString();
             };
-            // TODO: метод не оптимален - работает напрямую с DOM
+            // рекурсивно обходт элементы
+            // проверяет пропсы на соответсвие данным
+            // меняет при необходимости
             this.render = (e = this) => {
                 if (!this.isVisible() || e.nodeType !== 1)
                     return;
                 const element = e;
                 const { attributes } = element;
+                // упрощенный аналог v-for
+                // создает шаблон из содержимиого элемента
+                // повторяет отрисовку по количеству членов массива
                 if (element.hasAttribute('s-for')) { // for loop
                     const sForAttribute = element.getAttribute('s-for') || '';
-                    if (!sForAttribute) {
-                        throw new Error('\'s-for\' attribute must have \'s-key\'');
-                    }
+                    // match 'variable in array'
                     const res = sForAttribute.match(/^([\w\d_]+) in ([\w\d_]+)$/);
                     if (!res) {
                         throw new Error(`Cant parse string '${sForAttribute}' in 's-for' attribute`);
@@ -177,8 +185,6 @@ const sue = (i) => {
                     const templateId = `${sFor}_${sIn}_${sKey}`;
                     let template = document.getElementById(templateId);
                     if (!template) {
-                        // eslint-disable-next-line no-console
-                        console.log(`creating template ${templateId}`);
                         template = document.createElement('template');
                         template.id = templateId;
                         const clone = element.cloneNode(true);
@@ -188,10 +194,9 @@ const sue = (i) => {
                         element.innerHTML = '';
                         document.body.appendChild(template);
                     }
+                    // TODO перерисовывает список полностью, а надо бы использовать существующие элементы
                     if (element.childElementCount !== this.data[sIn].length) {
                         const array = this.data[sIn];
-                        // eslint-disable-next-line no-console
-                        console.log(`childElementCount ${element.childElementCount} !== ${array.length}`);
                         element.innerHTML = '';
                         const content = template.content.firstChild;
                         for (let index = 0; index < array.length; index += 1) {
@@ -236,11 +241,10 @@ const sue = (i) => {
                                 throw new Error(`Method '${parsed.func}' does not exist`);
                             }
                             element[eventHandler] = () => this.run(parsed);
-                            // eslint-disable-next-line no-console
-                            console.warn(`set ${eventHandler} to ${parsed.func}(${parsed.params.join(', ')})`);
                         }
                     }
                 });
+                // запускаем рекурсию
                 Array.from(element.childNodes).forEach((child) => this.render(child));
             };
             this.show = () => {
@@ -300,7 +304,7 @@ const sue = (i) => {
         }
     };
     customElements.define(init.name, app);
-    return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired || false };
+    return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired };
 };
 export default sue;
 //# sourceMappingURL=sue.js.map

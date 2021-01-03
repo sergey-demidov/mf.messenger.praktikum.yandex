@@ -1,7 +1,7 @@
 import { queryStringify } from "./utils.js";
-export const backendUrl = 'https://ya-praktikum.tech';
+import { ApiBaseUrl } from "./const.js";
 export default class HttpTransport {
-    constructor(prefix) {
+    constructor(url = ApiBaseUrl, prefix) {
         this.METHODS = Object.freeze({
             GET: 'GET',
             POST: 'POST',
@@ -9,12 +9,12 @@ export default class HttpTransport {
             PATCH: 'PATCH',
             DELETE: 'DELETE',
         });
-        this.ApiBaseUrl = `${backendUrl}/api/v2`;
         this.get = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.GET }), options.timeout, options.withCredentials);
         this.put = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.PUT }), options.timeout, options.withCredentials);
         this.post = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.POST }), options.timeout, options.withCredentials);
         this.delete = (url, options = {}) => this.request(url, Object.assign(Object.assign({}, options), { method: this.METHODS.DELETE }), options.timeout, options.withCredentials);
         this.prefix = prefix;
+        this.ApiBaseUrl = url;
     }
     request(url, options, timeout = 3000, withCredentials = true) {
         const { headers, data, method } = options;

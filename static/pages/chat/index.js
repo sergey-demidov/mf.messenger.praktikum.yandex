@@ -5,11 +5,12 @@ import template from "./template.js";
 import sUser from "../../components/user.js";
 import sChatDisplay from "../../components/chat-display.js";
 import sChatMember from "../../components/chat-member.js";
-import { CONST, isJsonString } from "../../lib/utils.js";
+import { isJsonString } from "../../lib/utils.js";
 import ChatsAPI from "../../api/chats.js";
 import Toaster from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
 import store from "../../lib/store.js";
+import { CONST } from "../../lib/const.js";
 const chatsApi = new ChatsAPI();
 const toaster = new Toaster();
 const chat = sue({
@@ -25,7 +26,6 @@ const chat = sue({
     },
     methods: {
         deleteUser() {
-            console.dir(store.state.currentMember.role);
             chatsApi.deleteUsers({ chatId: store.state.currentChat.id, users: [store.state.currentMember.id] })
                 .then((response) => {
                 if (response.status === 200) {
@@ -59,7 +59,6 @@ const chat = sue({
                     this.data.chats[index] = JSON.stringify(chats[key]);
                 });
                 if (!currentChatPresent) {
-                    console.warn('CHAT NOT PRESENT');
                     store.state.currentChat.id = 0;
                 }
                 eventBus.emit(CONST.chatChange);
@@ -71,15 +70,10 @@ const chat = sue({
             return store.state.currentChat.id > 0;
         },
         getMembers() {
-            console.log('getMembers');
-            console.log(typeof store.state.currentChat.id);
-            console.dir(store.state.currentChat.id);
-            console.trace();
             if (!store.state.currentChat.id || store.state.currentChat.id === 0) {
                 this.data.chatMembers = [];
                 return;
             }
-            // if (!this.isVisible()) return;
             chatsApi.getChatUsers(store.state.currentChat.id)
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
@@ -105,9 +99,6 @@ const chat = sue({
             // eslint-disable-next-line no-console
             console.dir(res); // print result
         },
-    },
-    mounted() {
-        console.log('CHATS mounted');
     },
     created() {
         eventBus.on(CONST.hashchange, () => this.methods.getChats());

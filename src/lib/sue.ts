@@ -2,15 +2,16 @@ import eventBus from './event-bus';
 import {
   sInit, sParsed, sCustomElementConstructor, sEvents, sHTMLElement,
 } from './types';
-import { CONST, hash8 } from './utils';
+import { hash8 } from './utils';
 import Queue from './queue';
 import store from './store';
+import { CONST } from './const';
 
-declare global {
-  interface Window {
-    sApp: HTMLElement;
-  }
-}
+// declare global {
+//   interface Window {
+//     sApp: HTMLElement;
+//   }
+// }
 
 const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   // need to merge with incomplete init definitions
@@ -88,7 +89,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
       this.init.created = this.init.created.bind(this);
       this.init.mounted = this.init.mounted.bind(this);
-      // this.style.display = CONST.none;
       this.init.created();
     }
 
@@ -109,7 +109,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       if (!this.rendering) {
         this.rendering = true;
         const tStart = performance.now();
+
         this.render();
+
         const tEnd = performance.now();
         this.rendering = false;
         const renderTime = Math.ceil(tEnd - tStart);
@@ -120,7 +122,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       }
     }
 
-    // setInterval(... ,100) handler
+    // setInterval handler
     // если очередь не пустая - очищает очередь и запускает update
     protected delayedUpdate = () => {
       if (!this.rendering && !this.renderQueue.isEmpty()) {
@@ -191,16 +193,19 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       return (style.visibility === CONST.visible);
     }
 
-    // TODO: метод не оптимален - работает напрямую с DOM
+    // рекурсивно обходт элементы
+    // проверяет пропсы на соответсвие данным
+    // меняет при необходимости
     protected render = (e: sHTMLElement = this) => {
       if (!this.isVisible() || e.nodeType !== 1) return;
       const element = <HTMLElement>e;
       const { attributes } = element;
+      // упрощенный аналог v-for
+      // создает шаблон из содержимиого элемента
+      // повторяет отрисовку по количеству членов массива
       if (element.hasAttribute('s-for')) { // for loop
         const sForAttribute = element.getAttribute('s-for') || '';
-        if (!sForAttribute) {
-          throw new Error('\'s-for\' attribute must have \'s-key\'');
-        }
+        // match 'variable in array'
         const res = sForAttribute.match(/^([\w\d_]+) in ([\w\d_]+)$/);
         if (!res) {
           throw new Error(`Cant parse string '${sForAttribute}' in 's-for' attribute`);
@@ -216,8 +221,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         const templateId = `${sFor}_${sIn}_${sKey}`;
         let template = <HTMLTemplateElement>document.getElementById(templateId);
         if (!template) {
-          // eslint-disable-next-line no-console
-          console.log(`creating template ${templateId}`);
           template = <HTMLTemplateElement>document.createElement('template');
           template.id = templateId;
           const clone = <HTMLElement>element.cloneNode(true);
@@ -227,10 +230,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           element.innerHTML = '';
           document.body.appendChild(template);
         }
+        // TODO перерисовывает список полностью, а надо бы использовать существующие элементы
         if (element.childElementCount !== (this.data[sIn] as string[]).length) {
           const array = <string[]> this.data[sIn];
-          // eslint-disable-next-line no-console
-          console.log(`childElementCount ${element.childElementCount} !== ${array.length}`);
           element.innerHTML = '';
           const content = <HTMLElement>template.content.firstChild;
           for (let index = 0; index < array.length; index += 1) {
@@ -274,11 +276,10 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
               throw new Error(`Method '${parsed.func}' does not exist`);
             }
             element[eventHandler as sEvents] = () => this.run(parsed);
-            // eslint-disable-next-line no-console
-            console.warn(`set ${eventHandler} to ${parsed.func}(${parsed.params.join(', ')})`);
           }
         }
       });
+      // запускаем рекурсию
       Array.from(element.childNodes).forEach((child) => this.render(child as sHTMLElement));
     }
 
@@ -336,7 +337,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     }
   };
   customElements.define(init.name, app);
-  return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired || false };
+  return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired };
 };
 
 export default sue;

@@ -1,6 +1,6 @@
 import { isJsonString } from '../lib/utils';
-import { backendUrl } from '../lib/http-transport';
 import store from '../lib/store';
+import { backendUrl } from '../lib/const';
 
 const template = `
 <div class="mpy_chat_member_wrapper mpy_white" draggable="true">

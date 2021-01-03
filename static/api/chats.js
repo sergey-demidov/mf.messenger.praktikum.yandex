@@ -1,11 +1,12 @@
 /* eslint-disable class-methods-use-this */
 import HttpTransport from "../lib/http-transport.js";
+import { ApiBaseUrl } from "../lib/const.js";
 const headers = {
     'Content-type': 'application/json',
 };
 class ChatsAPI {
     constructor() {
-        this.fetch = new HttpTransport('/chats');
+        this.fetch = new HttpTransport(ApiBaseUrl, '/chats');
     }
     getChats() {
         return this.fetch.get('', {});
@@ -26,7 +27,6 @@ class ChatsAPI {
         return this.fetch.put('/users', { data, headers });
     }
     deleteUsers(data) {
-        console.dir(data);
         return this.fetch.delete('/users', { data, headers });
     }
 }

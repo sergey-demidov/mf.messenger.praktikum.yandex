@@ -1,4 +1,4 @@
-import { CONST } from '../lib/utils';
+import { CONST } from '../lib/const';
 
 class sButton extends HTMLElement {
   get disabled(): boolean {

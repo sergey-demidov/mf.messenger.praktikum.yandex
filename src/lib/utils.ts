@@ -1,33 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
-export const CONST = Object.freeze({
-  undefined: 'undefined',
-  string: 'string',
-  object: 'object',
-  none: 'none',
-  auto: 'auto',
-  visible: 'visible',
-  hidden: 'hidden',
-  block: 'block',
-  update: 'update',
-  div: 'div',
-  click: 'click',
-  flex: 'flex',
-  disabled: 'disabled',
-  class: 'class',
-  error: 'error',
-  warn: 'warn',
-  info: 'info',
-  hashchange: 'hashchange',
-  function: 'function',
-  userDataChange: 'userDataChange',
-  validate: 'validate',
-  chatChange: 'chatChange',
-  pass: 'pass',
-  validateFinished: 'validateFinished',
-  true: 'true',
-  false: 'false',
-});
+import { CONST } from './const';
 
 export type PlainObject<T = unknown> = {
   [k in string]: T;
@@ -35,9 +8,9 @@ export type PlainObject<T = unknown> = {
 
 export function isPlainObject(value: unknown): value is PlainObject {
   return typeof value === 'object'
-        && value !== null
-        && value.constructor === Object
-        && Object.prototype.toString.call(value) === '[object Object]';
+    && value !== null
+    && value.constructor === Object
+    && Object.prototype.toString.call(value) === '[object Object]';
 }
 
 export function isArray(value: unknown): value is [] {
@@ -48,7 +21,7 @@ export function isArrayOrObject(value: unknown): value is [] | PlainObject {
   return isPlainObject(value) || isArray(value);
 }
 
-export function getKey(key: string, parentKey?: string):string {
+export function getKey(key: string, parentKey?: string): string {
   return parentKey ? `${parentKey}[${key}]` : key;
 }
 
@@ -90,6 +63,7 @@ export function isEqual(lhs: PlainObject, rhs: PlainObject): boolean {
   }
   return true;
 }
+
 export function isJsonString(str: unknown): boolean {
   if (typeof str !== CONST.string) return false;
   try {
@@ -143,6 +117,7 @@ export function cloneDeep(obj: unknown): unknown {
     }
     return target;
   }
+
   return clone(obj as iterable, (Array.isArray(obj) ? [] : {}) as iterable);
 }
 
