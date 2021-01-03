@@ -1,5 +1,5 @@
 import { CONST, isJsonString } from '../lib/utils';
-import { baseUrl } from '../lib/http-transport';
+import { backendUrl } from '../lib/http-transport';
 import store from '../lib/store';
 import eventBus from '../lib/event-bus';
 
@@ -76,7 +76,7 @@ class sChatDisplay extends HTMLElement {
         const chat = JSON.parse(newValue);
         this.chatTitle.innerText = chat.title || 'chat title';
         this.chatId = chat.id;
-        this.chatAvatar.src = chat.avatar ? baseUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+        this.chatAvatar.src = chat.avatar ? backendUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
         this.chatTool.onclick = (e) => {
           Object.assign(store.state.currentChat, chat);
           eventBus.emit(CONST.chatChange);

@@ -2,7 +2,7 @@
   "exclude": [
     "node_modules/",
     "**/*.test.ts",
-    "src/lib/mock-utils.ts"
+    "**/tests/*"
   ],
   "compilerOptions": {
     "rootDir": "src",

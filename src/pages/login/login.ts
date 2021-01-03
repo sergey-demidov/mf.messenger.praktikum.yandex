@@ -4,7 +4,7 @@ import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
 import { formDataToObject, isJsonString } from '../../lib/utils';
-import { baseUrl, HttpDataType } from '../../lib/http-transport';
+import { backendUrl, HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthAPI from '../../api/auth';
 import auth from '../../lib/auth';
@@ -40,7 +40,7 @@ const login = sue({
           if (!user.avatar) {
             user.avatar = that.data.emptyAvatar;
           } else {
-            user.avatar = baseUrl + user.avatar;
+            user.avatar = backendUrl + user.avatar;
           }
           auth.fillUserState().then(() => window.router.go('/#/chat'));
         }).catch((error) => {

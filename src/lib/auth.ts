@@ -1,7 +1,7 @@
 import eventBus from './event-bus';
 import store from './store';
 import { CONST, isJsonString } from './utils';
-import { baseUrl } from './http-transport';
+import { backendUrl } from './http-transport';
 import AuthAPI from '../api/auth';
 
 const authAPI = new AuthAPI();
@@ -28,7 +28,6 @@ class Auth {
     }
     return authAPI.getUser()
       .then((response) => {
-        console.dir(response.response);
         if (response.status === 200 && isJsonString(response.response)) {
           return JSON.parse(response.response);
         }
@@ -36,7 +35,7 @@ class Auth {
       })
       .then((u) => {
         const user = u;
-        user.avatar = baseUrl + user.avatar;
+        user.avatar = backendUrl + user.avatar;
         Object.assign(store.state.currentUser, user);
         this.eventBus.emit(CONST.update);
         return true;

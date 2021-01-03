@@ -1,5 +1,5 @@
 import { isJsonString } from '../lib/utils';
-import { baseUrl } from '../lib/http-transport';
+import { backendUrl } from '../lib/http-transport';
 import store from '../lib/store';
 
 const template = `
@@ -61,7 +61,7 @@ class sChatMember extends HTMLElement {
           this.memberSign.style.color = 'gold';
         }
         this.memberTitle.innerText = member.display_name || member.login || 'unknown';
-        this.memberAvatar.src = member.avatar ? baseUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+        this.memberAvatar.src = member.avatar ? backendUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
       }
     }
   }

@@ -10,7 +10,6 @@ class Store {
             set(target, key, value) {
                 // eslint-disable-next-line no-param-reassign
                 target[key] = value;
-                console.log(`set ${key} => ${value}`);
                 eventBus.emit(CONST.update);
                 return true;
             },
@@ -18,17 +17,6 @@ class Store {
                 throw new Error(`Cant delete property ${key} from ${target}`);
             },
         };
-        // initUser = {
-        //   id: 0,
-        //   first_name: '',
-        //   second_name: '',
-        //   display_name: '',
-        //   login: '',
-        //   email: '',
-        //   phone: '',
-        //   // avatar: '',
-        // }
-        //
         this.state = {
             currentUser: new Proxy({}, this.handler),
             currentMember: new Proxy({}, this.handler),

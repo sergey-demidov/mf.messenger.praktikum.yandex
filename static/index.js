@@ -12,11 +12,10 @@ import { createWindowListeners } from "./lib/utils.js";
 const root = document.getElementById('app');
 if (!root)
     throw new Error('Root element does not exist');
-// нужен для использования в шаблонах
+// window нужен для использования в шаблонах
 window.router = new Router(root);
+createWindowListeners();
 document.addEventListener('DOMContentLoaded', () => {
-    // показывает дропзону для удаления участника из чата
-    createWindowListeners();
     window.router
         .use('/#/chat', chat)
         .use('/#/login', login)

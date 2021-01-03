@@ -7,7 +7,7 @@ import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
 import ChatsAPI from "../../api/chats.js";
 import store from "../../lib/store.js";
-import { baseUrl } from "../../lib/http-transport.js";
+import { backendUrl } from "../../lib/http-transport.js";
 const chatsAPI = new ChatsAPI();
 const toaster = new Toaster();
 const chatEdit = sue({
@@ -117,7 +117,7 @@ const chatEdit = sue({
                 this.data.avatar = this.data.emptyAvatar;
             }
             else {
-                this.data.avatar = baseUrl + store.state.currentChat.avatar;
+                this.data.avatar = backendUrl + store.state.currentChat.avatar;
             }
         },
     },

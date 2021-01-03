@@ -4,6 +4,13 @@ import { CONST } from './utils';
 class Store {
   eventBus = eventBus;
 
+  constructor() {
+    if (Store.instance) {
+      return Store.instance;
+    }
+    Store.instance = this;
+  }
+
   handler = {
     get(target: Record<string, string>, key: string): string {
       return target[key];
@@ -11,7 +18,6 @@ class Store {
     set(target: Record<string, unknown>, key: string, value: string | number): boolean {
       // eslint-disable-next-line no-param-reassign
       target[key] = value;
-      console.log(`set ${key} => ${value}`);
       eventBus.emit(CONST.update);
       return true;
     },
@@ -20,17 +26,6 @@ class Store {
     },
   }
 
-  // initUser = {
-  //   id: 0,
-  //   first_name: '',
-  //   second_name: '',
-  //   display_name: '',
-  //   login: '',
-  //   email: '',
-  //   phone: '',
-  //   // avatar: '',
-  // }
-  //
   state = {
     currentUser: new Proxy(<Record<string, string | number>>{}, this.handler),
     currentMember: new Proxy(<Record<string, string | number>>{}, this.handler),
@@ -43,17 +38,6 @@ class Store {
   }
 
   private static instance: Store;
-
-  constructor() {
-    if (Store.instance) {
-      return Store.instance;
-    }
-    Store.instance = this;
-  }
-
-  // clearUser():void {
-  //   Object.assign(this.state.currentUser, this.initUser);
-  // }
 }
 
 const store = new Store();

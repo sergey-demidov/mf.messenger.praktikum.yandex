@@ -8,7 +8,7 @@ import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
 import ChatsAPI from '../../api/chats';
 import store from '../../lib/store';
-import { baseUrl } from '../../lib/http-transport';
+import { backendUrl } from '../../lib/http-transport';
 
 const chatsAPI = new ChatsAPI();
 const toaster = new Toaster();
@@ -118,7 +118,7 @@ const chatEdit = sue({
       if (store.state.currentChat.avatar === null) {
         this.data.avatar = this.data.emptyAvatar;
       } else {
-        this.data.avatar = baseUrl + store.state.currentChat.avatar;
+        this.data.avatar = backendUrl + store.state.currentChat.avatar;
       }
     },
   },
