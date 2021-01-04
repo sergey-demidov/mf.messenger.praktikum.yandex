@@ -1,5 +1,5 @@
 import {
-  expect, describe, test, beforeEach,
+  expect, describe, test,
 } from '@jest/globals';
 
 import Route from '../route';

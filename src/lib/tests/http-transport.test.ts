@@ -1,8 +1,9 @@
-import {
-  expect, describe, test, beforeAll,
-} from '@jest/globals';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
+// @ts-nocheck
+
+import {
+  expect, describe, test,
+} from '@jest/globals';
 import nock from 'nock';
 import HttpTransport from '../http-transport';
 import { queryStringify } from '../utils';

@@ -7,7 +7,7 @@ import { formDataToObject, isJsonString } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthAPI from '../../api/auth';
-import auth from '../../lib/auth';
+import auth from '../../controllers/auth';
 import { backendUrl } from '../../lib/const';
 
 const authAPI = new AuthAPI();

@@ -2,7 +2,7 @@ export default `<div class="mpy_overlay">
   <div class="mpy_container">
     <div class="mpy_dialog">
       <header class="mpy_dialog_header">
-        <span>Chat </span> &nbsp; <b><span :text="title"></span></b>
+        <span>Chat </span> &nbsp; <b><span :s-text="title"></span></b>
       </header>
       <main>
         <form name="chatEdit"

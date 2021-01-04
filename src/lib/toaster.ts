@@ -47,9 +47,9 @@ export default class Toaster {
     }
   }
 
-  bakeError(error: unknown): void {
+  bakeError(error: unknown, toast = true): string {
     // eslint-disable-next-line no-console
-    console.dir(error);
+    // console.dir(error);
     let message = '';
     if (!error) {
       message = 'Error: Something wrong';
@@ -60,23 +60,35 @@ export default class Toaster {
     if (isJsonString(error as string)) {
       message = JSON.parse(error as string).reason || error;
     } else
+    if (typeof error === CONST.string) {
+      message = <string>error;
+    } else
     if (error instanceof Error && isJsonString(error.message)) {
       message = JSON.parse(error.message).reason || error.message;
     } else
+    if (error instanceof Error) {
+      message = error.toString();
+    } else
     if (typeof error === CONST.object) {
       // eslint-disable-next-line @typescript-eslint/ban-types
-      message = (error as object).toString();
+      message = JSON.stringify(error, null, 1)
+        .slice(2, -2)
+        .split('"').join('')
+        .trim();
     } else {
       throw new Error(`Can't resolve error ${error}`);
     }
-    this.toast(message, ToasterMessageTypes.error);
+    if (toast) {
+      this.toast(message, ToasterMessageTypes.error);
+    }
+    return message;
   }
 
   makeToast(toast: sToast): HTMLElement {
     const toastElement = document.createElement('div');
     toastElement.id = toast.id;
     toastElement.classList.add('mpy_toaster_toast', `mpy_toaster_toast__${toast.type}`, 'unselectable');
-    toastElement.innerText = toast.message;
+    toastElement.textContent = toast.message;
     toastElement.onclick = () => this.untoast(toast.id);
     return toastElement;
   }

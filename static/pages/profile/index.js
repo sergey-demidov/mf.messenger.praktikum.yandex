@@ -136,7 +136,6 @@ const profile = sue({
         eventBus.on(CONST.hashchange, () => this.methods.fillForm());
     },
     mounted() {
-        console.log('Profile mounted');
         this.methods.fillForm();
     },
     components: {

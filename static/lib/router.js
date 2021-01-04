@@ -1,6 +1,6 @@
 import Route from "./route.js";
 import eventBus from "./event-bus.js";
-import auth from "./auth.js";
+import auth from "../controllers/auth.js";
 import { CONST } from "./const.js";
 class Router {
     constructor(root) {
@@ -20,9 +20,6 @@ class Router {
         return this;
     }
     start() {
-        // window.onhashchange = (event: HashChangeEvent): void => {
-        //   auth.fillUserState().then(() => this._onRoute((event.currentTarget as Window).location.hash));
-        // };
         window.onhashchange = () => {
             auth.fillUserState().then(() => this._onRoute(window.location.hash));
         };

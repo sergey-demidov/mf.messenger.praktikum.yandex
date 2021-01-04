@@ -1,8 +1,8 @@
-import eventBus from "./event-bus.js";
-import store from "./store.js";
-import { isJsonString } from "./utils.js";
+import eventBus from "../lib/event-bus.js";
+import store from "../lib/store.js";
+import { isJsonString } from "../lib/utils.js";
 import AuthAPI from "../api/auth.js";
-import { backendUrl, CONST } from "./const.js";
+import { backendUrl, CONST } from "../lib/const.js";
 const authAPI = new AuthAPI();
 class Auth {
     constructor() {
@@ -36,6 +36,7 @@ class Auth {
     }
     clearUserState() {
         store.state.currentUser.login = '';
+        store.state.currentUser.id = 0;
     }
 }
 const auth = new Auth();

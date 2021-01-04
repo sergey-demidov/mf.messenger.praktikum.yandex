@@ -2,7 +2,7 @@ import {
   expect, describe, test, beforeAll,
 } from '@jest/globals';
 
-import auth from '../auth';
+import auth from '../../controllers/auth';
 import eventBus from '../event-bus';
 import mocks from './mock-utils';
 import { CONST } from '../const';

@@ -2,7 +2,7 @@
   "exclude": [
     "node_modules/",
     "**/*.test.ts",
-    "**/tests/*"
+    "src/lib/tests/*"
   ],
   "compilerOptions": {
     "rootDir": "src",
@@ -16,6 +16,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "alwaysStrict": true,
+    "moduleResolution": "node",
     "types": [],
     "lib": [
       "dom",

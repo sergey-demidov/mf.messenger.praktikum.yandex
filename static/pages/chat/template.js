@@ -68,8 +68,6 @@ export default `<nav class="mpy_navigation">
         <s-btn round
           @drop="deleteUser()"
           ondragover="return false"
-          ondragenter="this.parentElement.style.backgroundColor = '#F0F'; return false"
-          ondragleave="this.parentElement.style.backgroundColor = '#0F0'; return false"
           :disabled="!isChatSelected()"
           onclick="router.go('/#/chat/adduser')">
           <i class="material-icons s-trash">group_add</i>

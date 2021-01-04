@@ -1,4 +1,6 @@
 module.exports = {
+  preset: 'jest-puppeteer',
+  verbose: true,
   collectCoverage: true,
   collectCoverageFrom: [
     'src/lib/*.ts',

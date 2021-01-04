@@ -3,7 +3,6 @@ import {
 } from '@jest/globals';
 
 import eventBus from '../event-bus';
-import Queue from '../queue';
 import { CONST } from '../const';
 
 describe('test EventBus', () => {
