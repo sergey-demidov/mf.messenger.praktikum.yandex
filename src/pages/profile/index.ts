@@ -32,9 +32,6 @@ const profile = sue({
     };
   },
   methods: {
-    // resetForm(): void {
-    //   this.methods.fillForm();
-    // },
     formIsValid(formName: string): boolean {
       const form = document.forms.namedItem(formName);
       if (!form) {
@@ -118,13 +115,12 @@ const profile = sue({
         })
         .then((u) => {
           const user = u;
-          const that = <sApp> this;
           if (!user.avatar) {
-            user.avatar = that.data.emptyAvatar;
+            user.avatar = this.data.emptyAvatar;
           } else {
             user.avatar = backendUrl + user.avatar;
           }
-          Object.assign(that.data, user);
+          Object.assign(this.data, user);
           eventBus.emit(CONST.userDataChange);
           const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
           if (fileInput) fileInput.value = '';
@@ -133,11 +129,11 @@ const profile = sue({
         });
     },
   },
-  created() {
-    eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.fillForm());
+  created(this: sApp) {
+    eventBus.on(CONST.hashchange, () => this.methods.fillForm());
   },
-  mounted() {
-    (this as unknown as sApp).methods.fillForm();
+  mounted(this: sApp) {
+    this.methods.fillForm();
   },
   components: {
     's-input': sInput,

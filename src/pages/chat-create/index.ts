@@ -7,7 +7,6 @@ import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 import ChatsAPI from '../../api/chats';
-import store from '../../lib/store';
 
 const toaster = new Toaster();
 const chatsApi = new ChatsAPI();
@@ -45,7 +44,6 @@ const createChat = sue({
           }
           toaster.toast(`Chat ${this.data.title} created successfully`, ToasterMessageTypes.info);
           this.data.title = '';
-          console.dir(store.state.currentChat.id);
           window.router.back();
         })
         .catch((error) => {

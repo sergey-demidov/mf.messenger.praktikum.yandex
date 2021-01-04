@@ -27,7 +27,7 @@ const login = sue({
       const form = document.forms.namedItem(formName);
       return (form as HTMLFormElement).checkValidity();
     },
-    fillUser() {
+    fillUser(this: sApp) {
       authAPI.getUser()
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {
@@ -37,9 +37,8 @@ const login = sue({
         })
         .then((u) => {
           const user = u;
-          const that = <sApp> this;
           if (!user.avatar) {
-            user.avatar = that.data.emptyAvatar;
+            user.avatar = this.data.emptyAvatar;
           } else {
             user.avatar = backendUrl + user.avatar;
           }

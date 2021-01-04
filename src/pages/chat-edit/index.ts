@@ -121,11 +121,11 @@ const chatEdit = sue({
       }
     },
   },
-  created() {
-    eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.fillForm());
+  created(this: sApp) {
+    eventBus.on(CONST.hashchange, () => this.methods.fillForm());
   },
-  mounted() {
-    (this as unknown as sApp).methods.fillForm();
+  mounted(this: sApp) {
+    this.methods.fillForm();
   },
   components: {
     's-input': sInput,

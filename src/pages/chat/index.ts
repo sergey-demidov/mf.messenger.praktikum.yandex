@@ -104,9 +104,9 @@ const chat = sue({
       console.dir(res); // print result
     },
   },
-  created() {
-    eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.getChats());
-    eventBus.on(CONST.chatChange, () => (this as unknown as sApp).methods.getMembers());
+  created(this: sApp) {
+    eventBus.on(CONST.hashchange, () => this.methods.getChats());
+    eventBus.on(CONST.chatChange, () => this.methods.getMembers());
   },
   components: {
     's-input': sInput,

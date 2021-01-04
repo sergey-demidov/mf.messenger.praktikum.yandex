@@ -33,9 +33,8 @@ const login = sue({
             })
                 .then((u) => {
                 const user = u;
-                const that = this;
                 if (!user.avatar) {
-                    user.avatar = that.data.emptyAvatar;
+                    user.avatar = this.data.emptyAvatar;
                 }
                 else {
                     user.avatar = backendUrl + user.avatar;
