@@ -96,7 +96,7 @@ class sUser extends HTMLElement {
       if (response.status === 200) {
         auth.clearUserState();
         toaster.toast('Successfully exited', ToasterMessageTypes.info);
-        setTimeout(() => window.router.go('/#/login'), 100);
+        setTimeout(() => window.router.go('/#/login'), 0);
       } else {
         toaster.toast('Error: Can not logout', ToasterMessageTypes.error);
       }

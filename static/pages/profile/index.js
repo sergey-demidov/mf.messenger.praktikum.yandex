@@ -28,9 +28,6 @@ const profile = sue({
         };
     },
     methods: {
-        // resetForm(): void {
-        //   this.methods.fillForm();
-        // },
         formIsValid(formName) {
             const form = document.forms.namedItem(formName);
             if (!form) {
@@ -115,14 +112,13 @@ const profile = sue({
             })
                 .then((u) => {
                 const user = u;
-                const that = this;
                 if (!user.avatar) {
-                    user.avatar = that.data.emptyAvatar;
+                    user.avatar = this.data.emptyAvatar;
                 }
                 else {
                     user.avatar = backendUrl + user.avatar;
                 }
-                Object.assign(that.data, user);
+                Object.assign(this.data, user);
                 eventBus.emit(CONST.userDataChange);
                 const fileInput = document.getElementById('avatarInput');
                 if (fileInput)
