@@ -1,11 +1,11 @@
 import {
-  expect, describe, test, beforeAll, afterAll, jest,
+  expect, describe, test, beforeAll, afterAll,
 } from '@jest/globals';
 
 import Router from '../router';
 import sue from '../sue';
 import eventBus from '../event-bus';
-import auth from '../auth';
+import auth from '../../controllers/auth';
 import mocks from './mock-utils';
 import { CONST } from '../const';
 

@@ -1,7 +1,7 @@
 import Route from './route';
 import { sCustomElementConstructor } from './types';
 import eventBus from './event-bus';
-import auth from './auth';
+import auth from '../controllers/auth';
 import { CONST } from './const';
 
 class Router {
@@ -34,9 +34,6 @@ class Router {
   }
 
   start(): void {
-    // window.onhashchange = (event: HashChangeEvent): void => {
-    //   auth.fillUserState().then(() => this._onRoute((event.currentTarget as Window).location.hash));
-    // };
     window.onhashchange = (): void => {
       auth.fillUserState().then(() => this._onRoute(window.location.hash));
     };

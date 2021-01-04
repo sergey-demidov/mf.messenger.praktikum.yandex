@@ -1,8 +1,8 @@
-import eventBus from './event-bus';
-import store from './store';
-import { isJsonString } from './utils';
+import eventBus from '../lib/event-bus';
+import store from '../lib/store';
+import { isJsonString } from '../lib/utils';
 import AuthAPI from '../api/auth';
-import { backendUrl, CONST } from './const';
+import { backendUrl, CONST } from '../lib/const';
 
 const authAPI = new AuthAPI();
 
@@ -44,6 +44,7 @@ class Auth {
 
   clearUserState(): void {
     store.state.currentUser.login = '';
+    store.state.currentUser.id = 0;
   }
 }
 

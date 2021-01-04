@@ -1,7 +1,7 @@
 import eventBus from "../lib/event-bus.js";
 import Toaster, { ToasterMessageTypes } from "../lib/toaster.js";
 import ICONS from "../lib/icons.js";
-import auth from "../lib/auth.js";
+import auth from "../controllers/auth.js";
 import store from "../lib/store.js";
 import AuthAPI from "../api/auth.js";
 import { CONST } from "../lib/const.js";

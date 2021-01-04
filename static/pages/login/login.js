@@ -5,7 +5,7 @@ import template from "./template.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthAPI from "../../api/auth.js";
-import auth from "../../lib/auth.js";
+import auth from "../../controllers/auth.js";
 import { backendUrl } from "../../lib/const.js";
 const authAPI = new AuthAPI();
 const toaster = new Toaster();

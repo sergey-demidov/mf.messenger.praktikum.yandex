@@ -137,7 +137,6 @@ const profile = sue({
     eventBus.on(CONST.hashchange, () => (this as unknown as sApp).methods.fillForm());
   },
   mounted() {
-    console.log('Profile mounted');
     (this as unknown as sApp).methods.fillForm();
   },
   components: {

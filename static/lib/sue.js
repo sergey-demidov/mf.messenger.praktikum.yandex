@@ -3,11 +3,6 @@ import { hash8 } from "./utils.js";
 import Queue from "./queue.js";
 import store from "./store.js";
 import { CONST } from "./const.js";
-// declare global {
-//   interface Window {
-//     sApp: HTMLElement;
-//   }
-// }
 const sue = (i) => {
     // need to merge with incomplete init definitions
     const emptyInit = {
@@ -22,7 +17,7 @@ const sue = (i) => {
         destroyed: () => ({}),
     };
     const init = Object.assign(Object.assign({}, emptyInit), i);
-    const app = class extends HTMLElement {
+    const elementConstructor = class extends HTMLElement {
         constructor() {
             super();
             this.eventBus = eventBus;
@@ -122,7 +117,7 @@ const sue = (i) => {
             // get result from user defined methods
             this.run = (parsed) => {
                 if (!this.methods[parsed.func]) {
-                    throw new Error(`Method ${parsed.func} is not defined`);
+                    throw new Error(`Method '${parsed.func}' is not defined`);
                 }
                 let res = this.methods[parsed.func](...parsed.params.map((e) => {
                     // param is plain string
@@ -177,7 +172,7 @@ const sue = (i) => {
                     const [, sFor, sIn] = res;
                     const sKey = element.getAttribute('s-key') || '';
                     if (!sIn || !this.data[sIn] || !Array.isArray(this.data[sIn])) {
-                        throw new Error(`Attribute 's-in' '${sIn}' is not array`);
+                        throw new Error(`Attribute 's-for' '${sIn}' is not array`);
                     }
                     if (!sKey) {
                         throw new Error('Attribute \'s-key\' required');
@@ -189,7 +184,7 @@ const sue = (i) => {
                         template.id = templateId;
                         const clone = element.cloneNode(true);
                         clone.removeAttribute('s-for');
-                        clone.removeAttribute('s-in');
+                        clone.removeAttribute('s-key');
                         template.content.appendChild(clone);
                         element.innerHTML = '';
                         document.body.appendChild(template);
@@ -214,9 +209,9 @@ const sue = (i) => {
                         const native = attribute.substring(1);
                         const res = this.run(parsed);
                         switch (native) {
-                            case 'text':
-                                if (element.innerText !== res)
-                                    element.innerText = res;
+                            case 's-text':
+                                if (element.textContent !== res)
+                                    element.textContent = res;
                                 break;
                             case 'disabled':
                                 if (element.disabled !== (res === 'true')) {
@@ -303,8 +298,8 @@ const sue = (i) => {
             this.init.mounted();
         }
     };
-    customElements.define(init.name, app);
-    return { constructor: app, name: init.name, authorisationRequired: init.authorisationRequired };
+    customElements.define(init.name, elementConstructor);
+    return { constructor: elementConstructor, name: init.name, authorisationRequired: init.authorisationRequired };
 };
 export default sue;
 //# sourceMappingURL=sue.js.map
