@@ -1,7 +1,7 @@
 import Route from './route';
 import { sCustomElementConstructor } from './types';
 import eventBus from './event-bus';
-import auth from '../controllers/auth';
+import authController from '../controllers/auth';
 import { CONST } from './const';
 
 class Router {
@@ -35,10 +35,10 @@ class Router {
 
   start(): void {
     window.onhashchange = (): void => {
-      auth.fillUserState().then(() => this._onRoute(window.location.hash));
+      authController.fillUserState().then(() => this._onRoute(window.location.hash));
     };
 
-    auth.fillUserState().then(() => this._onRoute((window.location.hash)));
+    authController.fillUserState().then(() => this._onRoute((window.location.hash)));
   }
 
   protected _onRoute(pathname: string):void {
@@ -46,11 +46,11 @@ class Router {
     console.log(`pathname: ${pathname}`);
     if (route) {
       console.dir(route);
-      if (route.view.authorisationRequired && !auth.isUserLoggedIn() && pathname !== '/#/404') {
+      if (route.view.authorisationRequired && !authController.isUserLoggedIn() && pathname !== '/#/404') {
         this.go('/#/login');
         return;
       }
-      if (!route.view.authorisationRequired && auth.isUserLoggedIn() && pathname !== '/#/404') {
+      if (!route.view.authorisationRequired && authController.isUserLoggedIn() && pathname !== '/#/404') {
         this.go('/#/chat');
         return;
       }
@@ -65,7 +65,7 @@ class Router {
     }
     if (pathname.match(/^[#/]*$/)) {
       console.log('matcher /#/');
-      this.go('/#/chat');
+      this.go('/#/login');
       return;
     }
     if (pathname !== '/#/404') {

@@ -2,10 +2,9 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
+import toaster from "../../lib/toaster.js";
 import { formDataToObject } from "../../lib/utils.js";
-import UserApi from "../../api/user.js";
-const userApi = new UserApi();
+import userController from "../../controllers/user.js";
 const password = sue({
     name: 's-app-password-modal',
     template,
@@ -31,29 +30,22 @@ const password = sue({
                 throw new Error(`form '${formName}' is not exist`);
             }
             if (!this.methods.formIsValid(formName)) { // validate
-                toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+                toaster.bakeError('form is not valid');
                 return;
             }
             if (this.data.newPassword !== this.data.newPasswordAgain) {
-                toaster.toast('Error: passwords is not match', ToasterMessageTypes.error);
+                toaster.bakeError('passwords is not match');
                 return;
             }
             const formData = new FormData(form);
             const res = formDataToObject(formData);
-            res.display_name = res.first_name;
-            userApi.changePassword(res)
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
-                toaster.toast('Password saved successfully', ToasterMessageTypes.info);
+            userController.changePassword(res)
+                .then(() => {
+                toaster.toast('Password saved successfully');
                 this.data.oldPassword = '';
                 this.data.newPassword = '';
                 this.data.newPasswordAgain = '';
                 window.router.back();
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
             });
         },
     },

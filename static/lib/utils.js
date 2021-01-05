@@ -99,11 +99,11 @@ export function cloneDeep(obj) {
 export function createWindowListeners() {
     window.ondragstart = () => {
         const trash = document.getElementsByClassName('s-trash')[0];
+        trash.parentElement.classList.add('mpy_trash');
         setTimeout(() => {
             trash.innerText = 'delete';
             trash.parentElement.classList.add('mpy_trash__red');
         }, 250);
-        trash.parentElement.classList.add('mpy_trash');
     };
     window.ondragend = () => {
         const trash = document.getElementsByClassName('s-trash')[0];

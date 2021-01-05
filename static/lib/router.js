@@ -1,6 +1,6 @@
 import Route from "./route.js";
 import eventBus from "./event-bus.js";
-import auth from "../controllers/auth.js";
+import authController from "../controllers/auth.js";
 import { CONST } from "./const.js";
 class Router {
     constructor(root) {
@@ -21,20 +21,20 @@ class Router {
     }
     start() {
         window.onhashchange = () => {
-            auth.fillUserState().then(() => this._onRoute(window.location.hash));
+            authController.fillUserState().then(() => this._onRoute(window.location.hash));
         };
-        auth.fillUserState().then(() => this._onRoute((window.location.hash)));
+        authController.fillUserState().then(() => this._onRoute((window.location.hash)));
     }
     _onRoute(pathname) {
         const route = this.getRoute(pathname);
         console.log(`pathname: ${pathname}`);
         if (route) {
             console.dir(route);
-            if (route.view.authorisationRequired && !auth.isUserLoggedIn() && pathname !== '/#/404') {
+            if (route.view.authorisationRequired && !authController.isUserLoggedIn() && pathname !== '/#/404') {
                 this.go('/#/login');
                 return;
             }
-            if (!route.view.authorisationRequired && auth.isUserLoggedIn() && pathname !== '/#/404') {
+            if (!route.view.authorisationRequired && authController.isUserLoggedIn() && pathname !== '/#/404') {
                 this.go('/#/chat');
                 return;
             }
@@ -49,7 +49,7 @@ class Router {
         }
         if (pathname.match(/^[#/]*$/)) {
             console.log('matcher /#/');
-            this.go('/#/chat');
+            this.go('/#/login');
             return;
         }
         if (pathname !== '/#/404') {

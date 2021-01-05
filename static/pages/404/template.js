@@ -6,7 +6,7 @@ export default `
           404
         </div>
         <div class="mpy_dialog_content mpy_lightgrey">
-          <div class="mpy_text_input_wrapper">
+          <div class="mpy_text_input_wrapper" style="padding: 20px 40px;">
             <p>
               Page not found.
             </p>

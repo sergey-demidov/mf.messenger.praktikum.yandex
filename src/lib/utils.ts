@@ -124,11 +124,11 @@ export function cloneDeep(obj: unknown): unknown {
 export function createWindowListeners(): void {
   window.ondragstart = () => {
     const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
+    (trash.parentElement as HTMLElement).classList.add('mpy_trash');
     setTimeout(() => {
       trash.innerText = 'delete';
       (trash.parentElement as HTMLElement).classList.add('mpy_trash__red');
     }, 250);
-    (trash.parentElement as HTMLElement).classList.add('mpy_trash');
   };
 
   window.ondragend = () => {

@@ -3,14 +3,13 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import sUser from "../../components/user.js";
-import { formDataToObject, isJsonString } from "../../lib/utils.js";
-import AuthApi from "../../api/auth.js";
-import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
-import UserApi from "../../api/user.js";
+import { formDataToObject } from "../../lib/utils.js";
+import toaster from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
-import { backendUrl, CONST } from "../../lib/const.js";
-const auth = new AuthApi();
-const userApi = new UserApi();
+import { CONST } from "../../lib/const.js";
+import userController from "../../controllers/user.js";
+import authController from "../../controllers/auth.js";
+import store from "../../lib/store.js";
 const profile = sue({
     name: 's-app-profile',
     template,
@@ -40,36 +39,23 @@ const profile = sue({
                 throw new Error(`form '${formName}' is not exist`);
             }
             if (!this.methods.formIsValid(formName)) { // validate
-                toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+                toaster.bakeError('form is not valid');
                 return;
             }
             const formData = new FormData(form);
             const res = formDataToObject(formData);
             res.display_name = res.first_name;
-            userApi.saveProfile(res)
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
-                toaster.toast('Profile saved successfully', ToasterMessageTypes.info);
-                eventBus.emit('userDataChange');
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
+            userController.saveProfile(res)
+                .then(() => {
+                toaster.toast('Profile saved successfully');
             });
             const avatar = formData.get('avatar');
             if (!avatar || !avatar.size) {
                 return;
             }
-            userApi.saveProfileAvatar(formData)
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
-                toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
+            userController.saveProfileAvatar(formData)
+                .then(() => {
+                toaster.toast('Avatar saved successfully');
             });
             const fileInput = document.getElementById('avatarInput');
             if (fileInput)
@@ -102,29 +88,9 @@ const profile = sue({
         fillForm() {
             if (!this.isVisible())
                 return;
-            auth.getUser()
-                .then((response) => {
-                if (response.status === 200 && isJsonString(response.response)) {
-                    return JSON.parse(response.response);
-                }
-                throw new Error('unauthorized');
-            })
-                .then((u) => {
-                const user = u;
-                if (!user.avatar) {
-                    user.avatar = this.data.emptyAvatar;
-                }
-                else {
-                    user.avatar = backendUrl + user.avatar;
-                }
-                Object.assign(this.data, user);
-                eventBus.emit(CONST.userDataChange);
-                const fileInput = document.getElementById('avatarInput');
-                if (fileInput)
-                    fileInput.value = '';
-            }).catch((error) => {
-                toaster.bakeError(error);
-            });
+            if (authController.isUserLoggedIn()) {
+                Object.assign(this.data, store.state.currentUser);
+            }
         },
     },
     created() {

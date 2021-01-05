@@ -3,12 +3,11 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
-import toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import toaster from '../../lib/toaster';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
-import UserApi from '../../api/user';
+import userController from '../../controllers/user';
 
-const userApi = new UserApi();
 const password = sue({
   name: 's-app-password-modal',
   template,
@@ -34,29 +33,22 @@ const password = sue({
         throw new Error(`form '${formName}' is not exist`);
       }
       if (!this.methods.formIsValid(formName)) { // validate
-        toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+        toaster.bakeError('form is not valid');
         return;
       }
       if (this.data.newPassword !== this.data.newPasswordAgain) {
-        toaster.toast('Error: passwords is not match', ToasterMessageTypes.error);
+        toaster.bakeError('passwords is not match');
         return;
       }
       const formData = new FormData(form);
       const res = formDataToObject(formData);
-      res.display_name = res.first_name;
-      userApi.changePassword(res as HttpDataType)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.response);
-          }
-          toaster.toast('Password saved successfully', ToasterMessageTypes.info);
+      userController.changePassword(res as HttpDataType)
+        .then(() => {
+          toaster.toast('Password saved successfully');
           this.data.oldPassword = '';
           this.data.newPassword = '';
           this.data.newPasswordAgain = '';
           window.router.back();
-        })
-        .catch((error) => {
-          toaster.bakeError(error);
         });
     },
   },

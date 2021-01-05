@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     .use('/#/chat/create', chatCreate)
     .use('/#/chat/edit', chatEdit)
     .use('/#/chat/adduser', addUser)
-
     .use('/#/404', error404)
     .start();
 });

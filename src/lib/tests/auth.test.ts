@@ -2,7 +2,7 @@ import {
   expect, describe, test, beforeAll,
 } from '@jest/globals';
 
-import auth from '../../controllers/auth';
+import authController from '../../controllers/auth';
 import eventBus from '../event-bus';
 import mocks from './mock-utils';
 import { CONST } from '../const';
@@ -14,22 +14,22 @@ describe('test auth module', () => {
   });
 
   test('is defined', () => {
-    expect(auth).toBeDefined();
+    expect(authController).toBeDefined();
   });
 
   test('authentication', async () => {
-    expect(auth.isUserLoggedIn()).toBeFalsy();
+    expect(authController.isUserLoggedIn()).toBeFalsy();
 
     mocks.fetchXmlHttp(401, {});
-    expect(await auth.fillUserState()).toBeFalsy();
+    expect(await authController.fillUserState()).toBeFalsy();
 
     mocks.fetchXmlHttp(200, mocks.apiUserResponse);
-    expect(await auth.fillUserState()).toBeTruthy();
-    expect(await auth.fillUserState()).toBeTruthy();
+    expect(await authController.fillUserState()).toBeTruthy();
+    expect(await authController.fillUserState()).toBeTruthy();
 
-    expect(auth.isUserLoggedIn()).toBeTruthy();
+    expect(authController.isUserLoggedIn()).toBeTruthy();
 
-    auth.clearUserState();
-    expect(auth.isUserLoggedIn()).toBeFalsy();
+    authController.clearUserState();
+    expect(authController.isUserLoggedIn()).toBeFalsy();
   });
 });

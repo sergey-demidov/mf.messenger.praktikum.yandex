@@ -21,7 +21,7 @@ export default `
               label="new password"
               :model="newPassword"
               type="password"
-              :s-validate="concat('min_8 match:', newPasswordAgain)">
+              s-validate="min_8">
             </s-input>
             <s-input
               name="newPasswordAgain"
