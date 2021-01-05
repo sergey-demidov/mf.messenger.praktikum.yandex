@@ -717,8 +717,7 @@ input:invalid {
 
 .mpy_trash {
   -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-  cursor: url(http://ssl.gstatic.com/s2/contacts/images/icons/trash.png), grab !important; }
+  transform: scaleX(-1); }
 
 .mpy_trash__red {
   background-color: red;
