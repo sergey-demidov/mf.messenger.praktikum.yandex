@@ -34,7 +34,8 @@ export default class Toaster {
     }
     bakeError(error, toast = true) {
         // eslint-disable-next-line no-console
-        // console.dir(error);
+        console.dir(error);
+        console.trace();
         let message = '';
         if (!error) {
             message = 'Error: Something wrong';

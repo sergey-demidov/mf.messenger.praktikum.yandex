@@ -6,11 +6,11 @@ import template from './template';
 import { formDataToObject, isJsonString } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
-import AuthAPI from '../../api/auth';
+import AuthApi from '../../api/auth';
 import auth from '../../controllers/auth';
 import { backendUrl } from '../../lib/const';
 
-const authAPI = new AuthAPI();
+const authApi = new AuthApi();
 const toaster = new Toaster();
 
 const login = sue({
@@ -28,7 +28,7 @@ const login = sue({
       return (form as HTMLFormElement).checkValidity();
     },
     fillUser(this: sApp) {
-      authAPI.getUser()
+      authApi.getUser()
         .then((response) => {
           if (response.status === 200 && isJsonString(response.response)) {
             return JSON.parse(response.response);
@@ -52,7 +52,7 @@ const login = sue({
       if (this.methods.formIsValid(formName)) { // validate
         const formData = new FormData(form as HTMLFormElement);
         const res = formDataToObject(formData);
-        authAPI.signIn(res as HttpDataType)
+        authApi.signIn(res as HttpDataType)
           .then((response) => {
             this.data.password = '';
             if (response.status !== 200) {

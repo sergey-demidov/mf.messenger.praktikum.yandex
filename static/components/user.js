@@ -3,10 +3,10 @@ import Toaster, { ToasterMessageTypes } from "../lib/toaster.js";
 import ICONS from "../lib/icons.js";
 import auth from "../controllers/auth.js";
 import store from "../lib/store.js";
-import AuthAPI from "../api/auth.js";
+import AuthApi from "../api/auth.js";
 import { CONST } from "../lib/const.js";
 const toaster = new Toaster();
-const authApi = new AuthAPI();
+const authApi = new AuthApi();
 class sUser extends HTMLElement {
     constructor() {
         super();

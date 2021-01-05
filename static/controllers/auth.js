@@ -1,9 +1,9 @@
 import eventBus from "../lib/event-bus.js";
 import store from "../lib/store.js";
 import { isJsonString } from "../lib/utils.js";
-import AuthAPI from "../api/auth.js";
+import AuthApi from "../api/auth.js";
 import { backendUrl, CONST } from "../lib/const.js";
-const authAPI = new AuthAPI();
+const authApi = new AuthApi();
 class Auth {
     constructor() {
         this.eventBus = eventBus;
@@ -19,7 +19,7 @@ class Auth {
         if (store.state.currentUser.login) {
             return Promise.resolve(true);
         }
-        return authAPI.getUser()
+        return authApi.getUser()
             .then((response) => {
             if (response.status === 200 && isJsonString(response.response)) {
                 return JSON.parse(response.response);

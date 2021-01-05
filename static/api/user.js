@@ -4,7 +4,7 @@ import { ApiBaseUrl } from "../lib/const.js";
 const headers = {
     'Content-type': 'application/json',
 };
-class UserAPI {
+class UserApi {
     constructor() {
         this.fetch = new HttpTransport(ApiBaseUrl, '/user');
     }
@@ -21,5 +21,5 @@ class UserAPI {
         return this.fetch.post('/search', { data, headers });
     }
 }
-export default UserAPI;
+export default UserApi;
 //# sourceMappingURL=user.js.map

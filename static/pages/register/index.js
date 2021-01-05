@@ -3,9 +3,9 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
-import AuthAPI from "../../api/auth.js";
+import AuthApi from "../../api/auth.js";
 import { formDataToObject } from "../../lib/utils.js";
-const auth = new AuthAPI();
+const auth = new AuthApi();
 const toaster = new Toaster();
 const register = sue({
     name: 's-app-register',

@@ -58,10 +58,10 @@ describe('test toaster', () => {
     test('processes Error instance', () => {
       expect(toaster.bakeError(new Error('ErrorMessage'), false)).toEqual('Error: ErrorMessage');
     });
-    test('processes API responses', () => {
+    test('processes Api responses', () => {
       expect(toaster.bakeError(JSON.stringify({ reason: 'reason' }), false)).toEqual('reason');
     });
-    test('processes API Errors', () => {
+    test('processes Api Errors', () => {
       expect(toaster.bakeError(new Error(JSON.stringify({ reason: 'reason' })), false)).toEqual('reason');
     });
     test('tries to convert any object to string', () => {

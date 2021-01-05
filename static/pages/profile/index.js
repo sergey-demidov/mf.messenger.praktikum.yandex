@@ -4,13 +4,13 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import sUser from "../../components/user.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
-import AuthAPI from "../../api/auth.js";
+import AuthApi from "../../api/auth.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
-import UserAPI from "../../api/user.js";
+import UserApi from "../../api/user.js";
 import eventBus from "../../lib/event-bus.js";
 import { backendUrl, CONST } from "../../lib/const.js";
-const auth = new AuthAPI();
-const userAPI = new UserAPI();
+const auth = new AuthApi();
+const userApi = new UserApi();
 const toaster = new Toaster();
 const profile = sue({
     name: 's-app-profile',
@@ -47,7 +47,7 @@ const profile = sue({
             const formData = new FormData(form);
             const res = formDataToObject(formData);
             res.display_name = res.first_name;
-            userAPI.saveProfile(res)
+            userApi.saveProfile(res)
                 .then((response) => {
                 if (response.status !== 200) {
                     throw new Error(response.response);
@@ -62,7 +62,7 @@ const profile = sue({
             if (!avatar || !avatar.size) {
                 return;
             }
-            userAPI.saveProfileAvatar(formData)
+            userApi.saveProfileAvatar(formData)
                 .then((response) => {
                 if (response.status !== 200) {
                     throw new Error(response.response);

@@ -5,11 +5,10 @@ import sButton from '../../components/button';
 import template from './template';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
-import ChatsAPI from '../../api/chats';
 import store from '../../lib/store';
 import { backendUrl, CONST } from '../../lib/const';
+import chatsController from '../../controllers/chats';
 
-const chatsAPI = new ChatsAPI();
 const toaster = new Toaster();
 
 const chatEdit = sue({
@@ -46,18 +45,10 @@ const chatEdit = sue({
       return !!(avatar && (avatar as File).size);
     },
     deleteChat(this: sApp):void {
-      chatsAPI.deleteChat({ chatId: <number> this.data.id })
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.response);
-          }
-          store.state.currentMember.id = 0;
-          store.state.currentChat.id = 0;
+      chatsController.deleteChat(<number> this.data.id)
+        .then(() => {
           toaster.toast(`Chat ${this.data.title} deleted successfully`, ToasterMessageTypes.info);
           window.router.go('/#/chat');
-        })
-        .catch((error) => {
-          toaster.bakeError(error);
         });
     },
     submitForm(this: sApp, formName: string): void {
@@ -69,18 +60,11 @@ const chatEdit = sue({
       if (!this.methods.isAvatarChanged(formName)) {
         return;
       }
-      chatsAPI.saveChatAvatar(formData)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.response);
-          }
-          toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
-        })
-        .catch((error) => {
-          toaster.bakeError(error);
+      chatsController.saveChatAvatar(formData)
+        .then(() => {
+          const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
+          if (fileInput) fileInput.value = '';
         });
-      const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
-      if (fileInput) fileInput.value = '';
     },
     // Превью аватара с обработкой ошибок
     loadImage(this: sApp): void {

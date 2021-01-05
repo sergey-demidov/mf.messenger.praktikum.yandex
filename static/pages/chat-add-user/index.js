@@ -2,16 +2,11 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import Toaster from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
-import ChatsAPI from "../../api/chats.js";
 import store from "../../lib/store.js";
-import { isJsonString } from "../../lib/utils.js";
-import UserAPI from "../../api/user.js";
 import { CONST } from "../../lib/const.js";
-const chatsAPI = new ChatsAPI();
-const toaster = new Toaster();
-const userApi = new UserAPI();
+import userController from "../../controllers/user.js";
+import chatsController from "../../controllers/chats.js";
 const addUser = sue({
     name: 's-app-chat-add-user-modal',
     template,
@@ -41,25 +36,16 @@ const addUser = sue({
             if (!form) {
                 throw new Error(`form '${formName}' is not exist`);
             }
-            chatsAPI.addUsers({
-                users: [
-                    this.data.userId,
-                ],
-                chatId: store.state.currentChat.id,
-            })
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
+            chatsController.addUser(this.data.userId)
+                .then(() => {
                 this.data.userId = 0;
                 this.data.userName = '';
                 this.data.allowInvite = false;
                 eventBus.emit(CONST.chatChange);
                 window.router.go('/#/chat');
             })
-                .catch((error) => {
+                .catch(() => {
                 this.data.allowInvite = false;
-                toaster.bakeError(error);
             });
         },
         checkChat() {
@@ -81,13 +67,7 @@ const addUser = sue({
                 this.data.possibleNames = [];
                 return;
             }
-            userApi.findUsers({ login: this.data.userName })
-                .then((response) => {
-                if (response.status === 200 && isJsonString(response.response)) {
-                    return JSON.parse(response.response);
-                }
-                throw new Error(response.response);
-            })
+            userController.findUsers(this.data.userName)
                 .then((users) => {
                 const res = [];
                 if (!Array.isArray(users))
@@ -104,9 +84,6 @@ const addUser = sue({
                     this.data.allowInvite = false;
                     this.data.possibleNames = res;
                 }
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
             });
         },
     },

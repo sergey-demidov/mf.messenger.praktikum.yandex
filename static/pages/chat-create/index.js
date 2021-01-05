@@ -4,9 +4,8 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import { formDataToObject } from "../../lib/utils.js";
-import ChatsAPI from "../../api/chats.js";
+import chatsController from "../../controllers/chats.js";
 const toaster = new Toaster();
-const chatsApi = new ChatsAPI();
 const createChat = sue({
     name: 's-app-chat-create-modal',
     authorisationRequired: true,
@@ -33,17 +32,11 @@ const createChat = sue({
             const formData = new FormData(form);
             const res = formDataToObject(formData);
             res.title = res.title.trim();
-            chatsApi.createChat(res)
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
+            chatsController.createChat(res)
+                .then(() => {
                 toaster.toast(`Chat ${this.data.title} created successfully`, ToasterMessageTypes.info);
                 this.data.title = '';
                 window.router.back();
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
             });
         },
     },

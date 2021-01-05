@@ -6,7 +6,7 @@ const headers = {
   'Content-type': 'application/json',
 };
 
-class ChatsAPI {
+class ChatsApi {
   fetch: HttpTransport;
 
   constructor() {
@@ -42,4 +42,4 @@ class ChatsAPI {
   }
 }
 
-export default ChatsAPI;
+export default ChatsApi;

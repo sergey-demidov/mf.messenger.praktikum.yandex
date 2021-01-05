@@ -4,10 +4,9 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import eventBus from "../../lib/event-bus.js";
-import ChatsAPI from "../../api/chats.js";
 import store from "../../lib/store.js";
 import { backendUrl, CONST } from "../../lib/const.js";
-const chatsAPI = new ChatsAPI();
+import chatsController from "../../controllers/chats.js";
 const toaster = new Toaster();
 const chatEdit = sue({
     name: 's-app-chat-edit-modal',
@@ -43,18 +42,10 @@ const chatEdit = sue({
             return !!(avatar && avatar.size);
         },
         deleteChat() {
-            chatsAPI.deleteChat({ chatId: this.data.id })
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
-                store.state.currentMember.id = 0;
-                store.state.currentChat.id = 0;
+            chatsController.deleteChat(this.data.id)
+                .then(() => {
                 toaster.toast(`Chat ${this.data.title} deleted successfully`, ToasterMessageTypes.info);
                 window.router.go('/#/chat');
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
             });
         },
         submitForm(formName) {
@@ -66,19 +57,12 @@ const chatEdit = sue({
             if (!this.methods.isAvatarChanged(formName)) {
                 return;
             }
-            chatsAPI.saveChatAvatar(formData)
-                .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(response.response);
-                }
-                toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
-            })
-                .catch((error) => {
-                toaster.bakeError(error);
+            chatsController.saveChatAvatar(formData)
+                .then(() => {
+                const fileInput = document.getElementById('avatarInput');
+                if (fileInput)
+                    fileInput.value = '';
             });
-            const fileInput = document.getElementById('avatarInput');
-            if (fileInput)
-                fileInput.value = '';
         },
         // Превью аватара с обработкой ошибок
         loadImage() {
