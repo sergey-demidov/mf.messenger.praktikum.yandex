@@ -122,7 +122,8 @@ export function cloneDeep(obj: unknown): unknown {
 }
 
 export function createWindowListeners(): void {
-  window.ondragstart = () => {
+  window.ondragstart = (e: DragEvent) => {
+    (e.dataTransfer as DataTransfer).effectAllowed = 'copyMove';
     const trash = <HTMLElement>document.getElementsByClassName('s-trash')[0];
     (trash.parentElement as HTMLElement).classList.add('mpy_trash');
     setTimeout(() => {

@@ -97,7 +97,8 @@ export function cloneDeep(obj) {
     return clone(obj, (Array.isArray(obj) ? [] : {}));
 }
 export function createWindowListeners() {
-    window.ondragstart = () => {
+    window.ondragstart = (e) => {
+        e.dataTransfer.effectAllowed = 'copyMove';
         const trash = document.getElementsByClassName('s-trash')[0];
         trash.parentElement.classList.add('mpy_trash');
         setTimeout(() => {
