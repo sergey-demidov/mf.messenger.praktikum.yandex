@@ -12,7 +12,12 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   const emptyInit: sInit = {
     authorisationRequired: false,
     name: '',
-    template: '',
+    template: `
+  <div class="mpy_overlay">
+    <div class="mpy_container">
+      loading...
+    </div>
+  </div>`,
     data: () => ({}),
     components: {},
     methods: {},
@@ -182,7 +187,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       return (parsed.not ? !res : res).toString();
     }
 
-    protected isVisible():boolean {
+    protected isVisible(): boolean {
       const style = window.getComputedStyle(this);
       return (style.visibility === CONST.visible);
     }
@@ -221,7 +226,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           clone.removeAttribute('s-for');
           clone.removeAttribute('s-key');
           template.content.appendChild(clone);
-          element.innerHTML = '';
+          // element.innerHTML = '';
           document.body.appendChild(template);
         }
         // TODO перерисовывает список полностью, а надо бы использовать существующие элементы
@@ -314,6 +319,9 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     connectedCallback() {
       this.innerHTML = init.template;
       this.connected = true;
+      this.style.display = CONST.block;
+      this.style.visibility = CONST.hidden;
+
       this.init.mounted();
     }
 

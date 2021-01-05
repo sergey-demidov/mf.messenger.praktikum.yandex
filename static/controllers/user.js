@@ -27,6 +27,43 @@ class UserController {
             toaster.bakeError(error);
         });
     }
+    changePassword(res) {
+        return userApi.changePassword(res)
+            .then((response) => {
+            if (response.status === 200) {
+                return response;
+            }
+            throw new Error(response.response);
+        })
+            .catch((error) => {
+            toaster.bakeError(error);
+        });
+    }
+    saveProfile(res) {
+        return userApi.saveProfile(res)
+            .then((response) => {
+            if (response.status === 200) {
+                eventBus.emit('userDataChange');
+                return;
+            }
+            throw new Error(response.response);
+        })
+            .catch((error) => {
+            toaster.bakeError(error);
+        });
+    }
+    saveProfileAvatar(formData) {
+        return userApi.saveProfileAvatar(formData)
+            .then((response) => {
+            if (response.status === 200) {
+                return response;
+            }
+            throw new Error(response.response);
+        })
+            .catch((error) => {
+            toaster.bakeError(error);
+        });
+    }
 }
 const userController = new UserController();
 export default userController;

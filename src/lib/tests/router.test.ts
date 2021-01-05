@@ -5,7 +5,7 @@ import {
 import Router from '../router';
 import sue from '../sue';
 import eventBus from '../event-bus';
-import auth from '../../controllers/auth';
+import authController from '../../controllers/auth';
 import mocks from './mock-utils';
 import { CONST } from '../const';
 
@@ -19,7 +19,7 @@ function fakeCallback():boolean {
   return true;
 }
 
-const fillUserStateBackup = auth.fillUserState;
+const fillUserStateBackup = authController.fillUserState;
 const createRouter = () => {
   const router = new Router(root);
   router
@@ -34,13 +34,13 @@ describe('test Router class', () => {
   beforeAll(() => {
     eventBus.on(CONST.hashchange, fakeCallback);
     eventBus.on(CONST.update, fakeCallback);
-    auth.fillUserState = () => Promise.resolve(true);
+    authController.fillUserState = () => Promise.resolve(true);
   });
 
   afterAll(() => {
     eventBus.off(CONST.hashchange, fakeCallback);
     eventBus.off(CONST.update, fakeCallback);
-    auth.fillUserState = fillUserStateBackup;
+    authController.fillUserState = fillUserStateBackup;
   });
 
   test('must be defined', () => {
@@ -49,7 +49,7 @@ describe('test Router class', () => {
 
   test('an authorized user immediately gets a chat page', async () => {
     const router = new Router(root);
-    auth.isUserLoggedIn = () => true;
+    authController.isUserLoggedIn = () => true;
 
     await router
       .use('/#/chat', chatPage)
@@ -61,7 +61,7 @@ describe('test Router class', () => {
 
   test('Unauthorized user immediately gets a login page', async () => {
     const router = new Router(root);
-    auth.isUserLoggedIn = () => false;
+    authController.isUserLoggedIn = () => false;
 
     await router
       .use('/#/chat', chatPage)
@@ -73,14 +73,14 @@ describe('test Router class', () => {
 
   test('Unauthorized user navigates to a secure page but receives a login page', async () => {
     const router = createRouter();
-    auth.isUserLoggedIn = () => false;
+    authController.isUserLoggedIn = () => false;
     await router.go('/#/chat');
     expect(window.document.location.hash).toEqual('#/login');
   });
 
   test('Authorized user navigates to login page but receives a chat page', async () => {
     const router = createRouter();
-    auth.isUserLoggedIn = () => true;
+    authController.isUserLoggedIn = () => true;
     await router.go('/#/login');
     expect(window.document.location.hash).toEqual('#/chat');
   });
@@ -93,7 +93,7 @@ describe('test Router class', () => {
 
   test('router back() and forward()', async () => {
     const router = createRouter();
-    auth.isUserLoggedIn = () => true;
+    authController.isUserLoggedIn = () => true;
 
     router.go('/#/chat');
     router.go('/#/profile');

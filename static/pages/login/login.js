@@ -2,12 +2,9 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import { formDataToObject, isJsonString } from "../../lib/utils.js";
+import { formDataToObject } from "../../lib/utils.js";
 import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
-import AuthApi from "../../api/auth.js";
-import auth from "../../controllers/auth.js";
-import { backendUrl } from "../../lib/const.js";
-const authApi = new AuthApi();
+import authController from "../../controllers/auth.js";
 const login = sue({
     name: 's-app-login',
     template,
@@ -22,54 +19,22 @@ const login = sue({
             const form = document.forms.namedItem(formName);
             return form.checkValidity();
         },
-        fillUser() {
-            authApi.getUser()
-                .then((response) => {
-                if (response.status === 200 && isJsonString(response.response)) {
-                    return JSON.parse(response.response);
-                }
-                throw new Error('unauthorized');
-            })
-                .then((u) => {
-                const user = u;
-                if (!user.avatar) {
-                    user.avatar = this.data.emptyAvatar;
-                }
-                else {
-                    user.avatar = backendUrl + user.avatar;
-                }
-                auth.fillUserState().then(() => window.router.go('/#/chat'));
-            }).catch((error) => {
-                toaster.bakeError(error);
-            });
-        },
         submitForm(formName) {
             const form = document.forms.namedItem(formName);
-            if (this.methods.formIsValid(formName)) { // validate
-                const formData = new FormData(form);
-                const res = formDataToObject(formData);
-                authApi.signIn(res)
-                    .then((response) => {
-                    this.data.password = '';
-                    if (response.status !== 200) {
-                        throw new Error(response.response);
-                    }
+            if (!this.methods.formIsValid(formName)) { // validate
+                toaster.bakeError('form is not valid');
+                return;
+            }
+            const formData = new FormData(form);
+            const res = formDataToObject(formData);
+            authController.signIn(res)
+                .then((result) => {
+                this.data.password = '';
+                if (result) {
                     toaster.toast('Logged in successfully', ToasterMessageTypes.info);
-                    this.methods.fillUser();
                     window.router.go('/#/chat');
-                })
-                    .catch((error) => {
-                    if (error.message && error.message === 'user already in system') {
-                        window.router.go('/#/chat');
-                    }
-                    else {
-                        toaster.bakeError(error);
-                    }
-                });
-            }
-            else {
-                toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
-            }
+                }
+            });
         },
     },
     components: {

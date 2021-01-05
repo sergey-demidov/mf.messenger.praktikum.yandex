@@ -4,16 +4,15 @@ import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
 import sUser from '../../components/user';
-import { formDataToObject, isJsonString } from '../../lib/utils';
-import AuthApi from '../../api/auth';
+import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
-import toaster, { ToasterMessageTypes } from '../../lib/toaster';
-import UserApi from '../../api/user';
+import toaster from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
-import { backendUrl, CONST } from '../../lib/const';
+import { CONST } from '../../lib/const';
+import userController from '../../controllers/user';
+import authController from '../../controllers/auth';
+import store from '../../lib/store';
 
-const auth = new AuthApi();
-const userApi = new UserApi();
 const profile = sue({
   name: 's-app-profile',
   template,
@@ -43,36 +42,23 @@ const profile = sue({
         throw new Error(`form '${formName}' is not exist`);
       }
       if (!this.methods.formIsValid(formName)) { // validate
-        toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
+        toaster.bakeError('form is not valid');
         return;
       }
       const formData = new FormData(form);
       const res = formDataToObject(formData);
       res.display_name = res.first_name;
-      userApi.saveProfile(res as HttpDataType)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.response);
-          }
-          toaster.toast('Profile saved successfully', ToasterMessageTypes.info);
-          eventBus.emit('userDataChange');
-        })
-        .catch((error) => {
-          toaster.bakeError(error);
+      userController.saveProfile(res as HttpDataType)
+        .then(() => {
+          toaster.toast('Profile saved successfully');
         });
       const avatar = formData.get('avatar');
       if (!avatar || !(avatar as File).size) {
         return;
       }
-      userApi.saveProfileAvatar(formData)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.response);
-          }
-          toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
-        })
-        .catch((error) => {
-          toaster.bakeError(error);
+      userController.saveProfileAvatar(formData)
+        .then(() => {
+          toaster.toast('Avatar saved successfully');
         });
       const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
       if (fileInput) fileInput.value = '';
@@ -104,27 +90,9 @@ const profile = sue({
     },
     fillForm(this: sApp) {
       if (!this.isVisible()) return;
-      auth.getUser()
-        .then((response) => {
-          if (response.status === 200 && isJsonString(response.response)) {
-            return JSON.parse(response.response);
-          }
-          throw new Error('unauthorized');
-        })
-        .then((u) => {
-          const user = u;
-          if (!user.avatar) {
-            user.avatar = this.data.emptyAvatar;
-          } else {
-            user.avatar = backendUrl + user.avatar;
-          }
-          Object.assign(this.data, user);
-          eventBus.emit(CONST.userDataChange);
-          const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
-          if (fileInput) fileInput.value = '';
-        }).catch((error) => {
-          toaster.bakeError(error);
-        });
+      if (authController.isUserLoggedIn()) {
+        Object.assign(this.data, store.state.currentUser);
+      }
     },
   },
   created(this: sApp) {

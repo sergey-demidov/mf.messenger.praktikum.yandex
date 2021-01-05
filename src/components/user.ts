@@ -1,7 +1,7 @@
 import eventBus from '../lib/event-bus';
 import toaster, { ToasterMessageTypes } from '../lib/toaster';
 import ICONS from '../lib/icons';
-import auth from '../controllers/auth';
+import authController from '../controllers/auth';
 import store from '../lib/store';
 import AuthApi from '../api/auth';
 import { CONST } from '../lib/const';
@@ -58,7 +58,7 @@ class sUser extends HTMLElement {
 
   update(): void {
     if (!this.isPresent()) return;
-    auth.fillUserState().then((res) => {
+    authController.fillUserState().then((res) => {
       if (res) this.innerText = <string>store.state.currentUser.login;
     });
   }
@@ -93,7 +93,7 @@ class sUser extends HTMLElement {
   logout(): void {
     authApi.logOut().then((response) => {
       if (response.status === 200) {
-        auth.clearUserState();
+        authController.clearUserState();
         toaster.toast('Successfully exited', ToasterMessageTypes.info);
         setTimeout(() => window.router.go('/#/login'), 0);
       } else {

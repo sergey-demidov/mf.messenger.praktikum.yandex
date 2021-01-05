@@ -5,7 +5,8 @@ import eventBus from '../lib/event-bus';
 // import { backendUrl, CONST } from '../lib/const';
 import UserApi from '../api/user';
 import { isJsonString } from '../lib/utils';
-import toaster from '../lib/toaster';
+import toaster, { ToasterMessageTypes } from '../lib/toaster';
+import { HttpDataType } from '../lib/http-transport';
 
 const userApi = new UserApi();
 
@@ -26,6 +27,46 @@ class UserController {
       .then((response) => {
         if (response.status === 200 && isJsonString(response.response)) {
           return JSON.parse(response.response);
+        }
+        throw new Error(response.response);
+      })
+      .catch((error) => {
+        toaster.bakeError(error);
+      });
+  }
+
+  changePassword(res: HttpDataType) {
+    return userApi.changePassword(res)
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
+        }
+        throw new Error(response.response);
+      })
+      .catch((error) => {
+        toaster.bakeError(error);
+      });
+  }
+
+  saveProfile(res: HttpDataType) {
+    return userApi.saveProfile(res as HttpDataType)
+      .then((response) => {
+        if (response.status === 200) {
+          eventBus.emit('userDataChange');
+          return;
+        }
+        throw new Error(response.response);
+      })
+      .catch((error) => {
+        toaster.bakeError(error);
+      });
+  }
+
+  saveProfileAvatar(formData: FormData) {
+    return userApi.saveProfileAvatar(formData)
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
         }
         throw new Error(response.response);
       })

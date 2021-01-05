@@ -3,19 +3,21 @@ import store from '../lib/store';
 import { isJsonString } from '../lib/utils';
 import AuthApi from '../api/auth';
 import { backendUrl, CONST } from '../lib/const';
+import { HttpDataType } from '../lib/http-transport';
+import toaster from '../lib/toaster';
 
 const authApi = new AuthApi();
 
-class Auth {
+class AuthController {
   eventBus = eventBus
 
-  private static instance: Auth;
+  private static instance: AuthController;
 
   constructor() {
-    if (Auth.instance) {
-      return Auth.instance;
+    if (AuthController.instance) {
+      return AuthController.instance;
     }
-    Auth.instance = this;
+    AuthController.instance = this;
   }
 
   isUserLoggedIn(): boolean {
@@ -39,15 +41,49 @@ class Auth {
         Object.assign(store.state.currentUser, user);
         this.eventBus.emit(CONST.update);
         return true;
-      }).catch(() => false);
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        return false;
+      });
   }
 
   clearUserState(): void {
     store.state.currentUser.login = '';
     store.state.currentUser.id = 0;
   }
+
+  signIn(res: HttpDataType) {
+    return authApi.signIn(res)
+      .then((response) => {
+        if (response.status === 200) {
+          return this.fillUserState();
+        }
+        throw new Error(response.response);
+      })
+      .catch((error) => {
+        if (error.message && error.message === 'user already in system') {
+          window.router.go('/#/chat');
+        } else {
+          toaster.bakeError(error);
+        }
+      });
+  }
+
+  signUp(res: HttpDataType) {
+    return authApi.signUp(res)
+      .then((response) => {
+        if (response.status === 200) {
+          return response;
+        }
+        throw new Error(response.response);
+      })
+      .catch((error) => {
+        toaster.bakeError(error);
+      });
+  }
 }
 
-const auth = new Auth();
+const authController = new AuthController();
 
-export default auth;
+export default authController;
