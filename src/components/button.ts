@@ -2,7 +2,6 @@ import { CONST } from '../lib/const';
 
 class sButton extends HTMLElement {
   get disabled(): boolean {
-    // return this.hasAttribute(CONST.disabled);
     return this.hasAttribute(CONST.disabled);
   }
 
@@ -19,10 +18,6 @@ class sButton extends HTMLElement {
       this.style.pointerEvents = CONST.auto;
     }
   }
-
-  // static get observedAttributes(): string[] {
-  //   return ['disabled'];
-  // }
 
   constructor() {
     super();

@@ -1,7 +1,6 @@
 import { CONST } from "../lib/const.js";
 class sButton extends HTMLElement {
     get disabled() {
-        // return this.hasAttribute(CONST.disabled);
         return this.hasAttribute(CONST.disabled);
     }
     set disabled(val) {
@@ -18,9 +17,6 @@ class sButton extends HTMLElement {
             this.style.pointerEvents = CONST.auto;
         }
     }
-    // static get observedAttributes(): string[] {
-    //   return ['disabled'];
-    // }
     constructor() {
         super();
         if (!this.getAttribute(CONST.class)) {

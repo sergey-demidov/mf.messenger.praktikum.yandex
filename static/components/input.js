@@ -14,7 +14,6 @@ class sInput extends HTMLElement {
         this.eventBus = eventBus;
         this.innerText = '';
         this.validateInstance = new Validate();
-        // eventBus.on(CONST.validate, () => this.validate());
         this.classList.add(css.wrapper);
         this.defaultLabel = this.getAttribute('label') || this.getAttribute('name') || 'label';
         this.labelElement = document.createElement('label');

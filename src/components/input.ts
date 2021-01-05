@@ -30,7 +30,6 @@ class sInput extends HTMLElement {
     super();
     this.innerText = '';
     this.validateInstance = new Validate();
-    // eventBus.on(CONST.validate, () => this.validate());
     this.classList.add(css.wrapper);
 
     this.defaultLabel = this.getAttribute('label') || this.getAttribute('name') || 'label';

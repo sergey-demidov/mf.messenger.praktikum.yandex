@@ -7,7 +7,6 @@ class EventBus {
         EventBus.instance = this;
     }
     on(event, callback) {
-        // console.dir(typeof event);
         if (!this.listeners[event]) {
             this.listeners[event] = [];
         }
