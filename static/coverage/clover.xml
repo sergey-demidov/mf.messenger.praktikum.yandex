@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1609832257116" clover="3.2.0">
-  <project timestamp="1609832257116" name="All files">
-    <metrics statements="555" coveredstatements="393" conditionals="283" coveredconditionals="176" methods="146" coveredmethods="93" elements="984" coveredelements="662" complexity="0" loc="555" ncloc="555" packages="2" files="15" classes="15"/>
+<coverage generated="1609833144923" clover="3.2.0">
+  <project timestamp="1609833144923" name="All files">
+    <metrics statements="553" coveredstatements="391" conditionals="283" coveredconditionals="176" methods="146" coveredmethods="93" elements="982" coveredelements="660" complexity="0" loc="553" ncloc="553" packages="2" files="15" classes="15"/>
     <package name="controllers">
-      <metrics statements="95" coveredstatements="21" conditionals="44" coveredconditionals="7" methods="37" coveredmethods="7"/>
+      <metrics statements="93" coveredstatements="19" conditionals="44" coveredconditionals="7" methods="37" coveredmethods="7"/>
       <file name="auth.ts" path="/home/sergey/projects/yp/mf.messenger.praktikum.yandex/src/controllers/auth.ts">
-        <metrics statements="30" coveredstatements="21" conditionals="12" coveredconditionals="7" methods="11" coveredmethods="7"/>
+        <metrics statements="28" coveredstatements="19" conditionals="12" coveredconditionals="7" methods="11" coveredmethods="7"/>
         <line num="8" count="2" type="stmt"/>
         <line num="11" count="2" type="stmt"/>
         <line num="16" count="2" type="cond" truecount="1" falsecount="1"/>
@@ -23,19 +23,17 @@
         <line num="40" count="1" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="51" count="1" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="54" count="0" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
-        <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="59" count="0" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
+        <line num="63" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="64" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
-        <line num="68" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="69" count="0" type="stmt"/>
-        <line num="71" count="0" type="stmt"/>
-        <line num="76" count="2" type="stmt"/>
+        <line num="71" count="2" type="stmt"/>
       </file>
       <file name="chats.ts" path="/home/sergey/projects/yp/mf.messenger.praktikum.yandex/src/controllers/chats.ts">
         <metrics statements="42" coveredstatements="0" conditionals="20" coveredconditionals="0" methods="17" coveredmethods="0"/>
@@ -130,11 +128,11 @@
         <line num="27" count="1" type="stmt"/>
         <line num="30" count="3" type="stmt"/>
         <line num="31" count="19" type="stmt"/>
-        <line num="36" count="52" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="51" type="cond" truecount="2" falsecount="0"/>
         <line num="38" count="1" type="stmt"/>
         <line num="39" count="1" type="stmt"/>
-        <line num="41" count="51" type="stmt"/>
-        <line num="42" count="258" type="cond" truecount="1" falsecount="1"/>
+        <line num="41" count="50" type="stmt"/>
+        <line num="42" count="257" type="cond" truecount="1" falsecount="1"/>
         <line num="47" count="5" type="stmt"/>
       </file>
       <file name="http-transport.ts" path="/home/sergey/projects/yp/mf.messenger.praktikum.yandex/src/lib/http-transport.ts">
@@ -269,11 +267,11 @@
         <line num="34" count="4" type="stmt"/>
         <line num="37" count="4" type="stmt"/>
         <line num="39" count="6" type="stmt"/>
-        <line num="42" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="42" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="44" count="0" type="stmt"/>
-        <line num="47" count="10" type="stmt"/>
-        <line num="48" count="10" type="stmt"/>
-        <line num="49" count="10" type="stmt"/>
+        <line num="47" count="9" type="stmt"/>
+        <line num="48" count="9" type="stmt"/>
+        <line num="49" count="9" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
         <line num="56" count="4" type="stmt"/>
         <line num="70" count="4" type="stmt"/>
