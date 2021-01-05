@@ -5,14 +5,12 @@ import sButton from '../../components/button';
 import template from './template';
 import { formDataToObject, isJsonString } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
-import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import AuthApi from '../../api/auth';
 import auth from '../../controllers/auth';
 import { backendUrl } from '../../lib/const';
 
 const authApi = new AuthApi();
-const toaster = new Toaster();
-
 const login = sue({
   name: 's-app-login',
   template,

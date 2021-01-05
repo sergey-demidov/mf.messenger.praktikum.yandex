@@ -3,8 +3,7 @@ import store from "../lib/store.js";
 import { isJsonString } from "../lib/utils.js";
 import ChatsApi from "../api/chats.js";
 import { CONST } from "../lib/const.js";
-import Toaster, { ToasterMessageTypes } from "../lib/toaster.js";
-const toaster = new Toaster();
+import toaster, { ToasterMessageTypes } from "../lib/toaster.js";
 const chatsApi = new ChatsApi();
 class ChatsController {
     constructor() {

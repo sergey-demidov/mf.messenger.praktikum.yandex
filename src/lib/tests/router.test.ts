@@ -85,7 +85,7 @@ describe('test Router class', () => {
     expect(window.document.location.hash).toEqual('#/chat');
   });
 
-  test('user navigates to no such page but receives a error 404 page', async () => {
+  test('user navigates to no such page received a error 404 page', async () => {
     const router = createRouter();
     await router.go('/no-such-page');
     expect(window.document.location.hash).toEqual('#/404');

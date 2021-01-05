@@ -5,13 +5,12 @@ import template from "./template.js";
 import sUser from "../../components/user.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
 import AuthApi from "../../api/auth.js";
-import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
+import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import UserApi from "../../api/user.js";
 import eventBus from "../../lib/event-bus.js";
 import { backendUrl, CONST } from "../../lib/const.js";
 const auth = new AuthApi();
 const userApi = new UserApi();
-const toaster = new Toaster();
 const profile = sue({
     name: 's-app-profile',
     template,

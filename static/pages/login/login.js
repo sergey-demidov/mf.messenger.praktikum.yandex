@@ -3,12 +3,11 @@ import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
-import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
+import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import AuthApi from "../../api/auth.js";
 import auth from "../../controllers/auth.js";
 import { backendUrl } from "../../lib/const.js";
 const authApi = new AuthApi();
-const toaster = new Toaster();
 const login = sue({
     name: 's-app-login',
     template,

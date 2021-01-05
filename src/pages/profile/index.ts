@@ -7,15 +7,13 @@ import sUser from '../../components/user';
 import { formDataToObject, isJsonString } from '../../lib/utils';
 import AuthApi from '../../api/auth';
 import { HttpDataType } from '../../lib/http-transport';
-import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import UserApi from '../../api/user';
 import eventBus from '../../lib/event-bus';
 import { backendUrl, CONST } from '../../lib/const';
 
 const auth = new AuthApi();
 const userApi = new UserApi();
-const toaster = new Toaster();
-
 const profile = sue({
   name: 's-app-profile',
   template,

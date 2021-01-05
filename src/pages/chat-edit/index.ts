@@ -3,13 +3,11 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
-import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
 import store from '../../lib/store';
 import { backendUrl, CONST } from '../../lib/const';
 import chatsController from '../../controllers/chats';
-
-const toaster = new Toaster();
 
 const chatEdit = sue({
   name: 's-app-chat-edit-modal',

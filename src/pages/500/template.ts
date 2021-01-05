@@ -20,7 +20,7 @@ export default `
           <s-btn onclick="window.history.go(-1)">
             Back
           </s-btn>
-          <s-btn onclick="window.location = '/';">
+          <s-btn onclick="window.router.go('/');">
             Home
           </s-btn>
         </div>

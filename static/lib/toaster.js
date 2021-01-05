@@ -5,7 +5,7 @@ export const ToasterMessageTypes = Object.freeze({
     error: 'error',
     warn: 'warn',
 });
-export default class Toaster {
+class Toaster {
     constructor() {
         this.timeout = 4000;
         this.wrapper = document.createElement('div');
@@ -33,9 +33,8 @@ export default class Toaster {
         }
     }
     bakeError(error, toast = true) {
-        // eslint-disable-next-line no-console
-        console.dir(error);
-        console.trace();
+        // console.dir(error);
+        // console.trace();
         let message = '';
         if (!error) {
             message = 'Error: Something wrong';
@@ -79,4 +78,6 @@ export default class Toaster {
         return toastElement;
     }
 }
+const toaster = new Toaster();
+export default toaster;
 //# sourceMappingURL=toaster.js.map

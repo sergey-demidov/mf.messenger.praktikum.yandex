@@ -16,10 +16,10 @@ export default `
           </div>
         </div>
         <div class="mpy_dialog_footer mpy_lightgrey">
-          <s-btn onclick="window.history.go(-1)">
+          <s-btn onclick="window.history.go(-2)">
             Back
           </s-btn>
-          <s-btn onclick="window.location = '/';">
+          <s-btn onclick="window.router.go('/');">
             Home
           </s-btn>
         </div>
