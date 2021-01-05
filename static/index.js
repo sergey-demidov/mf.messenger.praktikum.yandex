@@ -9,6 +9,7 @@ import chatCreate from "./pages/chat-create/index.js";
 import chatEdit from "./pages/chat-edit/index.js";
 import addUser from "./pages/chat-add-user/index.js";
 import { createWindowListeners } from "./lib/utils.js";
+window.debug = false;
 const root = document.getElementById('app');
 if (!root)
     throw new Error('Root element does not exist');
