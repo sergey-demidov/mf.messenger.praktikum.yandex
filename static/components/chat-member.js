@@ -24,7 +24,6 @@ class sChatMember extends HTMLElement {
         this.memberTitle = this.getElementsByClassName('mpy_chat_display_nick')[0];
         this.memberAvatar = this.getElementsByClassName('mpy_avatar_preview')[0];
         this.memberWrapper = this.getElementsByClassName('mpy_chat_member_wrapper')[0];
-        // this.memberWrapper.draggable = true;
         this.memberTool = this.getElementsByClassName('mpy_chat_display_tool')[0];
         this.memberSign = this.getElementsByClassName('mpy_chat_member_avatar_sign')[0];
         this.memberWrapper.ondragstart = () => {

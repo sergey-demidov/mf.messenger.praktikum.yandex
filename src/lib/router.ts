@@ -52,8 +52,7 @@ class Router {
         this.go('/#/chat');
         return;
       }
-      // if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
-      if (this.currentRoute && this.currentRoute !== route) {
+      if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
         this.currentRoute.leave();
       }
       this.currentRoute = route;

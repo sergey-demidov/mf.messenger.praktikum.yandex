@@ -15,7 +15,6 @@ class EventBus {
   }
 
   on(event: string, callback: (...args: unknown[]) => void): void {
-    // console.dir(typeof event);
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }

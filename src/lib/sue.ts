@@ -126,7 +126,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
     protected delayedUpdate = () => {
       if (!this.rendering && !this.renderQueue.isEmpty()) {
         // eslint-disable-next-line no-console
-        console.warn(`delayedUpdate: ${this.renderQueue.size} queued`);
+        if (window.debug) console.warn(`delayedUpdate: ${this.renderQueue.size} queued`);
         while (!this.renderQueue.isEmpty()) {
           this.renderQueue.dequeue();
         }
