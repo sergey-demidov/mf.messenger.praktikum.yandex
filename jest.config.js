@@ -1,9 +1,8 @@
 module.exports = {
-  verbose: true,
+  verbose: false,
   collectCoverage: true,
   collectCoverageFrom: [
     'src/lib/*.ts',
-    'src/controllers/*.ts',
     // 'src/*.ts',
   ],
   coverageDirectory: 'static/coverage',

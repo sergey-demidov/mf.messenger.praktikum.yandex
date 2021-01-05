@@ -191,7 +191,6 @@ const sue = (i) => {
                         clone.removeAttribute('s-for');
                         clone.removeAttribute('s-key');
                         template.content.appendChild(clone);
-                        // element.innerHTML = '';
                         document.body.appendChild(template);
                     }
                     // TODO перерисовывает список полностью, а надо бы использовать существующие элементы
@@ -300,8 +299,6 @@ const sue = (i) => {
         connectedCallback() {
             this.innerHTML = init.template;
             this.connected = true;
-            this.style.display = CONST.block;
-            this.style.visibility = CONST.hidden;
             this.init.mounted();
         }
     };
