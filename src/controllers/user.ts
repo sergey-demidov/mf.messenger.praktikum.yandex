@@ -5,9 +5,8 @@ import eventBus from '../lib/event-bus';
 // import { backendUrl, CONST } from '../lib/const';
 import UserApi from '../api/user';
 import { isJsonString } from '../lib/utils';
-import Toaster from '../lib/toaster';
+import toaster from '../lib/toaster';
 
-const toaster = new Toaster();
 const userApi = new UserApi();
 
 class UserController {

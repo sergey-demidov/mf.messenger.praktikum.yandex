@@ -13,7 +13,7 @@ type sToast = {
   id: string
 }
 
-export default class Toaster {
+class Toaster {
   private static instance: Toaster;
 
   timeout = 4000;
@@ -48,9 +48,8 @@ export default class Toaster {
   }
 
   bakeError(error: unknown, toast = true): string {
-    // eslint-disable-next-line no-console
-    console.dir(error);
-    console.trace();
+    // console.dir(error);
+    // console.trace();
     let message = '';
     if (!error) {
       message = 'Error: Something wrong';
@@ -94,3 +93,5 @@ export default class Toaster {
     return toastElement;
   }
 }
+const toaster = new Toaster();
+export default toaster;

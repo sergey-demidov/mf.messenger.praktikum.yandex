@@ -21,6 +21,7 @@ if (!root) throw new Error('Root element does not exist');
 
 // window нужен для использования в шаблонах
 window.router = new Router(root);
+
 createWindowListeners();
 
 document.addEventListener('DOMContentLoaded', () => {

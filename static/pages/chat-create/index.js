@@ -2,10 +2,9 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
+import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import { formDataToObject } from "../../lib/utils.js";
 import chatsController from "../../controllers/chats.js";
-const toaster = new Toaster();
 const createChat = sue({
     name: 's-app-chat-create-modal',
     authorisationRequired: true,

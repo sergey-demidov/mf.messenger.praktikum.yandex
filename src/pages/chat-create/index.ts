@@ -3,12 +3,10 @@ import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
-import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
+import toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 import chatsController from '../../controllers/chats';
-
-const toaster = new Toaster();
 
 const createChat = sue({
   name: 's-app-chat-create-modal',

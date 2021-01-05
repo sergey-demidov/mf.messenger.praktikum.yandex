@@ -3,10 +3,9 @@ import store from '../lib/store';
 import { isJsonString } from '../lib/utils';
 import ChatsApi from '../api/chats';
 import { CONST } from '../lib/const';
-import Toaster, { ToasterMessageTypes } from '../lib/toaster';
+import toaster, { ToasterMessageTypes } from '../lib/toaster';
 import { HttpDataType } from '../lib/http-transport';
 
-const toaster = new Toaster();
 const chatsApi = new ChatsApi();
 
 class ChatsController {

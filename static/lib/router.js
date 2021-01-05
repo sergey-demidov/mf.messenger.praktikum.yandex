@@ -27,12 +27,14 @@ class Router {
     }
     _onRoute(pathname) {
         const route = this.getRoute(pathname);
+        console.log(`pathname: ${pathname}`);
         if (route) {
-            if (route.view.authorisationRequired && !auth.isUserLoggedIn()) {
+            console.dir(route);
+            if (route.view.authorisationRequired && !auth.isUserLoggedIn() && pathname !== '/#/404') {
                 this.go('/#/login');
                 return;
             }
-            if (!route.view.authorisationRequired && auth.isUserLoggedIn()) {
+            if (!route.view.authorisationRequired && auth.isUserLoggedIn() && pathname !== '/#/404') {
                 this.go('/#/chat');
                 return;
             }
@@ -45,7 +47,8 @@ class Router {
             eventBus.emit(CONST.hashchange);
             return;
         }
-        if (pathname.match(/^[/#]?$/)) {
+        if (pathname.match(/^[#/]*$/)) {
+            console.log('matcher /#/');
             this.go('/#/chat');
             return;
         }

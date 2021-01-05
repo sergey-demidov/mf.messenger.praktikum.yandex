@@ -2,11 +2,10 @@ import sue from "../../lib/sue.js";
 import sInput from "../../components/input.js";
 import sButton from "../../components/button.js";
 import template from "./template.js";
-import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
+import toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import { formDataToObject } from "../../lib/utils.js";
 import UserApi from "../../api/user.js";
 const userApi = new UserApi();
-const toaster = new Toaster();
 const password = sue({
     name: 's-app-password-modal',
     template,
