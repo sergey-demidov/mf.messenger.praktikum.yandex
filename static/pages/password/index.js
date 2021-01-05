@@ -4,8 +4,8 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
 import { formDataToObject } from "../../lib/utils.js";
-import UserAPI from "../../api/user.js";
-const userAPI = new UserAPI();
+import UserApi from "../../api/user.js";
+const userApi = new UserApi();
 const toaster = new Toaster();
 const password = sue({
     name: 's-app-password-modal',
@@ -42,7 +42,7 @@ const password = sue({
             const formData = new FormData(form);
             const res = formDataToObject(formData);
             res.display_name = res.first_name;
-            userAPI.changePassword(res)
+            userApi.changePassword(res)
                 .then((response) => {
                 if (response.status !== 200) {
                     throw new Error(response.response);

@@ -4,7 +4,7 @@ import { ApiBaseUrl } from "../lib/const.js";
 const headers = {
     'Content-type': 'application/json',
 };
-class AuthAPI {
+class AuthApi {
     constructor() {
         this.fetch = new HttpTransport(ApiBaseUrl, '/auth');
     }
@@ -21,5 +21,5 @@ class AuthAPI {
         return this.fetch.post('/logout', { headers });
     }
 }
-export default AuthAPI;
+export default AuthApi;
 //# sourceMappingURL=auth.js.map

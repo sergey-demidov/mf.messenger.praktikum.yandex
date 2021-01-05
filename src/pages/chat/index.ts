@@ -5,16 +5,11 @@ import template from './template';
 import sUser from '../../components/user';
 import sChatDisplay from '../../components/chat-display';
 import sChatMember from '../../components/chat-member';
-import { isJsonString } from '../../lib/utils';
-import ChatsAPI from '../../api/chats';
-import Toaster from '../../lib/toaster';
 import { sApp } from '../../lib/types';
 import eventBus from '../../lib/event-bus';
 import store from '../../lib/store';
 import { CONST } from '../../lib/const';
-
-const chatsApi = new ChatsAPI();
-const toaster = new Toaster();
+import chatsController from '../../controllers/chats';
 
 const chat = sue({
   name: 's-app-chat',
@@ -29,28 +24,11 @@ const chat = sue({
   },
   methods: {
     deleteUser(): void {
-      chatsApi.deleteUsers({ chatId: <number>store.state.currentChat.id, users: [<number> store.state.currentMember.id] })
-        .then((response) => {
-          if (response.status === 200) {
-            toaster.toast(`User ${store.state.currentMember.login} has been kicked`);
-            store.state.currentMember.id = 0;
-            setTimeout(() => { eventBus.emit(CONST.hashchange); }, 0);
-            return;
-          }
-          throw new Error('User deletion failed');
-        }).catch((error) => {
-          toaster.bakeError(error);
-        });
+      chatsController.deleteUsers();
     },
     getChats(this: sApp): void {
       if (!this.isVisible()) return;
-      chatsApi.getChats()
-        .then((response) => {
-          if (response.status === 200 && isJsonString(response.response)) {
-            return JSON.parse(response.response);
-          }
-          throw new Error('Getting chats failed');
-        })
+      chatsController.getChats()
         .then((c) => {
           const chats = c;
           (this.data.chats as string[]).length = Object.keys(chats).length;
@@ -63,8 +41,6 @@ const chat = sue({
             store.state.currentChat.id = 0;
           }
           eventBus.emit(CONST.chatChange);
-        }).catch((error) => {
-          toaster.bakeError(error);
         });
     },
     isChatSelected(): boolean {
@@ -75,13 +51,7 @@ const chat = sue({
         (this.data.chatMembers as string[]) = [];
         return;
       }
-      chatsApi.getChatUsers(<number>store.state.currentChat.id)
-        .then((response) => {
-          if (response.status === 200 && isJsonString(response.response)) {
-            return JSON.parse(response.response);
-          }
-          throw new Error('Getting users failed');
-        })
+      chatsController.getChatUsers()
         .then((m) => {
           const members = m;
           (this.data.chatMembers as string[]).length = Object.keys(members).length;
@@ -89,8 +59,6 @@ const chat = sue({
             (this.data.chatMembers as string[])[index] = JSON.stringify(members[key]);
           });
           eventBus.emit(CONST.update);
-        }).catch((error) => {
-          toaster.bakeError(error);
         });
     },
     submitForm(formName: string): void {

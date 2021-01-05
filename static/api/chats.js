@@ -4,7 +4,7 @@ import { ApiBaseUrl } from "../lib/const.js";
 const headers = {
     'Content-type': 'application/json',
 };
-class ChatsAPI {
+class ChatsApi {
     constructor() {
         this.fetch = new HttpTransport(ApiBaseUrl, '/chats');
     }
@@ -30,5 +30,5 @@ class ChatsAPI {
         return this.fetch.delete('/users', { data, headers });
     }
 }
-export default ChatsAPI;
+export default ChatsApi;
 //# sourceMappingURL=chats.js.map

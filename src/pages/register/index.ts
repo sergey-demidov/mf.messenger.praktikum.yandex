@@ -4,11 +4,11 @@ import sInput from '../../components/input';
 import sButton from '../../components/button';
 import template from './template';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
-import AuthAPI from '../../api/auth';
+import AuthApi from '../../api/auth';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
 
-const auth = new AuthAPI();
+const auth = new AuthApi();
 const toaster = new Toaster();
 
 const register = sue({

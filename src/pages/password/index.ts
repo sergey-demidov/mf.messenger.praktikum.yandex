@@ -6,9 +6,9 @@ import template from './template';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
-import UserAPI from '../../api/user';
+import UserApi from '../../api/user';
 
-const userAPI = new UserAPI();
+const userApi = new UserApi();
 const toaster = new Toaster();
 
 const password = sue({
@@ -46,7 +46,7 @@ const password = sue({
       const formData = new FormData(form);
       const res = formDataToObject(formData);
       res.display_name = res.first_name;
-      userAPI.changePassword(res as HttpDataType)
+      userApi.changePassword(res as HttpDataType)
         .then((response) => {
           if (response.status !== 200) {
             throw new Error(response.response);

@@ -6,7 +6,7 @@ const headers = {
   'Content-type': 'application/json',
 };
 
-class UserAPI {
+class UserApi {
   fetch: HttpTransport;
 
   constructor() {
@@ -30,4 +30,4 @@ class UserAPI {
   }
 }
 
-export default UserAPI;
+export default UserApi;

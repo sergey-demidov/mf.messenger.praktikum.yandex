@@ -6,7 +6,7 @@ const headers = {
   'Content-type': 'application/json',
 };
 
-class AuthAPI {
+class AuthApi {
   fetch: HttpTransport;
 
   constructor() {
@@ -30,4 +30,4 @@ class AuthAPI {
   }
 }
 
-export default AuthAPI;
+export default AuthApi;

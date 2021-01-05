@@ -4,10 +4,10 @@ import sButton from "../../components/button.js";
 import template from "./template.js";
 import { formDataToObject, isJsonString } from "../../lib/utils.js";
 import Toaster, { ToasterMessageTypes } from "../../lib/toaster.js";
-import AuthAPI from "../../api/auth.js";
+import AuthApi from "../../api/auth.js";
 import auth from "../../controllers/auth.js";
 import { backendUrl } from "../../lib/const.js";
-const authAPI = new AuthAPI();
+const authApi = new AuthApi();
 const toaster = new Toaster();
 const login = sue({
     name: 's-app-login',
@@ -24,7 +24,7 @@ const login = sue({
             return form.checkValidity();
         },
         fillUser() {
-            authAPI.getUser()
+            authApi.getUser()
                 .then((response) => {
                 if (response.status === 200 && isJsonString(response.response)) {
                     return JSON.parse(response.response);
@@ -49,7 +49,7 @@ const login = sue({
             if (this.methods.formIsValid(formName)) { // validate
                 const formData = new FormData(form);
                 const res = formDataToObject(formData);
-                authAPI.signIn(res)
+                authApi.signIn(res)
                     .then((response) => {
                     this.data.password = '';
                     if (response.status !== 200) {

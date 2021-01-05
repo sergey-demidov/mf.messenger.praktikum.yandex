@@ -6,10 +6,9 @@ import template from './template';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
-import ChatsAPI from '../../api/chats';
+import chatsController from '../../controllers/chats';
 
 const toaster = new Toaster();
-const chatsApi = new ChatsAPI();
 
 const createChat = sue({
   name: 's-app-chat-create-modal',
@@ -37,17 +36,11 @@ const createChat = sue({
       const formData = new FormData(form);
       const res = formDataToObject(formData);
       res.title = (res.title as string).trim();
-      chatsApi.createChat(res as HttpDataType)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(response.response);
-          }
+      chatsController.createChat(res as HttpDataType)
+        .then(() => {
           toaster.toast(`Chat ${this.data.title} created successfully`, ToasterMessageTypes.info);
           this.data.title = '';
           window.router.back();
-        })
-        .catch((error) => {
-          toaster.bakeError(error);
         });
     },
   },

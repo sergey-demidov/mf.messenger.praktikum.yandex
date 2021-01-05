@@ -5,15 +5,15 @@ import sButton from '../../components/button';
 import template from './template';
 import sUser from '../../components/user';
 import { formDataToObject, isJsonString } from '../../lib/utils';
-import AuthAPI from '../../api/auth';
+import AuthApi from '../../api/auth';
 import { HttpDataType } from '../../lib/http-transport';
 import Toaster, { ToasterMessageTypes } from '../../lib/toaster';
-import UserAPI from '../../api/user';
+import UserApi from '../../api/user';
 import eventBus from '../../lib/event-bus';
 import { backendUrl, CONST } from '../../lib/const';
 
-const auth = new AuthAPI();
-const userAPI = new UserAPI();
+const auth = new AuthApi();
+const userApi = new UserApi();
 const toaster = new Toaster();
 
 const profile = sue({
@@ -51,7 +51,7 @@ const profile = sue({
       const formData = new FormData(form);
       const res = formDataToObject(formData);
       res.display_name = res.first_name;
-      userAPI.saveProfile(res as HttpDataType)
+      userApi.saveProfile(res as HttpDataType)
         .then((response) => {
           if (response.status !== 200) {
             throw new Error(response.response);
@@ -66,7 +66,7 @@ const profile = sue({
       if (!avatar || !(avatar as File).size) {
         return;
       }
-      userAPI.saveProfileAvatar(formData)
+      userApi.saveProfileAvatar(formData)
         .then((response) => {
           if (response.status !== 200) {
             throw new Error(response.response);
