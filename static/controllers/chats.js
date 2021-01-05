@@ -20,8 +20,6 @@ class ChatsController {
                 return JSON.parse(response.response);
             }
             throw new Error('Getting users failed');
-        }).catch((error) => {
-            toaster.bakeError(error);
         });
     }
     getChats() {
@@ -31,9 +29,6 @@ class ChatsController {
                 return JSON.parse(response.response);
             }
             throw new Error('Getting chats failed');
-        })
-            .catch((error) => {
-            toaster.bakeError(error);
         });
     }
     deleteUsers() {
@@ -48,7 +43,8 @@ class ChatsController {
                 return;
             }
             throw new Error('User deletion failed');
-        }).catch((error) => {
+        })
+            .catch((error) => {
             toaster.bakeError(error);
         });
     }
@@ -59,9 +55,6 @@ class ChatsController {
                 return response;
             }
             throw new Error(response.response);
-        })
-            .catch((error) => {
-            toaster.bakeError(error);
         });
     }
     createChat(res) {
@@ -71,9 +64,6 @@ class ChatsController {
                 return response;
             }
             throw new Error(response.response);
-        })
-            .catch((error) => {
-            toaster.bakeError(error);
         });
     }
     deleteChat(chatId) {
@@ -85,9 +75,6 @@ class ChatsController {
                 return response;
             }
             throw new Error(response.response);
-        })
-            .catch((error) => {
-            toaster.bakeError(error);
         });
     }
     saveChatAvatar(formData) {
@@ -98,9 +85,6 @@ class ChatsController {
                 return response;
             }
             throw new Error(response.response);
-        })
-            .catch((error) => {
-            toaster.bakeError(error);
         });
     }
 }

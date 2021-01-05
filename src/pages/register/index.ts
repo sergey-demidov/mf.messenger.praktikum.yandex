@@ -34,6 +34,8 @@ const register = sue({
           this.data.password = '';
           window.router.go('/#/chat');
           toaster.toast('Logged in successfully', ToasterMessageTypes.info);
+        }).catch((error) => {
+          toaster.bakeError(error);
         });
     },
   },

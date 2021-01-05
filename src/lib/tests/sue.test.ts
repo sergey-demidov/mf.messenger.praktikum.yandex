@@ -6,7 +6,6 @@ import {
 } from '@jest/globals';
 import sue from '../sue';
 import { hash8 } from '../utils';
-import mocks from './mock-utils';
 import { CONST } from '../const';
 
 describe('test Sue', () => {

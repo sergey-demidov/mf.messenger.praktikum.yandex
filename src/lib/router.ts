@@ -43,9 +43,7 @@ class Router {
 
   protected _onRoute(pathname: string):void {
     const route = this.getRoute(pathname);
-    console.log(`pathname: ${pathname}`);
     if (route) {
-      console.dir(route);
       if (route.view.authorisationRequired && !authController.isUserLoggedIn() && pathname !== '/#/404') {
         this.go('/#/login');
         return;
@@ -64,7 +62,6 @@ class Router {
       return;
     }
     if (pathname.match(/^[#/]*$/)) {
-      console.log('matcher /#/');
       this.go('/#/login');
       return;
     }

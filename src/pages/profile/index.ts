@@ -51,6 +51,8 @@ const profile = sue({
       userController.saveProfile(res as HttpDataType)
         .then(() => {
           toaster.toast('Profile saved successfully');
+        }).catch((error) => {
+          toaster.bakeError(error);
         });
       const avatar = formData.get('avatar');
       if (!avatar || !(avatar as File).size) {
@@ -59,6 +61,8 @@ const profile = sue({
       userController.saveProfileAvatar(formData)
         .then(() => {
           toaster.toast('Avatar saved successfully');
+        }).catch((error) => {
+          toaster.bakeError(error);
         });
       const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
       if (fileInput) fileInput.value = '';

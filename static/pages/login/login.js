@@ -34,6 +34,13 @@ const login = sue({
                     toaster.toast('Logged in successfully', ToasterMessageTypes.info);
                     window.router.go('/#/chat');
                 }
+            }).catch((error) => {
+                if (error.message && error.message === 'user already in system') {
+                    window.router.go('/#/chat');
+                }
+                else {
+                    toaster.bakeError(error);
+                }
             });
         },
     },

@@ -36,6 +36,9 @@ const createChat = sue({
                 toaster.toast(`Chat ${this.data.title} created successfully`, ToasterMessageTypes.info);
                 this.data.title = '';
                 window.router.back();
+            })
+                .catch((error) => {
+                toaster.bakeError(error);
             });
         },
     },
