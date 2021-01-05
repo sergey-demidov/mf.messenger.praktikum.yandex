@@ -13,8 +13,11 @@ import { createWindowListeners } from './lib/utils';
 declare global {
   interface Window {
     router: Router;
+    debug: boolean;
   }
 }
+
+window.debug = false;
 
 const root = document.getElementById('app');
 if (!root) throw new Error('Root element does not exist');

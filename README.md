@@ -1,9 +1,9 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5b95fe70-0d95-4e20-9500-8a2fb6d556c2/deploy-status)](https://messenger42-praktikum-yandex.netlify.app/)
 [![Github Actions CI](https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/workflows/ci/badge.svg)](https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/actions?query=workflow%3Aci)
 
-# Месенджер 
+## Месенджер 
 > этот репозиторий является заготовкой для учебного проекта по программе 
-> "Мидл фронтенд-разработчик" от [Яндекс Практикум](https://praktikum.yandex.ru/).
+> "Мидл фронтенд-разработчик" от Яндекс Практикум
 
 <details><summary>Проектная работа 1-й спринт</summary>
 
@@ -31,7 +31,7 @@
 
 </details>
 
-### Проектная работа 2-й спринт
+<details><summary>Проектная работа 2-й спринт</summary>
 
 1. Частично реализован шаблонизатор на основе [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)
 1. Проект переведен на TypeScript
@@ -43,8 +43,21 @@
 1. Свойство `disabled` кнопки отправки связано с валидацией форм
 1. TypeScript компилятор внедрен в скрипт запуска сервера разработки
 
+</details>
+
+#### Проектная работа 3-й спринт
+1. Добавен класс `HttpTransport` для работы с запросами
+1. В проект добавлен роутинг с проверкой авторизации
+1. Библиотеки частично покрыты тестами
+1. Внедрены HTTP API чатов, авторизации и пользователей
+   - настройка/удаление чата по клику на аватарке чата
+   - удаление участника перетаскиванием в корзину
+1. Стили перенесены на SCSS
+1. Компилятор `node-sass` внедрен в скрипт запуска сервера разработки
+1. Настроены CSP в виде `http-equiv` тэга в заголовке
+
 ---
-### Инсталляция
+#### Инсталляция
 Клонируйте репозиторий
 ```shell script
 git clone https://github.com/sergey-demidov/mf.messenger.praktikum.yandex.git
@@ -54,16 +67,21 @@ git clone https://github.com/sergey-demidov/mf.messenger.praktikum.yandex.git
 npm install # или yarn
 ```
 ---
-## Использование
+#### Использование
 Для запуска локального сервера express
 ```shell script
 node server.js
 ```
-Для компиляции TS и синхронизации с браузером
+Для компиляции TS, SCSS и синхронизации с браузером
 ```shell script
 npm run dev # или yarn dev
 ```
 Для проверки синтаксиса
 ```shell script
 npm run lint # или yarn lint
+```
+
+Для проверки запуска тестов
+```shell script
+npm run test # или yarn test
 ```

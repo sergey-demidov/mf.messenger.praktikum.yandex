@@ -115,6 +115,6 @@ export function createWindowListeners() {
         }, 250);
     };
     // TODO: enable on deploy
-    // window.onbeforeunload = () => false;
+    window.onbeforeunload = () => false;
 }
 //# sourceMappingURL=utils.js.map
