@@ -27,8 +27,6 @@ class ChatsController {
           return JSON.parse(response.response);
         }
         throw new Error('Getting users failed');
-      }).catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -39,9 +37,6 @@ class ChatsController {
           return JSON.parse(response.response);
         }
         throw new Error('Getting chats failed');
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -57,7 +52,8 @@ class ChatsController {
           return;
         }
         throw new Error('User deletion failed');
-      }).catch((error) => {
+      })
+      .catch((error) => {
         toaster.bakeError(error);
       });
   }
@@ -69,9 +65,6 @@ class ChatsController {
           return response;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -82,9 +75,6 @@ class ChatsController {
           return response;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -97,9 +87,6 @@ class ChatsController {
           return response;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -111,9 +98,6 @@ class ChatsController {
           return response;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 }

@@ -45,8 +45,11 @@ const chatEdit = sue({
     deleteChat(this: sApp):void {
       chatsController.deleteChat(<number> this.data.id)
         .then(() => {
+          this.data.deleteConfirm = '';
           toaster.toast(`Chat ${this.data.title} deleted successfully`, ToasterMessageTypes.info);
           window.router.go('/#/chat');
+        }).catch((error) => {
+          toaster.bakeError(error);
         });
     },
     submitForm(this: sApp, formName: string): void {
@@ -62,6 +65,8 @@ const chatEdit = sue({
         .then(() => {
           const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
           if (fileInput) fileInput.value = '';
+        }).catch((error) => {
+          toaster.bakeError(error);
         });
     },
     // Превью аватара с обработкой ошибок

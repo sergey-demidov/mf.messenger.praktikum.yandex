@@ -48,6 +48,8 @@ const profile = sue({
             userController.saveProfile(res)
                 .then(() => {
                 toaster.toast('Profile saved successfully');
+            }).catch((error) => {
+                toaster.bakeError(error);
             });
             const avatar = formData.get('avatar');
             if (!avatar || !avatar.size) {
@@ -56,6 +58,8 @@ const profile = sue({
             userController.saveProfileAvatar(formData)
                 .then(() => {
                 toaster.toast('Avatar saved successfully');
+            }).catch((error) => {
+                toaster.bakeError(error);
             });
             const fileInput = document.getElementById('avatarInput');
             if (fileInput)

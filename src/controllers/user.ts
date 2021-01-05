@@ -1,11 +1,6 @@
 import eventBus from '../lib/event-bus';
-// import store from '../lib/store';
-// import { isJsonString } from '../lib/utils';
-// import AuthApi from '../api/auth';
-// import { backendUrl, CONST } from '../lib/const';
 import UserApi from '../api/user';
 import { isJsonString } from '../lib/utils';
-import toaster, { ToasterMessageTypes } from '../lib/toaster';
 import { HttpDataType } from '../lib/http-transport';
 
 const userApi = new UserApi();
@@ -29,9 +24,6 @@ class UserController {
           return JSON.parse(response.response);
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -42,9 +34,6 @@ class UserController {
           return response;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -56,9 +45,6 @@ class UserController {
           return;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 
@@ -69,9 +55,6 @@ class UserController {
           return response;
         }
         throw new Error(response.response);
-      })
-      .catch((error) => {
-        toaster.bakeError(error);
       });
   }
 }

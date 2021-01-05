@@ -8,6 +8,7 @@ import store from '../../lib/store';
 import { CONST } from '../../lib/const';
 import userController from '../../controllers/user';
 import chatsController from '../../controllers/chats';
+import toaster from '../../lib/toaster';
 
 const addUser = sue({
   name: 's-app-chat-add-user-modal',
@@ -82,6 +83,8 @@ const addUser = sue({
             this.data.allowInvite = false;
             this.data.possibleNames = res;
           }
+        }).catch((error) => {
+          toaster.bakeError(error);
         });
     },
   },

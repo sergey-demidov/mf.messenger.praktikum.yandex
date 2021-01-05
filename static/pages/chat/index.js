@@ -9,6 +9,7 @@ import eventBus from "../../lib/event-bus.js";
 import store from "../../lib/store.js";
 import { CONST } from "../../lib/const.js";
 import chatsController from "../../controllers/chats.js";
+import toaster from "../../lib/toaster.js";
 const chat = sue({
     name: 's-app-chat',
     authorisationRequired: true,
@@ -41,6 +42,8 @@ const chat = sue({
                     store.state.currentChat.id = 0;
                 }
                 eventBus.emit(CONST.chatChange);
+            }).catch((error) => {
+                toaster.bakeError(error);
             });
         },
         isChatSelected() {
@@ -59,6 +62,8 @@ const chat = sue({
                     this.data.chatMembers[index] = JSON.stringify(members[key]);
                 });
                 eventBus.emit(CONST.update);
+            }).catch((error) => {
+                toaster.bakeError(error);
             });
         },
         submitForm(formName) {

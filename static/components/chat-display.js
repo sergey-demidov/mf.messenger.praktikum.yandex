@@ -5,7 +5,7 @@ import { backendUrl, CONST } from "../lib/const.js";
 const template = `
 <div class="mpy_chat_display_wrapper mpy_white">
   <div class="mpy_chat_display_tool">
-    <div class="mpy_chat_display_avatar">
+    <div class="mpy_chat_display_avatar unselectable undraggable">
       <span class="material-icons mpy_chat_display_avatar_sign"> settings </span> 
       <img 
         class="mpy_avatar_preview unselectable undraggable"

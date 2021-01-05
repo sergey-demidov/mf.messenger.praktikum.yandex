@@ -46,6 +46,8 @@ const password = sue({
                 this.data.newPassword = '';
                 this.data.newPasswordAgain = '';
                 window.router.back();
+            }).catch((error) => {
+                toaster.bakeError(error);
             });
         },
     },
