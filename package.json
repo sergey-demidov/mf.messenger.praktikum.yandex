@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev_xx": "ttsc -w & node server & node-sass src/css/main.scss -wo static/css & browser-sync start --proxy 'localhost:3000' --files 'static'",
-    "dev": "npx webpack-dev-server  --open",
+    "dev": "npx webpack serve --mode development",
     "build": "npx webpack --config webpack.production.js --mode production",
     "serve": "node server",
     "css": "node-sass src/css/main.scss -o static/css",

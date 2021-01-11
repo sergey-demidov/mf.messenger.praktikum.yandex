@@ -7,9 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
-  // devtool: 'eval',
-  devtool: 'inline-source-map',
-  // mode: process.env.WEBPACK_MODE === 'production' ? 'production' : 'development',
+  devtool: false,
   module: {
     rules: [
       {
@@ -27,7 +25,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.scss'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.join(__dirname, 'dist'),
   },
   plugins: [
@@ -41,7 +39,6 @@ module.exports = {
       ],
     }),
     new webpack.SourceMapDevToolPlugin({
-      filename: '[name].js.map',
     }),
     // new StylelintWebpackPlugin(),
   ],
