@@ -43,15 +43,18 @@ class Router {
 
   protected _onRoute(pathname: string):void {
     const route = this.getRoute(pathname);
-    if (route) {
-      if (route.view.authorisationRequired && !authController.isUserLoggedIn() && pathname !== '/#/404') {
+    console.log(pathname);
+    if (route && !pathname.match(/^[#/]*404$/)) {
+      if (route.view.authorisationRequired && !authController.isUserLoggedIn()) {
         this.go('/#/login');
         return;
       }
-      if (!route.view.authorisationRequired && authController.isUserLoggedIn() && pathname !== '/#/404') {
+      if (!route.view.authorisationRequired && authController.isUserLoggedIn()) {
         this.go('/#/chat');
         return;
       }
+    }
+    if (route) {
       if (this.currentRoute && this.currentRoute !== route && !route.view.name.match(/-modal$/)) {
         this.currentRoute.leave();
       }
@@ -60,11 +63,11 @@ class Router {
       eventBus.emit(CONST.hashchange);
       return;
     }
-    if (pathname.match(/^[#/]*$/)) {
+    if (pathname.match(/^[#/]*$/) && !pathname.match(/[#/]*404$/)) {
       this.go('/#/login');
       return;
     }
-    if (pathname !== '/#/404') {
+    if (!pathname.match(/[#/]*404$/)) {
       this.go('/#/404');
     }
   }
