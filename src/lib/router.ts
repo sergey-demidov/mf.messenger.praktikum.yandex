@@ -43,7 +43,6 @@ class Router {
 
   protected _onRoute(pathname: string):void {
     const route = this.getRoute(pathname);
-    console.log(pathname);
     if (route && !pathname.match(/^[#/]*404$/)) {
       if (route.view.authorisationRequired && !authController.isUserLoggedIn()) {
         this.go('/#/login');
