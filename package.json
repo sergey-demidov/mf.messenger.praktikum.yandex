@@ -8,6 +8,7 @@
     "dev_xx": "ttsc -w & node server & node-sass src/css/main.scss -wo static/css & browser-sync start --proxy 'localhost:3000' --files 'static'",
     "dev": "npx webpack serve --mode development",
     "build": "npx webpack --config webpack.production.js --mode production",
+    "start": "node server",
     "serve": "node server",
     "css": "node-sass src/css/main.scss -o static/css",
     "lint": "eslint --ext .ts src",
