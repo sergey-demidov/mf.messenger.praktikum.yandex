@@ -142,5 +142,5 @@ export function createWindowListeners(): void {
   };
 
   // TODO: enable on deploy
-  window.onbeforeunload = () => false;
+  // window.onbeforeunload = () => false;
 }
