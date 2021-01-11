@@ -33,13 +33,14 @@
   },
   "homepage": "https://github.com/sergey-demidov/mf.messenger.praktikum.yandex#readme",
   "dependencies": {
-    "express": "^4.17.1",
     "@jest/globals": "^26.6.2",
-    "nock": "^13.0.5",
-    "webpack": "^5.12.3",
-    "html-webpack-plugin": "^4.5.1",
     "copy-webpack-plugin": "^7.0.0",
-    "stylelint-webpack-plugin": "^2.1.1"
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^4.5.1",
+    "nock": "^13.0.5",
+    "postcss": "^8.2.4",
+    "stylelint-webpack-plugin": "^2.1.1",
+    "webpack": "^5.12.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
