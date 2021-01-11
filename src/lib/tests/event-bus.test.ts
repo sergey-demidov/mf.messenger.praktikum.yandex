@@ -14,10 +14,12 @@ describe('test EventBus', () => {
   let output;
 
   beforeEach(() => {
+    // eslint-disable-next-line no-console
     console.error = (e) => { output = e; };
   });
 
   afterEach(() => {
+    // eslint-disable-next-line no-console
     console.error = original;
   });
 
