@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import {
   expect, describe, test, beforeEach, afterEach,
 } from '@jest/globals';
@@ -11,12 +14,10 @@ describe('test EventBus', () => {
   let output;
 
   beforeEach(() => {
-    // eslint-disable-next-line no-console
     console.error = (e) => { output = e; };
   });
 
   afterEach(() => {
-    // eslint-disable-next-line no-console
     console.error = original;
   });
 

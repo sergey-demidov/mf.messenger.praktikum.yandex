@@ -1,7 +1,19 @@
+//:root {
+//  --text-wrapper-padding-x: 10px;
+//  --text-wrapper-padding-y: 10px;
+//}
+
+$text-wrapper-padding-x: 10px;
+$text-wrapper-padding-y: 10px;
+
+$icon-font: 'Material Icons';
+$icon-font-outlined: 'Material Icons Outlined';
+
 @keyframes fadeInAnimation {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -65,11 +77,6 @@ input {
 
 .animate {
   animation: fadeInAnimation ease-out 300ms;
-}
-
-:root {
-  --text-wrapper-padding-x: 10px;
-  --text-wrapper-padding-y: 10px;
 }
 
 .mpy_navigation {
@@ -144,7 +151,7 @@ input {
   position: relative;
   vertical-align: middle;
 
-  &:before {
+  &::before {
     content: attr(data-icon);
     top: 9px;
     left: 9px;
@@ -153,7 +160,7 @@ input {
     width: 20px;
     font-size: 20px;
     overflow: hidden;
-    font-family: 'Material Icons';
+    font-family: $icon-font;
   }
 
   &:hover {
@@ -206,7 +213,7 @@ input {
 .mpy_avatar_error_sign {
   position: absolute;
   color: red;
-  font-family: 'Material Icons Outlined';
+  font-family: $icon-font-outlined;
   font-size: 100px;
   line-height: 100px;
   top: 25px;
@@ -220,7 +227,7 @@ input {
 
 .mpy_avatar_output_icon {
   color: #eee;
-  font-family: 'Material Icons Outlined';
+  font-family: $icon-font-outlined;
   font-size: 25px;
   font-weight: lighter;
   font-style: normal;
@@ -276,7 +283,7 @@ input {
 
 .mpy_text_input_wrapper {
   position: relative;
-  padding: var(--text-wrapper-padding-y) var(--text-wrapper-padding-x);
+  padding: $text-wrapper-padding-y $text-wrapper-padding-x;
   margin: 0;
   font-weight: normal;
   background-color: inherit;
@@ -288,8 +295,8 @@ input {
 
 .mpy_text_input_label {
   position: absolute;
-  top: calc(var(--text-wrapper-padding-y) - 9px);
-  left: calc(var(--text-wrapper-padding-x) + 8px);
+  top: $text-wrapper-padding-y - 9px;
+  left: $text-wrapper-padding-x + 8px;
   font-size: small;
   font-weight: lighter;
   background-color: inherit;
@@ -322,8 +329,8 @@ input {
 
 .mpy_text_input_icon {
   position: absolute;
-  top: calc(var(--text-wrapper-padding-y) + 8px);
-  right: calc(var(--text-wrapper-padding-x) + 8px);
+  top: $text-wrapper-padding-y + 8px;
+  right: $text-wrapper-padding-x + 8px;
   color: #567;
   cursor: pointer;
   text-shadow: 0 0 1px #0009;
@@ -335,7 +342,7 @@ input {
 }
 
 .mpy_text_input_icon.prepend {
-  right: calc(var(--text-wrapper-padding-x) + 40px);
+  right: $text-wrapper-padding-x + 40px;
 }
 
 .mpy_dialog {
@@ -364,7 +371,7 @@ input {
   display: block;
   align-items: center;
   flex-direction: column;
-  flex-flow: row wrap;
+  //flex-flow: row wrap;
 }
 
 .mpy_dialog_footer {
@@ -396,7 +403,7 @@ input {
   overflow-y: auto;
   overflow-x: hidden;
   direction: rtl;
-  border-right: 1px #444444 solid;
+  border-right: 1px #444 solid;
   box-sizing: border-box;
   padding: 0 0 60px 0;
   position: relative;
@@ -418,7 +425,7 @@ input {
   height: calc(100vh - 40px);
   overflow-y: auto;
   overflow-x: hidden;
-  border-left: 1px #444444 solid;
+  border-left: 1px #444 solid;
   box-sizing: border-box;
   padding: 0 0 60px 0;
   position: relative;
@@ -452,7 +459,7 @@ input {
   position: relative;
   max-width: 50em;
 
-  &:before {
+  &::before {
     content: "";
     width: 0;
     height: 0;
@@ -479,7 +486,7 @@ input {
   align-items: flex-end;
   justify-content: center;
 
-  &:before {
+  &::before {
     content: "";
     width: 0;
     height: 0;
@@ -509,7 +516,7 @@ input {
 
 .mpy_chat_input {
   margin-top: 15px;
-  background-color: #eeeeee;
+  background-color: #eee;
   position: relative;
 }
 
@@ -551,7 +558,7 @@ input {
 
 .mpy_button__block {
   display: block;
-  background-color: #eeeeee;
+  background-color: #eee;
   background-image: none;
   margin: 10px 10px;
   box-shadow: 0 0 2px #000;
@@ -630,7 +637,7 @@ input {
 }
 
 .mpy_white {
-  background-color: #ffffff;
+  background-color: #fff;
   background-image: none;
 }
 
@@ -805,7 +812,6 @@ input {
   //background-size: contain;
   //background-color: gold;
   border-radius: 50%;
-
 }
 
 .mpy_chat_display_body {

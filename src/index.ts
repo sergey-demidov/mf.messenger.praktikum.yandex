@@ -9,6 +9,7 @@ import chatCreate from './pages/chat-create/index';
 import chatEdit from './pages/chat-edit/index';
 import addUser from './pages/chat-add-user/index';
 import { createWindowListeners } from './lib/utils';
+import './css/main.scss';
 
 declare global {
   interface Window {
