@@ -18,7 +18,7 @@ declare global {
   }
 }
 
-window.debug = false;
+window.debug = true;
 
 const root = document.getElementById('app');
 if (!root) throw new Error('Root element does not exist');

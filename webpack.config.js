@@ -1,10 +1,14 @@
 const path = require('path');
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: './src/index.ts',
+  // devtool: 'eval',
+  devtool: 'inline-source-map',
   // mode: process.env.WEBPACK_MODE === 'production' ? 'production' : 'development',
   module: {
     rules: [
@@ -36,11 +40,14 @@ module.exports = {
         { from: './static/index.html' },
       ],
     }),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[name].js.map',
+    }),
     // new StylelintWebpackPlugin(),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    compress: true,
+    // compress: true,
     historyApiFallback: true,
     writeToDisk: true,
     hot: true,
