@@ -2,7 +2,7 @@ import { sApp } from '../../lib/types';
 import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
-import template from './template';
+import template from './chat-add-user-template';
 import eventBus from '../../lib/event-bus';
 import store from '../../lib/store';
 import { CONST } from '../../lib/const';

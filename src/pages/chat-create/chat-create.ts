@@ -2,18 +2,19 @@ import { sApp } from '../../lib/types';
 import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
-import template from './template';
+import template from './chat-create-template';
 import toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import { formDataToObject } from '../../lib/utils';
 import { HttpDataType } from '../../lib/http-transport';
-import authController from '../../controllers/auth';
+import chatsController from '../../controllers/chats';
 
-const register = sue({
-  name: 's-app-register',
+const createChat = sue({
+  name: 's-app-chat-create-modal',
+  authorisationRequired: true,
   template,
   data() {
     return {
-      password: '',
+      title: '',
     };
   },
   methods: {
@@ -23,18 +24,23 @@ const register = sue({
     },
     submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
+      if (!form) {
+        throw new Error(`form '${formName}' is not exist`);
+      }
       if (!this.methods.formIsValid(formName)) { // validate
         toaster.toast('Error: form is not valid', ToasterMessageTypes.error);
         return;
       }
-      const formData = new FormData(form as HTMLFormElement);
+      const formData = new FormData(form);
       const res = formDataToObject(formData);
-      authController.signUp(res as HttpDataType)
+      res.title = (res.title as string).trim();
+      chatsController.createChat(res as HttpDataType)
         .then(() => {
-          this.data.password = '';
-          window.router.go('/#/chat');
-          toaster.toast('Logged in successfully', ToasterMessageTypes.info);
-        }).catch((error) => {
+          toaster.toast(`Chat ${this.data.title} created successfully`, ToasterMessageTypes.info);
+          this.data.title = '';
+          window.router.back();
+        })
+        .catch((error) => {
           toaster.bakeError(error);
         });
     },
@@ -45,4 +51,4 @@ const register = sue({
   },
 });
 
-export default register;
+export default createChat;

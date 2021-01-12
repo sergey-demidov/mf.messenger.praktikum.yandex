@@ -2,29 +2,23 @@ import { sApp } from '../../lib/types';
 import sue from '../../lib/sue';
 import sInput from '../../components/input';
 import sButton from '../../components/button';
-import template from './template';
-import sUser from '../../components/user';
-import { formDataToObject } from '../../lib/utils';
-import { HttpDataType } from '../../lib/http-transport';
-import toaster from '../../lib/toaster';
+import template from './chat-edit-template';
+import toaster, { ToasterMessageTypes } from '../../lib/toaster';
 import eventBus from '../../lib/event-bus';
-import { CONST } from '../../lib/const';
-import userController from '../../controllers/user';
-import authController from '../../controllers/auth';
 import store from '../../lib/store';
+import { backendUrl, CONST } from '../../lib/const';
+import chatsController from '../../controllers/chats';
 
-const profile = sue({
-  name: 's-app-profile',
+const chatEdit = sue({
+  name: 's-app-chat-edit-modal',
   template,
   authorisationRequired: true,
   data() {
     return {
-      first_name: '',
-      second_name: '',
-      email: '',
-      phone: '',
-      login: '',
+      title: '',
+      id: 0,
       avatar: '',
+      deleteConfirm: '',
       emptyAvatar: '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200',
     };
   },
@@ -36,43 +30,51 @@ const profile = sue({
       }
       return form.checkValidity();
     },
+    matchTitle(this: sApp) {
+      return this.data.deleteConfirm !== this.data.title;
+    },
+    isAvatarChanged(formName: string) {
+      const form = document.forms.namedItem(formName);
+      if (!form) {
+        throw new Error(`form '${formName}' is not exist`);
+      }
+      const formData = new FormData(form);
+      const avatar = formData.get('avatar');
+      return !!(avatar && (avatar as File).size);
+    },
+    deleteChat(this: sApp):void {
+      chatsController.deleteChat(<number> this.data.id)
+        .then(() => {
+          this.data.deleteConfirm = '';
+          toaster.toast(`Chat ${this.data.title} deleted successfully`, ToasterMessageTypes.info);
+          window.router.go('/#/chat');
+        }).catch((error) => {
+          toaster.bakeError(error);
+        });
+    },
     submitForm(this: sApp, formName: string): void {
       const form = document.forms.namedItem(formName);
       if (!form) {
         throw new Error(`form '${formName}' is not exist`);
       }
-      if (!this.methods.formIsValid(formName)) { // validate
-        toaster.bakeError('form is not valid');
-        return;
-      }
       const formData = new FormData(form);
-      const res = formDataToObject(formData);
-      res.display_name = res.first_name;
-      userController.saveProfile(res as HttpDataType)
-        .then(() => {
-          toaster.toast('Profile saved successfully');
-        }).catch((error) => {
-          toaster.bakeError(error);
-        });
-      const avatar = formData.get('avatar');
-      if (!avatar || !(avatar as File).size) {
+      if (!this.methods.isAvatarChanged(formName)) {
         return;
       }
-      userController.saveProfileAvatar(formData)
+      chatsController.saveChatAvatar(formData)
         .then(() => {
-          toaster.toast('Avatar saved successfully');
+          const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
+          if (fileInput) fileInput.value = '';
         }).catch((error) => {
           toaster.bakeError(error);
         });
-      const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
-      if (fileInput) fileInput.value = '';
     },
     // Превью аватара с обработкой ошибок
     loadImage(this: sApp): void {
-      const fileInput = <HTMLInputElement>document.getElementById('avatarInput');
-      const avatarPreview = <HTMLSourceElement>document.getElementById('avatarPreview');
+      const fileInput = <HTMLInputElement>document.getElementById('chatAvatarInput');
+      const avatarPreview = <HTMLSourceElement>document.getElementById('chatAvatarPreview');
       if (!avatarPreview || !fileInput || !fileInput.files) {
-        throw new Error(`avatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
+        throw new Error(`chatAvatarPreview: ${avatarPreview}, fileInput: ${fileInput}`);
       }
       const backupSrc = avatarPreview.src; // сохраняем старое изображение
       this.data.avatar = URL.createObjectURL(fileInput.files[0]); // показываем новое
@@ -82,9 +84,9 @@ const profile = sue({
         fileInput.value = '';
         this.data.avatar = backupSrc; // возвращаем старое изображение
         // моргаем красным значком
-        const errorSign = document.getElementById('errorSign');
+        const errorSign = document.getElementById('chatErrorSign');
         if (!errorSign) {
-          throw new Error(`errorSign: ${errorSign}`);
+          throw new Error(`chatErrorSign: ${errorSign}`);
         }
         errorSign.classList.add('blink');
         setTimeout(() => {
@@ -94,8 +96,15 @@ const profile = sue({
     },
     fillForm(this: sApp) {
       if (!this.isVisible()) return;
-      if (authController.isUserLoggedIn()) {
-        Object.assign(this.data, store.state.currentUser);
+      if (!store.state.currentChat.id) {
+        setTimeout(() => window.router.go('/#/chat'), 100);
+        return;
+      }
+      Object.assign(this.data, store.state.currentChat);
+      if (store.state.currentChat.avatar === null) {
+        this.data.avatar = this.data.emptyAvatar;
+      } else {
+        this.data.avatar = backendUrl + store.state.currentChat.avatar;
       }
     },
   },
@@ -108,8 +117,7 @@ const profile = sue({
   components: {
     's-input': sInput,
     's-btn': sButton,
-    's-user': sUser,
   },
 });
 
-export default profile;
+export default chatEdit;

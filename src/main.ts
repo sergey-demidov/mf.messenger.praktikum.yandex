@@ -1,13 +1,13 @@
 import Router from './lib/router';
-import chat from './pages/chat/index';
+import chat from './pages/chat/chat';
 import login from './pages/login/login';
-import register from './pages/register/index';
-import profile from './pages/profile/index';
-import error404 from './pages/404/index';
-import password from './pages/password/index';
-import chatCreate from './pages/chat-create/index';
-import chatEdit from './pages/chat-edit/index';
-import addUser from './pages/chat-add-user/index';
+import register from './pages/register/register';
+import profile from './pages/profile/profile';
+import error404 from './pages/404/404';
+import password from './pages/password/password';
+import chatCreate from './pages/chat-create/chat-create';
+import chatEdit from './pages/chat-edit/chat-edit';
+import addUser from './pages/chat-add-user/chat-add-user';
 import { createWindowListeners } from './lib/utils';
 import './css/main.scss';
 

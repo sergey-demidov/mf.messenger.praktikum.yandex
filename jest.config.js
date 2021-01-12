@@ -2,12 +2,10 @@ module.exports = {
   verbose: false,
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/lib/*.ts',
-    // 'src/*.ts',
+    'src/**/*.ts',
   ],
   // coverageDirectory: 'static/coverage',
-
-    testPathIgnorePatterns: [
+  testPathIgnorePatterns: [
     '<rootDir>/static/',
     '<rootDir>/node_modules/',
     '<rootDir>/src/lib/icons.ts'],

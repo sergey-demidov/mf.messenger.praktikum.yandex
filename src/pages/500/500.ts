@@ -1,6 +1,6 @@
 import sue from '../../lib/sue';
 import sButton from '../../components/button';
-import template from './template';
+import template from './500-template';
 
 const error500 = sue({
   name: 's-app-error500',
