@@ -10,6 +10,9 @@ jobs:
       - uses: actions/checkout@master
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: echo $CODACY_PROJECT_TOKEN
         with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          project-token: echo $CODACY_PROJECT_TOKEN
           coverage-reports: coverage/clover.xml
