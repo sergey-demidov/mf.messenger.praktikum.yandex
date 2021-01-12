@@ -11,6 +11,6 @@ jobs:
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
-          path: coverage
+          entryPoint: coverage
           project-token: echo $CODACY_PROJECT_TOKEN
-          coverage-reports: clover.xml
+          coverage-reports: "clover.xml"
