@@ -1,5 +1,7 @@
 name: codacy-coverage-reporter
 
+environment: codacy
+
 on: ["push"]
 
 jobs:
