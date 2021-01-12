@@ -1,8 +1,7 @@
 [![Github Actions CI](https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/workflows/ci/badge.svg)](https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/actions?query=workflow%3Aci)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/292312ce77de4ff9aa76a66458fa8f5a)](https://app.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Grade)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/5b95fe70-0d95-4e20-9500-8a2fb6d556c2/deploy-status)](https://messenger42-praktikum-yandex.netlify.app/)
 [![Heroku](https://heroku-badge.herokuapp.com/?app=mfmessenger)](https://mfmessenger.herokuapp.com/)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/292312ce77de4ff9aa76a66458fa8f5a)](https://app.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1c725db8ddea43a59afdbc3dacf89dc8)](https://www.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex/dashboard?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Coverage)
 
 ## Месенджер 
 > этот репозиторий является заготовкой для учебного проекта по программе 

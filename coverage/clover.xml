@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1610419757855" clover="3.2.0">
-  <project timestamp="1610419757855" name="All files">
+<coverage generated="1610419996072" clover="3.2.0">
+  <project timestamp="1610419996072" name="All files">
     <metrics statements="459" coveredstatements="366" conditionals="250" coveredconditionals="174" methods="109" coveredmethods="84" elements="818" coveredelements="624" complexity="0" loc="459" ncloc="459" packages="1" files="12" classes="12"/>
     <file name="const.ts" path="/home/sergey/projects/yp/mf.messenger.praktikum.yandex/src/lib/const.ts">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
