@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -33,18 +32,8 @@ module.exports = {
         { from: './static/index.html' },
       ],
     }),
-    // new webpack.SourceMapDevToolPlugin({
-    //   test: [/\.js$/, /\.jsx$/],
-    //   exclude: 'vendor',
-    //   filename: 'app.[hash].js.map',
-    //   append: '//# sourceMappingURL=[url]',
-    //   moduleFilenameTemplate: '[resource-path]',
-    //   fallbackModuleFilenameTemplate: '[resource-path]',
-    // }),
   ],
   devServer: {
-    // contentBase: path.join(__dirname, 'dist'),
-    // writeToDisk: true,
     watchContentBase: true,
     watchOptions: {
       ignored: /node_modules/,
