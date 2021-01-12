@@ -17,12 +17,12 @@
     "noUnusedParameters": true,
     "alwaysStrict": true,
     "moduleResolution": "node",
-    "types": [],
+    "types": ["node"],
     "lib": [
       "dom",
       "es6",
       "dom.iterable",
-      "es2017"
+      "es2017",
     ],
     "plugins": [
       {

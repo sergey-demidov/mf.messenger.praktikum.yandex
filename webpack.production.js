@@ -2,8 +2,10 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/main.ts',
   devtool: false,
+  mode: 'production',
+
   module: {
     rules: [
       {
@@ -21,7 +23,7 @@ module.exports = {
     extensions: ['.ts', '.js', '.scss'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.join(__dirname, 'dist'),
   },
   plugins: [

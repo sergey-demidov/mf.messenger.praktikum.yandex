@@ -2,12 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
-
 module.exports = {
-  entry: './src/index.ts',
-  devtool: false,
+  entry: './src/main.ts',
+  devtool: 'source-map',
+  mode: 'development',
   module: {
     rules: [
       {
@@ -29,24 +27,31 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   template: './static/index.html',
-    // }),
     new CopyWebpackPlugin({
       patterns: [
         { from: './static/favicon.ico' },
         { from: './static/index.html' },
       ],
     }),
-    new webpack.SourceMapDevToolPlugin({
-    }),
-    // new StylelintWebpackPlugin(),
+    // new webpack.SourceMapDevToolPlugin({
+    //   test: [/\.js$/, /\.jsx$/],
+    //   exclude: 'vendor',
+    //   filename: 'app.[hash].js.map',
+    //   append: '//# sourceMappingURL=[url]',
+    //   moduleFilenameTemplate: '[resource-path]',
+    //   fallbackModuleFilenameTemplate: '[resource-path]',
+    // }),
   ],
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    // compress: true,
+    // contentBase: path.join(__dirname, 'dist'),
+    // writeToDisk: true,
+    watchContentBase: true,
+    watchOptions: {
+      ignored: /node_modules/,
+      aggregateTimeout: 300,
+      poll: 500,
+    },
     historyApiFallback: true,
-    writeToDisk: true,
     hot: true,
     port: 9000,
   },

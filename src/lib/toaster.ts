@@ -48,8 +48,6 @@ class Toaster {
   }
 
   bakeError(error: unknown, toast = true): string {
-    // console.dir(error);
-    // console.trace();
     let message = '';
     if (!error) {
       message = 'Error: Something wrong';
@@ -70,7 +68,6 @@ class Toaster {
       message = error.toString();
     } else
     if (typeof error === CONST.object) {
-      // eslint-disable-next-line @typescript-eslint/ban-types
       message = JSON.stringify(error, null, 1)
         .slice(2, -2)
         .split('"').join('')

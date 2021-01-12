@@ -18,17 +18,19 @@ declare global {
   }
 }
 
-window.debug = true;
-
-const root = document.getElementById('app');
-if (!root) throw new Error('Root element does not exist');
-
-// window нужен для использования в шаблонах
-window.router = new Router(root);
-
-createWindowListeners();
+if (process.env.NODE_ENV !== 'production') {
+  window.debug = true;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('app');
+  if (!root) throw new Error('Root element does not exist');
+
+  // window нужен для использования в шаблонах
+  window.router = new Router(root);
+
+  createWindowListeners();
+
   window.router
     .use('/#/chat', chat)
     .use('/#/login', login)

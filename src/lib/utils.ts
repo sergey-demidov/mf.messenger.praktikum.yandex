@@ -141,6 +141,8 @@ export function createWindowListeners(): void {
     }, 250);
   };
 
-  // TODO: enable on deploy
-  // window.onbeforeunload = () => false;
+  if (process.env.NODE_ENV === 'production') {
+    window.onbeforeunload = () => false;
+    window.onunload = () => false;
+  }
 }

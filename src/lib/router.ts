@@ -13,8 +13,6 @@ class Router {
 
   protected readonly root!: HTMLElement;
 
-  // protected overlay: HTMLElement;
-
   protected static instance: Router;
 
   constructor(root: HTMLElement) {
