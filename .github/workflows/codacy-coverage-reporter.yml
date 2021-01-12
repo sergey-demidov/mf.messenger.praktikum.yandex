@@ -11,5 +11,5 @@ jobs:
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: "coverage/clover.xml"
+          project-token: 292312ce77de4ff9aa76a66458fa8f5a
+          coverage-reports: coverage/clover.xml
