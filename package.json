@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev_xx": "ttsc -w & node server & node-sass src/css/main.scss -wo static/css & browser-sync start --proxy 'localhost:3000' --files 'static'",
     "dev": "npx webpack serve",
     "build": "npx webpack --config webpack.production.js",
     "start": "node server",
@@ -13,7 +12,7 @@
     "css": "node-sass src/css/main.scss -o static/css",
     "lint": "eslint --ext .ts src",
     "lint-fix": "eslint --ext .ts src --fix",
-    "push": "test `git status --porcelain | wc -l` -eq 0 && npm run lint && git push || echo commit and lint first",
+    "push": "test `git status --porcelain | wc -l` -eq 0 && git push || echo commit first",
     "deploy": "test `git status --porcelain | wc -l` -eq 0 && git rebase main deploy && git push && git checkout main || echo commit first"
   },
   "husky": {
