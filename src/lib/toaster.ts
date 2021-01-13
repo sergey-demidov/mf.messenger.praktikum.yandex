@@ -48,6 +48,8 @@ class Toaster {
   }
 
   bakeError(error: unknown, toast = true): string {
+    // eslint-disable-next-line no-console
+    if (window.debug) console.dir(error);
     let message = '';
     if (!error) {
       message = 'Error: Something wrong';
