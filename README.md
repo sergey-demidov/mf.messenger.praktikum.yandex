@@ -4,6 +4,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1c725db8ddea43a59afdbc3dacf89dc8)](https://www.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex/dashboard?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Coverage)
 
 ## Месенджер 
+
 > этот репозиторий является заготовкой для учебного проекта по программе 
 > "Мидл фронтенд-разработчик" от Яндекс Практикум
 
