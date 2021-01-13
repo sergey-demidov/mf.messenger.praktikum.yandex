@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     name: codacy-coverage-reporter
     steps:
-      - uses: actions/checkout@master
+      - name: checkout
+      - uses: actions/checkout@main
 
       - name: Install dependencies
         run: npm install
@@ -19,7 +20,7 @@ jobs:
         run: npm run test
 
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@main
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/clover.xml
