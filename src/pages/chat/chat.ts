@@ -11,6 +11,7 @@ import store from '../../lib/store';
 import { CONST } from '../../lib/const';
 import chatsController from '../../controllers/chats';
 import toaster from '../../lib/toaster';
+import MessagesController from '../../controllers/messages';
 
 const chat = sue({
   name: 's-app-chat',
@@ -21,6 +22,8 @@ const chat = sue({
       chats: [],
       chatMembers: [],
       message: '',
+      chatMessages: [],
+      messagesController: {},
     };
   },
   methods: {
@@ -66,6 +69,34 @@ const chat = sue({
           toaster.bakeError(error);
         });
     },
+
+    fillChat(this: sApp) {
+      chatsController.getChatToken()
+        .then((response) => {
+          store.state.currentChat.token = response.token;
+          this.methods.getMembers();
+          this.methods.getMessages();
+        }).catch((error) => {
+          toaster.bakeError(error);
+        });
+    },
+
+    getMessages(this: sApp) {
+      const controller = <MessagesController> this.data.messagesController;
+      if (!controller.chatId || controller.chatId !== store.state.currentChat.id) {
+        if (controller.chatId) controller.close();
+        this.data.messagesController = new MessagesController(
+          store.state.currentUser.id as number,
+          store.state.currentChat.id as number,
+          store.state.currentChat.token as string,
+        );
+        console.dir(controller.chatId);
+      }
+    },
+    messageReceived(data: string) {
+      console.dir(data);
+    },
+
     submitForm(formName: string): void {
       const form = document.forms.namedItem(formName);
       const formData = new FormData(form as HTMLFormElement);
@@ -79,7 +110,8 @@ const chat = sue({
   },
   created(this: sApp) {
     eventBus.on(CONST.hashchange, () => this.methods.getChats());
-    eventBus.on(CONST.chatChange, () => this.methods.getMembers());
+    eventBus.on(CONST.chatChange, () => this.methods.fillChat());
+    eventBus.on(CONST.messageReceived, () => this.methods.getMessages());
   },
   components: {
     's-input': sInput,

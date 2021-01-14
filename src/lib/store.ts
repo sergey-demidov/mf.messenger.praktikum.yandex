@@ -24,6 +24,14 @@ const chatMember = {
   role: '',
 };
 
+const chat = {
+  id: 0,
+  title: '',
+  avatar: '',
+  created_by: 0,
+  token: '',
+};
+
 class Store {
   eventBus = eventBus;
 
@@ -56,12 +64,7 @@ class Store {
   state = {
     currentUser: new Proxy(<Record<string, string | number>>user, this.handler),
     currentMember: new Proxy(<Record<string, string | number>>chatMember, this.handler),
-    currentChat: new Proxy({
-      id: 0,
-      title: '',
-      avatar: '',
-      created_by: 0,
-    }, this.handler),
+    currentChat: new Proxy(<Record<string, string | number>>chat, this.handler),
   }
 
   private static instance: Store;

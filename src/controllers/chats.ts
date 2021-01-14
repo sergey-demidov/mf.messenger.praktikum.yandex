@@ -100,6 +100,16 @@ class ChatsController {
         throw new Error(response.response);
       });
   }
+
+  getChatToken() {
+    return chatsApi.getChatToken(<number>store.state.currentChat.id)
+      .then((response) => {
+        if (response.status === 200 && isJsonString(response.response)) {
+          return JSON.parse(response.response);
+        }
+        throw new Error('Getting chat token failed');
+      });
+  }
 }
 
 const chatsController = new ChatsController();

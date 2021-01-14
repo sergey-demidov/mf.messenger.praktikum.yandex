@@ -25,8 +25,12 @@ export const CONST = Object.freeze({
   validateFinished: 'validateFinished',
   true: 'true',
   false: 'false',
+  received: 'received',
+  messageReceived: 'messageReceived',
 });
 
 export const backendUrl = 'https://ya-praktikum.tech';
 
 export const ApiBaseUrl = `${backendUrl}/api/v2`;
+
+export const WsBaseUrl = 'wss://ya-praktikum.tech/ws/chats';
