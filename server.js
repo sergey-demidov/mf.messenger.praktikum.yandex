@@ -26,7 +26,11 @@ app.get('*', (req, res) => {
   res.redirect('/#/404');
 });
 
-const server = app.listen(process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
+
+console.log(`listening at ${port}`);
+
+const server = app.listen(port);
 
 function shutDown() {
   console.log('Received kill signal, shutting down gracefully');
