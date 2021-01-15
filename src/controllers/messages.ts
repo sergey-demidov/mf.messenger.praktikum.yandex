@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 
-// import { setTimeout } from 'timers';
-// import eventBus from '../lib/event-bus';
 import { CONST, WsBaseUrl } from '../lib/const';
 import { isJsonString } from '../lib/utils';
 import eventBus from '../lib/event-bus';
@@ -22,7 +20,7 @@ class MessagesController {
 
     this.pinger = window.setInterval(() => {
       this.ping();
-    }, 5000);
+    }, 5 * 1000);
 
     this.socket.onopen = (() => {
       if (window.debug) console.log('WebSocket: connected');
@@ -31,17 +29,23 @@ class MessagesController {
 
     this.socket.onmessage = (event) => {
       let data = { type: '', content: '' };
-      if (isJsonString(event.data)) {
-        data = JSON.parse(event.data);
+      if (!isJsonString(event.data)) {
+        if (window.debug) console.log('WebSocket: unexpected message');
+        if (window.debug) console.dir(event);
+        return;
       }
-
+      data = JSON.parse(event.data);
       if (data.type === 'error') {
         if (data.content === 'Wrong message type') return; // pong
         if (window.debug) console.log('WebSocket: unexpected error');
         if (window.debug) console.dir(data);
         return;
       }
-      eventBus.emit(CONST.messageReceived, JSON.stringify(data));
+      if (Array.isArray(data)) {
+        eventBus.emit(CONST.messagesBulkReceived, JSON.stringify(data));
+      } else {
+        eventBus.emit(CONST.messageReceived, JSON.stringify(data));
+      }
     };
 
     this.socket.onclose = (event) => {
@@ -49,6 +53,7 @@ class MessagesController {
         if (window.debug) console.log('WebSocket: disconnected');
       } else {
         console.warn('WebSocket: unexpected disconnect');
+        eventBus.emit(CONST.websocketDisconnected);
       }
       if (window.debug) console.log(`Code: ${event.code}, Reason: ${event.reason}`);
     };

@@ -52,9 +52,9 @@ export default `<nav class="mpy_navigation">
         name="message"
         autocomplete="off"
         spellcheck="false">
-        <div class="mpy_chat_input">
+        <div class="mpy_chat_input" :s-if="isChatSelected()">
           <s-input name="message"
-            s-validate="required"></s-input>
+            :model="message"></s-input>
           <s-btn class="mpy_text_input_icon"
             @click="submitForm('message')">
             <i class="material-icons ">send</i>

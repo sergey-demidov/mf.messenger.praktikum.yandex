@@ -82,6 +82,7 @@ class sInput extends HTMLElement {
     if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
+      this.eventBus.emit(CONST.enterPressed);
     }
   }
 

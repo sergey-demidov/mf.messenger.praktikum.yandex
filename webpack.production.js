@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -5,7 +7,6 @@ module.exports = {
   entry: './src/main.ts',
   devtool: false,
   mode: 'production',
-
   module: {
     rules: [
       {

@@ -34,22 +34,19 @@ const addUser = sue({
     matchUser() {
       return true;
     },
-    submitForm(this: sApp, formName: string): void {
-      const form = document.forms.namedItem(formName);
-      if (!form) {
-        throw new Error(`form '${formName}' is not exist`);
-      }
+    submitForm(this: sApp): void {
       chatsController.addUser(<number> this.data.userId)
         .then(() => {
+          toaster.toast(`User ${this.data.userName} has been added`);
           this.data.userId = 0;
           this.data.userName = '';
-          this.data.allowInvite = false;
           eventBus.emit(CONST.chatChange);
           window.router.go('/#/chat');
         })
         .catch(() => {
-          this.data.allowInvite = false;
+          toaster.bakeError(`User ${this.data.userName} has not added`);
         });
+      this.data.allowInvite = false;
     },
     checkChat(this: sApp) {
       if (!this.isVisible()) return;

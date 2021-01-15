@@ -62,6 +62,7 @@ const chat = sue({
           const members = m;
           (this.data.chatMembers as string[]).length = Object.keys(members).length;
           Object.keys(members).forEach((key, index) => {
+            console.dir(members[key]);
             (this.data.chatMembers as string[])[index] = JSON.stringify(members[key]);
           });
           eventBus.emit(CONST.update);
@@ -82,6 +83,7 @@ const chat = sue({
     },
 
     getMessages(this: sApp) {
+      if (!store.state.currentChat.id) return;
       const controller = <MessagesController> this.data.messagesController;
       if (!controller.chatId || controller.chatId !== store.state.currentChat.id) {
         if (controller.chatId) controller.close();
@@ -97,21 +99,21 @@ const chat = sue({
       console.dir(data);
     },
 
-    submitForm(formName: string): void {
-      const form = document.forms.namedItem(formName);
-      const formData = new FormData(form as HTMLFormElement);
-      const res = Array.from(formData.entries()).reduce((memo, pair) => ({
-        ...memo,
-        [pair[0]]: pair[1],
-      }), {});
-      // eslint-disable-next-line no-console
-      console.dir(res); // print result
+    messagesBulkReceived(data: string) {
+      console.dir(JSON.parse(data));
+    },
+    submitForm(this: sApp): void {
+      if (!this.isVisible() || !this.data.message) return;
+      (this.data.messagesController as MessagesController).send('message', <string> this.data.message);
+      this.data.message = '';
     },
   },
   created(this: sApp) {
     eventBus.on(CONST.hashchange, () => this.methods.getChats());
+    eventBus.on(CONST.enterPressed, () => this.methods.submitForm());
     eventBus.on(CONST.chatChange, () => this.methods.fillChat());
-    eventBus.on(CONST.messageReceived, () => this.methods.getMessages());
+    eventBus.on(CONST.messageReceived, (data) => this.methods.messageReceived(data));
+    eventBus.on(CONST.messagesBulkReceived, (data) => this.methods.messagesBulkReceived(data));
   },
   components: {
     's-input': sInput,

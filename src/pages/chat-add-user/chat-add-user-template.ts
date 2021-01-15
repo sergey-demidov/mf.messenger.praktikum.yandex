@@ -18,7 +18,7 @@ export default `<div class="mpy_overlay">
       </main>
       <footer class="mpy_dialog_footer mpy_lightgrey mpy_pt10">
         <s-btn tabindex="0"
-          @click="submitForm('addUser')"
+          @click="submitForm()"
           :disabled="!allowInvite">
           Invite
         </s-btn>

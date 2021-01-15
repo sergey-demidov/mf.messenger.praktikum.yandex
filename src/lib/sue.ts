@@ -248,6 +248,11 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           const native = attribute.substring(1);
           const res = this.run(parsed);
           switch (native) {
+            case 's-if':
+              if ((element as HTMLInputElement).hidden !== (res !== 'true')) {
+                (element as HTMLInputElement).hidden = (res !== 'true');
+              }
+              break;
             case 's-text':
               if (element.textContent !== res) element.textContent = res;
               break;
