@@ -13,41 +13,16 @@ export default `<nav class="mpy_navigation">
           <i class="material-icons">playlist_add</i>
         </s-btn>
       </div>
-      <div s-for="chat in chats"
-        s-key="chat">
+      <div s-for="chat in chats" s-key="chat">
         <s-chat-display :s-chat="chats[chat]"></s-chat-display>
       </div>
     </div>
-    <div class="mpy_chat_wrapper">
-      <ul class="mpy_chat_content">
-        <li class="mpy_chat_content_sended">
-          <div class="mpy_chat_content_message">
-            Ага
-          </div>
-          <div class="mpy_chat_time">
-            09:20
-          </div>
-          <i class="material-icons mpy_chat_message_status mpy_chat_message_readed">done_all</i>
-        </li>
-        <li class="mpy_chat_content_received">
-          <div class="mpy_chat_content_avatar">
-            <img class="mpy_avatar_preview unselectable undraggable"
-              src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
-              width="40"
-              height="40"
-              alt="Marcus Tullius Cicero">
-            <div class="mpy_chat_nickname">Marcus Tullius Cicero</div>
-            <div class="mpy_chat_time">09:20</div>
-          </div>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </div>
-        </li>
-      </ul>
+        <div class="mpy_chat_wrapper">
+      <div class="mpy_chat_content">
+      <div s-for="message in chatMessages" s-key="chat_messages">
+        <s-chat-message :s-message="chatMessages[message]"></s-chat-message>
+      </div>
+      </div>
       <form action="/"
         name="message"
         autocomplete="off"
@@ -73,8 +48,7 @@ export default `<nav class="mpy_navigation">
           <i class="material-icons s-trash">group_add</i>
         </s-btn>
       </div>
-      <div s-for="member in chatMembers"
-        s-key="member">
+      <div s-for="member in chatMembers" s-key="member">
         <s-chat-member :s-member="chatMembers[member]"></s-chat-member>
       </div>
     </div>

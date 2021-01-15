@@ -12,6 +12,7 @@ import { CONST } from '../../lib/const';
 import chatsController from '../../controllers/chats';
 import toaster from '../../lib/toaster';
 import MessagesController from '../../controllers/messages';
+import sChatMessage from '../../components/chat-message';
 
 const chat = sue({
   name: 's-app-chat',
@@ -74,6 +75,8 @@ const chat = sue({
     fillChat(this: sApp) {
       chatsController.getChatToken()
         .then((response) => {
+          this.data.chatMessages = [];
+          console.log('reset messages');
           store.state.currentChat.token = response.token;
           this.methods.getMembers();
           this.methods.getMessages();
@@ -95,17 +98,23 @@ const chat = sue({
         console.dir(controller.chatId);
       }
     },
-    messageReceived(data: string) {
+    messageReceived(this: sApp, data: string) {
       console.dir(data);
+      (this.data.chatMessages as string[]).unshift(data);
+      eventBus.emit(CONST.update);
     },
 
-    messagesBulkReceived(data: string) {
-      console.dir(JSON.parse(data));
+    messagesBulkReceived(this: sApp, data: string) {
+      const messages = JSON.parse(data);
+      (this.data.chatMessages as string[]).unshift(...messages.map((m: unknown) => JSON.stringify(m)));
+      console.dir(this.data.chatMessages);
+      eventBus.emit(CONST.update);
     },
     submitForm(this: sApp): void {
       if (!this.isVisible() || !this.data.message) return;
       (this.data.messagesController as MessagesController).send('message', <string> this.data.message);
       this.data.message = '';
+      eventBus.emit(CONST.update);
     },
   },
   created(this: sApp) {
@@ -114,6 +123,7 @@ const chat = sue({
     eventBus.on(CONST.chatChange, () => this.methods.fillChat());
     eventBus.on(CONST.messageReceived, (data) => this.methods.messageReceived(data));
     eventBus.on(CONST.messagesBulkReceived, (data) => this.methods.messagesBulkReceived(data));
+    // eventBus.on(CONST.update, () => { console.dir(this.data.chatMessages); });
   },
   components: {
     's-input': sInput,
@@ -121,6 +131,7 @@ const chat = sue({
     's-user': sUser,
     's-chat-display': sChatDisplay,
     's-chat-member': sChatMember,
+    's-chat-message': sChatMessage,
   },
 });
 
