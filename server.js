@@ -9,7 +9,7 @@ app.use(compression());
 
 const CSPHeader = `
     default-src 'self';
-    connect-src https://ya-praktikum.tech;
+    connect-src https://ya-praktikum.tech wss://ya-praktikum.tech;
     font-src https://fonts.gstatic.com https://fonts.googleapis.com;
     img-src 'self' blob: data: https://ya-praktikum.tech http://avatars.mds.yandex.net https://ssl.gstatic.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
