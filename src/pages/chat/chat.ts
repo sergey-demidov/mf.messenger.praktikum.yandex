@@ -93,6 +93,8 @@ const chat = sue({
           store.state.currentChat.id as number,
           store.state.currentChat.token as string,
         );
+      } else {
+        controller.send('get old', '0');
       }
     },
     messageReceived(this: sApp, data: string) {

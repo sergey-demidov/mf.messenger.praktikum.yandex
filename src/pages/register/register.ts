@@ -32,8 +32,10 @@ const register = sue({
       authController.signUp(res as HttpDataType)
         .then(() => {
           this.data.password = '';
-          window.router.go('/#/chat');
-          toaster.toast('Logged in successfully', ToasterMessageTypes.info);
+          authController.fillUserState().then(() => {
+            window.router.go('/#/chat');
+            toaster.toast('Logged in successfully', ToasterMessageTypes.info);
+          });
         }).catch((error) => {
           toaster.bakeError(error);
         });

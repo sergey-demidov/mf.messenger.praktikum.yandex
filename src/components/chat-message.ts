@@ -35,6 +35,8 @@ class sChatMessage extends HTMLElement {
 
   chatId = 0;
 
+  date: Date;
+
   constructor() {
     super();
     this.innerHTML = template;
@@ -43,7 +45,7 @@ class sChatMessage extends HTMLElement {
     this.messageTime = <HTMLElement> this.getElementsByClassName('mpy_chat_time')[0];
     this.messageSender = <HTMLElement> this.getElementsByClassName('mpy_chat_nickname')[0];
     this.messageAvatar = <HTMLImageElement> this.getElementsByClassName('mpy_avatar_preview')[0];
-
+    this.date = new Date();
     // eventBus.on(CONST.update, () => this.update());
   }
 
@@ -59,14 +61,12 @@ class sChatMessage extends HTMLElement {
     if (name === 's-message') {
       if (isJsonString(newValue)) {
         const message = JSON.parse(newValue);
-        this.messageContent.innerText = message.content || '';
-        // const res = message.time.match(/^20(\d+)-(\d+)-(\d+)T(\d+:\d+)/);
-        const res = message.time.match(/T(\d+:\d+)/);
-        if (res) {
-          const [, time] = res;
-          // this.messageTime.innerText = `${day}.${month}.${year}\n${time}`;
-          this.messageTime.innerText = `${time}`;
-        }
+        this.messageContent.innerText = message.content || 'empty';
+        this.date = new Date(message.time);
+        this.messageTime.innerText = this.date
+          .toLocaleTimeString('ru-RU')
+          .replace(/:\d+$/, '');
+
         const userId = message.user_id || message.userId;
         if (userId === store.state.currentUser.id) {
           this.classList.add('mpy_chat_content_sended');
