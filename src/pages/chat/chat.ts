@@ -63,7 +63,6 @@ const chat = sue({
           const members = m;
           (this.data.chatMembers as string[]).length = Object.keys(members).length;
           Object.keys(members).forEach((key, index) => {
-            console.dir(members[key]);
             (this.data.chatMembers as string[])[index] = JSON.stringify(members[key]);
           });
           eventBus.emit(CONST.update);
@@ -76,7 +75,6 @@ const chat = sue({
       chatsController.getChatToken()
         .then((response) => {
           this.data.chatMessages = [];
-          console.log('reset messages');
           store.state.currentChat.token = response.token;
           this.methods.getMembers();
           this.methods.getMessages();
@@ -95,19 +93,16 @@ const chat = sue({
           store.state.currentChat.id as number,
           store.state.currentChat.token as string,
         );
-        console.dir(controller.chatId);
       }
     },
     messageReceived(this: sApp, data: string) {
-      console.dir(data);
-      (this.data.chatMessages as string[]).unshift(data);
+      (this.data.chatMessages as string[]).push(data);
       eventBus.emit(CONST.update);
     },
 
     messagesBulkReceived(this: sApp, data: string) {
-      const messages = JSON.parse(data);
-      (this.data.chatMessages as string[]).unshift(...messages.map((m: unknown) => JSON.stringify(m)));
-      console.dir(this.data.chatMessages);
+      const messages = JSON.parse(data).reverse();
+      (this.data.chatMessages as string[]).push(...messages.map((m: unknown) => JSON.stringify(m)));
       eventBus.emit(CONST.update);
     },
     submitForm(this: sApp): void {

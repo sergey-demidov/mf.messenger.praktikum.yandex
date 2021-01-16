@@ -1,11 +1,11 @@
 import { isJsonString } from '../lib/utils';
 import eventBus from '../lib/event-bus';
 import { backendUrl, CONST } from '../lib/const';
-import store from '../lib/store';
+import store, { user } from '../lib/store';
+import userController from '../controllers/user';
 
 const template = `
-        <div class="mpy_chat_content_wrapper">
-          <div class="mpy_chat_content_avatar">
+          <div class="mpy_chat_content_info">
             <img class="mpy_avatar_preview unselectable undraggable"
               src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
               width="40"
@@ -16,7 +16,6 @@ const template = `
           </div>
           <div  class="mpy_chat_message_content" >
           </div>
-        </div>
 `;
 
 class sChatMessage extends HTMLElement {
@@ -26,7 +25,7 @@ class sChatMessage extends HTMLElement {
 
   messageContent: HTMLElement;
 
-  messageWrapper: HTMLElement;
+  // messageWrapper: HTMLElement;
 
   messageAvatar: HTMLImageElement;
 
@@ -39,7 +38,7 @@ class sChatMessage extends HTMLElement {
   constructor() {
     super();
     this.innerHTML = template;
-    this.messageWrapper = <HTMLElement> this.getElementsByClassName('mpy_chat_content_wrapper')[0];
+    // this.messageWrapper = <HTMLElement> this.getElementsByClassName('mpy_chat_content_wrapper_selector')[0];
     this.messageContent = <HTMLElement> this.getElementsByClassName('mpy_chat_message_content')[0];
     this.messageTime = <HTMLElement> this.getElementsByClassName('mpy_chat_time')[0];
     this.messageSender = <HTMLElement> this.getElementsByClassName('mpy_chat_nickname')[0];
@@ -61,22 +60,39 @@ class sChatMessage extends HTMLElement {
       if (isJsonString(newValue)) {
         const message = JSON.parse(newValue);
         this.messageContent.innerText = message.content || '';
-        const res = message.time.match(/^20(\d+)-(\d+)-(\d+)T(\d+:\d+)/);
+        // const res = message.time.match(/^20(\d+)-(\d+)-(\d+)T(\d+:\d+)/);
+        const res = message.time.match(/T(\d+:\d+)/);
         if (res) {
-          const [, year, month, day, time] = res;
-          this.messageTime.innerText = `${day}.${month}.${year}\n${time}`;
+          const [, time] = res;
+          // this.messageTime.innerText = `${day}.${month}.${year}\n${time}`;
+          this.messageTime.innerText = `${time}`;
         }
         const userId = message.user_id || message.userId;
         if (userId === store.state.currentUser.id) {
-          this.messageWrapper.classList.add('mpy_chat_content_sended');
+          this.classList.add('mpy_chat_content_sended');
           this.messageAvatar.remove();
+          (this.parentElement as HTMLElement).style.textAlign = 'right';
         } else {
-          this.messageWrapper.classList.add('mpy_chat_content_received');
-          this.messageAvatar.src = message.avatar ? backendUrl + message.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+          this.classList.add('mpy_chat_content_received');
+          (this.parentElement as HTMLElement).style.textAlign = 'left';
+          if (!store.state.users[userId]) {
+            userController.getUserInfo(userId).then((u) => {
+              // this.messageSender.textContent = user.display_name || user.first_name || user.login;
+              // this.messageAvatar.src = user.avatar ? backendUrl + user.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+              this.setUserInfo(u);
+            });
+          } else {
+            this.setUserInfo(store.state.users[userId] as typeof user);
+          }
         }
         eventBus.emit(CONST.update);
       }
     }
+  }
+
+  setUserInfo(u: typeof user): void {
+    this.messageSender.textContent = u.display_name || u.first_name || u.login;
+    this.messageAvatar.src = u.avatar ? backendUrl + u.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
   }
 }
 

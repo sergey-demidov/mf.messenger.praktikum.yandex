@@ -39,7 +39,7 @@ class sUser extends HTMLElement {
     this.menuOpened = true;
     const targetRect = this.getBoundingClientRect();
     this.wrapper.style.top = `${targetRect.bottom + 5}px`;
-    this.wrapper.style.right = '5px';
+    this.wrapper.style.left = `${targetRect.left}px`;
     this.wrapper.style.minWidth = `${menuWidth}px`;
 
     this.wrapper.style.display = CONST.flex;

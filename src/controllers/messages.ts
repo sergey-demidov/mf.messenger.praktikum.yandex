@@ -3,6 +3,7 @@
 import { CONST, WsBaseUrl } from '../lib/const';
 import { isJsonString } from '../lib/utils';
 import eventBus from '../lib/event-bus';
+import toaster from '../lib/toaster';
 
 class MessagesController {
   private socket: WebSocket;
@@ -39,6 +40,10 @@ class MessagesController {
         if (data.content === 'Wrong message type') return; // pong
         if (window.debug) console.log('WebSocket: unexpected error');
         if (window.debug) console.dir(data);
+        return;
+      }
+      if (data.type === 'user connected') {
+        toaster.toast('user connected');
         return;
       }
       if (Array.isArray(data)) {

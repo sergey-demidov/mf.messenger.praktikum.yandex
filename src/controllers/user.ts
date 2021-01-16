@@ -2,6 +2,7 @@ import eventBus from '../lib/event-bus';
 import UserApi from '../api/user';
 import { isJsonString } from '../lib/utils';
 import { HttpDataType } from '../lib/http-transport';
+import store from '../lib/store';
 
 const userApi = new UserApi();
 
@@ -53,6 +54,20 @@ class UserController {
       .then((response) => {
         if (response.status === 200) {
           return response;
+        }
+        throw new Error(response.response);
+      });
+  }
+
+  getUserInfo(userId: number) {
+    return userApi.getUserInfo(userId)
+      .then((response) => {
+        if (response.status === 200) {
+          const user = JSON.parse(response.response);
+          if (!store.state.users[user.id]) {
+            store.state.users[user.id] = user;
+          }
+          return user;
         }
         throw new Error(response.response);
       });

@@ -1,7 +1,7 @@
 import eventBus from './event-bus';
 import { CONST } from './const';
 
-const user = {
+export const user = {
   id: 0,
   first_name: '',
   second_name: '',
@@ -65,6 +65,7 @@ class Store {
     currentUser: new Proxy(<Record<string, string | number>>user, this.handler),
     currentMember: new Proxy(<Record<string, string | number>>chatMember, this.handler),
     currentChat: new Proxy(<Record<string, string | number>>chat, this.handler),
+    users: new Proxy(<Record<number, typeof user>>{}, this.handler),
   }
 
   private static instance: Store;

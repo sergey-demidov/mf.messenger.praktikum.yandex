@@ -28,6 +28,10 @@ class UserApi {
   findUsers(data: HttpDataType): Promise<XMLHttpRequest> {
     return this.fetch.post('/search', { data, headers });
   }
+
+  getUserInfo(userId: number): Promise<XMLHttpRequest> {
+    return this.fetch.get(`/${userId}`, {});
+  }
 }
 
 export default UserApi;
