@@ -25,12 +25,6 @@ class ChatsController {
       .then((response) => {
         if (response.status === 200 && isJsonString(response.response)) {
           return JSON.parse(response.response);
-          // users.forEach((u: typeof user) => {
-          //   if (!store.state.users[u.id]) {
-          //     store.state.users[u.id] = u;
-          //   }
-          // });
-          // return users;
         }
         throw new Error('Getting users failed');
       });
@@ -114,6 +108,16 @@ class ChatsController {
           return JSON.parse(response.response);
         }
         throw new Error('Getting chat token failed');
+      });
+  }
+
+  getUnreadMessagesCount(chatId: number) {
+    return chatsApi.getUnreadMessagesCount(chatId)
+      .then((response) => {
+        if (response.status === 200 && isJsonString(response.response)) {
+          return JSON.parse(response.response);
+        }
+        throw new Error('Getting unread messages failed');
       });
   }
 }

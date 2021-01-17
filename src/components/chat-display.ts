@@ -2,6 +2,7 @@ import { isJsonString } from '../lib/utils';
 import store from '../lib/store';
 import eventBus from '../lib/event-bus';
 import { backendUrl, CONST } from '../lib/const';
+import chatsController from '../controllers/chats';
 
 const template = `
 <div class="mpy_chat_display_wrapper mpy_white">
@@ -30,7 +31,7 @@ const template = `
       09:20
     </div>
     <div class="mpy_chat_display_sign">
-      4
+      
     </div>
   </div>
 </div>
@@ -49,7 +50,11 @@ class sChatDisplay extends HTMLElement {
 
   chatAvatar: HTMLImageElement;
 
+  chatMessageCount: HTMLElement;
+
   chatId = 0;
+
+  getMessageCountInterval = 0;
 
   constructor() {
     super();
@@ -59,10 +64,11 @@ class sChatDisplay extends HTMLElement {
     this.chatAvatar = <HTMLImageElement> this.getElementsByClassName('mpy_avatar_preview')[0];
     this.chatWrapper = <HTMLElement> this.getElementsByClassName('mpy_chat_display_wrapper')[0];
     this.chatTool = <HTMLElement> this.getElementsByClassName('mpy_chat_display_tool')[0];
+    this.chatMessageCount = <HTMLElement> this.getElementsByClassName('mpy_chat_display_sign')[0];
     eventBus.on(CONST.update, () => this.update());
   }
 
-  update():void {
+  update(): void {
     if (this.chatId && this.chatId === store.state.currentChat.id) {
       this.chatWrapper.classList.add('mpy_chat_display_wrapper__active');
     } else {
@@ -87,11 +93,33 @@ class sChatDisplay extends HTMLElement {
         this.chatWrapper.onclick = () => {
           Object.assign(store.state.currentChat, chat);
           eventBus.emit(CONST.chatChange);
+          window.setTimeout(() => this.getUnreadMessagesCount(), 500);
           return false;
         };
         eventBus.emit(CONST.update);
       }
     }
+  }
+
+  getUnreadMessagesCount(): void {
+    chatsController.getUnreadMessagesCount(this.chatId).then((res) => {
+      if (res.unread_count > 0) {
+        this.chatMessageCount.textContent = res.unread_count;
+        this.chatMessageCount.style.display = CONST.block;
+      } else {
+        this.chatMessageCount.textContent = '';
+        this.chatMessageCount.style.display = CONST.none;
+      }
+    });
+  }
+
+  connectedCallback(): void {
+    this.getMessageCountInterval = window.setInterval(() => this.getUnreadMessagesCount(),
+      10 * 1000 + Math.floor(Math.random() * 1000));
+  }
+
+  disconnectedCallback(): void {
+    window.clearInterval(this.getMessageCountInterval);
   }
 }
 

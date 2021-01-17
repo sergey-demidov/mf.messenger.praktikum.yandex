@@ -44,6 +44,10 @@ class ChatsApi {
   getChatToken(chatId: number): Promise<XMLHttpRequest> {
     return this.fetch.post(`/token/${chatId}`, {});
   }
+
+  getUnreadMessagesCount(chatId: number): Promise<XMLHttpRequest> {
+    return this.fetch.get(`/new/${chatId}`, {});
+  }
 }
 
 export default ChatsApi;
