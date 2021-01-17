@@ -12,12 +12,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
   const emptyInit: sInit = {
     authorisationRequired: false,
     name: '',
-    template: `
-  <div class="mpy_overlay">
-    <div class="mpy_container">
-      loading...
-    </div>
-  </div>`,
+    template: '',
     data: () => ({}),
     components: {},
     methods: {},
@@ -52,11 +47,14 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
 
     init = emptyInit;
 
-    instanceId = hash8()
+    instanceId = hash8();
+
+    updateInterval: number;
 
     constructor() {
       super();
       this.createResources();
+      this.updateInterval = window.setInterval(() => this.delayedUpdate(), 100);
     }
 
     createResources = () => {
@@ -65,8 +63,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.authorisationRequired = init.authorisationRequired;
       if (!this.name) throw new Error('Component name is not defined');
       if (!this.name.match(/-/)) throw new Error('Component name must include at least one hyphen');
-
-      setInterval(() => this.delayedUpdate(), 100);
 
       this.eventBus.on(CONST.update, this.update);
       this.eventBus.on('dataChange', (...args) => this.setData(...args as string[]));
@@ -325,6 +321,11 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
       this.innerHTML = init.template;
       this.connected = true;
       this.init.mounted();
+    }
+
+    disconnectedCallback() {
+      window.clearInterval(this.updateInterval);
+      this.init.destroyed();
     }
 
     show = () => {

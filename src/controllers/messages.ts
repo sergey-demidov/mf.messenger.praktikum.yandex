@@ -44,6 +44,7 @@ class MessagesController {
       }
       if (data.type === 'user connected') {
         toaster.toast('user connected');
+        eventBus.emit(CONST.userConnected);
         return;
       }
       if (Array.isArray(data)) {

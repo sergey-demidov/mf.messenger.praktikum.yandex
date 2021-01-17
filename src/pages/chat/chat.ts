@@ -7,7 +7,7 @@ import sChatDisplay from '../../components/chat-display';
 import sChatMember from '../../components/chat-member';
 import { sApp } from '../../lib/types';
 import eventBus from '../../lib/event-bus';
-import store from '../../lib/store';
+import store, { chatMember } from '../../lib/store';
 import { CONST } from '../../lib/const';
 import chatsController from '../../controllers/chats';
 import toaster from '../../lib/toaster';
@@ -30,6 +30,20 @@ const chat = sue({
   methods: {
     deleteUser(): void {
       chatsController.deleteUsers();
+    },
+    checkChats(this: sApp): void {
+      if (!this.isVisible()) return;
+      chatsController.getChats()
+        .then((c) => {
+          const chats = c;
+          const existChats = <string[]> this.data.chats;
+          if (existChats.length !== chats.length) {
+            eventBus.emit(CONST.hashchange);
+          }
+        }).catch((error) => {
+        // eslint-disable-next-line no-console
+          console.error(error);
+        });
     },
     getChats(this: sApp): void {
       if (!this.isVisible()) return;
@@ -60,10 +74,19 @@ const chat = sue({
       }
       chatsController.getChatUsers()
         .then((m) => {
-          const members = m;
-          (this.data.chatMembers as string[]).length = Object.keys(members).length;
-          Object.keys(members).forEach((key, index) => {
-            (this.data.chatMembers as string[])[index] = JSON.stringify(members[key]);
+          const members = Object.values(m)
+            .sort(
+              (a, b) => {
+                const a2 = a as unknown as typeof chatMember;
+                const b2 = b as unknown as typeof chatMember;
+                if (a2.role > b2.role) return 1;
+                if (a2.role < b2.role) return -1;
+                return 0;
+              },
+            );
+          (this.data.chatMembers as string[]).length = members.length;
+          members.forEach((_key, index) => {
+            (this.data.chatMembers as string[])[index] = JSON.stringify(members[index]);
           });
           eventBus.emit(CONST.update);
         }).catch((error) => {
@@ -118,9 +141,13 @@ const chat = sue({
     eventBus.on(CONST.hashchange, () => this.methods.getChats());
     eventBus.on(CONST.enterPressed, () => this.methods.submitForm());
     eventBus.on(CONST.chatChange, () => this.methods.fillChat());
+    eventBus.on(CONST.userConnected, () => this.methods.getMembers());
     eventBus.on(CONST.messageReceived, (data) => this.methods.messageReceived(data));
     eventBus.on(CONST.messagesBulkReceived, (data) => this.methods.messagesBulkReceived(data));
-    // eventBus.on(CONST.update, () => { console.dir(this.data.chatMessages); });
+    (this.data.updateChatInterval as number) = window.setInterval(() => this.methods.checkChats(), 10 * 1000);
+  },
+  destroyed(this: sApp) {
+    window.clearInterval(this.data.updateChatInterval as number);
   },
   components: {
     's-input': sInput,

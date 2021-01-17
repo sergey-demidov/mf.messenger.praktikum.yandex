@@ -30,6 +30,7 @@ export const CONST = Object.freeze({
   messagesBulkReceived: 'messagesBulkReceived',
   websocketDisconnected: 'websocketDisconnected',
   enterPressed: 'enterPressed',
+  userConnected: 'userConnected',
 });
 
 export const backendUrl = 'https://ya-praktikum.tech';

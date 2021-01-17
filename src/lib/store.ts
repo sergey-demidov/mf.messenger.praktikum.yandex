@@ -12,7 +12,7 @@ export const user = {
   avatar: '',
 };
 
-const chatMember = {
+export const chatMember = {
   id: 0,
   first_name: '',
   second_name: '',
