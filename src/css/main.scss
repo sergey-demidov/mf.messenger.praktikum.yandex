@@ -722,10 +722,17 @@ input {
 }
 
 .mpy_chat_display_header {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mpy_chat_display_title {
   font-weight: bold;
   font-size: 14px;
   text-align: left;
-  padding: 10px 5px 0 10px;
+  padding: 10px 0 0 10px;
+  display: inline-block;
 }
 
 .mpy_chat_display_nick {
@@ -753,11 +760,11 @@ input {
   text-align: center;
   border-radius: 50%;
   background: linear-gradient(to top, #5b6, #8e9);
-  width: 1em;
-  margin: 3px auto 3px auto;
   line-height: 1em;
   padding: 3px;
   display: none;
+  width: 1em;
+  margin-top: 8px;
 }
 
 .mpy_chat_display_tool {
@@ -839,7 +846,7 @@ input {
   border-radius: 50%;
 }
 
-.mpy_chat_display_body {
+.mpy_chat_display_users {
   font-weight: lighter;
   font-size: smaller;
   text-align: left;
@@ -847,6 +854,7 @@ input {
   margin: 0 0 0.5em 0;
   height: 2.5em;
   overflow: hidden;
+  word-break: break-word;
 }
 
 .mpy_chat_message_status {

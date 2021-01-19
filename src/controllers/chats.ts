@@ -20,8 +20,8 @@ class ChatsController {
     ChatsController.instance = this;
   }
 
-  getChatUsers() {
-    return chatsApi.getChatUsers(<number>store.state.currentChat.id)
+  getChatUsers(id = store.state.currentChat.id) {
+    return chatsApi.getChatUsers(id as number)
       .then((response) => {
         if (response.status === 200 && isJsonString(response.response)) {
           return JSON.parse(response.response);

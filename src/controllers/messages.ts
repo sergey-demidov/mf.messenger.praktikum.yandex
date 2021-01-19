@@ -36,6 +36,7 @@ class MessagesController {
         return;
       }
       data = JSON.parse(event.data);
+      console.dir(data);
       if (data.type === 'error') {
         if (data.content === 'Wrong message type') return; // pong
         if (window.debug) console.log('WebSocket: unexpected error');
