@@ -9,14 +9,14 @@ export default `<div class="mpy_overlay">
           action="/">
           <div class="mpy_dialog_content mpy_lightgrey mpy_py10">
             <div class="mpy_avatar_output_wrapper unselectable">
-            <input type="hidden" name="chatId" :value="id"/>
-              <input id="chatAvatarInput"
-                name="avatar"
-                type="file"
-                accept="image/*"
-                @change="loadImage()"
-                hidden />
-              <img id="chatAvatarPreview"
+              <input type="hidden"
+                name="chatId"
+                :value="id"/> <input id="chatAvatarInput"
+              name="avatar"
+              type="file"
+              accept="image/*"
+              @change="loadImage()"
+              hidden/> <img id="chatAvatarPreview"
               class="mpy_avatar_preview unselectable undraggable"
               :src="avatar"
               src="//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200"
@@ -32,22 +32,25 @@ export default `<div class="mpy_overlay">
               image_not_supported
             </span>
             </div>
-                <s-btn tabindex="0" block
-          :disabled="!isAvatarChanged('chatEdit')"
-          @click="submitForm('chatEdit')">
-          
-          Save chat avatar
-        </s-btn>
+            <s-btn tabindex="0"
+              block
+              :disabled="!isAvatarChanged('chatEdit')"
+              @click="submitForm('chatEdit')">
 
-            <s-input name="deleteConfirm"
-              :model="deleteConfirm"
-              label="enter chat name to delete"></s-input>
-            <s-btn tabindex="0" style="background-color: #f33;"
-              @click="deleteChat()"
-              :disabled="matchTitle()"
-              block>
-              Delete chat
+              Save chat avatar
             </s-btn>
+            <div class="mpy_danger_zone mpy_lightgrey">
+              <s-input name="deleteConfirm"
+                :model="deleteConfirm"
+                label="enter chat name to delete"></s-input>
+              <s-btn tabindex="0"
+                style="background-color: #f33;"
+                @click="deleteChat()"
+                :disabled="matchTitle()"
+                block>
+                Delete chat
+              </s-btn>
+            </div>
           </div>
         </form>
       </main>

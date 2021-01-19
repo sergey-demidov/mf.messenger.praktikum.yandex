@@ -269,6 +269,16 @@ input {
   object-fit: cover;
 }
 
+.mpy_danger_zone {
+  padding: 10px;
+  margin: 0 10px;
+  border: 1px solid #f33;
+  border-radius: 5px;
+  position: relative;
+  color: #f33;
+  text-align: center;
+}
+
 .mpy_text_input {
   color: #678;
   padding: 10px 10px 10px 10px;
