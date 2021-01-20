@@ -125,8 +125,8 @@ class sChatDisplay extends HTMLElement {
         this.chatMessageCount.textContent = res.unread_count;
         this.chatMessageCount.style.display = 'inline-block';
       } else {
-        this.chatMessageCount.textContent = '0';
-        this.chatMessageCount.style.display = 'inline-block';
+        this.chatMessageCount.textContent = '';
+        this.chatMessageCount.style.display = 'none';
       }
     });
   }

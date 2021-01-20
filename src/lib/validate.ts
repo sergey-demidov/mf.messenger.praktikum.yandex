@@ -25,9 +25,6 @@ class Validate {
     this.rules = {
       pass: { regexp: new RegExp(/.*/), message: '' }, // default
       required: { regexp: new RegExp(/^.+$/), message: 'required' },
-      min_6: { regexp: new RegExp(/^.{6,}$/), message: 'minimum 6 characters' },
-      min_8: { regexp: new RegExp(/^.{8,}$/), message: 'minimum 8 characters' },
-      max_32: { regexp: new RegExp(/^.{0,32}$/), message: 'maximum 32 characters' },
       no_spaces: { regexp: new RegExp(/^\S+$/), message: 'no spaces allowed' },
       letters_only: { regexp: new RegExp(/^[a-zа-яё]+$/i), message: 'only letters allowed' },
       no_special_chars: { regexp: new RegExp(/^[a-zа-яё0-9_+\-%#.@ ]+$/i), message: 'no special characters' },
@@ -36,8 +33,9 @@ class Validate {
     };
   }
 
-  validate(input: string, ruleset: string): validateResult {
+  validate(input: string, ruleset = CONST.pass): validateResult {
     const result: validateResult = { valid: true, message: 'Ok' };
+    if (ruleset === CONST.pass || ruleset === '') return result;
     ruleset.split(' ').every((r) => {
       // "match:PassWorD" compare to another field
       const ruleMatch = r.match(/^match:(.*)/);
@@ -50,8 +48,31 @@ class Validate {
         }
         return true; // next every
       }
+
+      const ruleMin = r.match(/^min_(\d+)/);
+      if (ruleMin) {
+        const [, min] = ruleMin;
+        if (input.length < parseInt(min, 10)) {
+          result.valid = false;
+          result.message = `minimum ${min} characters`;
+          return false; // last every
+        }
+        return true; // next every
+      }
+
+      const ruleMax = r.match(/^max_(\d+)/);
+      if (ruleMax) {
+        const [, max] = ruleMax;
+        if (input.length > parseInt(max, 10)) {
+          result.valid = false;
+          result.message = `maximum ${max} characters`;
+          return false; // last every
+        }
+        return true; // next every
+      }
+
       if (!this.rules[r]) {
-        throw new Error(`Cant validate: rule '${r}' dont exist`);
+        throw new TypeError(`Cant validate: rule '${r}' dont exist`);
       }
       // regexp rules
       const res = input.match(this.rules[r].regexp);
