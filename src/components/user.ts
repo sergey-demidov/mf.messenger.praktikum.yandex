@@ -3,10 +3,7 @@ import toaster, { ToasterMessageTypes } from '../lib/toaster';
 import ICONS from '../lib/icons';
 import authController from '../controllers/auth';
 import store from '../lib/store';
-import AuthApi from '../api/auth';
 import { CONST } from '../lib/const';
-
-const authApi = new AuthApi();
 
 class sUser extends HTMLElement {
   eventBus = eventBus;
@@ -91,7 +88,7 @@ class sUser extends HTMLElement {
   }
 
   logout(): void {
-    authApi.logOut().then((response) => {
+    authController.logOut().then((response) => {
       if (response.status === 200) {
         authController.clearUserState();
         toaster.toast('Successfully exited', ToasterMessageTypes.info);

@@ -71,6 +71,10 @@ class AuthController {
         throw new Error(response.response);
       });
   }
+
+  logOut() {
+    return authApi.logOut();
+  }
 }
 
 const authController = new AuthController();

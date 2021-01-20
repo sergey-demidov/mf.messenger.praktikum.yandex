@@ -41,6 +41,7 @@ describe('test authController module', () => {
     expect(await authController.isUserLoggedIn()).toBeFalsy();
 
     expect(await authController.fillUserState()).toBeTruthy();
+    expect(await authController.fillUserState()).toBeTruthy();
 
     expect(authController.isUserLoggedIn()).toBeTruthy();
     expect(store.state.currentUser.id).toEqual(777);
@@ -100,11 +101,20 @@ describe('test authController module', () => {
 
     expect(await authController.signUp({})).toEqual(JSON.stringify(response));
   });
+
   test('must throw error if not sign Up', async () => {
     nock(ApiBaseUrl)
       .post('/auth/signup')
       .reply(400);
 
     await expect(authController.signUp({})).rejects.toThrow(Error);
+  });
+
+  test('must log out', async () => {
+    nock(ApiBaseUrl)
+      .post('/auth/logout')
+      .reply(200);
+
+    await expect(authController.logOut({})).resolves.toBeTruthy();
   });
 });
