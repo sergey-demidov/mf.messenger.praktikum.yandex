@@ -47,9 +47,9 @@ class Store {
       return target[key];
     },
     set(target: Record<string, unknown>, key: string, value: string | number): boolean {
-      if (typeof target[key] === CONST.undefined) {
+      if (typeof target[key] === CONST.undefined && window.debug) {
         // eslint-disable-next-line no-console
-        if (window.debug) console.warn(`key '${key}' undefined in store '${target}'`);
+        console.warn(`key '${key}' undefined in store '${target}'`);
       }
       // eslint-disable-next-line no-param-reassign
       target[key] = value;

@@ -40,11 +40,16 @@ class AuthController {
         Object.assign(store.state.currentUser, user);
         this.eventBus.emit(CONST.update);
         return true;
-      }).catch(() => false);
+      }).catch((e) => {
+        // eslint-disable-next-line no-console
+        if (window.debug) console.error(e);
+        return false;
+      });
   }
 
   clearUserState(): void {
     store.state.currentUser.login = '';
+    store.state.currentUser.id = 0;
   }
 
   signIn(res: HttpDataType) {
@@ -61,7 +66,7 @@ class AuthController {
     return authApi.signUp(res)
       .then((response) => {
         if (response.status === 200) {
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });

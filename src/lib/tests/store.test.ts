@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
-  expect, describe, test, jest,
+  expect, describe, test, jest, beforeEach, afterEach,
 } from '@jest/globals';
 
 import store from '../store';
@@ -11,6 +11,19 @@ import { CONST } from '../const';
 eventBus.on(CONST.update, jest.fn);
 
 describe('test Store class', () => {
+  const original = console.warn;
+  let output;
+
+  beforeEach(() => {
+    // eslint-disable-next-line no-console
+    console.warn = (e) => { output = e; };
+  });
+
+  afterEach(() => {
+    // eslint-disable-next-line no-console
+    console.warn = original;
+  });
+
   test('must be defined', () => {
     expect(store).toBeDefined();
   });
@@ -25,6 +38,12 @@ describe('test Store class', () => {
   test('must set values to pre-defined objects', () => {
     store.state.currentUser.id = 777;
     expect(store.state.currentUser.id).toEqual(777);
+  });
+
+  test('must set values to pre-defined objects', () => {
+    window.debug = true;
+    store.state.currentUser.XXX = 777;
+    expect(store.state.currentUser.XXX).toEqual(777);
   });
 
   test('must reject to delete pre-defined objects', () => {
