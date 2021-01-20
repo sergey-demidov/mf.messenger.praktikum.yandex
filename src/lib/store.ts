@@ -61,12 +61,12 @@ class Store {
     },
   }
 
-  state = {
+  state = Object.freeze({
     currentUser: new Proxy(<Record<string, string | number>>user, this.handler),
     currentMember: new Proxy(<Record<string, string | number>>chatMember, this.handler),
     currentChat: new Proxy(<Record<string, string | number>>chat, this.handler),
     users: new Proxy(<Record<number, typeof user>>{}, this.handler),
-  }
+  })
 
   private static instance: Store;
 }
