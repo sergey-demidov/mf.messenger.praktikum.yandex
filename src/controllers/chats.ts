@@ -20,6 +20,7 @@ class ChatsController {
     ChatsController.instance = this;
   }
 
+  // eslint-disable-next-line no-use-before-define
   getChatUsers(id = store.state.currentChat.id) {
     return chatsApi.getChatUsers(id as number)
       .then((response) => {
