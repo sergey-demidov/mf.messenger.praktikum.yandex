@@ -10,7 +10,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        use: ['ts-loader', 'eslint-loader'],
+        use: ['ts-loader'],
         exclude: [/node_modules/, /static/, /tests/],
       },
       {
