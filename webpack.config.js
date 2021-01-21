@@ -38,7 +38,7 @@ module.exports = {
     watchContentBase: true,
     watchOptions: {
       ignored: /node_modules/,
-      aggregateTimeout: 500,
+      aggregateTimeout: 300,
       poll: 500,
     },
     historyApiFallback: true,

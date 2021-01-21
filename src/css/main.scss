@@ -26,6 +26,42 @@ $navigation-menu-height: 40px;
   }
 }
 
+@keyframes blink_shadow {
+  0% {
+    box-shadow: 0 0 3px #000;
+  }
+
+  50% {
+    box-shadow: none;
+  }
+
+  100% {
+    box-shadow: 0 0 3px #000;
+  }
+}
+
+@-webkit-keyframes blink_shadow {
+  0% {
+    box-shadow: 0 0 3px #000;
+  }
+
+  50% {
+    box-shadow: 0 0 0;
+  }
+
+  100% {
+    box-shadow: 0 0 3px #000;
+  }
+}
+
+.blink_shadow {
+  -webkit-animation: blink_shadow 1s linear infinite;
+  -moz-animation: blink_shadow 1s linear infinite;
+  -ms-animation: blink_shadow 1s linear infinite;
+  -o-animation: blink_shadow 1s linear infinite;
+  animation: blink_shadow 1s linear infinite;
+}
+
 html {
   padding: 0;
   margin: 0;
@@ -423,7 +459,7 @@ input {
 }
 
 .mpy_chat_list {
-  width: 260px;
+  width: 280px;
   display: block;
   height: calc(100vh - 40px);
   overflow-y: auto;
@@ -765,16 +801,17 @@ input {
 }
 
 .mpy_chat_display_sign {
-  font-size: small;
+  font-size: x-small;
   font-weight: bolder;
   text-align: center;
   border-radius: 50%;
   background: linear-gradient(to top, #5b6, #8e9);
   line-height: 1em;
-  padding: 3px;
+  padding: 2px;
   display: none;
   width: 1em;
-  margin-top: 8px;
+  height: 1em;
+  margin: 5px;
 }
 
 .mpy_chat_display_tool {
@@ -858,11 +895,11 @@ input {
 
 .mpy_chat_display_users {
   font-weight: lighter;
-  font-size: smaller;
+  font-size: x-small;
   text-align: left;
-  padding: 0.5em 10px 0 10px;
+  padding: 0 10px 0 10px;
   margin: 0 0 0.5em 0;
-  height: 2.5em;
+  min-height: 2.5em;
   overflow: hidden;
   word-break: break-word;
 }

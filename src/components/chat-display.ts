@@ -19,7 +19,7 @@ const template = `<div class="mpy_chat_display_wrapper mpy_white">
   <div class="mpy_chat_display">
     <div class="mpy_chat_display_header">
       <div class="mpy_chat_display_title"></div>
-      <div class="mpy_chat_display_sign"></div>
+      <div class="mpy_chat_display_sign blink_shadow"></div>
     </div>
     <div class="mpy_chat_display_users">
     </div>
