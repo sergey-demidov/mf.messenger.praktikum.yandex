@@ -14,6 +14,6 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '<rootDir>/src/lib/icons.ts',
     '<rootDir>/src/lib/mock-utils.ts',
-    '<rootDir>/src/lib/tests/',
+    '<rootDir>/src/lib/__tests__/',
   ],
 };

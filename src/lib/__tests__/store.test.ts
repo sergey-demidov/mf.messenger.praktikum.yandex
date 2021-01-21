@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+/* eslint-disable no-console,@typescript-eslint/no-unused-vars */
 import {
   expect, describe, test, jest, beforeEach, afterEach,
 } from '@jest/globals';
@@ -15,7 +16,7 @@ describe('test Store class', () => {
   let output;
 
   beforeEach(() => {
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console,@typescript-eslint/no-unused-vars
     console.warn = (e) => { output = e; };
   });
 

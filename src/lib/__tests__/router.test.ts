@@ -1,12 +1,12 @@
 import {
-  expect, describe, test, beforeAll, afterAll,
+  expect, describe, test, beforeAll, afterAll, jest,
 } from '@jest/globals';
 
 import Router from '../router';
 import sue from '../sue';
 import eventBus from '../event-bus';
 import authController from '../../controllers/auth';
-import mocks from './mock-utils';
+import mocks from '../mock-utils';
 import { CONST } from '../const';
 
 const root = window.document.body;
@@ -15,11 +15,8 @@ const profilePage = sue({ name: 's-profile', authorisationRequired: true });
 
 const loginPage = sue({ name: 's-login' });
 
-function fakeCallback():boolean {
-  return true;
-}
-
 const fillUserStateBackup = authController.fillUserState;
+
 const createRouter = () => {
   const router = new Router(root);
   router
@@ -32,14 +29,14 @@ const createRouter = () => {
 
 describe('test Router class', () => {
   beforeAll(() => {
-    eventBus.on(CONST.hashchange, fakeCallback);
-    eventBus.on(CONST.update, fakeCallback);
+    eventBus.on(CONST.hashchange, () => jest.fn());
+    eventBus.on(CONST.update, () => jest.fn());
     authController.fillUserState = () => Promise.resolve(true);
   });
 
   afterAll(() => {
-    eventBus.off(CONST.hashchange, fakeCallback);
-    eventBus.off(CONST.update, fakeCallback);
+    eventBus.off(CONST.hashchange, () => jest.fn());
+    eventBus.off(CONST.update, () => jest.fn());
     authController.fillUserState = fillUserStateBackup;
   });
 

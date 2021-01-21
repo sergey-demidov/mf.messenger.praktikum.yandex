@@ -5,7 +5,7 @@ import {
   expect, describe, test, beforeAll,
 } from '@jest/globals';
 import toaster, { ToasterMessageTypes } from '../toaster';
-import mocks from './mock-utils';
+import mocks from '../mock-utils';
 
 toaster.timeout = 1000;
 const hello = 'Hello';

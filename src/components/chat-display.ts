@@ -114,6 +114,7 @@ class sChatDisplay extends HTMLElement {
         this.chatUsersList.textContent = res.slice(0, -2);
         eventBus.emit(CONST.update);
       }).catch((error) => {
+      // eslint-disable-next-line no-console
         console.warn(error);
       });
   }

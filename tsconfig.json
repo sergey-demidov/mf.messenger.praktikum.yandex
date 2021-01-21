@@ -2,7 +2,7 @@
   "exclude": [
     "node_modules/",
     "**/*.test.ts",
-    "src/lib/tests/*"
+    "src/lib/__tests__/*"
   ],
   "compilerOptions": {
     "rootDir": "src",

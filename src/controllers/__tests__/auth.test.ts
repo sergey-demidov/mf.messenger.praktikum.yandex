@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import {
-  expect, describe, test, jest, beforeAll, beforeEach,
+  expect, describe, test, jest, beforeEach,
 } from '@jest/globals';
 import nock from 'nock';
 import authController from '../auth';
