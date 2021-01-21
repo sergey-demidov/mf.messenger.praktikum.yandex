@@ -4,6 +4,8 @@ import { CONST, WsBaseUrl } from '../lib/const';
 import { isJsonString } from '../lib/utils';
 import eventBus from '../lib/event-bus';
 import toaster from '../lib/toaster';
+import userController from './user';
+import store, { user } from '../lib/store';
 
 class MessagesController {
   private socket: WebSocket;
@@ -28,7 +30,7 @@ class MessagesController {
       this.send('get old', '0');
     });
 
-    this.socket.onmessage = (event) => {
+    this.socket.onmessage = async (event) => {
       let data = { type: '', content: '' };
       if (!isJsonString(event.data)) {
         if (window.debug) console.log('WebSocket: unexpected message');
@@ -44,7 +46,14 @@ class MessagesController {
         return;
       }
       if (data.type === 'user connected') {
-        toaster.toast('user connected');
+        console.dir(data.content);
+        if (!store.state.users[data.content]) {
+          await userController.getUserInfo(parseInt(data.content, 10));
+        }
+        const u = <typeof user>store.state.users[data.content];
+        const userName = u.display_name || u.first_name || u.login;
+        toaster.toast(`user ${userName} connected`);
+
         eventBus.emit(CONST.userConnected);
         return;
       }
