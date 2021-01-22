@@ -32,7 +32,7 @@ class UserController {
     return userApi.changePassword(res)
       .then((response) => {
         if (response.status === 200) {
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });
@@ -53,7 +53,7 @@ class UserController {
     return userApi.saveProfileAvatar(formData)
       .then((response) => {
         if (response.status === 200) {
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });
@@ -64,7 +64,7 @@ class UserController {
       .then((response) => {
         if (response.status === 200) {
           const user = JSON.parse(response.response);
-          if (!store.state.users[user.id]) {
+          if (!store.state.users[user.id] || !(store.state.users[user.id] as typeof user).id) {
             store.state.users[user.id] = user;
           }
           return user;
