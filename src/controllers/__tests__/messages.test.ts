@@ -5,10 +5,8 @@ import {
   expect, describe, test, jest, beforeEach, afterEach,
 } from '@jest/globals';
 import WS from 'jest-websocket-mock';
-import nock from 'nock';
-import { cli } from 'webpack';
 import MessagesController from '../messages';
-import { ApiBaseUrl, CONST, WsBaseUrl } from '../../lib/const';
+import { CONST, WsBaseUrl } from '../../lib/const';
 import eventBus from '../../lib/event-bus';
 import mocks from '../../lib/mock-utils';
 import store from '../../lib/store';
