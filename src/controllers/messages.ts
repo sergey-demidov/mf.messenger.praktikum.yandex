@@ -8,7 +8,7 @@ import userController from './user';
 import store, { user } from '../lib/store';
 
 class MessagesController {
-  private socket: WebSocket;
+  protected socket: WebSocket;
 
   chatId: number;
 
@@ -38,15 +38,16 @@ class MessagesController {
         return;
       }
       data = JSON.parse(event.data);
-      console.dir(data);
       if (data.type === 'error') {
-        if (data.content === 'Wrong message type') return; // pong
+        if (data.content === 'Wrong message type') { // pong
+          this.pong();
+          return;
+        }
         if (window.debug) console.log('WebSocket: unexpected error');
         if (window.debug) console.dir(data);
         return;
       }
       if (data.type === 'user connected') {
-        console.dir(data.content);
         if (!store.state.users[data.content]) {
           await userController.getUserInfo(parseInt(data.content, 10));
         }
@@ -65,12 +66,10 @@ class MessagesController {
     };
 
     this.socket.onclose = (event) => {
-      if (event.wasClean) {
-        if (window.debug) console.log('WebSocket: disconnected');
-      } else {
+      if (!event.wasClean && window.debug) {
         console.warn('WebSocket: unexpected disconnect');
-        eventBus.emit(CONST.websocketDisconnected);
       }
+      eventBus.emit(CONST.websocketDisconnected);
       if (window.debug) console.log(`Code: ${event.code}, Reason: ${event.reason}`);
     };
   }
@@ -91,6 +90,10 @@ class MessagesController {
 
   ping(): void {
     this.send('ping', 'ping');
+  }
+
+  pong():void {
+    if (window.debug) console.dir('pong');
   }
 }
 
