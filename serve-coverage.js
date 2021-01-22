@@ -6,7 +6,7 @@ const app = express();
 
 app.use('/', express.static(path.join(__dirname, 'coverage/lcov-report')));
 
-const port = 3000;
+const port = 5000;
 
 console.log(`listening at ${port}`);
 

@@ -47,7 +47,9 @@ const chatEdit = sue({
         .then(() => {
           this.data.deleteConfirm = '';
           toaster.toast(`Chat ${this.data.title} deleted successfully`, ToasterMessageTypes.info);
-          window.router.go('/#/chat');
+          eventBus.emit(CONST.hashchange);
+          // window.router.go('/#/chat');
+          window.router.back();
         }).catch((error) => {
           toaster.bakeError(error);
         });

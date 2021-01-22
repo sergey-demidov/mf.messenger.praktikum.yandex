@@ -41,7 +41,7 @@ class ChatsController {
       });
   }
 
-  deleteUsers() {
+  deleteCurrentMember() {
     chatsApi.deleteUsers({ chatId: <number>store.state.currentChat.id, users: [<number>store.state.currentMember.id] })
       .then((response) => {
         if (response.status === 200) {
@@ -63,7 +63,7 @@ class ChatsController {
     return chatsApi.addUsers({ users: [userId], chatId: <number>store.state.currentChat.id })
       .then((response) => {
         if (response.status === 200) {
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });
@@ -73,7 +73,7 @@ class ChatsController {
     return chatsApi.createChat(res)
       .then((response) => {
         if (response.status === 200) {
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });
@@ -85,7 +85,7 @@ class ChatsController {
         if (response.status === 200) {
           store.state.currentMember.id = 0;
           store.state.currentChat.id = 0;
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });
@@ -96,7 +96,7 @@ class ChatsController {
       .then((response) => {
         if (response.status === 200) {
           toaster.toast('Avatar saved successfully', ToasterMessageTypes.info);
-          return response;
+          return response.response;
         }
         throw new Error(response.response);
       });

@@ -134,10 +134,11 @@ class sChatDisplay extends HTMLElement {
 
   connectedCallback(): void {
     this.getMessageCountInterval = window.setInterval(() => this.getUnreadMessagesCount(),
-      5 * 1000 + Math.floor(Math.random() * 1000));
+      10 * 1000 + Math.floor(Math.random() * 1000));
   }
 
   disconnectedCallback(): void {
+    this.chatId = 0;
     window.clearInterval(this.getMessageCountInterval);
   }
 }

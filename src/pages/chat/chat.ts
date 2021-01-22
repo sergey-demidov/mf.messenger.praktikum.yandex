@@ -29,7 +29,7 @@ const chat = sue({
   },
   methods: {
     deleteUser(): void {
-      chatsController.deleteUsers();
+      chatsController.deleteCurrentMember();
     },
     checkChats(this: sApp): void {
       if (!this.isVisible()) return;

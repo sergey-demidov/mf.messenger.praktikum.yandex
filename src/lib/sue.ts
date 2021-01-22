@@ -245,9 +245,6 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
           const res = this.run(parsed);
           switch (native) {
             case 's-if':
-              // if ((element as HTMLElement).hidden !== (res !== 'true')) {
-              //   (element as HTMLElement).hidden = (res !== 'true');
-              // }
               (element as HTMLElement).style.display = res !== CONST.true ? CONST.block : CONST.none;
               break;
             case 's-text':
