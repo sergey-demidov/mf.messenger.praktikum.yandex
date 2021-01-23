@@ -6,38 +6,10 @@ import {
 } from '@jest/globals';
 import sChatMember from '../chat-member';
 import store from '../../lib/store';
-import chatsController from '../../controllers/chats';
-import mocks from '../../lib/mock-utils';
 import eventBus from '../../lib/event-bus';
 import { CONST } from '../../lib/const';
 
 let chatMember;
-
-// const chatId = 888;
-//
-// const userId = 777;
-//
-// const chatTitle = 'title';
-//
-// const userName = 'user';
-//
-// const chatProperties = {
-//   avatar: '',
-//   created_by: 777,
-//   id: chatId,
-//   title: chatTitle,
-// };
-//
-// const members = [
-//   {
-//     display_name: userName,
-//     id: userId,
-//   },
-//   {
-//     display_name: 'guest',
-//     id: 999,
-//   },
-// ];
 
 const member = {
   display_name: 'user name',
