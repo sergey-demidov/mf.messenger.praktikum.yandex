@@ -75,28 +75,26 @@ class sChatDisplay extends HTMLElement {
   }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
-    if (name === 's-chat') {
-      if (isJsonString(newValue)) {
-        const chat = JSON.parse(newValue);
-        this.chatTitle.innerText = chat.title || 'chat title';
-        this.chatId = chat.id;
-        this.chatAvatar.src = chat.avatar ? backendUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
-        this.getMembers();
-        this.chatTool.onclick = (e) => {
-          if (store.state.currentChat.id !== this.chatId) return;
-          window.router.go('/#/chat/edit');
-          e.preventDefault();
-          e.stopPropagation();
-        };
-        this.chatWrapper.onclick = (e) => {
-          Object.assign(store.state.currentChat, chat);
-          eventBus.emit(CONST.chatChange);
-          window.setTimeout(() => this.getUnreadMessagesCount(), 500);
-          e.preventDefault();
-          e.stopPropagation();
-        };
-        eventBus.emit(CONST.update);
-      }
+    if (name === 's-chat' && isJsonString(newValue)) {
+      const chat = JSON.parse(newValue);
+      this.chatTitle.innerText = chat.title || 'chat title';
+      this.chatId = chat.id;
+      this.chatAvatar.src = chat.avatar ? backendUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+      this.getMembers();
+      this.chatTool.onclick = (e) => {
+        if (store.state.currentChat.id !== this.chatId) return;
+        window.router.go('/#/chat/edit');
+        e.preventDefault();
+        e.stopPropagation();
+      };
+      this.chatWrapper.onclick = (e) => {
+        Object.assign(store.state.currentChat, chat);
+        eventBus.emit(CONST.chatChange);
+        window.setTimeout(() => this.getUnreadMessagesCount(), 500);
+        e.preventDefault();
+        e.stopPropagation();
+      };
+      eventBus.emit(CONST.update);
     }
   }
 
