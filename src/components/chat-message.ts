@@ -25,8 +25,6 @@ class sChatMessage extends HTMLElement {
 
   messageContent: HTMLElement;
 
-  // messageWrapper: HTMLElement;
-
   messageAvatar: HTMLImageElement;
 
   messageTime: HTMLElement;
@@ -40,22 +38,12 @@ class sChatMessage extends HTMLElement {
   constructor() {
     super();
     this.innerHTML = template;
-    // this.messageWrapper = <HTMLElement> this.getElementsByClassName('mpy_chat_content_wrapper_selector')[0];
     this.messageContent = <HTMLElement> this.getElementsByClassName('mpy_chat_message_content')[0];
     this.messageTime = <HTMLElement> this.getElementsByClassName('mpy_chat_time')[0];
     this.messageSender = <HTMLElement> this.getElementsByClassName('mpy_chat_nickname')[0];
     this.messageAvatar = <HTMLImageElement> this.getElementsByClassName('mpy_avatar_preview')[0];
     this.date = new Date();
-    // eventBus.on(CONST.update, () => this.update());
   }
-
-  // update():void {
-  //   if (this.chatId && this.chatId === store.state.currentChat.id) {
-  //     this.chatWrapper.classList.add('mpy_chat_display_wrapper__active');
-  //   } else {
-  //     this.chatWrapper.classList.remove('mpy_chat_display_wrapper__active');
-  //   }
-  // }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
     if (name === 's-message') {
@@ -77,8 +65,6 @@ class sChatMessage extends HTMLElement {
           (this.parentElement as HTMLElement).style.textAlign = 'left';
           if (!store.state.users[userId]) {
             userController.getUserInfo(userId).then((u) => {
-              // this.messageSender.textContent = user.display_name || user.first_name || user.login;
-              // this.messageAvatar.src = user.avatar ? backendUrl + user.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
               this.setUserInfo(u);
             });
           } else {

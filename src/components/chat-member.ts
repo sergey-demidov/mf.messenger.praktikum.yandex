@@ -51,17 +51,15 @@ class sChatMember extends HTMLElement {
   }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
-    if (name === 's-member') {
-      if (isJsonString(newValue)) {
-        const member = JSON.parse(newValue);
-        Object.assign(this.member, member);
-        if (member.role === 'admin') {
-          this.memberSign.innerText = 'star';
-          this.memberSign.style.color = 'gold';
-        }
-        this.memberTitle.innerText = member.display_name || member.login;
-        this.memberAvatar.src = member.avatar ? backendUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
+    if (name === 's-member' && isJsonString(newValue)) {
+      const member = JSON.parse(newValue);
+      Object.assign(this.member, member);
+      if (member.role === 'admin') {
+        this.memberSign.innerText = 'star';
+        this.memberSign.style.color = 'gold';
       }
+      this.memberTitle.innerText = member.display_name || member.login;
+      this.memberAvatar.src = member.avatar ? backendUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
     }
   }
 }
