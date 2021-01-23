@@ -30,7 +30,7 @@ jest.mock('../../lib/const', () => ({
 }));
 
 describe('test userController module', () => {
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(userController).toBeDefined();
   });
 

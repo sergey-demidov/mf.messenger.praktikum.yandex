@@ -9,6 +9,7 @@ import store from '../../lib/store';
 import eventBus from '../../lib/event-bus';
 import { CONST } from '../../lib/const';
 import userController from '../../controllers/user';
+import { cloneDeep } from '../../lib/utils';
 
 let chatMessage;
 
@@ -42,7 +43,7 @@ describe('test sChatMessage module', () => {
     document.body.innerHTML = '';
   });
 
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(sChatMessage).toBeDefined();
   });
 
@@ -57,6 +58,16 @@ describe('test sChatMessage module', () => {
     store.state.currentUser.id = message.user_id;
     document.body.appendChild(chatMessage);
     chatMessage.setAttribute('s-message', JSON.stringify(message));
+    expect(chatMessage.classList.contains('mpy_chat_content_sended')).toBeTruthy();
+  });
+
+  test('must process both "user_id" and "userId" as same property', async () => {
+    const messageWithUserId = cloneDeep(message);
+    delete messageWithUserId.user_id;
+    messageWithUserId.userId = message.user_id;
+    store.state.currentUser.id = message.user_id;
+    document.body.appendChild(chatMessage);
+    chatMessage.setAttribute('s-message', JSON.stringify(messageWithUserId));
     expect(chatMessage.classList.contains('mpy_chat_content_sended')).toBeTruthy();
   });
 

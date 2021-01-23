@@ -31,7 +31,7 @@ describe('test sChatMember module', () => {
     document.body.innerHTML = '';
   });
 
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(sChatMember).toBeDefined();
   });
 

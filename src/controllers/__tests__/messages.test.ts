@@ -45,7 +45,7 @@ describe('test MessagesController module', () => {
     server.close();
   });
 
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(MessagesController).toBeDefined();
   });
 

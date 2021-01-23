@@ -44,7 +44,7 @@ describe('test chatsController module', () => {
     store.state.currentMember.id = 0;
   });
 
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(chatsController).toBeDefined();
   });
 

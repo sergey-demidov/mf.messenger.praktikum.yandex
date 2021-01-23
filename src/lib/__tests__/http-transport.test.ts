@@ -14,7 +14,7 @@ const fetch = new HttpTransport(apiUrl, '');
 const data = { first_name: 'Vasiliy', second_name: 'Pupkin' };
 
 describe('test HttpTransport module', () => {
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(HttpTransport).toBeDefined();
   });
 

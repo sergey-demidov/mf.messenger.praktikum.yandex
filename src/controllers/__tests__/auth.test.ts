@@ -32,7 +32,7 @@ describe('test authController module', () => {
     store.state.currentUser.id = 0;
   });
 
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(authController).toBeDefined();
   });
 

@@ -50,7 +50,7 @@ describe('test sChatDisplay module', () => {
     document.body.innerHTML = '';
   });
 
-  test('is defined', () => {
+  test('must be defined', () => {
     expect(sChatDisplay).toBeDefined();
   });
 

@@ -46,33 +46,31 @@ class sChatMessage extends HTMLElement {
   }
 
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
-    if (name === 's-message') {
-      if (isJsonString(newValue)) {
-        const message = JSON.parse(newValue);
-        this.messageContent.innerText = message.content || 'empty';
-        this.date = new Date(message.time);
-        this.messageTime.innerText = this.date
-          .toLocaleTimeString('ru-RU')
-          .replace(/:\d+$/, '');
+    if (name === 's-message' && isJsonString(newValue)) {
+      const message = JSON.parse(newValue);
+      this.messageContent.innerText = message.content || 'empty';
+      this.date = new Date(message.time);
+      this.messageTime.innerText = this.date
+        .toLocaleTimeString('ru-RU')
+        .replace(/:\d+$/, '');
 
-        const userId = message.user_id || message.userId;
-        if (userId === store.state.currentUser.id) {
-          this.classList.add('mpy_chat_content_sended');
-          this.messageAvatar.remove();
-          (this.parentElement as HTMLElement).style.textAlign = 'right';
+      const userId = message.user_id || message.userId;
+      if (userId === store.state.currentUser.id) {
+        this.classList.add('mpy_chat_content_sended');
+        this.messageAvatar.remove();
+        (this.parentElement as HTMLElement).style.textAlign = 'right';
+      } else {
+        this.classList.add('mpy_chat_content_received');
+        (this.parentElement as HTMLElement).style.textAlign = 'left';
+        if (!store.state.users[userId]) {
+          userController.getUserInfo(userId).then((u) => {
+            this.setUserInfo(u);
+          });
         } else {
-          this.classList.add('mpy_chat_content_received');
-          (this.parentElement as HTMLElement).style.textAlign = 'left';
-          if (!store.state.users[userId]) {
-            userController.getUserInfo(userId).then((u) => {
-              this.setUserInfo(u);
-            });
-          } else {
-            this.setUserInfo(store.state.users[userId] as typeof user);
-          }
+          this.setUserInfo(store.state.users[userId] as typeof user);
         }
-        eventBus.emit(CONST.update);
       }
+      eventBus.emit(CONST.update);
     }
   }
 
