@@ -23,7 +23,7 @@ class MessagesController {
 
     this.pinger = window.setInterval(() => {
       this.ping();
-    }, 5 * 1000);
+    }, 60 * 1000);
 
     this.socket.onopen = (() => {
       if (window.debug) console.log('WebSocket: connected');

@@ -111,7 +111,7 @@ const sue = (i: Record<string, unknown>): sCustomElementConstructor => {
         this.rendering = false;
         const renderTime = Math.ceil(tEnd - tStart);
         // eslint-disable-next-line no-console
-        if (renderTime >= 10 && window.debug) console.log(`render ${this.name} took ${renderTime} milliseconds.`);
+        if (renderTime > 10 && window.debug) console.log(`render ${this.name} took ${renderTime} milliseconds.`);
       } else {
         this.renderQueue.enqueue('update');
       }

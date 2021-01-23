@@ -11,6 +11,8 @@ import store from '../../lib/store';
 import eventBus from '../../lib/event-bus';
 
 eventBus.on(CONST.update, jest.fn);
+const userId = 777;
+const login = 'login';
 
 jest.mock('../../lib/const', () => ({
   get ApiBaseUrl() {
@@ -37,15 +39,15 @@ describe('test authController module', () => {
   test('must set store variable', async () => {
     nock(ApiBaseUrl)
       .get('/auth/user')
-      .reply(200, { id: 777, login: 'user' });
+      .reply(200, { id: userId, login });
     expect(await authController.isUserLoggedIn()).toBeFalsy();
 
     expect(await authController.fillUserState()).toBeTruthy();
     expect(await authController.fillUserState()).toBeTruthy();
 
     expect(authController.isUserLoggedIn()).toBeTruthy();
-    expect(store.state.currentUser.id).toEqual(777);
-    expect(store.state.currentUser.login).toEqual('user');
+    expect(store.state.currentUser.id).toEqual(userId);
+    expect(store.state.currentUser.login).toEqual(login);
   });
 
   test('must return false if unauthorized', async () => {
@@ -59,17 +61,17 @@ describe('test authController module', () => {
   test('must sign in and fill user state', async () => {
     nock(ApiBaseUrl)
       .get('/auth/user')
-      .reply(200, { id: 777, login: 'user' });
+      .reply(200, { id: userId, login });
 
     nock(ApiBaseUrl)
       .post('/auth/signin')
-      .reply(200, { id: 777, login: 'user' });
+      .reply(200, { id: userId, login });
 
     expect(await authController.isUserLoggedIn()).toBeFalsy();
     expect(await authController.signIn({})).toBeTruthy();
     expect(authController.isUserLoggedIn()).toBeTruthy();
-    expect(store.state.currentUser.id).toEqual(777);
-    expect(store.state.currentUser.login).toEqual('user');
+    expect(store.state.currentUser.id).toEqual(userId);
+    expect(store.state.currentUser.login).toEqual(login);
   });
 
   test('must throw error if not sign In', async () => {
@@ -82,8 +84,8 @@ describe('test authController module', () => {
   });
 
   test('must clear user state', async () => {
-    store.state.currentUser.id = 666;
-    store.state.currentUser.login = 'XXX';
+    store.state.currentUser.id = userId;
+    store.state.currentUser.login = login;
     expect(authController.isUserLoggedIn()).toBeTruthy();
 
     authController.clearUserState();
@@ -94,7 +96,7 @@ describe('test authController module', () => {
   });
 
   test('must sign Up', async () => {
-    const response = { id: 777 };
+    const response = { id: userId };
     nock(ApiBaseUrl)
       .post('/auth/signup')
       .reply(200, response);
