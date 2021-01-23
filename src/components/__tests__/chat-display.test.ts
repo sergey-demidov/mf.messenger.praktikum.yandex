@@ -129,6 +129,7 @@ describe('test sChatDisplay module', () => {
     await mocks.sleep(100);
 
     expect(wrapper.classList.contains('mpy_chat_display_wrapper__active')).toBeTruthy();
+    expect(store.state.currentChat.id).toEqual(chatId);
   });
 
   test('must show edit dialog', async () => {

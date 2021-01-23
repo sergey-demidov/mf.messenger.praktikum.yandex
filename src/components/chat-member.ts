@@ -59,7 +59,7 @@ class sChatMember extends HTMLElement {
           this.memberSign.innerText = 'star';
           this.memberSign.style.color = 'gold';
         }
-        this.memberTitle.innerText = member.display_name || member.login || 'unknown';
+        this.memberTitle.innerText = member.display_name || member.login;
         this.memberAvatar.src = member.avatar ? backendUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
       }
     }
