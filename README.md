@@ -1,12 +1,12 @@
 [![Github Actions CI](https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/workflows/ci/badge.svg)](https://github.com/sergey-demidov/mf.messenger.praktikum.yandex/actions?query=workflow%3Aci)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=mfmessenger)](https://mfmessenger.herokuapp.com/)
+[![Heroku](https://img.shields.io/badge/website-mfmessenger.herokuapp.com-brightgreen)](https://mfmessenger.herokuapp.com/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/292312ce77de4ff9aa76a66458fa8f5a)](https://app.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1c725db8ddea43a59afdbc3dacf89dc8)](https://www.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex/dashboard?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Coverage)
+![David](https://img.shields.io/david/sergey-demidov/mf.messenger.praktikum.yandex)
 
 ## Месенджер 
 
-> этот репозиторий является заготовкой для учебного проекта по программе 
-> "Мидл фронтенд-разработчик" от Яндекс Практикум
+> учебный проект по программе "Мидл фронтенд-разработчик" от Яндекс Практикум
 
 <details><summary>Проектная работа 1-й спринт</summary>
 
@@ -77,7 +77,8 @@
    - добавлены CSP заголовки и компрессия
 1. Используется `StyleLint` и `ESLint` с наследованием от `airbnb` 
 1. Добавлены `pre-commit` и `pre-push` с помощью `husky`
-1. Обновлены npm-пакеты, версии зафиксированы на уровне `patch`
+1. Обновлены npm-пакеты. Версии зафиксированы.
+1. Подключен WebSocket, добавлена работа с real-time сообщениями.
 1. Интегрирован внешний анализатор кода `codacy`
 
 ---
