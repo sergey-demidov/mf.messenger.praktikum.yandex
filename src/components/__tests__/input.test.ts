@@ -7,9 +7,8 @@ import {
 import sInput from '../input';
 import { CONST } from '../../lib/const';
 import eventBus from '../../lib/event-bus';
-import mocks from '../../lib/mock-utils';
 
-let input;
+let inputInstance;
 
 customElements.define('s-input', sInput);
 
@@ -22,8 +21,8 @@ describe('test sInput module constructor', () => {
     const div = document.createElement('div');
     div.innerHTML = `<s-input id="myInputWithLabel" label="${myLabel}"></s-input>`;
     document.body.appendChild(div);
-    input = document.getElementById('myInputWithLabel');
-    const labelElement = input.getElementsByClassName('mpy_text_input_label')[0];
+    inputInstance = document.getElementById('myInputWithLabel');
+    const labelElement = inputInstance.getElementsByClassName('mpy_text_input_label')[0];
 
     expect(labelElement.textContent).toEqual(myLabel);
     document.body.innerHTML = '';
@@ -34,9 +33,9 @@ describe('test sInput module constructor', () => {
     const div = document.createElement('div');
     div.innerHTML = `<s-input id="myInputWithValue" value="${myValue}"></s-input>`;
     document.body.appendChild(div);
-    input = document.getElementById('myInputWithValue');
+    inputInstance = document.getElementById('myInputWithValue');
 
-    expect(input.inputElement.value).toEqual(myValue);
+    expect(inputInstance.inputElement.value).toEqual(myValue);
     document.body.innerHTML = '';
   });
 
@@ -45,9 +44,9 @@ describe('test sInput module constructor', () => {
     const div = document.createElement('div');
     div.innerHTML = `<s-input id="myInputWithModel" :model="${myModel}"></s-input>`;
     document.body.appendChild(div);
-    input = document.getElementById('myInputWithModel');
+    inputInstance = document.getElementById('myInputWithModel');
 
-    expect(input.model).toEqual(myModel);
+    expect(inputInstance.model).toEqual(myModel);
     document.body.innerHTML = '';
   });
 
@@ -55,9 +54,9 @@ describe('test sInput module constructor', () => {
     const div = document.createElement('div');
     div.innerHTML = '<s-input id="myInputWithValidate" s-validate="min_8"></s-input>';
     document.body.appendChild(div);
-    input = document.getElementById('myInputWithValidate');
+    inputInstance = document.getElementById('myInputWithValidate');
 
-    expect(input.inputElement.validity.valid).toBeFalsy();
+    expect(inputInstance.inputElement.validity.valid).toBeFalsy();
     document.body.innerHTML = '';
   });
 });
@@ -65,8 +64,8 @@ describe('test sInput module constructor', () => {
 describe('test sInput module', () => {
   beforeEach(() => {
     // eslint-disable-next-line new-cap
-    input = new sInput();
-    document.body.appendChild(input);
+    inputInstance = new sInput();
+    document.body.appendChild(inputInstance);
   });
   afterEach(() => {
     document.body.innerHTML = '';
@@ -77,104 +76,65 @@ describe('test sInput module', () => {
   });
 
   test('must validate input', () => {
-    input.validateRules = 'min_8';
+    inputInstance.validateRules = 'min_8';
 
-    input.inputElement.value = ' '.repeat(7);
-    input.validate();
-    expect(input.inputElement.validity.valid).toBeFalsy();
+    inputInstance.inputElement.value = ' '.repeat(7);
+    inputInstance.validate();
+    expect(inputInstance.inputElement.validity.valid).toBeFalsy();
 
-    input.inputElement.value = ' '.repeat(8);
-    input.validate();
-    expect(input.inputElement.validity.valid).toBeTruthy();
+    inputInstance.inputElement.value = ' '.repeat(8);
+    inputInstance.validate();
+    expect(inputInstance.inputElement.validity.valid).toBeTruthy();
   });
 
   test('must set new input value by model attribute', () => {
     const newValue = 'newValue';
-    input.setAttribute('model', newValue);
-    expect(input.inputElement.value).toEqual(newValue);
+    inputInstance.setAttribute('model', newValue);
+    expect(inputInstance.inputElement.value).toEqual(newValue);
   });
 
   test('must validate on focus', async () => {
-    input.validate = jest.fn();
-    await input.inputElement.focus();
-    expect(input.validate).toHaveBeenCalled();
+    inputInstance.validate = jest.fn();
+    await inputInstance.inputElement.focus();
+    expect(inputInstance.validate).toHaveBeenCalled();
   });
 
   test('must validate on blur', async () => {
-    input.validate = jest.fn();
-    await input.inputElement.focus();
-    await input.inputElement.blur();
-    expect(input.validate).toHaveBeenCalledTimes(2);
+    inputInstance.validate = jest.fn();
+    await inputInstance.inputElement.focus();
+    await inputInstance.inputElement.blur();
+    expect(inputInstance.validate).toHaveBeenCalledTimes(2);
   });
 
   test('must fire dataChange eventBus event if model prop present', () => {
-    input.inputElement.value = 'value';
-    input.model = 'model';
+    inputInstance.inputElement.value = 'value';
+    inputInstance.model = 'model';
     let res = [];
     eventBus.on('dataChange', (...e) => { res = e; });
-    input.dataChange();
+    inputInstance.dataChange();
 
-    expect(res).toEqual([input.model, input.inputElement.value]);
+    expect(res).toEqual([inputInstance.model, inputInstance.inputElement.value]);
   });
 
   test('must reset input value to default', () => {
-    input.inputElement.value = 'value';
-    input.inputElement.defaultValue = 'defaultValue';
-    input.inputElement.reset();
-    expect(input.inputElement.value).toEqual(input.inputElement.defaultValue);
+    inputInstance.inputElement.value = 'value';
+    inputInstance.inputElement.defaultValue = 'defaultValue';
+    inputInstance.inputElement.reset();
+    expect(inputInstance.inputElement.value).toEqual(inputInstance.inputElement.defaultValue);
   });
 
   test('must call dataChange on keyUp', async () => {
-    input.dataChange = jest.fn();
-    await input.inputElement.focus();
-    await input.inputElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'a' }));
+    inputInstance.dataChange = jest.fn();
+    await inputInstance.inputElement.focus();
+    await inputInstance.inputElement.dispatchEvent(new KeyboardEvent('keyup', { key: 'a' }));
 
-    expect(input.dataChange).toHaveBeenCalled();
+    expect(inputInstance.dataChange).toHaveBeenCalled();
   });
 
   test('must fire "enterPressed" eventBus event', async () => {
     eventBus.emit = jest.fn();
-    await input.inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    await inputInstance.inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
 
     expect(eventBus.emit).toHaveBeenCalledWith(CONST.enterPressed);
   });
-
-  //
-  // test('must be disabled by setAttribute', () => {
-  //   input.setAttribute('disabled', 'true');
-  //   expect(input.disabled).toBeTruthy();
-  //   expect(input.getAttribute(CONST.disabled)).toBeTruthy();
-  // });
-  //
-  // test('must be disabled by property', () => {
-  //   input.disabled = true;
-  //   expect(input.disabled).toBeTruthy();
-  //   expect(input.getAttribute(CONST.disabled)).toBeTruthy();
-  // });
-  //
-  // test('must be enabled by property', () => {
-  //   input.disabled = true;
-  //   expect(input.disabled).toBeTruthy();
-  //   expect(input.getAttribute(CONST.disabled)).toBeTruthy();
-  //
-  //   input.disabled = false;
-  //   expect(input.disabled).toBeFalsy();
-  //   expect(input.getAttribute(CONST.disabled)).toBeFalsy();
-  // });
-  //
-  // test('must be enabled by removeAttribute', () => {
-  //   input.disabled = true;
-  //   expect(input.disabled).toBeTruthy();
-  //   expect(input.getAttribute(CONST.disabled)).toBeTruthy();
-  //
-  //   input.removeAttribute('disabled');
-  //   expect(input.disabled).toBeFalsy();
-  //   expect(input.getAttribute(CONST.disabled)).toBeFalsy();
-  // });
-  //
-  // test('must fire onclick if Enter pressed', async () => {
-  //   input.onclick = jest.fn();
-  //   await input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-  //   expect(input.onclick).toHaveBeenCalled();
-  // });
 });

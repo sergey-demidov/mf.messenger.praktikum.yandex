@@ -113,10 +113,11 @@ describe('test authController module', () => {
   });
 
   test('must log out', async () => {
+    const response = 'Ok';
     nock(ApiBaseUrl)
       .post('/auth/logout')
-      .reply(200);
+      .reply(200, response);
 
-    await expect(authController.logOut({})).resolves.toBeTruthy();
+    expect(await authController.logOut()).toEqual(response);
   });
 });

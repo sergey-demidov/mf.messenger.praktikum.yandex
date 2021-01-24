@@ -494,15 +494,18 @@ input {
 }
 
 .mpy_chat_content {
-  //flex: 1;
   display: flex;
   height: calc(100vh - 113px);
-  //position: relative;
-  //bottom: 0;
   padding-bottom: 10px;
   flex-direction: column-reverse;
-  //justify-content: flex-start;
   overflow-y: auto;
+}
+
+.mpy_chat_content__empty {
+  display: block;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 45vh;
 }
 
 .mpy_chat_input {

@@ -12,10 +12,13 @@ class sUser extends HTMLElement {
 
   wrapper: HTMLElement;
 
+  logoutElement: HTMLElement;
+
   constructor() {
     super();
 
     this.wrapper = document.createElement(CONST.div);
+    this.logoutElement = document.createElement(CONST.div);
     this.createResources();
 
     this.eventBus.on(CONST.userDataChange, () => this.update());
@@ -76,26 +79,24 @@ class sUser extends HTMLElement {
     profile.addEventListener('click', () => window.router.go('/#/profile'));
     this.wrapper.appendChild(profile);
 
-    const logout = document.createElement(CONST.div);
-    logout.classList.add('mpy_navigation_link');
-    logout.textContent = 'Logout';
-    logout.dataset.icon = ICONS.logout;
-    logout.addEventListener('click', () => this.logout());
-    this.wrapper.appendChild(logout);
+    this.logoutElement = document.createElement(CONST.div);
+    this.logoutElement.classList.add('mpy_navigation_link');
+    this.logoutElement.textContent = 'logout';
+    this.logoutElement.dataset.icon = ICONS.logout;
+    this.logoutElement.addEventListener('click', () => this.logout());
+    this.wrapper.appendChild(this.logoutElement);
 
     this.wrapper.style.display = CONST.none;
     document.body.appendChild(this.wrapper);
   }
 
   logout(): void {
-    authController.logOut().then((response) => {
-      if (response.status === 200) {
-        authController.clearUserState();
-        toaster.toast('Successfully exited', ToasterMessageTypes.info);
-        setTimeout(() => window.router.go('/#/login'), 0);
-      } else {
-        toaster.toast('Error: Can not logout', ToasterMessageTypes.error);
-      }
+    authController.logOut().then(() => {
+      authController.clearUserState();
+      toaster.toast('Successfully exited', ToasterMessageTypes.info);
+      setTimeout(() => window.router.go('/#/login'), 0);
+    }).catch(() => {
+      toaster.bakeError('Cant logout');
     });
   }
 }

@@ -21,6 +21,7 @@ export default `<div class="mpy_container__shadow">
       </div>
       <div class="mpy_chat_wrapper">
         <div class="mpy_chat_content">
+          <div class="mpy_chat_content__empty" :s-if="isChatSelected()">Please select chat</div>
           <div s-for="message in chatMessages"
             s-key="chat_messages">
             <s-chat-message :s-message="chatMessages[message]"></s-chat-message>

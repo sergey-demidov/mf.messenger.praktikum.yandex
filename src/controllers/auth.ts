@@ -73,7 +73,13 @@ class AuthController {
   }
 
   logOut() {
-    return authApi.logOut();
+    return authApi.logOut()
+      .then((response) => {
+        if (response.status === 200) {
+          return response.response;
+        }
+        throw new Error(response.response);
+      });
   }
 }
 

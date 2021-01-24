@@ -102,7 +102,6 @@ describe('test userController module', () => {
 
   test('getUserInfo(userId) must works', async () => {
     const response = { id: userId, login: 'user' };
-    // store.state.users[userId] = {};
     nock(ApiBaseUrl)
       .get(`/user/${userId}`)
       .reply(200, response);
