@@ -2,7 +2,7 @@
 [![Heroku](https://img.shields.io/badge/website-mfmessenger.herokuapp.com-brightgreen)](https://mfmessenger.herokuapp.com/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/292312ce77de4ff9aa76a66458fa8f5a)](https://app.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1c725db8ddea43a59afdbc3dacf89dc8)](https://www.codacy.com/gh/sergey-demidov/mf.messenger.praktikum.yandex/dashboard?utm_source=github.com&utm_medium=referral&utm_content=sergey-demidov/mf.messenger.praktikum.yandex&utm_campaign=Badge_Coverage)
-![David](https://img.shields.io/david/sergey-demidov/mf.messenger.praktikum.yandex)
+[![David](https://img.shields.io/david/sergey-demidov/mf.messenger.praktikum.yandex)]()
 
 ## Месенджер 
 
