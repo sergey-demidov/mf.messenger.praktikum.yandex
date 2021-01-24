@@ -48,9 +48,9 @@ class sChatMessage extends HTMLElement {
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
     if (name === 's-message' && isJsonString(newValue)) {
       const message = JSON.parse(newValue);
-      this.messageContent.innerText = message.content || 'empty';
+      this.messageContent.textContent = message.content || 'empty';
       this.date = new Date(message.time);
-      this.messageTime.innerText = this.date
+      this.messageTime.textContent = this.date
         .toLocaleTimeString('ru-RU')
         .replace(/:\d+$/, '');
 

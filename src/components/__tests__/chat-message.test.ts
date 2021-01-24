@@ -51,7 +51,7 @@ describe('test sChatMessage module', () => {
     document.body.appendChild(chatMessage);
     chatMessage.setAttribute('s-message', JSON.stringify(message));
     const messageContent = chatMessage.getElementsByClassName('mpy_chat_message_content')[0];
-    expect(messageContent.innerText).toEqual(message.content);
+    expect(messageContent.textContent).toEqual(message.content);
   });
 
   test('must recognise messages match current user id as sended', async () => {

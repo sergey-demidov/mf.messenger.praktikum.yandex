@@ -28,7 +28,7 @@ class sInput extends HTMLElement {
 
   constructor() {
     super();
-    this.innerText = '';
+    this.textContent = '';
     this.validateInstance = new Validate();
     this.classList.add(css.wrapper);
 
@@ -36,7 +36,7 @@ class sInput extends HTMLElement {
 
     this.labelElement = document.createElement('label');
     this.labelElement.classList.add(css.label);
-    this.labelElement.innerText = this.defaultLabel;
+    this.labelElement.textContent = this.defaultLabel;
 
     this.model = this.getAttribute(':model') || '';
     this.inputElement = document.createElement('input');
@@ -87,8 +87,8 @@ class sInput extends HTMLElement {
   }
 
   setLabel(message: string): void {
-    if (this.labelElement.innerText === message) return;
-    this.labelElement.innerText = message;
+    if (this.labelElement.textContent === message) return;
+    this.labelElement.textContent = message;
   }
 
   validate(): void {

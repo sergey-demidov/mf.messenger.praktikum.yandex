@@ -39,7 +39,7 @@ describe('test sChatMember module', () => {
     document.body.appendChild(chatMember);
     chatMember.setAttribute('s-member', JSON.stringify(member));
     const title = chatMember.getElementsByClassName('mpy_chat_display_nick')[0];
-    expect(title.innerText).toEqual(member.display_name);
+    expect(title.textContent).toEqual(member.display_name);
   });
 
   test('must set store currentMember on click', async () => {

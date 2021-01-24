@@ -55,10 +55,10 @@ class sChatMember extends HTMLElement {
       const member = JSON.parse(newValue);
       Object.assign(this.member, member);
       if (member.role === 'admin') {
-        this.memberSign.innerText = 'star';
+        this.memberSign.textContent = 'star';
         this.memberSign.style.color = 'gold';
       }
-      this.memberTitle.innerText = member.display_name || member.login;
+      this.memberTitle.textContent = member.display_name || member.login;
       this.memberAvatar.src = member.avatar ? backendUrl + member.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
     }
   }

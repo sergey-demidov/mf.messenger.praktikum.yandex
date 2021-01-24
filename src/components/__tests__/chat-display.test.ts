@@ -69,7 +69,7 @@ describe('test sChatDisplay module', () => {
     chatDisplay.setAttribute('s-chat', JSON.stringify(chatProperties));
     const title = chatDisplay.getElementsByClassName('mpy_chat_display_title')[0];
 
-    expect(title.innerText).toEqual(chatTitle);
+    expect(title.textContent).toEqual(chatTitle);
   });
 
   test('must be active if local chatId equal with store current chat id', async () => {

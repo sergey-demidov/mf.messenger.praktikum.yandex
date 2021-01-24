@@ -77,7 +77,7 @@ class sChatDisplay extends HTMLElement {
   attributeChangedCallback(name: string, _oldValue: string, newValue: string): void {
     if (name === 's-chat' && isJsonString(newValue)) {
       const chat = JSON.parse(newValue);
-      this.chatTitle.innerText = chat.title || 'chat title';
+      this.chatTitle.textContent = chat.title || 'chat title';
       this.chatId = chat.id;
       this.chatAvatar.src = chat.avatar ? backendUrl + chat.avatar : '//avatars.mds.yandex.net/get-yapic/0/0-0/islands-200';
       this.getMembers();

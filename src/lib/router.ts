@@ -22,7 +22,7 @@ class Router {
     Router.instance = this;
     this.routes = [];
     this.root = root;
-    this.root.innerText = '';
+    this.root.textContent = '';
   }
 
   use(pathname: string, view: sCustomElementConstructor): Router {

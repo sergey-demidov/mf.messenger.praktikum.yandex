@@ -56,7 +56,7 @@ class sUser extends HTMLElement {
   update(): void {
     if (!this.isPresent()) return;
     authController.fillUserState().then((res) => {
-      if (res) this.innerText = <string>store.state.currentUser.login;
+      if (res) this.textContent = <string>store.state.currentUser.login;
     });
   }
 
@@ -71,14 +71,14 @@ class sUser extends HTMLElement {
 
     const profile = document.createElement('div');
     profile.dataset.icon = ICONS.settings;
-    profile.innerText = 'Profile';
+    profile.textContent = 'Profile';
     profile.classList.add('mpy_navigation_link');
     profile.addEventListener('click', () => window.router.go('/#/profile'));
     this.wrapper.appendChild(profile);
 
     const logout = document.createElement(CONST.div);
     logout.classList.add('mpy_navigation_link');
-    logout.innerText = 'Logout';
+    logout.textContent = 'Logout';
     logout.dataset.icon = ICONS.logout;
     logout.addEventListener('click', () => this.logout());
     this.wrapper.appendChild(logout);
