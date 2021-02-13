@@ -38,7 +38,7 @@
     "nock": "=13.0.6",
     "sass": "=1.32.5",
     "jest-websocket-mock": "=2.2.0",
-    "webpack": "=5.16.0"
+    "webpack": "5.17.0"
   },
   "devDependencies": {
     "@babel/core": "=7.12.10",
