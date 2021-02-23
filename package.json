@@ -36,7 +36,7 @@
     "copy-webpack-plugin": "=7.0.0",
     "express": "=4.17.1",
     "nock": "=13.0.6",
-    "sass": "=1.32.5",
+    "sass": "1.32.6",
     "jest-websocket-mock": "=2.2.0",
     "webpack": "=5.16.0"
   },
