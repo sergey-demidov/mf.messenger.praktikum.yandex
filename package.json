@@ -33,7 +33,7 @@
   "dependencies": {
     "@jest/globals": "=26.6.2",
     "compression": "=1.7.4",
-    "copy-webpack-plugin": "=7.0.0",
+    "copy-webpack-plugin": "9.0.1",
     "express": "=4.17.1",
     "nock": "=13.0.6",
     "sass": "=1.32.5",
